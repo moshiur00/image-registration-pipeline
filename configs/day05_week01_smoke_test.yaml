@@ -1,0 +1,45 @@
+experiment:
+  name: week01_smoke_test
+  seed: 42
+
+data:
+  fixed: data/samples/week01/fixed.png
+  moving: data/samples/week01/moving.png
+  color_mode: grayscale
+  require_same_shape: true
+  require_same_ndim: true
+
+preprocessing:
+  grayscale: true
+  clip_lower_percentile: 1.0
+  clip_upper_percentile: 99.0
+  normalize: true
+  gaussian_sigma: 0.6
+  resize: null
+
+transform:
+  source: known
+  type: similarity
+  parameters:
+    scale: 0.97
+    angle_degrees: 5.0
+    tx: 12.0
+    ty: -7.0
+    center: [110.0, 80.0]
+
+warp:
+  interpolation: linear
+  border_value: 0.0
+
+evaluation:
+  enabled: true
+
+visualization:
+  enabled: true
+  alpha: 0.5
+  checkerboard_tile_size: 24
+  title: Week 1 smoke test
+
+output:
+  root: outputs
+  overwrite: true

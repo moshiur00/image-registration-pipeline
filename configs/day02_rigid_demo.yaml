@@ -1,0 +1,27 @@
+experiment:
+  name: day02_rigid_demo
+  seed: 42
+
+convention:
+  transform_direction: moving_to_fixed
+  coordinate_order: x_y
+  positive_rotation: counterclockwise_in_display
+  angle_unit: degrees
+
+point:
+  moving_x: 120.0
+  moving_y: 100.0
+
+rigid_transform:
+  angle_degrees: 90.0
+  tx: 10.0
+  ty: 5.0
+  center_x: 100.0
+  center_y: 100.0
+
+expected:
+  fixed_x: 110.0
+  fixed_y: 85.0
+
+output:
+  path: outputs/day02_rigid_demo_result.json

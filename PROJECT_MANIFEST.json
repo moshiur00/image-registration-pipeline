@@ -1,0 +1,264 @@
+{
+  "project": "image-registration-pipeline",
+  "milestone": "Week 1 Day 5",
+  "date": "2026-09-01",
+  "status": "complete",
+  "validation": {
+    "tests": "65 passed, 1 skipped",
+    "skipped_reason": "SimpleITK is not installed in the build environment. It remains pinned in requirements.txt and the metadata test runs when that dependency is installed.",
+    "expected_with_simpleitk": "66 passed",
+    "day05_smoke_test": "passed",
+    "compileall": "passed",
+    "tool_specific_wording_scan": "passed",
+    "em_dash_scan": "passed",
+    "non_gui_visualization": "Matplotlib Agg canvas used directly; no Tkinter dependency for saved figures.",
+    "windows_log_cleanup": "Run log handlers are flushed, closed, and detached before overwrite and after successful completion."
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "db02d4aa4bd638d2ef004bd27464e7677e04427b21405242ec5d70ae6f5ab57f",
+      "bytes": 363
+    },
+    {
+      "path": "README.md",
+      "sha256": "154af6cfa080380ad41712c562d1aa8740394c54bb5964ef7663aeb2579b0162",
+      "bytes": 6569
+    },
+    {
+      "path": "configs/day01_translation_demo.yaml",
+      "sha256": "421042229e98f6303a9adbd9a240d17030f61f2438fb1c4d826c2d414e47472b",
+      "bytes": 258
+    },
+    {
+      "path": "configs/day02_rigid_demo.yaml",
+      "sha256": "e1a84f943b74eb8d2294d0ec38fe9fd8e0229a72e7ec6a90c2f66f43354d3134",
+      "bytes": 434
+    },
+    {
+      "path": "configs/day03_warping_demo.yaml",
+      "sha256": "73061d8829b1fffd341bd2df3d4607fb7c18d21e71eb92a2beb4fb98f46642ff",
+      "bytes": 483
+    },
+    {
+      "path": "configs/day04_io_preprocessing_evaluation_demo.yaml",
+      "sha256": "808d4cc8032fae7754790c1b9e6e86f0cf1c96e255c8f83bffba06de0a855911",
+      "bytes": 593
+    },
+    {
+      "path": "configs/day05_week01_smoke_test.yaml",
+      "sha256": "ef9546bf3efa58965a5419ac9294c19a91e9be3948581b3ca24f7e8bcceee5a3",
+      "bytes": 737
+    },
+    {
+      "path": "data/samples/week01/fixed.png",
+      "sha256": "6ef03c6191df81913ebaef660ff9299b72c6e05b4a87a131d767f4d53151e6e0",
+      "bytes": 5474
+    },
+    {
+      "path": "data/samples/week01/moving.png",
+      "sha256": "21e76978ff7929ac85285df9995f02bd19835a84ba3d9f5edd2504316f6fbc31",
+      "bytes": 18167
+    },
+    {
+      "path": "docs/CONFIGURATION_AND_RUN_OUTPUTS.md",
+      "sha256": "f68bc51d4b8c150e85375c76b1fc3238f5815fa884207adb8affabe48d8ca64d",
+      "bytes": 4675
+    },
+    {
+      "path": "docs/IMAGE_IO_PREPROCESSING_EVALUATION.md",
+      "sha256": "f8133c59a694d4c8f6afe41293927204d36aab2260b24a4d49c0cf26ad12fd77",
+      "bytes": 5624
+    },
+    {
+      "path": "docs/ROTATION_RIGID_TRANSFORMS.md",
+      "sha256": "96982b43c5b12c01f10ddbfcb7bec2859e9a5d01fbbb73182a160011551bb251",
+      "bytes": 3753
+    },
+    {
+      "path": "docs/SIMILARITY_AFFINE_WARPING.md",
+      "sha256": "4e60b9b7df527222927ab6d3b51d87ec34f4787b264ddae9382d90620407cba0",
+      "bytes": 5489
+    },
+    {
+      "path": "docs/TRANSFORM_CONVENTIONS.md",
+      "sha256": "93a0ca0859924ec3bb37b3c4ff001c806394b5bf8f7480777c47441b17a4abee",
+      "bytes": 5039
+    },
+    {
+      "path": "docs/daily/day_01_summary.md",
+      "sha256": "5b048dea3b69106559e4f920fc318e833ebeb9f3529f325d482ce0a5dd56330a",
+      "bytes": 3205
+    },
+    {
+      "path": "docs/daily/day_02_summary.md",
+      "sha256": "edd157e763711b4fc0a8f71b54badab4cfdf51117d050c1f99e7ba2369fb6858",
+      "bytes": 3398
+    },
+    {
+      "path": "docs/daily/day_03_summary.md",
+      "sha256": "55a022704b3059763ef5ffd3dcffc87fdaba2dba533f8f8c1d9f33dd9cee70a5",
+      "bytes": 4556
+    },
+    {
+      "path": "docs/daily/day_04_summary.md",
+      "sha256": "7cac7282092968538ee3f34fdf217d9507980f4ce1d0d89a0eba1afd0cfc0161",
+      "bytes": 4661
+    },
+    {
+      "path": "docs/daily/day_05_summary.md",
+      "sha256": "4d33fcdd86a6a4702b67d4d0e532a3c34a5d2a7d37fc6a99d3955afd7c04dfc2",
+      "bytes": 3962
+    },
+    {
+      "path": "docs/weekly/week_01_summary.md",
+      "sha256": "50f0ed22c1b273b738cf5718c6dbb5f19e77f69bec27ca3adb1960ca187a2af0",
+      "bytes": 4717
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "590497d259aec6b7cc926021b496f73a4bd0d5f66745db9d556d9e3e5287895a",
+      "bytes": 447
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "834b61644ff78bba2f11e5ec0959695c0031a0f80dcbe535d5a1af9e54e7d2ec",
+      "bytes": 217
+    },
+    {
+      "path": "scripts/day01_demo.py",
+      "sha256": "54287c3448a409b4ce23300e962f61155fb41fac4f1c9e97440c56b2b2aba333",
+      "bytes": 3380
+    },
+    {
+      "path": "scripts/day02_rigid_demo.py",
+      "sha256": "ce3aca333730381ceabe2cd7fa684c569c8eab91a9b63a43aa55aa05ed254e83",
+      "bytes": 5326
+    },
+    {
+      "path": "scripts/day03_warping_demo.py",
+      "sha256": "7030e07621655bff10f56f81f5689d2fe4dd1b53690fdae3b078913c5b1ba6cd",
+      "bytes": 8479
+    },
+    {
+      "path": "scripts/day04_io_preprocessing_evaluation_demo.py",
+      "sha256": "e596cea02d184314a4b62ac394ff31162dbe02084b7b8e7d268d6690319acc58",
+      "bytes": 7900
+    },
+    {
+      "path": "scripts/run_experiment.py",
+      "sha256": "893dfdfcae49b13a408713f8b6f35385cc68b42f7108878ea715576874ad00c4",
+      "bytes": 1825
+    },
+    {
+      "path": "scripts/zip_project.py",
+      "sha256": "83290b0ea83096b733a9c03b1bc4b6d8920b20f20e60ce793540e02c60ce1c6d",
+      "bytes": 3332
+    },
+    {
+      "path": "src/image_registration/__init__.py",
+      "sha256": "ec02c8fd319f7b489581fdcc58f9a4cf183396e07c613b79dac3bdbeae626f32",
+      "bytes": 2321
+    },
+    {
+      "path": "src/image_registration/config.py",
+      "sha256": "3e426fd49b9e70d2da84bf24531c073a1f7aecd0f837e4939e7bc09fa65f5f11",
+      "bytes": 6500
+    },
+    {
+      "path": "src/image_registration/conventions.py",
+      "sha256": "dd606db555f18dc42468f769d8af56d19bf05d67f404552fa7a7a49017f0033e",
+      "bytes": 950
+    },
+    {
+      "path": "src/image_registration/evaluation.py",
+      "sha256": "348f281fe9ef8f6df968014afdbfc5787f4d10af488e58ec869898753af3f01d",
+      "bytes": 3760
+    },
+    {
+      "path": "src/image_registration/io.py",
+      "sha256": "13fef9f11d8506d7c0484e3528612b9713dd239f873453edeb619b5c7644ee6f",
+      "bytes": 6465
+    },
+    {
+      "path": "src/image_registration/pipeline.py",
+      "sha256": "da0aa018f22cccb55490c6705afdfff14f7c4430ac9d168860cf84638417c2f3",
+      "bytes": 11444
+    },
+    {
+      "path": "src/image_registration/preprocessing.py",
+      "sha256": "3a1e038331b3b740e18f3d5470a82e2a0f6ac29de0653e19de5af850672bec8d",
+      "bytes": 7170
+    },
+    {
+      "path": "src/image_registration/registration.py",
+      "sha256": "89b534d85450e9ac8f050bee9fb17569a0e29c6020effad7c39281647a3b50cf",
+      "bytes": 937
+    },
+    {
+      "path": "src/image_registration/transforms.py",
+      "sha256": "0ec4eeda48544c62977330cc557195169f18d49892d1b0be3fc4ac0e084de58a",
+      "bytes": 10838
+    },
+    {
+      "path": "src/image_registration/visualization.py",
+      "sha256": "72696717709f8e232e3b9002babf3e1bddaf6ac45a8c64a0cc3f603287596f44",
+      "bytes": 4430
+    },
+    {
+      "path": "src/image_registration/warping.py",
+      "sha256": "3954a5cc78d7f296a0717c9c2baec471810f4fa4bedffa8a3129f1ab71ef94da",
+      "bytes": 3787
+    },
+    {
+      "path": "tests/test_config.py",
+      "sha256": "cc0c21d823959cb441aa7d1b2abce2b9ed3bdf6322c89ed31a91afc58f37fb63",
+      "bytes": 2199
+    },
+    {
+      "path": "tests/test_conventions.py",
+      "sha256": "812780fceffb32fc7997756196485a5b822414aa2838d075c7faec28cac9b920",
+      "bytes": 727
+    },
+    {
+      "path": "tests/test_evaluation.py",
+      "sha256": "f5774255ffba23681035980991e293314e00611af09056f30f6e1c16796190f9",
+      "bytes": 1395
+    },
+    {
+      "path": "tests/test_io.py",
+      "sha256": "4451054f861ad81157f92ce7954d6545b0020368d0c021fdc36cb8f43570c10b",
+      "bytes": 2489
+    },
+    {
+      "path": "tests/test_pipeline.py",
+      "sha256": "d465fa925b5a2df7b145abe88802e9cec8ff34db208e506cccba4bfffea8c04e",
+      "bytes": 4334
+    },
+    {
+      "path": "tests/test_preprocessing.py",
+      "sha256": "68061946aac0c82f0b009c81a390e4c0d1699d287fbbb0bcd803816638440242",
+      "bytes": 2475
+    },
+    {
+      "path": "tests/test_registration.py",
+      "sha256": "db6351b2dcd19bb575f1a8bc15f3d490b80eb46a5ac1161bfa115c7768793b5d",
+      "bytes": 614
+    },
+    {
+      "path": "tests/test_transforms.py",
+      "sha256": "670d41ae93801d4010fe353558947b1f4840f275eb98d1d6fc7594dc4d6af271",
+      "bytes": 8132
+    },
+    {
+      "path": "tests/test_visualization.py",
+      "sha256": "6f475b79711c4d1221cb1bb66ea14666c53cc1655da52881da3eafe6dd1a4a3f",
+      "bytes": 1331
+    },
+    {
+      "path": "tests/test_warping.py",
+      "sha256": "d270c72f4b940d6025117d83a7b09956de4d10c0a98c2d99f7a185126ea77a3a",
+      "bytes": 2315
+    }
+  ]
+}

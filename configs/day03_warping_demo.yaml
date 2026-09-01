@@ -1,0 +1,30 @@
+experiment:
+  name: day03_similarity_affine_warping_demo
+  seed: 42
+
+convention:
+  transform_direction: moving_to_fixed
+  coordinate_order: x_y
+  positive_rotation: counterclockwise_in_display
+  angle_unit: degrees
+
+image:
+  height: 240
+  width: 320
+
+similarity_transform:
+  scale: 0.90
+  angle_degrees: 12.0
+  tx: 18.0
+  ty: -10.0
+  center_x: 160.0
+  center_y: 120.0
+
+interpolation:
+  methods:
+    - nearest
+    - linear
+    - cubic
+
+output:
+  directory: outputs/day03_warping_demo

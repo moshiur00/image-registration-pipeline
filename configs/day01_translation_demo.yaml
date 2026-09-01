@@ -1,0 +1,18 @@
+experiment:
+  name: day01_translation_demo
+  seed: 42
+
+convention:
+  transform_direction: moving_to_fixed
+  coordinate_order: x_y
+
+point:
+  moving_x: 100.0
+  moving_y: 100.0
+
+translation:
+  tx: 30.0
+  ty: 20.0
+
+output:
+  path: outputs/day01_demo_result.json
