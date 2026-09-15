@@ -121,3 +121,114 @@ def save_comparison_figure(
     fig.savefig(path, dpi=140, bbox_inches="tight")
     fig.clear()
     return path
+
+
+def save_intensity_histogram(
+    fixed: ArrayLike,
+    comparison: ArrayLike,
+    output_path: str | Path,
+    *,
+    mask: ArrayLike | None = None,
+    bins: int = 64,
+    title: str = "Intensity histograms",
+) -> Path:
+    """Save fixed and comparison intensity histograms within an optional mask."""
+    if bins <= 1:
+        raise ValueError("bins must be greater than 1.")
+    fixed_array = _as_grayscale_float(fixed)
+    comparison_array = _as_grayscale_float(comparison)
+    if fixed_array.shape != comparison_array.shape:
+        raise ValueError("Histogram images must have the same shape.")
+
+    if mask is None:
+        selector = np.ones(fixed_array.shape, dtype=bool)
+    else:
+        mask_array = np.asarray(mask)
+        if mask_array.shape != fixed_array.shape:
+            raise ValueError("Histogram mask must match the image shape.")
+        selector = mask_array.astype(bool)
+    if not np.any(selector):
+        raise ValueError("Histogram mask must contain at least one valid pixel.")
+
+    fixed_values = fixed_array[selector]
+    comparison_values = comparison_array[selector]
+    combined_low = float(min(np.min(fixed_values), np.min(comparison_values)))
+    combined_high = float(max(np.max(fixed_values), np.max(comparison_values)))
+    if np.isclose(combined_low, combined_high):
+        combined_high = combined_low + 1.0
+
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig = Figure(figsize=(7, 4.5))
+    FigureCanvasAgg(fig)
+    axis = fig.subplots(1, 1)
+    axis.hist(
+        fixed_values,
+        bins=bins,
+        range=(combined_low, combined_high),
+        histtype="step",
+        linewidth=1.6,
+        label="Fixed",
+    )
+    axis.hist(
+        comparison_values,
+        bins=bins,
+        range=(combined_low, combined_high),
+        histtype="step",
+        linewidth=1.6,
+        label="Comparison",
+    )
+    axis.set_title(title)
+    axis.set_xlabel("Intensity")
+    axis.set_ylabel("Pixel count")
+    axis.legend()
+    fig.tight_layout()
+    fig.savefig(path, dpi=140, bbox_inches="tight")
+    fig.clear()
+    return path
+
+
+def save_joint_histogram(
+    fixed: ArrayLike,
+    comparison: ArrayLike,
+    output_path: str | Path,
+    *,
+    mask: ArrayLike | None = None,
+    bins: int = 64,
+    title: str = "Joint intensity histogram",
+) -> Path:
+    """Save a joint histogram for corresponding fixed and comparison pixels."""
+    if bins <= 1:
+        raise ValueError("bins must be greater than 1.")
+    fixed_array = _as_grayscale_float(fixed)
+    comparison_array = _as_grayscale_float(comparison)
+    if fixed_array.shape != comparison_array.shape:
+        raise ValueError("Joint-histogram images must have the same shape.")
+
+    if mask is None:
+        selector = np.ones(fixed_array.shape, dtype=bool)
+    else:
+        mask_array = np.asarray(mask)
+        if mask_array.shape != fixed_array.shape:
+            raise ValueError("Joint-histogram mask must match the image shape.")
+        selector = mask_array.astype(bool)
+    if not np.any(selector):
+        raise ValueError("Joint-histogram mask must contain at least one valid pixel.")
+
+    fixed_values = fixed_array[selector]
+    comparison_values = comparison_array[selector]
+
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig = Figure(figsize=(5.5, 5.0))
+    FigureCanvasAgg(fig)
+    axis = fig.subplots(1, 1)
+    histogram = axis.hist2d(fixed_values, comparison_values, bins=bins)
+    axis.set_title(title)
+    axis.set_xlabel("Fixed intensity")
+    axis.set_ylabel("Comparison intensity")
+    fig.colorbar(histogram[3], ax=axis, label="Pixel count")
+    fig.tight_layout()
+    fig.savefig(path, dpi=140, bbox_inches="tight")
+    fig.clear()
+    return path

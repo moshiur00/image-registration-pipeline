@@ -1,4 +1,0 @@
-python scripts/zip_project.py
-
-python scripts/zip_project.py --include-data
-

@@ -1,0 +1,90 @@
+{
+  "dataset_id": "rire_training001_ct_mr_t1",
+  "description": "RIRE training_001 CT and MR-T1 real multimodal pair in SimpleITK-compatible MHA format.",
+  "license_note": "Follow the source dataset terms and citation requirements.",
+  "provenance_record": "https://zenodo.org/records/14592145",
+  "record_type": "medical_volume_pairs",
+  "records": [
+    {
+      "fixed_image": "data/raw/rire/training_001/mha/training_001_ct.mha",
+      "fixed_metadata": {
+        "components_per_pixel": 1,
+        "dimension": 3,
+        "direction": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "origin_xyz_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pixel_type": "16-bit signed integer",
+        "size_xyz": [
+          512,
+          512,
+          29
+        ],
+        "spacing_xyz_mm": [
+          0.653595,
+          0.653595,
+          4.0
+        ]
+      },
+      "fixed_modality": "CT",
+      "fixed_sha256": "a1526b57976dbe71db7b2ea3607abd147dab5b7622951ebc7c06a311c6a43a8f",
+      "ground_truth_status": "reference_landmarks_not_integrated_in_day04",
+      "modality_class": "real_multimodal",
+      "moving_image": "data/raw/rire/training_001/mha/training_001_mr_T1.mha",
+      "moving_metadata": {
+        "components_per_pixel": 1,
+        "dimension": 3,
+        "direction": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "origin_xyz_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pixel_type": "16-bit signed integer",
+        "size_xyz": [
+          256,
+          256,
+          26
+        ],
+        "spacing_xyz_mm": [
+          1.25,
+          1.25,
+          4.0
+        ]
+      },
+      "moving_modality": "MR-T1",
+      "moving_sha256": "b5de326cde5cf66c76a519e492b1d06596a7d3c853478397d491aa4c7210a591",
+      "pair_id": "training001_mr_t1_to_ct",
+      "preprocessing_requirements": [
+        "preserve spacing, origin, and direction",
+        "operate in physical coordinates for 3D registration",
+        "do not force identical intensity histograms"
+      ]
+    }
+  ],
+  "schema_version": 2,
+  "simpleitk_example": "https://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/Python_html/60_Registration_Introduction.html",
+  "source_page": "https://rire.insight-journal.org/download_training_data"
+}

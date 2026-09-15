@@ -1,0 +1,59 @@
+experiment:
+  name: week02_day02_degradations_overlap
+  seed: 42
+
+source:
+  image: data/samples/week01/fixed.png
+  color_mode: grayscale
+
+geometry:
+  type: rigid
+  ranges:
+    tx: [10.0, 10.0]
+    ty: [-7.0, -7.0]
+    angle_degrees: [5.0, 5.0]
+  interpolation: linear
+  border_value: 0.0
+
+degradation_cases:
+  - id: gaussian_noise
+    type: gaussian_noise
+    sigma_fraction: 0.04
+
+  - id: impulse_noise
+    type: impulse_noise
+    probability: 0.035
+    salt_fraction: 0.5
+
+  - id: gaussian_blur
+    type: gaussian_blur
+    sigma: 1.5
+
+  - id: contrast
+    type: contrast
+    factor: 1.35
+
+  - id: gamma
+    type: gamma
+    gamma: 1.45
+
+  - id: illumination_gradient
+    type: illumination_gradient
+    strength_fraction: 0.18
+    direction: diagonal
+
+  - id: occlusion
+    type: rectangular_occlusion
+    area_fraction: 0.12
+    fill_value: 0.0
+
+partial_overlap:
+  id: restricted_fov
+  width_fraction: 0.68
+  height_fraction: 0.78
+  center_x_fraction: 0.42
+  center_y_fraction: 0.55
+  fill_value: 0.0
+
+output:
+  directory: outputs/week02_day02_degradations_overlap

@@ -1,0 +1,153 @@
+experiment:
+  name: week02_day05_integrated_benchmark
+  seed: 42
+
+benchmark:
+  samples_per_tier: 20
+  image_size: [256, 256]
+  transform_families:
+    - translation
+    - rigid
+    - similarity
+    - affine
+  restricted_fov_every: 4
+  interpolation: linear
+  border_value: 0.0
+
+sources:
+  general_manifest: data/manifests/general_real_sources.json
+  real_multimodal_manifest: data/manifests/rire_training001.json
+
+# These intervals extend the Day 3 difficulty model with affine shear.
+# All severity intervals are non-overlapping from easy to hard.
+difficulty_tiers:
+  easy:
+    translation_abs_px: [2.0, 5.0]
+    rotation_abs_degrees: [1.0, 3.0]
+    scale_deviation_abs: [0.01, 0.03]
+    affine_shear_abs: [0.01, 0.03]
+    noise_base_sigma_fraction: [0.002, 0.008]
+    noise_signal_sigma_fraction: [0.004, 0.012]
+
+  moderate:
+    translation_abs_px: [7.0, 12.0]
+    rotation_abs_degrees: [5.0, 8.0]
+    scale_deviation_abs: [0.05, 0.08]
+    affine_shear_abs: [0.05, 0.08]
+    noise_base_sigma_fraction: [0.012, 0.025]
+    noise_signal_sigma_fraction: [0.020, 0.040]
+
+  hard:
+    translation_abs_px: [15.0, 22.0]
+    rotation_abs_degrees: [11.0, 16.0]
+    scale_deviation_abs: [0.11, 0.16]
+    affine_shear_abs: [0.11, 0.16]
+    noise_base_sigma_fraction: [0.035, 0.055]
+    noise_signal_sigma_fraction: [0.055, 0.085]
+
+degradation_cases:
+  - id: none
+    type: none
+
+  - id: gaussian_noise
+    type: gaussian_noise
+    per_tier:
+      easy: {sigma_fraction: 0.015}
+      moderate: {sigma_fraction: 0.035}
+      hard: {sigma_fraction: 0.060}
+
+  - id: impulse_noise
+    type: impulse_noise
+    salt_fraction: 0.5
+    per_tier:
+      easy: {probability: 0.010}
+      moderate: {probability: 0.025}
+      hard: {probability: 0.050}
+
+  - id: gaussian_blur
+    type: gaussian_blur
+    per_tier:
+      easy: {sigma: 0.7}
+      moderate: {sigma: 1.4}
+      hard: {sigma: 2.2}
+
+  - id: gamma
+    type: gamma
+    per_tier:
+      easy: {gamma: 1.15}
+      moderate: {gamma: 1.45}
+      hard: {gamma: 1.90}
+
+  - id: illumination_gradient
+    type: illumination_gradient
+    direction: diagonal
+    per_tier:
+      easy: {strength_fraction: 0.08}
+      moderate: {strength_fraction: 0.18}
+      hard: {strength_fraction: 0.30}
+
+  - id: occlusion
+    type: rectangular_occlusion
+    fill_value: 0.0
+    per_tier:
+      easy: {area_fraction: 0.05}
+      moderate: {area_fraction: 0.12}
+      hard: {area_fraction: 0.22}
+
+multimodal_cases:
+  - id: intensity_inversion
+    type: intensity_inversion
+
+  - id: nonlinear_gamma
+    type: nonlinear_gamma
+    per_tier:
+      easy: {gamma: 1.25}
+      moderate: {gamma: 1.75}
+      hard: {gamma: 2.40}
+
+  - id: histogram_remap
+    type: histogram_remap
+    input_knots: [0.0, 0.25, 0.50, 0.75, 1.0]
+    per_tier:
+      easy: {output_knots: [0.0, 0.18, 0.55, 0.82, 1.0]}
+      moderate: {output_knots: [0.0, 0.10, 0.68, 0.88, 1.0]}
+      hard: {output_knots: [0.0, 0.04, 0.78, 0.94, 1.0]}
+
+  - id: bias_field
+    type: bias_field
+    center_x_fraction: 0.62
+    center_y_fraction: 0.38
+    sigma_fraction: 0.34
+    per_tier:
+      easy: {strength_fraction: 0.12}
+      moderate: {strength_fraction: 0.28}
+      hard: {strength_fraction: 0.48}
+
+  - id: edge_emphasized
+    type: edge_emphasized
+    per_tier:
+      easy: {blend: 0.35}
+      moderate: {blend: 0.65}
+      hard: {blend: 0.95}
+
+partial_overlap:
+  per_tier:
+    easy:
+      width_fraction: 0.90
+      height_fraction: 0.92
+      center_x_fraction: 0.50
+      center_y_fraction: 0.50
+    moderate:
+      width_fraction: 0.76
+      height_fraction: 0.82
+      center_x_fraction: 0.46
+      center_y_fraction: 0.54
+    hard:
+      width_fraction: 0.62
+      height_fraction: 0.68
+      center_x_fraction: 0.42
+      center_y_fraction: 0.58
+  fill_value: 0.0
+
+output:
+  directory: outputs/week02_day05_integrated_benchmark

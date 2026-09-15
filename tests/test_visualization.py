@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from image_registration.visualization import (
     absolute_difference,
@@ -42,3 +43,51 @@ def test_save_comparison_figure_creates_file(tmp_path: Path) -> None:
     path = save_comparison_figure(fixed, moving, fixed, tmp_path / "comparison.png")
     assert path.exists()
     assert path.stat().st_size > 0
+
+
+def test_save_intensity_histogram_creates_file(tmp_path) -> None:
+    from image_registration.visualization import save_intensity_histogram
+
+    fixed = np.arange(100, dtype=np.float32).reshape(10, 10)
+    comparison = fixed * 0.8 + 5.0
+    mask = np.ones((10, 10), dtype=np.uint8)
+    path = save_intensity_histogram(
+        fixed,
+        comparison,
+        tmp_path / "histogram.png",
+        mask=mask,
+        bins=16,
+    )
+    assert path.exists()
+    assert path.stat().st_size > 0
+
+
+def test_save_joint_histogram_creates_file(tmp_path) -> None:
+    from image_registration.visualization import save_joint_histogram
+
+    fixed = np.arange(100, dtype=np.float32).reshape(10, 10)
+    comparison = np.flipud(fixed)
+    mask = np.ones((10, 10), dtype=np.uint8)
+    path = save_joint_histogram(
+        fixed,
+        comparison,
+        tmp_path / "joint.png",
+        mask=mask,
+        bins=16,
+    )
+    assert path.exists()
+    assert path.stat().st_size > 0
+
+
+def test_histogram_helpers_reject_empty_mask(tmp_path) -> None:
+    from image_registration.visualization import save_intensity_histogram
+
+    fixed = np.ones((8, 8), dtype=np.float32)
+    mask = np.zeros((8, 8), dtype=np.uint8)
+    with pytest.raises(ValueError, match="at least one valid pixel"):
+        save_intensity_histogram(
+            fixed,
+            fixed,
+            tmp_path / "unused.png",
+            mask=mask,
+        )

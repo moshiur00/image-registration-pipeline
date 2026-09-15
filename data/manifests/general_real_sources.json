@@ -1,0 +1,53 @@
+{
+  "dataset_id": "skimage_real_source_subset",
+  "description": "Small real grayscale source subset for controlled registration experiments.",
+  "record_type": "image_sources",
+  "records": [
+    {
+      "dtype": "uint8",
+      "ground_truth_status": "source_image_only",
+      "image_id": "camera",
+      "modality": "visible",
+      "modality_class": "monomodal_source",
+      "path": "data/samples/week02_real_general/camera.png",
+      "preprocessing_requirements": [],
+      "sha256": "b779d2c8e2a7098a0182c26227c3b516fb2d9d15f14ed99940c6196ba4a2c4e2",
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "scikit-image.data.camera"
+    },
+    {
+      "dtype": "uint8",
+      "ground_truth_status": "source_image_only",
+      "image_id": "coins",
+      "modality": "visible",
+      "modality_class": "monomodal_source",
+      "path": "data/samples/week02_real_general/coins.png",
+      "preprocessing_requirements": [],
+      "sha256": "ce486a40c54dfbf237aea10a2fe5b5e9f789a57dcbbb24054ffd84b478432826",
+      "shape": [
+        303,
+        384
+      ],
+      "source_name": "scikit-image.data.coins"
+    },
+    {
+      "dtype": "uint8",
+      "ground_truth_status": "source_image_only",
+      "image_id": "moon",
+      "modality": "visible",
+      "modality_class": "monomodal_source",
+      "path": "data/samples/week02_real_general/moon.png",
+      "preprocessing_requirements": [],
+      "sha256": "2ab62fb95bfbccce9cf72fb3db26f5fe69b0f7fd1c5173940295439fe419492b",
+      "shape": [
+        512,
+        512
+      ],
+      "source_name": "scikit-image.data.moon"
+    }
+  ],
+  "schema_version": 1
+}

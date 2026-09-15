@@ -1,0 +1,41 @@
+experiment:
+  name: week02_day01_synthetic_ground_truth
+  seed: 42
+
+source:
+  image: data/samples/week01/fixed.png
+  color_mode: grayscale
+
+synthetic:
+  interpolation: linear
+  border_value: 0.0
+  transform_families:
+    - type: translation
+      ranges:
+        tx: [-18.0, 18.0]
+        ty: [-14.0, 14.0]
+
+    - type: rigid
+      ranges:
+        tx: [-14.0, 14.0]
+        ty: [-12.0, 12.0]
+        angle_degrees: [-8.0, 8.0]
+
+    - type: similarity
+      ranges:
+        tx: [-12.0, 12.0]
+        ty: [-10.0, 10.0]
+        angle_degrees: [-7.0, 7.0]
+        scale: [0.94, 1.06]
+
+    - type: affine
+      ranges:
+        tx: [-10.0, 10.0]
+        ty: [-8.0, 8.0]
+        angle_degrees: [-6.0, 6.0]
+        scale_x: [0.94, 1.06]
+        scale_y: [0.94, 1.06]
+        shear_x: [-0.06, 0.06]
+
+output:
+  directory: outputs/week02_day01_synthetic_ground_truth

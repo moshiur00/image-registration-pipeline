@@ -1,0 +1,52 @@
+project:
+  day: week02_day04
+  description: real-data preparation, manifests, and integrity checks
+
+general_real_sources:
+  dataset_id: skimage_real_source_subset
+  output_dir: data/samples/week02_real_general
+  manifest: data/manifests/general_real_sources.json
+  source_package: scikit-image
+  images:
+    - image_id: camera
+      loader: camera
+    - image_id: coins
+      loader: coins
+    - image_id: moon
+      loader: moon
+
+rire_training_001:
+  dataset_id: rire_training001_ct_mr_t1
+  raw_root: data/raw/rire/training_001
+  manifest: data/manifests/rire_training001.json
+  pair_id: training001_mr_t1_to_ct
+  fixed_modality: CT
+  moving_modality: MR-T1
+
+  mha:
+    directory: mha
+    fixed_name: training_001_ct.mha
+    moving_name: training_001_mr_T1.mha
+
+  zenodo:
+    record_url: https://zenodo.org/records/14592145
+    doi: 10.5281/zenodo.14592145
+    archive_name: zenodo_data.zip
+    archive_url: https://zenodo.org/records/14592145/files/data.zip?download=1
+    archive_md5: 37aafd3306394995833798bc08b17d02
+
+  legacy_raw:
+    fixed_archive_name: ct.tar.gz
+    moving_archive_name: mr_T1.tar.gz
+    fixed_key: ct
+    moving_key: mr_T1
+    source_page: https://rire.insight-journal.org/download_training_data
+    format_page: https://rire.insight-journal.org/data_format
+
+  source_page: https://rire.insight-journal.org/download_training_data
+  simpleitk_example: https://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/Python_html/60_Registration_Introduction.html
+  provenance_record: https://zenodo.org/records/14592145
+  license_note: Follow the source dataset terms and citation requirements.
+
+output:
+  report: outputs/week02_day04_real_data/report.json

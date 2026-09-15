@@ -2,15 +2,20 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 is complete and establishes the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure required by the registration algorithms planned for the following weeks.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark that will be used to evaluate the registration algorithms planned for later weeks.
 
 ## Current status
 
 **Week 1: Registration Foundations and Pipeline Skeleton**  
-**Status: Complete, 5 of 5 working days**  
-**Latest local validation: 66 tests passed on Windows with Python 3.12.6**
+**Status: Complete, 5 of 5 working days**
 
-Automatic transform estimation is intentionally not part of Week 1. The current end-to-end smoke test uses a known transform so the pipeline can be validated independently before registration algorithms are introduced.
+**Week 2: Controlled Dataset and Ground-Truth Benchmark Design**  
+**Status: Complete, 5 of 5 working days**
+
+**Current automated test suite: 172 tests**  
+**With the full project dependencies installed, all 172 tests are expected to run**
+
+Automatic transform estimation has not started yet. Week 2 has established deterministic synthetic pairs, known ground truth, controlled appearance changes, overlap information, multimodal variants, real-data manifests, and a final integrated benchmark so the registration methods introduced in Week 3 can be measured objectively from the beginning.
 
 ## Completed work
 
@@ -69,6 +74,53 @@ Current visual outputs:
 
 These measures are currently used to verify pipeline behavior. Later benchmark stages will add geometric and task-specific evaluation such as parameter error, TRE, Dice, success rate, and physical-space error.
 
+### Week 2 benchmark foundation
+
+- Deterministic synthetic transform sampling from configured ranges
+- Translation, rigid, similarity, and affine ground-truth families
+- Exact Moving -> Fixed and Fixed -> Moving matrices
+- Synthetic moving-image generation from inverse ground truth
+- Deterministic control points with verified correspondence
+- Ground-truth JSON records and experiment manifest output
+- Reproducible generation from a fixed random seed
+- Controlled Gaussian and impulse noise
+- Gaussian blur, contrast, gamma, and illumination changes
+- Rectangular occlusion with an explicit visibility mask
+- Transformed-support masks for geometric validity
+- Restricted field-of-view masks for partial-overlap cases
+- Valid-overlap masks mapped into fixed-image coordinates
+- Overlap-fraction measurement and structured case metadata
+- Synthetic multimodal intensity inversion
+- Nonlinear gamma modality mapping
+- Monotonic histogram remapping
+- Smooth multiplicative bias fields
+- Edge-emphasized modality representations
+- Deterministic signal-dependent modality noise
+- Non-overlapping easy, moderate, and hard difficulty tiers
+- Difficulty sampling for translation magnitude, rotation magnitude, scale deviation, and modality noise
+- Intensity-histogram and joint-histogram outputs within valid overlap
+- Small tracked real-image source subset using `scikit-image` sample data
+- Dataset manifests with IDs, paths, shapes, data types, SHA-256 digests, modality labels, and ground-truth status
+- RIRE training_001 CT and MR-T1 preparation configuration
+- Preferred SimpleITK-compatible MHA workflow using fixed CT and moving MR-T1
+- Medical-volume metadata validation for size, spacing, origin, direction, and pixel type
+- SHA-256 validation for real medical volumes
+- Support for a local Zenodo `data.zip` archive that extracts only the two required MHA files
+- Optional streamed Zenodo download with retries
+- Legacy RIRE raw-header and big-endian voxel support retained as a local fallback
+- Dataset integrity checks for missing files, duplicate IDs, shape mismatches, hashes, modality labels, and medical metadata
+- Dataset cards for the general real-image subset and RIRE multimodal subset
+- Integrated benchmark generator with 20 easy, 20 moderate, and 20 hard cases
+- Balanced 30 monomodal and 30 simulated multimodal cases
+- Translation, rigid, similarity, and affine families in one benchmark
+- Tier-dependent affine shear sampling
+- Integrated degradation, occlusion, and restricted field-of-view factors
+- Valid-overlap and effective evaluation masks for every case
+- Control-point ground-truth verification for every case
+- Per-case SHA-256 file hashes and a complete dataset fingerprint
+- Repeat-run fingerprint comparison for reproducibility validation
+- JSON benchmark manifest, CSV index, and representative visual gallery
+
 ### Configuration and reproducibility
 
 - YAML-based experiment configuration
@@ -89,7 +141,7 @@ These measures are currently used to verify pipeline behavior. Later benchmark s
 
 | Week | Planned work | Main outcome |
 |---|---|---|
-| Week 2 | Controlled dataset and ground-truth benchmark design | Synthetic monomodal and multimodal pairs with known transforms, degradations, overlap masks, manifests, and small real-data subsets |
+| Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Phase correlation and ECC registration with multiresolution support, convergence diagnostics, and baseline comparisons |
 | Week 4 | Feature-based registration | ORB matching with RANSAC for similarity and affine estimation, match diagnostics, failure checks, and optional SIFT comparison |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
@@ -130,21 +182,36 @@ image-registration-pipeline/
 │   ├── day02_rigid_demo.yaml
 │   ├── day03_warping_demo.yaml
 │   ├── day04_io_preprocessing_evaluation_demo.yaml
-│   └── day05_week01_smoke_test.yaml
+│   ├── day05_week01_smoke_test.yaml
+│   ├── week02_day01_synthetic_ground_truth.yaml
+│   ├── week02_day02_degradations_overlap.yaml
+│   ├── week02_day03_multimodal_difficulty.yaml
+│   ├── week02_day04_real_datasets.yaml
+│   └── week02_day05_integrated_benchmark.yaml
 ├── data/
+│   ├── manifests/
+│   │   └── general_real_sources.json
 │   ├── raw/
 │   ├── processed/
 │   └── samples/
-│       └── week01/
-│           ├── fixed.png
-│           └── moving.png
+│       ├── week01/
+│       │   ├── fixed.png
+│       │   └── moving.png
+│       └── week02_real_general/
+│           ├── camera.png
+│           ├── coins.png
+│           └── moon.png
 ├── docs/
 │   ├── daily/
 │   ├── weekly/
+│   ├── datasets/
 │   ├── CONFIGURATION_AND_RUN_OUTPUTS.md
+│   ├── CONTROLLED_DEGRADATIONS_PARTIAL_OVERLAP.md
+│   ├── SIMULATED_MULTIMODAL_DIFFICULTY_TIERS.md
 │   ├── IMAGE_IO_PREPROCESSING_EVALUATION.md
 │   ├── ROTATION_RIGID_TRANSFORMS.md
 │   ├── SIMILARITY_AFFINE_WARPING.md
+│   ├── SYNTHETIC_GROUND_TRUTH_BENCHMARK.md
 │   └── TRANSFORM_CONVENTIONS.md
 ├── outputs/
 ├── scripts/
@@ -152,7 +219,13 @@ image-registration-pipeline/
 │   ├── day02_rigid_demo.py
 │   ├── day03_warping_demo.py
 │   ├── day04_io_preprocessing_evaluation_demo.py
+│   ├── week02_day01_synthetic_demo.py
+│   ├── week02_day02_degradations_overlap_demo.py
+│   ├── week02_day03_multimodal_difficulty_demo.py
+│   ├── week02_day04_prepare_real_data.py
+│   ├── week02_day05_generate_benchmark.py
 │   ├── run_experiment.py
+│   ├── cleanup_obsolete_files.py
 │   └── zip_project.py
 ├── src/
 │   └── image_registration/
@@ -184,11 +257,37 @@ pip check
 pytest -v
 ```
 
-The current project should report:
+The current suite contains 172 tests. With SimpleITK installed, all 172 tests are expected to run.
+
+## Prepare the Week 2 Day 4 real-data subsets
+
+Prepare the tracked general real-image subset and validate any already available RIRE data:
+
+```powershell
+python scripts/week02_day04_prepare_real_data.py --config configs/week02_day04_real_datasets.yaml
+```
+
+The preferred RIRE input is a local SimpleITK-compatible pair:
 
 ```text
-66 passed
+data/raw/rire/training_001/mha/
+├── training_001_ct.mha
+└── training_001_mr_T1.mha
 ```
+
+If you download the Zenodo `data.zip` archive manually, save it as:
+
+```text
+data/raw/rire/training_001/archives/zenodo_data.zip
+```
+
+The normal preparation command will verify the archive and extract only the required CT and MR-T1 MHA files. An optional network download is also available:
+
+```powershell
+python scripts/week02_day04_prepare_real_data.py --config configs/week02_day04_real_datasets.yaml --download-zenodo
+```
+
+Large medical data remains excluded from Git and project-sharing ZIP files.
 
 ## Run the Week 1 end-to-end smoke test
 
@@ -266,6 +365,22 @@ Day 4, image loading, preprocessing, evaluation, and visualization:
 python scripts/day04_io_preprocessing_evaluation_demo.py --config configs/day04_io_preprocessing_evaluation_demo.yaml
 ```
 
+Week 2 Day 1, deterministic synthetic pairs and exact ground truth:
+
+```powershell
+python scripts/week02_day01_synthetic_demo.py --config configs/week02_day01_synthetic_ground_truth.yaml
+```
+
+The demonstration creates one translation, rigid, similarity, and affine pair from seed 42. Each pair stores the sampled parameters, Moving -> Fixed matrix, inverse matrix, control-point correspondences, and numerical round-trip error. Generated files are written under `outputs/` and are not committed to Git.
+
+Week 2 Day 2, controlled degradations and partial overlap:
+
+```powershell
+python scripts/week02_day02_degradations_overlap_demo.py --config configs/week02_day02_degradations_overlap.yaml
+```
+
+The demonstration keeps one known rigid geometry fixed while creating separate Gaussian-noise, impulse-noise, blur, contrast, gamma, illumination, occlusion, and restricted-field-of-view cases. It stores visibility masks, valid-overlap masks, overlap fractions, degradation metadata, and the exact ground-truth transform under `outputs/`.
+
 ## Data and generated outputs
 
 Small sample images required for tests and demonstrations are stored under `data/samples/` and are tracked by Git.
@@ -275,6 +390,34 @@ Large raw or processed datasets should not be committed. The `.gitignore` file e
 ## Documentation
 
 Technical notes are available under `docs/`. Daily and weekly summaries record implementation decisions, experiments, validation results, and progress through the internship plan.
+
+## Apply project cleanup after extracting an update
+
+When an update retires an old file, extracting a ZIP does not remove the old local copy automatically. Run:
+
+```powershell
+python scripts/cleanup_obsolete_files.py
+```
+
+For this update the cleanup removes the obsolete `scripts/scripts.txt` file if it still exists.
+
+## Generate the final Week 2 benchmark
+
+Run the integrated benchmark generator:
+
+```powershell
+python scripts/week02_day05_generate_benchmark.py --config configs/week02_day05_integrated_benchmark.yaml
+```
+
+The generator creates 60 cases: 20 easy, 20 moderate, and 20 hard. It records exact ground truth, modality class, degradation, overlap, effective evaluation masks, file hashes, and a dataset fingerprint.
+
+Run the same command a second time to compare the new dataset fingerprint with the previous run. With unchanged inputs and configuration, the repeat check should report `MATCH`.
+
+Main outputs are written under:
+
+```text
+outputs/week02_day05_integrated_benchmark/
+```
 
 ## Create a lightweight project archive
 

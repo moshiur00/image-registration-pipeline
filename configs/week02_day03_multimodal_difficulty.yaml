@@ -1,0 +1,89 @@
+experiment:
+  name: week02_day03_multimodal_difficulty
+  seed: 42
+
+source:
+  image: data/samples/week01/fixed.png
+  color_mode: grayscale
+
+geometry:
+  interpolation: linear
+  border_value: 0.0
+
+# Severity ranges do not overlap between tiers. Geometry uses similarity
+# transforms so translation, rotation, and isotropic scale can increase together.
+difficulty_tiers:
+  easy:
+    translation_abs_px: [2.0, 5.0]
+    rotation_abs_degrees: [1.0, 3.0]
+    scale_deviation_abs: [0.01, 0.03]
+    noise_base_sigma_fraction: [0.002, 0.008]
+    noise_signal_sigma_fraction: [0.004, 0.012]
+
+  moderate:
+    translation_abs_px: [7.0, 12.0]
+    rotation_abs_degrees: [5.0, 8.0]
+    scale_deviation_abs: [0.05, 0.08]
+    noise_base_sigma_fraction: [0.012, 0.025]
+    noise_signal_sigma_fraction: [0.020, 0.040]
+
+  hard:
+    translation_abs_px: [15.0, 22.0]
+    rotation_abs_degrees: [11.0, 16.0]
+    scale_deviation_abs: [0.11, 0.16]
+    noise_base_sigma_fraction: [0.035, 0.055]
+    noise_signal_sigma_fraction: [0.055, 0.085]
+
+multimodal_cases:
+  - id: intensity_inversion
+    type: intensity_inversion
+
+  - id: nonlinear_gamma
+    type: nonlinear_gamma
+    per_tier:
+      easy:
+        gamma: 1.25
+      moderate:
+        gamma: 1.75
+      hard:
+        gamma: 2.40
+
+  - id: histogram_remap
+    type: histogram_remap
+    input_knots: [0.0, 0.25, 0.50, 0.75, 1.0]
+    per_tier:
+      easy:
+        output_knots: [0.0, 0.18, 0.55, 0.82, 1.0]
+      moderate:
+        output_knots: [0.0, 0.10, 0.68, 0.88, 1.0]
+      hard:
+        output_knots: [0.0, 0.04, 0.78, 0.94, 1.0]
+
+  - id: bias_field
+    type: bias_field
+    center_x_fraction: 0.62
+    center_y_fraction: 0.38
+    sigma_fraction: 0.34
+    per_tier:
+      easy:
+        strength_fraction: 0.12
+      moderate:
+        strength_fraction: 0.28
+      hard:
+        strength_fraction: 0.48
+
+  - id: edge_emphasized
+    type: edge_emphasized
+    per_tier:
+      easy:
+        blend: 0.35
+      moderate:
+        blend: 0.65
+      hard:
+        blend: 0.95
+
+histograms:
+  bins: 48
+
+output:
+  directory: outputs/week02_day03_multimodal_difficulty

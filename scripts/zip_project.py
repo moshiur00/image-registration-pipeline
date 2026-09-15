@@ -7,6 +7,7 @@ from pathlib import Path
 
 INCLUDE_FOLDERS = [
     "configs",
+    "data/manifests",
     "data/samples",
     "docs",
     "scripts",
@@ -35,15 +36,19 @@ EXCLUDED_DIR_NAMES = {
     "outputs",
     "build",
     "dist",
+    "image_registration_pipeline.egg-info",
 }
 
 EXCLUDED_FILE_SUFFIXES = {".pyc", ".pyo", ".log", ".tmp"}
 EXCLUDED_FILE_NAMES = {".DS_Store", "Thumbs.db"}
+EXCLUDED_RELATIVE_PATHS = {Path("scripts/scripts.txt")}
 
 
 def should_exclude(relative_path: Path) -> bool:
     """Return True when a path should not be included in the project archive."""
     if any(part in EXCLUDED_DIR_NAMES for part in relative_path.parts):
+        return True
+    if relative_path in EXCLUDED_RELATIVE_PATHS:
         return True
     if relative_path.name in EXCLUDED_FILE_NAMES:
         return True
