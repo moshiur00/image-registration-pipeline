@@ -1,0 +1,222 @@
+{
+  "base_case_count": 14,
+  "condition_summary": {
+    "clean": {
+      "max_mean_tre_pixels": 64.39166191155668,
+      "mean_ncc_improvement": 0.4488555714296706,
+      "mean_runtime_ms": 42.65103750049093,
+      "mean_ssim_improvement": 0.40188561164464287,
+      "median_mean_tre_pixels": 0.42056672296555,
+      "median_runtime_ms": 36.07575000023644,
+      "optimizer_success_count": 8,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 8,
+      "within_tolerance_count": 7,
+      "within_tolerance_rate": 0.875
+    },
+    "contrast": {
+      "max_mean_tre_pixels": 0.22884229228038144,
+      "mean_ncc_improvement": 0.09475281480236175,
+      "mean_runtime_ms": 7.941750000100001,
+      "mean_ssim_improvement": 0.3828668669785672,
+      "median_mean_tre_pixels": 0.15663510254519447,
+      "median_runtime_ms": 7.941750000100001,
+      "optimizer_success_count": 2,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 2,
+      "within_tolerance_count": 2,
+      "within_tolerance_rate": 1.0
+    },
+    "gaussian_blur": {
+      "max_mean_tre_pixels": 1.3363446667864256,
+      "mean_ncc_improvement": 0.33800333278043493,
+      "mean_runtime_ms": 93.97318000010273,
+      "mean_ssim_improvement": 0.12656755060072045,
+      "median_mean_tre_pixels": 0.9778145292139857,
+      "median_runtime_ms": 40.03440000087721,
+      "optimizer_success_count": 5,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 5,
+      "within_tolerance_count": 4,
+      "within_tolerance_rate": 0.8
+    },
+    "gaussian_noise": {
+      "max_mean_tre_pixels": 0.13240411056703788,
+      "mean_ncc_improvement": 0.6616894014691324,
+      "mean_runtime_ms": 20.080459999735467,
+      "mean_ssim_improvement": 0.5344703241184602,
+      "median_mean_tre_pixels": 0.054691097214920846,
+      "median_runtime_ms": 16.76439999937429,
+      "optimizer_success_count": 5,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 5,
+      "within_tolerance_count": 5,
+      "within_tolerance_rate": 1.0
+    },
+    "illumination_gradient": {
+      "max_mean_tre_pixels": 0.08711942124233539,
+      "mean_ncc_improvement": 0.9347697888703199,
+      "mean_runtime_ms": 5.830000000059954,
+      "mean_ssim_improvement": 0.709688655445867,
+      "median_mean_tre_pixels": 0.057392950261476616,
+      "median_runtime_ms": 5.830000000059954,
+      "optimizer_success_count": 2,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 2,
+      "within_tolerance_count": 2,
+      "within_tolerance_rate": 1.0
+    },
+    "restricted_fov": {
+      "max_mean_tre_pixels": 26.627053911388696,
+      "mean_ncc_improvement": 0.012132120166579594,
+      "mean_runtime_ms": 5.700800000340678,
+      "mean_ssim_improvement": 0.09012784239528354,
+      "median_mean_tre_pixels": 13.333908240977806,
+      "median_runtime_ms": 5.700800000340678,
+      "optimizer_success_count": 1,
+      "optimizer_success_rate": 0.5,
+      "registration_count": 2,
+      "within_tolerance_count": 1,
+      "within_tolerance_rate": 0.5
+    }
+  },
+  "daily_summary": "docs/daily/day_15_summary.md",
+  "global_day": 15,
+  "method_summary": {
+    "ecc_affine_multiresolution": {
+      "max_mean_tre_pixels": 0.977385685426238,
+      "mean_ncc_improvement": 0.528130943240972,
+      "mean_runtime_ms": 107.23295000025246,
+      "mean_ssim_improvement": 0.39578304214555493,
+      "median_mean_tre_pixels": 0.661798840233926,
+      "median_runtime_ms": 57.44779999986349,
+      "optimizer_success_count": 4,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 4,
+      "within_tolerance_count": 4,
+      "within_tolerance_rate": 1.0
+    },
+    "ecc_affine_single": {
+      "max_mean_tre_pixels": 64.39166191155668,
+      "mean_ncc_improvement": 0.4434659839342935,
+      "mean_runtime_ms": 71.15580000026966,
+      "mean_ssim_improvement": 0.27288752721869325,
+      "median_mean_tre_pixels": 0.7337311360625685,
+      "median_runtime_ms": 66.74010000006092,
+      "optimizer_success_count": 4,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 4,
+      "within_tolerance_count": 3,
+      "within_tolerance_rate": 0.75
+    },
+    "ecc_rigid": {
+      "max_mean_tre_pixels": 0.9857090244096206,
+      "mean_ncc_improvement": 0.4737462395544603,
+      "mean_runtime_ms": 32.694099999844184,
+      "mean_ssim_improvement": 0.399168706117597,
+      "median_mean_tre_pixels": 0.2950384169405603,
+      "median_runtime_ms": 36.988799999562616,
+      "optimizer_success_count": 4,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 4,
+      "within_tolerance_count": 4,
+      "within_tolerance_rate": 1.0
+    },
+    "ecc_translation": {
+      "max_mean_tre_pixels": 26.627053911388696,
+      "mean_ncc_improvement": 0.4044957819737547,
+      "mean_runtime_ms": 14.852583333473982,
+      "mean_ssim_improvement": 0.3663072671431226,
+      "median_mean_tre_pixels": 0.2902254140142144,
+      "median_runtime_ms": 10.836200000085228,
+      "optimizer_success_count": 5,
+      "optimizer_success_rate": 0.8333333333333334,
+      "registration_count": 6,
+      "within_tolerance_count": 4,
+      "within_tolerance_rate": 0.6666666666666666
+    },
+    "phase_correlation": {
+      "max_mean_tre_pixels": 0.09324850524732604,
+      "mean_ncc_improvement": 0.4107117219337155,
+      "mean_runtime_ms": 2.8291166669684267,
+      "mean_ssim_improvement": 0.4027400486010609,
+      "median_mean_tre_pixels": 0.03421452492376669,
+      "median_runtime_ms": 2.6992499997504638,
+      "optimizer_success_count": 6,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 6,
+      "within_tolerance_count": 6,
+      "within_tolerance_rate": 1.0
+    }
+  },
+  "motion_model_summary": {
+    "affine": {
+      "max_mean_tre_pixels": 64.39166191155668,
+      "mean_ncc_improvement": 0.4857984635876327,
+      "mean_runtime_ms": 89.19437500026106,
+      "mean_ssim_improvement": 0.33433528468212415,
+      "median_mean_tre_pixels": 0.6618602565979753,
+      "median_runtime_ms": 57.44779999986349,
+      "optimizer_success_count": 8,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 8,
+      "within_tolerance_count": 7,
+      "within_tolerance_rate": 0.875
+    },
+    "rigid": {
+      "max_mean_tre_pixels": 0.9857090244096206,
+      "mean_ncc_improvement": 0.4737462395544603,
+      "mean_runtime_ms": 32.694099999844184,
+      "mean_ssim_improvement": 0.399168706117597,
+      "median_mean_tre_pixels": 0.2950384169405603,
+      "median_runtime_ms": 36.988799999562616,
+      "optimizer_success_count": 4,
+      "optimizer_success_rate": 1.0,
+      "registration_count": 4,
+      "within_tolerance_count": 4,
+      "within_tolerance_rate": 1.0
+    },
+    "translation": {
+      "max_mean_tre_pixels": 26.627053911388696,
+      "mean_ncc_improvement": 0.40760375195373516,
+      "mean_runtime_ms": 8.840850000221204,
+      "mean_ssim_improvement": 0.3845236578720918,
+      "median_mean_tre_pixels": 0.08577366702617145,
+      "median_runtime_ms": 5.366950001189252,
+      "optimizer_success_count": 11,
+      "optimizer_success_rate": 0.9166666666666666,
+      "registration_count": 12,
+      "within_tolerance_count": 10,
+      "within_tolerance_rate": 0.8333333333333334
+    }
+  },
+  "optimizer_success_count": 23,
+  "raw_output_directory": "outputs/week03_day05_integrated_baselines",
+  "registration_count": 24,
+  "seed": 42,
+  "source_images": [
+    "camera",
+    "coins",
+    "moon"
+  ],
+  "status": "experiment_completed",
+  "technical_note": "docs/WEEK03_BASELINE_COMPARISON.md",
+  "title": "Integrated monomodal frequency and intensity baselines",
+  "tolerances": {
+    "affine_linear_error": 0.02,
+    "affine_translation_error_pixels": 1.5,
+    "mean_tre_pixels": 1.0,
+    "rigid_translation_error_pixels": 1.5,
+    "rotation_error_degrees": 1.0,
+    "translation_error_pixels": 0.5
+  },
+  "week": 3,
+  "week_day": 5,
+  "weekly_summary": "docs/weekly/week_03_summary.md",
+  "within_tolerance_count": 21,
+  "within_tolerance_rate": 0.875,
+  "working_shape": [
+    256,
+    256
+  ]
+}

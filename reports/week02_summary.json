@@ -1,0 +1,26 @@
+{
+  "week": 2,
+  "title": "Controlled Dataset and Ground-Truth Benchmark Design",
+  "status": "complete",
+  "working_days_complete": 5,
+  "daily_summaries": [
+    "docs/daily/day_06_summary.md",
+    "docs/daily/day_07_summary.md",
+    "docs/daily/day_08_summary.md",
+    "docs/daily/day_09_summary.md",
+    "docs/daily/day_10_summary.md"
+  ],
+  "weekly_summary": "docs/weekly/week_02_summary.md",
+  "validated_results": {
+    "integrated_benchmark_cases": 60,
+    "easy_cases": 20,
+    "moderate_cases": 20,
+    "hard_cases": 20,
+    "monomodal_cases": 30,
+    "simulated_multimodal_cases": 30,
+    "restricted_fov_cases": 15,
+    "dataset_fingerprint": "9d74385564129b5bb714b9fb0b088c46097efad1422b20fc09c67e056ed9cd81",
+    "repeat_check": "MATCH",
+    "local_test_suite": "172 passed"
+  }
+}

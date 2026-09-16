@@ -1,0 +1,68 @@
+experiment:
+  name: week03_day02_phase_robustness
+  seed: 42
+
+source:
+  image: data/samples/week02_real_general/camera.png
+  color_mode: grayscale
+
+phase_correlation:
+  use_hanning_window: true
+  subtract_mean: true
+  interpolation: linear
+  min_response: 0.0
+
+validation:
+  translation_tolerance_pixels: 0.5
+  base_translation:
+    tx: 16.0
+    ty: -11.0
+
+sweeps:
+  gaussian_noise:
+    sigma_fractions: [0.0, 0.03, 0.10, 0.30, 0.75, 1.50]
+
+  gaussian_blur:
+    sigmas: [0.0, 0.75, 1.50, 2.50, 4.00, 6.00, 8.00]
+
+  partial_overlap:
+    field_of_view_fractions: [1.00, 0.75, 0.45, 0.25, 0.15, 0.10, 0.05]
+
+  translation_magnitude:
+    vectors:
+      - [2.0, -1.0]
+      - [8.0, -6.0]
+      - [16.0, -12.0]
+      - [32.0, -24.0]
+      - [64.0, -48.0]
+      - [96.0, -72.0]
+      - [128.0, -96.0]
+      - [180.0, -120.0]
+
+  subpixel:
+    vectors:
+      - [12.0, -9.0]
+      - [12.25, -9.25]
+      - [12.50, -9.50]
+      - [12.75, -9.75]
+      - [13.0, -10.0]
+      - [15.50, -10.25]
+      - [-15.50, 10.75]
+
+  windowing_comparison:
+    translation: [96.0, -72.0]
+    conditions:
+      - id: clean
+        type: clean
+      - id: severe_blur
+        type: gaussian_blur
+        sigma: 8.0
+      - id: severe_noise
+        type: gaussian_noise
+        sigma_fraction: 1.0
+      - id: limited_overlap
+        type: restricted_fov
+        field_of_view_fraction: 0.20
+
+output:
+  directory: outputs/week03_day02_phase_robustness

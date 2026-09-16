@@ -1,0 +1,243 @@
+experiment:
+  name: week03_day05_integrated_baselines
+  seed: 42
+
+sources:
+  camera:
+    image: data/samples/week02_real_general/camera.png
+    color_mode: grayscale
+  coins:
+    image: data/samples/week02_real_general/coins.png
+    color_mode: grayscale
+  moon:
+    image: data/samples/week02_real_general/moon.png
+    color_mode: grayscale
+
+working_size:
+  width: 256
+  height: 256
+
+methods:
+  phase_correlation:
+    label: Phase correlation
+    motion_model: translation
+    use_hanning_window: true
+    subtract_mean: true
+    interpolation: linear
+    min_response: null
+
+  ecc_translation:
+    label: ECC translation
+    motion_model: translation
+    initialization: phase_correlation
+    max_iterations: 120
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+
+  ecc_rigid:
+    label: ECC rigid
+    motion_model: rigid
+    initialization: phase_correlation
+    max_iterations: 140
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+
+  ecc_affine_single:
+    label: ECC affine single resolution
+    motion_model: affine
+    initialization: phase_correlation
+    max_iterations: 160
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+
+  ecc_affine_multiresolution:
+    label: ECC affine multiresolution
+    motion_model: affine
+    initialization: phase_correlation
+    max_iterations: 160
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+    pyramid:
+      scales: [0.25, 0.5, 1.0]
+      pre_smoothing_sigma: 0.5
+
+validation:
+  translation_error_tolerance_pixels: 0.5
+  mean_tre_tolerance_pixels: 1.0
+  rigid_translation_error_tolerance_pixels: 1.5
+  rotation_error_tolerance_degrees: 1.0
+  affine_translation_error_tolerance_pixels: 1.5
+  affine_linear_tolerance: 0.02
+
+cases:
+  - id: translation_clean_camera
+    source: camera
+    motion_model: translation
+    tx: 16.0
+    ty: -11.0
+    condition:
+      type: clean
+    methods: [phase_correlation, ecc_translation]
+
+  - id: translation_noise_coins
+    source: coins
+    motion_model: translation
+    tx: -18.0
+    ty: 13.0
+    condition:
+      type: gaussian_noise
+      sigma_fraction: 0.05
+    methods: [phase_correlation, ecc_translation]
+
+  - id: translation_blur_moon
+    source: moon
+    motion_model: translation
+    tx: 24.0
+    ty: -16.0
+    condition:
+      type: gaussian_blur
+      sigma: 2.0
+    methods: [phase_correlation, ecc_translation]
+
+  - id: translation_contrast_camera
+    source: camera
+    motion_model: translation
+    tx: -20.0
+    ty: 14.0
+    condition:
+      type: contrast
+      factor: 1.5
+    methods: [phase_correlation, ecc_translation]
+
+  - id: translation_illumination_coins
+    source: coins
+    motion_model: translation
+    tx: 20.0
+    ty: -14.0
+    condition:
+      type: illumination_gradient
+      strength_fraction: 0.10
+      direction: diagonal
+    methods: [phase_correlation, ecc_translation]
+
+  - id: translation_partial_overlap_moon
+    source: moon
+    motion_model: translation
+    tx: -22.0
+    ty: 15.0
+    condition:
+      type: restricted_fov
+      width_fraction: 0.70
+      height_fraction: 0.70
+    methods: [phase_correlation, ecc_translation]
+
+  - id: rigid_clean_camera
+    source: camera
+    motion_model: rigid
+    angle_degrees: 5.0
+    tx: 8.0
+    ty: -6.0
+    condition:
+      type: clean
+    methods: [ecc_rigid]
+
+  - id: rigid_noise_coins
+    source: coins
+    motion_model: rigid
+    angle_degrees: -6.0
+    tx: -10.0
+    ty: 8.0
+    condition:
+      type: gaussian_noise
+      sigma_fraction: 0.04
+    methods: [ecc_rigid]
+
+  - id: rigid_blur_moon
+    source: moon
+    motion_model: rigid
+    angle_degrees: 8.0
+    tx: 12.0
+    ty: -9.0
+    condition:
+      type: gaussian_blur
+      sigma: 1.8
+    methods: [ecc_rigid]
+
+  - id: rigid_challenging_camera
+    source: camera
+    motion_model: rigid
+    angle_degrees: 20.0
+    tx: 50.0
+    ty: -35.0
+    condition:
+      type: clean
+    methods: [ecc_rigid]
+
+  - id: affine_small_camera
+    source: camera
+    motion_model: affine
+    angle_degrees: 4.0
+    scale_x: 1.03
+    scale_y: 0.98
+    shear_x: 0.02
+    tx: 8.0
+    ty: -6.0
+    condition:
+      type: clean
+    methods: [ecc_affine_single, ecc_affine_multiresolution]
+
+  - id: affine_anisotropic_coins
+    source: coins
+    motion_model: affine
+    angle_degrees: -6.0
+    scale_x: 0.92
+    scale_y: 1.10
+    shear_x: -0.04
+    tx: -15.0
+    ty: 11.0
+    condition:
+      type: gaussian_noise
+      sigma_fraction: 0.03
+    methods: [ecc_affine_single, ecc_affine_multiresolution]
+
+  - id: affine_shear_moon
+    source: moon
+    motion_model: affine
+    angle_degrees: 5.0
+    scale_x: 1.0
+    scale_y: 1.0
+    shear_x: 0.10
+    tx: 12.0
+    ty: -9.0
+    condition:
+      type: gaussian_blur
+      sigma: 1.2
+    methods: [ecc_affine_single, ecc_affine_multiresolution]
+
+  - id: affine_capture_range_camera
+    source: camera
+    motion_model: affine
+    angle_degrees: 20.0
+    scale_x: 1.05
+    scale_y: 0.95
+    shear_x: 0.03
+    tx: 70.0
+    ty: -46.0
+    condition:
+      type: clean
+    methods: [ecc_affine_single, ecc_affine_multiresolution]
+
+representative_outputs:
+  - [translation_clean_camera, phase_correlation]
+  - [translation_clean_camera, ecc_translation]
+  - [rigid_challenging_camera, ecc_rigid]
+  - [affine_capture_range_camera, ecc_affine_single]
+  - [affine_capture_range_camera, ecc_affine_multiresolution]
+
+output:
+  directory: outputs/week03_day05_integrated_baselines
+  report_snapshot: reports/week03_day05_integrated_baselines.json

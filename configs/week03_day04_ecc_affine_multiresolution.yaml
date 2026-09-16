@@ -1,0 +1,105 @@
+experiment:
+  name: week03_day04_ecc_affine_multiresolution
+  seed: 42
+
+source:
+  image: data/samples/week02_real_general/camera.png
+  color_mode: grayscale
+  resize:
+    width: 256
+    height: 256
+
+ecc:
+  max_iterations: 160
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+  min_ecc: null
+  initialization: phase_correlation
+  phase_initialization:
+    use_hanning_window: true
+    subtract_mean: true
+  pyramid:
+    scales: [0.25, 0.5, 1.0]
+    pre_smoothing_sigma: 0.5
+
+validation:
+  mean_tre_tolerance_pixels: 1.0
+  translation_parameter_tolerance_pixels: 1.5
+  affine_linear_tolerance: 0.02
+  cases:
+    - id: affine_identity
+      angle_degrees: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+      shear_x: 0.0
+      tx: 0.0
+      ty: 0.0
+
+    - id: affine_small
+      angle_degrees: 3.0
+      scale_x: 1.02
+      scale_y: 0.98
+      shear_x: 0.02
+      tx: 5.0
+      ty: -4.0
+
+    - id: affine_moderate
+      angle_degrees: 8.0
+      scale_x: 1.08
+      scale_y: 0.94
+      shear_x: 0.06
+      tx: 18.0
+      ty: -14.0
+
+    - id: affine_anisotropic
+      angle_degrees: -6.0
+      scale_x: 0.90
+      scale_y: 1.12
+      shear_x: -0.05
+      tx: -16.0
+      ty: 12.0
+
+    - id: affine_shear
+      angle_degrees: 4.0
+      scale_x: 1.0
+      scale_y: 1.0
+      shear_x: 0.12
+      tx: 10.0
+      ty: -8.0
+
+    - id: affine_large
+      angle_degrees: 12.0
+      scale_x: 1.12
+      scale_y: 0.88
+      shear_x: 0.10
+      tx: 30.0
+      ty: -24.0
+
+    - id: affine_capture_range
+      angle_degrees: 20.0
+      scale_x: 1.05
+      scale_y: 0.95
+      shear_x: 0.03
+      tx: 70.0
+      ty: -46.0
+
+    - id: affine_strong_capture_range
+      angle_degrees: 25.0
+      scale_x: 1.05
+      scale_y: 0.95
+      shear_x: 0.03
+      tx: 70.0
+      ty: -46.0
+
+    - id: affine_strong_shape_change
+      angle_degrees: 20.0
+      scale_x: 1.12
+      scale_y: 0.90
+      shear_x: 0.08
+      tx: 70.0
+      ty: -46.0
+
+output:
+  directory: outputs/week03_day04_ecc_affine_multiresolution
+  report_snapshot: reports/week03_day04_ecc_affine_multiresolution.json

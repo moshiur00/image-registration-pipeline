@@ -1,0 +1,56 @@
+experiment:
+  name: week03_day01_phase_correlation
+  seed: 42
+
+source:
+  image: data/samples/week02_real_general/camera.png
+  color_mode: grayscale
+
+phase_correlation:
+  use_hanning_window: true
+  subtract_mean: true
+  interpolation: linear
+  min_response: 0.0
+
+validation:
+  translation_tolerance_pixels: 0.5
+  cases:
+    - id: identity
+      tx: 0.0
+      ty: 0.0
+    - id: small_positive_negative
+      tx: 3.0
+      ty: -2.0
+    - id: small_translation
+      tx: 5.0
+      ty: -3.0
+    - id: negative_positive
+      tx: -8.0
+      ty: 7.0
+    - id: medium_positive
+      tx: 10.0
+      ty: 8.0
+    - id: medium_negative
+      tx: -12.0
+      ty: -9.0
+    - id: larger_positive_negative
+      tx: 16.0
+      ty: -11.0
+    - id: larger_negative_positive
+      tx: -18.0
+      ty: 14.0
+    - id: large_positive
+      tx: 22.0
+      ty: 17.0
+    - id: large_negative
+      tx: -24.0
+      ty: -18.0
+    - id: subpixel_positive_negative
+      tx: 12.5
+      ty: -9.25
+    - id: subpixel_negative_positive
+      tx: -15.5
+      ty: 10.75
+
+output:
+  directory: outputs/week03_day01_phase_correlation

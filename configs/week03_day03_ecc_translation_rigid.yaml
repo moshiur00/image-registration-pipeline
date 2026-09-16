@@ -1,0 +1,128 @@
+experiment:
+  name: week03_day03_ecc_translation_rigid
+  seed: 42
+
+source:
+  image: data/samples/week02_real_general/camera.png
+  color_mode: grayscale
+  resize:
+    width: 256
+    height: 256
+
+ecc:
+  max_iterations: 120
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+  min_ecc: null
+  initializations:
+    - identity
+    - phase_correlation
+  phase_initialization:
+    use_hanning_window: true
+    subtract_mean: true
+
+validation:
+  mean_tre_tolerance_pixels: 1.0
+  translation_parameter_tolerance_pixels: 1.5
+  rotation_tolerance_degrees: 1.0
+  cases:
+    - id: translation_identity
+      motion_model: translation
+      tx: 0.0
+      ty: 0.0
+      appearance:
+        type: clean
+
+    - id: translation_small
+      motion_model: translation
+      tx: 5.0
+      ty: -3.0
+      appearance:
+        type: clean
+
+    - id: translation_medium
+      motion_model: translation
+      tx: 16.0
+      ty: -11.0
+      appearance:
+        type: clean
+
+    - id: translation_large
+      motion_model: translation
+      tx: 40.0
+      ty: 25.0
+      appearance:
+        type: clean
+
+    - id: translation_contrast
+      motion_model: translation
+      tx: -20.0
+      ty: 14.0
+      appearance:
+        type: contrast
+        factor: 1.6
+
+    - id: translation_illumination
+      motion_model: translation
+      tx: 24.0
+      ty: -18.0
+      appearance:
+        type: illumination_gradient
+        strength_fraction: 0.12
+        direction: diagonal
+
+    - id: rigid_small
+      motion_model: rigid
+      angle_degrees: 2.0
+      tx: 4.0
+      ty: -3.0
+      appearance:
+        type: clean
+
+    - id: rigid_medium
+      motion_model: rigid
+      angle_degrees: -5.0
+      tx: -8.0
+      ty: 7.0
+      appearance:
+        type: clean
+
+    - id: rigid_larger
+      motion_model: rigid
+      angle_degrees: 8.0
+      tx: 12.0
+      ty: -9.0
+      appearance:
+        type: clean
+
+    - id: rigid_challenging_initialization
+      motion_model: rigid
+      angle_degrees: 20.0
+      tx: 50.0
+      ty: -35.0
+      appearance:
+        type: clean
+
+    - id: rigid_contrast
+      motion_model: rigid
+      angle_degrees: 6.0
+      tx: -12.0
+      ty: 10.0
+      appearance:
+        type: contrast
+        factor: 0.7
+
+    - id: rigid_illumination
+      motion_model: rigid
+      angle_degrees: -7.0
+      tx: 10.0
+      ty: -12.0
+      appearance:
+        type: illumination_gradient
+        strength_fraction: 0.15
+        direction: horizontal
+
+output:
+  directory: outputs/week03_day03_ecc_translation_rigid
+  report_snapshot: reports/week03_day03_ecc_translation_rigid.json

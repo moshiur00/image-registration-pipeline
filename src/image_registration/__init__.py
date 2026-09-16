@@ -39,6 +39,13 @@ from .difficulty import (
     sample_similarity_difficulty,
     validate_difficulty_tiers,
 )
+from .ecc import (
+    ECCEstimate,
+    ECCRegistration,
+    MultiResolutionECCRegistration,
+    estimate_ecc,
+    rigid_angle_degrees,
+)
 from .evaluation import (
     evaluate_pair,
     mean_absolute_error,
@@ -49,6 +56,18 @@ from .evaluation import (
 from .io import LoadedImage, load_image, validate_image_pair
 from .medical import MedicalImageMetadata, read_medical_image_metadata
 from .pipeline import ExperimentResult, run_experiment
+from .pyramids import (
+    PyramidLevel,
+    build_image_pyramid,
+    rescale_transform_between_shapes,
+    validate_pyramid_scales,
+)
+from .phase_correlation import (
+    PhaseCorrelationEstimate,
+    PhaseCorrelationRegistration,
+    estimate_phase_correlation,
+    phase_correlation_surface,
+)
 from .multimodal import (
     MultimodalResult,
     apply_multimodal_mapping,
@@ -90,6 +109,16 @@ from .transforms import (
     translation_matrix,
 )
 from .registration import RegistrationMethod, RegistrationResult
+from .registration_metrics import (
+    affine_linear_error,
+    centered_translation_error_pixels,
+    centered_translation_parameters,
+    mean_tre_pixels,
+    rotation_angle_degrees,
+    rotation_error_degrees,
+    transform_point_errors,
+)
+from .reporting import write_report_snapshot
 from .rire import (
     RireHeader,
     find_rire_volume_files,
@@ -109,14 +138,18 @@ from .visualization import (
     absolute_difference,
     alpha_overlay,
     checkerboard,
+    edge_overlay,
     save_comparison_figure,
     save_grayscale_image,
     save_intensity_histogram,
     save_joint_histogram,
+    save_rgb_image,
 )
+from .week3_baseline import BaselineThresholds, summarize_by_key, within_model_tolerance
 from .warping import warp_image, warp_mask
 
 __all__ = [
+    "BaselineThresholds",
     "BenchmarkCasePlan",
     "benchmark_manifest_fingerprint",
     "build_case_plan",
@@ -135,6 +168,11 @@ __all__ = [
     "validate_dataset_manifest",
     "write_dataset_manifest",
     "DifficultySample",
+    "ECCEstimate",
+    "ECCRegistration",
+    "MultiResolutionECCRegistration",
+    "estimate_ecc",
+    "rigid_angle_degrees",
     "MultimodalResult",
     "MedicalImageMetadata",
     "apply_multimodal_mapping",
@@ -153,6 +191,22 @@ __all__ = [
     "ExperimentResult",
     "RegistrationMethod",
     "RegistrationResult",
+    "affine_linear_error",
+    "centered_translation_error_pixels",
+    "centered_translation_parameters",
+    "mean_tre_pixels",
+    "rotation_angle_degrees",
+    "rotation_error_degrees",
+    "transform_point_errors",
+    "write_report_snapshot",
+    "PyramidLevel",
+    "build_image_pyramid",
+    "rescale_transform_between_shapes",
+    "validate_pyramid_scales",
+    "PhaseCorrelationEstimate",
+    "PhaseCorrelationRegistration",
+    "estimate_phase_correlation",
+    "phase_correlation_surface",
     "GroundTruthTransform",
     "SyntheticPair",
     "COORDINATE_ORDER",
@@ -171,6 +225,7 @@ __all__ = [
     "apply_gaussian_blur",
     "apply_transform",
     "checkerboard",
+    "edge_overlay",
     "clip_percentiles",
     "combine_valid_masks",
     "compose_transforms",
@@ -204,7 +259,9 @@ __all__ = [
     "rotation_matrix",
     "save_comparison_figure",
     "save_grayscale_image",
+    "save_rgb_image",
     "sample_ground_truth_transform",
+    "summarize_by_key",
     "similarity_matrix",
     "structural_similarity",
     "to_grayscale",
@@ -215,4 +272,6 @@ __all__ = [
     "warp_image",
     "warp_mask",
     "with_defaults",
+    "within_model_tolerance",
 ]
+

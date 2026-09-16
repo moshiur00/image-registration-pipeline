@@ -1,0 +1,321 @@
+{
+  "affine_case_count": 9,
+  "capture_range_cases": [
+    {
+      "affine_linear_error": 0.8537638234281819,
+      "case_id": "affine_capture_range",
+      "estimated_transform": [
+        [
+          0.4834861755337163,
+          -0.055247144979570215,
+          178.933556951947
+        ],
+        [
+          -0.8687683551748192,
+          1.1073815576771873,
+          44.83036126978075
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 106.03403334760063,
+      "estimated_ty": -52.24645541116732,
+      "failure_reason": null,
+      "final_ecc": 0.41119443376173387,
+      "initialization": "phase_correlation",
+      "levels_completed": 1,
+      "mean_tre_pixels": 86.56247353331014,
+      "ncc_after": 0.3473358785996365,
+      "ncc_before": -0.2324595835803149,
+      "ncc_improvement": 0.5797954621799514,
+      "runtime_ms": 122.65909999950964,
+      "strategy": "single_resolution",
+      "success": true,
+      "translation_parameter_error_pixels": 36.571433722233195,
+      "true_angle_degrees": 20.0,
+      "true_scale_x": 1.05,
+      "true_scale_y": 0.95,
+      "true_shear_x": 0.03,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": false
+    },
+    {
+      "affine_linear_error": 0.010079197968728313,
+      "case_id": "affine_capture_range",
+      "estimated_transform": [
+        [
+          0.9941605990884529,
+          0.3520980072189228,
+          26.42946611723527
+        ],
+        [
+          -0.3641726927107876,
+          0.8874228764109732,
+          14.428479808378775
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 70.57743842142567,
+      "estimated_ty": -46.35712176984756,
+      "failure_reason": null,
+      "final_ecc": 0.9969844511448426,
+      "initialization": "phase_correlation",
+      "levels_completed": 3,
+      "mean_tre_pixels": 0.5953008978021639,
+      "ncc_after": 0.6859833118984063,
+      "ncc_before": -0.2324595835803149,
+      "ncc_improvement": 0.9184428954787213,
+      "runtime_ms": 73.77619999897433,
+      "strategy": "multiresolution",
+      "success": true,
+      "translation_parameter_error_pixels": 0.678948517221756,
+      "true_angle_degrees": 20.0,
+      "true_scale_x": 1.05,
+      "true_scale_y": 0.95,
+      "true_shear_x": 0.03,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": true
+    },
+    {
+      "affine_linear_error": 1.0734696457621917,
+      "case_id": "affine_strong_capture_range",
+      "estimated_transform": [
+        [
+          1.7034143158280404,
+          0.21426414814619257,
+          -27.582439861503445
+        ],
+        [
+          -1.1272495912448368,
+          1.1220462479751365,
+          67.26786677628158
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 89.42156429521125,
+      "estimated_ty": -60.89555949060522,
+      "failure_reason": null,
+      "final_ecc": 0.7776916224503088,
+      "initialization": "phase_correlation",
+      "levels_completed": 1,
+      "mean_tre_pixels": 81.58393937880872,
+      "ncc_after": 0.5959788603486655,
+      "ncc_before": -0.24416230160364985,
+      "ncc_improvement": 0.8401411619523154,
+      "runtime_ms": 196.0465000011027,
+      "strategy": "single_resolution",
+      "success": true,
+      "translation_parameter_error_pixels": 24.476005642489625,
+      "true_angle_degrees": 25.0,
+      "true_scale_x": 1.05,
+      "true_scale_y": 0.95,
+      "true_shear_x": 0.03,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": false
+    },
+    {
+      "affine_linear_error": 0.009657544830520684,
+      "case_id": "affine_strong_capture_range",
+      "estimated_transform": [
+        [
+          0.9588884787146525,
+          0.42846720566060104,
+          21.182666363581667
+        ],
+        [
+          -0.44921281547438074,
+          0.8519989228238701,
+          29.764698224314184
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 70.5705161214265,
+      "estimated_ty": -46.380073088625906,
+      "failure_reason": null,
+      "final_ecc": 0.997006949313535,
+      "initialization": "phase_correlation",
+      "levels_completed": 3,
+      "mean_tre_pixels": 0.5516050676331281,
+      "ncc_after": 0.6835755711669598,
+      "ncc_before": -0.24416230160364985,
+      "ncc_improvement": 0.9277378727706096,
+      "runtime_ms": 36.643999999796506,
+      "strategy": "multiresolution",
+      "success": true,
+      "translation_parameter_error_pixels": 0.6855247606798496,
+      "true_angle_degrees": 25.0,
+      "true_scale_x": 1.05,
+      "true_scale_y": 0.95,
+      "true_shear_x": 0.03,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": true
+    },
+    {
+      "affine_linear_error": 0.010740704698287598,
+      "case_id": "affine_strong_shape_change",
+      "estimated_transform": [
+        [
+          1.0608851806955317,
+          0.37598613855978724,
+          14.91103460547844
+        ],
+        [
+          -0.38870644712396635,
+          0.8245898258774279,
+          25.571104769770585
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 70.61212781053162,
+      "estimated_ty": -46.35376443916307,
+      "failure_reason": null,
+      "final_ecc": 0.9970924639447183,
+      "initialization": "phase_correlation",
+      "levels_completed": 1,
+      "mean_tre_pixels": 0.5982128888856744,
+      "ncc_after": 0.691345035521557,
+      "ncc_before": -0.18961255791306253,
+      "ncc_improvement": 0.8809575934346195,
+      "runtime_ms": 157.53750000112632,
+      "strategy": "single_resolution",
+      "success": true,
+      "translation_parameter_error_pixels": 0.7070005196904704,
+      "true_angle_degrees": 20.0,
+      "true_scale_x": 1.12,
+      "true_scale_y": 0.9,
+      "true_shear_x": 0.08,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": true
+    },
+    {
+      "affine_linear_error": 0.010737911315744935,
+      "case_id": "affine_strong_shape_change",
+      "estimated_transform": [
+        [
+          1.060883713482594,
+          0.37598436303884825,
+          14.911471697541975
+        ],
+        [
+          -0.3887035976242649,
+          0.8245896397576529,
+          25.570949408545683
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "estimated_tx": 70.61215145402585,
+      "estimated_ty": -46.35358021944734,
+      "failure_reason": null,
+      "final_ecc": 0.9970929570124201,
+      "initialization": "phase_correlation",
+      "levels_completed": 3,
+      "mean_tre_pixels": 0.5980446087565996,
+      "ncc_after": 0.6913469690303268,
+      "ncc_before": -0.18961255791306253,
+      "ncc_improvement": 0.8809595269433893,
+      "runtime_ms": 26.53169999939564,
+      "strategy": "multiresolution",
+      "success": true,
+      "translation_parameter_error_pixels": 0.7069288325216254,
+      "true_angle_degrees": 20.0,
+      "true_scale_x": 1.12,
+      "true_scale_y": 0.9,
+      "true_shear_x": 0.08,
+      "true_tx": 70.0,
+      "true_ty": -46.0,
+      "within_tolerance": true
+    }
+  ],
+  "daily_summary": "docs/daily/day_14_summary.md",
+  "global_day": 14,
+  "groups": {
+    "multiresolution": {
+      "case_count": 9,
+      "max_mean_tre_pixels": 0.5980446087565996,
+      "mean_runtime_ms": 41.90358888849409,
+      "median_affine_linear_error": 0.008472040115940261,
+      "median_final_ecc": 0.9977697616237109,
+      "median_mean_tre_pixels": 0.5027747854749818,
+      "optimizer_success_count": 9,
+      "within_tolerance_count": 9,
+      "within_tolerance_rate": 1.0
+    },
+    "single_resolution": {
+      "case_count": 9,
+      "max_mean_tre_pixels": 86.56247353331014,
+      "mean_runtime_ms": 82.49265555585023,
+      "median_affine_linear_error": 0.00847301826409947,
+      "median_final_ecc": 0.9977703059130818,
+      "median_mean_tre_pixels": 0.5028184023354483,
+      "optimizer_success_count": 9,
+      "within_tolerance_count": 7,
+      "within_tolerance_rate": 0.7777777777777778
+    }
+  },
+  "initialization": "phase_correlation",
+  "optimizer_success_count": 18,
+  "pyramid": {
+    "pre_smoothing_sigma": 0.5,
+    "scales": [
+      0.25,
+      0.5,
+      1.0
+    ]
+  },
+  "raw_output_directory": "outputs/week03_day04_ecc_affine_multiresolution",
+  "registration_count": 18,
+  "source_image": "data/samples/week02_real_general/camera.png",
+  "status": "complete_local_validation",
+  "target_windows_validation": {
+    "multiresolution_mean_runtime_ms": 41.9,
+    "multiresolution_within_tolerance": "9/9",
+    "optimizer_success_count": 18,
+    "single_resolution_mean_runtime_ms": 82.49,
+    "single_resolution_within_tolerance": "7/9",
+    "tests_passed": 232,
+    "within_tolerance_count": 16
+  },
+  "technical_note": "docs/MULTIRESOLUTION_ECC.md",
+  "title": "ECC affine and multiresolution pyramids",
+  "tolerances": {
+    "affine_linear_error": 0.02,
+    "mean_tre_pixels": 1.0,
+    "translation_parameter_error_pixels": 1.5
+  },
+  "week": 3,
+  "week_day": 4,
+  "within_tolerance_count": 16,
+  "within_tolerance_rate": 0.8888888888888888,
+  "working_shape": [
+    256,
+    256
+  ]
+}

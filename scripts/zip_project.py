@@ -10,6 +10,7 @@ INCLUDE_FOLDERS = [
     "data/manifests",
     "data/samples",
     "docs",
+    "reports",
     "scripts",
     "src",
     "tests",

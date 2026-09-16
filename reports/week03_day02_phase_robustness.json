@@ -1,0 +1,23 @@
+{
+  "week": 3,
+  "global_day": 12,
+  "week_day": 2,
+  "title": "Phase-correlation robustness",
+  "status": "complete",
+  "method": "phase_correlation",
+  "motion_model": "translation",
+  "translation_tolerance_pixels": 0.5,
+  "total_case_count": 43,
+  "local_test_suite": "195 passed",
+  "sweeps": {
+    "gaussian_noise": {"passed": 6, "count": 6, "rate": 1.0, "median_error_pixels": 0.016, "max_error_pixels": 0.069},
+    "gaussian_blur": {"passed": 6, "count": 7, "rate": 0.857, "median_error_pixels": 0.007, "max_error_pixels": 4.181},
+    "partial_overlap": {"passed": 6, "count": 7, "rate": 0.857, "median_error_pixels": 0.030, "max_error_pixels": 0.622},
+    "translation_magnitude": {"passed": 8, "count": 8, "rate": 1.0, "median_error_pixels": 0.008, "max_error_pixels": 0.026},
+    "subpixel": {"passed": 7, "count": 7, "rate": 1.0, "median_error_pixels": 0.046, "max_error_pixels": 0.439},
+    "windowing_comparison": {"passed": 6, "count": 8, "rate": 0.75, "median_error_pixels": 0.116, "max_error_pixels": 72.160}
+  },
+  "raw_output_directory": "outputs/week03_day02_phase_robustness",
+  "daily_summary": "docs/daily/day_12_summary.md",
+  "technical_note": "docs/PHASE_CORRELATION_ROBUSTNESS.md"
+}

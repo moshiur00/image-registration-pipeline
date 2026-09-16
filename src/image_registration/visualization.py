@@ -64,6 +64,51 @@ def checkerboard(fixed: ArrayLike, moving: ArrayLike, tile_size: int = 32) -> ND
     return np.where(selector, a, b).astype(np.float32)
 
 
+
+def edge_overlay(
+    fixed: ArrayLike,
+    comparison: ArrayLike,
+    *,
+    low_threshold: float = 50.0,
+    high_threshold: float = 150.0,
+) -> NDArray[np.float32]:
+    """Create an RGB edge overlay for alignment inspection.
+
+    Fixed-image edges are shown in the first channel, comparison-image edges in
+    the second channel, and coincident edges therefore appear in both channels.
+    """
+    if low_threshold < 0.0 or high_threshold <= low_threshold:
+        raise ValueError("Canny thresholds must satisfy 0 <= low < high.")
+    a = _normalize_display(fixed)
+    b = _normalize_display(comparison)
+    if a.shape != b.shape:
+        raise ValueError("Edge-overlay images must have the same shape.")
+
+    import cv2
+
+    a_u8 = np.clip(a * 255.0, 0.0, 255.0).astype(np.uint8)
+    b_u8 = np.clip(b * 255.0, 0.0, 255.0).astype(np.uint8)
+    edge_a = cv2.Canny(a_u8, int(round(low_threshold)), int(round(high_threshold))) > 0
+    edge_b = cv2.Canny(b_u8, int(round(low_threshold)), int(round(high_threshold))) > 0
+
+    overlay = np.zeros((*a.shape, 3), dtype=np.float32)
+    overlay[..., 0] = edge_a.astype(np.float32)
+    overlay[..., 1] = edge_b.astype(np.float32)
+    return overlay
+
+
+def save_rgb_image(output_path: str | Path, image: ArrayLike) -> Path:
+    """Save a normalized RGB image without requiring an interactive backend."""
+    array = np.asarray(image, dtype=np.float32)
+    if array.ndim != 3 or array.shape[2] != 3 or array.size == 0:
+        raise ValueError("RGB image must have shape (H, W, 3).")
+    if not np.all(np.isfinite(array)):
+        raise ValueError("RGB image must contain only finite values.")
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    imsave(path, np.clip(array, 0.0, 1.0))
+    return path
+
 def save_grayscale_image(
     output_path: str | Path,
     image: ArrayLike,

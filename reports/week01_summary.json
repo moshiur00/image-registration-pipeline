@@ -1,0 +1,20 @@
+{
+  "week": 1,
+  "title": "Registration Foundations and Pipeline Skeleton",
+  "status": "complete",
+  "working_days_complete": 5,
+  "daily_summaries": [
+    "docs/daily/day_01_summary.md",
+    "docs/daily/day_02_summary.md",
+    "docs/daily/day_03_summary.md",
+    "docs/daily/day_04_summary.md",
+    "docs/daily/day_05_summary.md"
+  ],
+  "weekly_summary": "docs/weekly/week_01_summary.md",
+  "evidence": {
+    "configuration_driven_pipeline": true,
+    "structured_run_outputs": true,
+    "transform_conventions_documented": true,
+    "image_io_preprocessing_warping_evaluation": true
+  }
+}

@@ -91,3 +91,25 @@ def test_histogram_helpers_reject_empty_mask(tmp_path) -> None:
             tmp_path / "unused.png",
             mask=mask,
         )
+
+
+def test_edge_overlay_returns_rgb_alignment_view() -> None:
+    from image_registration.visualization import edge_overlay
+
+    fixed = np.zeros((32, 32), dtype=np.uint8)
+    moving = np.zeros((32, 32), dtype=np.uint8)
+    fixed[8:24, 8:24] = 255
+    moving[9:25, 8:24] = 255
+    overlay = edge_overlay(fixed, moving)
+    assert overlay.shape == (32, 32, 3)
+    assert overlay.dtype == np.float32
+    assert np.max(overlay) == 1.0
+
+
+def test_edge_overlay_rejects_shape_mismatch() -> None:
+    from image_registration.visualization import edge_overlay
+
+    fixed = np.zeros((16, 16), dtype=np.uint8)
+    moving = np.zeros((12, 16), dtype=np.uint8)
+    with pytest.raises(ValueError, match="same shape"):
+        edge_overlay(fixed, moving)

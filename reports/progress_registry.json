@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "purpose": "Compact index of completed internship work for future report generation",
+  "weeks": {
+    "week_01": {
+      "status": "complete",
+      "summary": "reports/week01_summary.json"
+    },
+    "week_02": {
+      "status": "complete",
+      "summary": "reports/week02_summary.json"
+    },
+    "week_03": {
+      "status": "in_progress",
+      "summary": "docs/weekly/week_03_summary.md"
+    }
+  },
+  "days": {
+    "day_01": {
+      "status": "complete",
+      "summary": "docs/daily/day_01_summary.md"
+    },
+    "day_02": {
+      "status": "complete",
+      "summary": "docs/daily/day_02_summary.md"
+    },
+    "day_03": {
+      "status": "complete",
+      "summary": "docs/daily/day_03_summary.md"
+    },
+    "day_04": {
+      "status": "complete",
+      "summary": "docs/daily/day_04_summary.md"
+    },
+    "day_05": {
+      "status": "complete",
+      "summary": "docs/daily/day_05_summary.md"
+    },
+    "day_06": {
+      "status": "complete",
+      "summary": "docs/daily/day_06_summary.md"
+    },
+    "day_07": {
+      "status": "complete",
+      "summary": "docs/daily/day_07_summary.md"
+    },
+    "day_08": {
+      "status": "complete",
+      "summary": "docs/daily/day_08_summary.md"
+    },
+    "day_09": {
+      "status": "complete",
+      "summary": "docs/daily/day_09_summary.md"
+    },
+    "day_10": {
+      "status": "complete",
+      "summary": "docs/daily/day_10_summary.md"
+    },
+    "day_11": {
+      "status": "complete",
+      "summary": "reports/week03_day01_phase_correlation.json"
+    },
+    "day_12": {
+      "status": "complete",
+      "summary": "reports/week03_day02_phase_robustness.json"
+    },
+    "day_13": {
+      "status": "complete",
+      "summary": "reports/week03_day03_ecc_translation_rigid.json"
+    },
+    "day_14": {
+      "status": "complete",
+      "summary": "reports/week03_day04_ecc_affine_multiresolution.json"
+    },
+    "day_15": {
+      "status": "implementation_complete_local_validation_pending",
+      "summary": "reports/week03_day05_integrated_baselines.json"
+    }
+  }
+}

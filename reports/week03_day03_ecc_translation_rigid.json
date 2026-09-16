@@ -1,0 +1,124 @@
+{
+  "base_case_count": 12,
+  "challenging_initialization_case": [
+    {
+      "appearance": "clean",
+      "case_id": "rigid_challenging_initialization",
+      "estimated_angle_degrees": 0.0,
+      "estimated_tx": 0.0,
+      "estimated_ty": 0.0,
+      "failure_reason": "ecc_optimization_failed",
+      "final_ecc": null,
+      "initialization": "identity",
+      "mean_tre_pixels": 65.72079191263025,
+      "motion_model": "rigid",
+      "ncc_after": -0.046073860939712497,
+      "ncc_before": -0.046073860939712497,
+      "ncc_improvement": 0.0,
+      "rotation_error_degrees": 20.0,
+      "runtime_ms": 11.810199999672477,
+      "success": false,
+      "translation_parameter_error_pixels": 61.032778078668514,
+      "true_angle_degrees": 20.0,
+      "true_tx": 50.0,
+      "true_ty": -35.0,
+      "within_tolerance": false
+    },
+    {
+      "appearance": "clean",
+      "case_id": "rigid_challenging_initialization",
+      "estimated_angle_degrees": 19.970716311203454,
+      "estimated_tx": 50.222190354913934,
+      "estimated_ty": -35.243119046918665,
+      "failure_reason": null,
+      "final_ecc": 0.9954380057150327,
+      "initialization": "phase_correlation",
+      "mean_tre_pixels": 0.3393379691376424,
+      "motion_model": "rigid",
+      "ncc_after": 0.7495639543449975,
+      "ncc_before": -0.046073860939712497,
+      "ncc_improvement": 0.7956378152847099,
+      "rotation_error_degrees": 0.02928368879653931,
+      "runtime_ms": 26.60979999927804,
+      "success": true,
+      "translation_parameter_error_pixels": 0.3293560759898318,
+      "true_angle_degrees": 20.0,
+      "true_tx": 50.0,
+      "true_ty": -35.0,
+      "within_tolerance": true
+    }
+  ],
+  "daily_summary": "docs/daily/day_13_summary.md",
+  "global_day": 13,
+  "groups": {
+    "rigid_identity": {
+      "case_count": 6,
+      "max_mean_tre_pixels": 65.72079191263025,
+      "mean_ncc_improvement": 0.11391802478016817,
+      "mean_runtime_ms": 20.527399999991758,
+      "median_final_ecc": 0.9967192670046874,
+      "median_mean_tre_pixels": 0.2554099397196678,
+      "optimizer_success_count": 5,
+      "within_tolerance_count": 5,
+      "within_tolerance_rate": 0.8333333333333334
+    },
+    "rigid_phase_correlation": {
+      "case_count": 6,
+      "max_mean_tre_pixels": 0.3393379691376424,
+      "mean_ncc_improvement": 0.24652503336274068,
+      "mean_runtime_ms": 22.3952166664579,
+      "median_final_ecc": 0.9966994794701224,
+      "median_mean_tre_pixels": 0.2548189825005775,
+      "optimizer_success_count": 6,
+      "within_tolerance_count": 6,
+      "within_tolerance_rate": 1.0
+    },
+    "translation_identity": {
+      "case_count": 6,
+      "max_mean_tre_pixels": 0.36576604178081396,
+      "mean_ncc_improvement": 0.23718998735678576,
+      "mean_runtime_ms": 24.422249999891694,
+      "median_final_ecc": 0.9968785435932035,
+      "median_mean_tre_pixels": 0.2672126182119762,
+      "optimizer_success_count": 6,
+      "within_tolerance_count": 6,
+      "within_tolerance_rate": 1.0
+    },
+    "translation_phase_correlation": {
+      "case_count": 6,
+      "max_mean_tre_pixels": 0.35274071311763894,
+      "mean_ncc_improvement": 0.23718161746674707,
+      "mean_runtime_ms": 10.574250000293736,
+      "median_final_ecc": 0.9968785435932035,
+      "median_mean_tre_pixels": 0.27425092883149993,
+      "optimizer_success_count": 6,
+      "within_tolerance_count": 6,
+      "within_tolerance_rate": 1.0
+    }
+  },
+  "optimizer_success_count": 23,
+  "raw_output_directory": "outputs/week03_day03_ecc_translation_rigid",
+  "registration_count": 24,
+  "source_image": "data/samples/week02_real_general/camera.png",
+  "status": "complete",
+  "target_validation": {
+    "automated_tests_passed": 214,
+    "automated_tests_total": 214,
+    "experiment_completed": true
+  },
+  "technical_note": "docs/ECC_REGISTRATION.md",
+  "title": "ECC translation and rigid registration",
+  "tolerances": {
+    "mean_tre_pixels": 1.0,
+    "rotation_error_degrees": 1.0,
+    "translation_parameter_error_pixels": 1.5
+  },
+  "week": 3,
+  "week_day": 3,
+  "within_tolerance_count": 23,
+  "within_tolerance_rate": 0.9583333333333334,
+  "working_shape": [
+    256,
+    256
+  ]
+}
