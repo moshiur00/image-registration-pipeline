@@ -2,6 +2,8 @@
 
 ## Week 3 Day 5: Integrated monomodal baseline benchmark
 
+**Status:** Complete and locally validated on the target Windows environment
+
 ### Objective
 
 Combine the Week 3 phase-correlation and ECC implementations into one configuration-driven benchmark with standardized result fields, comparable translation experiments, representative figures, runtime measurements, and a compact report snapshot.
@@ -41,17 +43,29 @@ ECC affine multiresolution       affine
 
 Phase correlation and ECC translation are evaluated on the same six translation cases. Rigid and affine methods are evaluated only on their supported motion models.
 
-### Reference development result
+### Local validation result
+
+The target Windows environment passed all 242 automated tests in the complete project. The integrated benchmark then reproduced the expected 24 registrations:
 
 ```text
 Optimizer successes: 23/24
 Within tolerance:    21/24
 
-phase_correlation               6/6
+Phase correlation               6/6
 ECC translation                 4/6
 ECC rigid                       4/4
 ECC affine single resolution    3/4
 ECC affine multiresolution      4/4
+```
+
+Target-machine method summaries:
+
+```text
+Phase correlation:            median TRE 0.034 px, mean runtime   2.83 ms
+ECC translation:              median TRE 0.290 px, mean runtime  14.85 ms
+ECC rigid:                    median TRE 0.295 px, mean runtime  32.69 ms
+ECC affine single resolution: median TRE 0.734 px, mean runtime  71.16 ms
+ECC affine multiresolution:   median TRE 0.662 px, mean runtime 107.23 ms
 ```
 
 The affine capture-range case preserved an important Week 3 failure example: single-resolution ECC returned a transform but failed geometrically, while multiresolution ECC recovered the case within tolerance.
@@ -74,9 +88,4 @@ reports/week03_day05_integrated_baselines.json
 
 ### Validation status
 
-Implementation and reference development validation are complete. Target Windows validation remains pending. The target sequence is:
-
-```powershell
-pytest -v
-python scripts/week03_day05_integrated_baselines.py --config configs/week03_day05_integrated_baselines.yaml
-```
+Target Windows validation is complete. The complete automated test suite passed 242 / 242, and the integrated benchmark completed with 23 / 24 optimizer successes and 21 / 24 registrations within the selected development tolerances. Week 3 is therefore complete and locally validated.

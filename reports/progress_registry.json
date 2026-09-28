@@ -11,7 +11,7 @@
       "summary": "reports/week02_summary.json"
     },
     "week_03": {
-      "status": "in_progress",
+      "status": "complete",
       "summary": "docs/weekly/week_03_summary.md"
     }
   },
@@ -73,7 +73,7 @@
       "summary": "reports/week03_day04_ecc_affine_multiresolution.json"
     },
     "day_15": {
-      "status": "implementation_complete_local_validation_pending",
+      "status": "complete",
       "summary": "reports/week03_day05_integrated_baselines.json"
     }
   }

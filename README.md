@@ -13,12 +13,12 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Status: Complete, 5 of 5 working days**
 
 **Week 3: Monomodal Intensity and Frequency-Domain Baselines**  
-**Status: Day 5 implemented, local validation pending**
+**Status: Complete, 5 of 5 working days**
 
 **Current automated test suite: 242 tests**  
-**With the full project dependencies installed, all 242 tests are expected to run**
+**Local Windows validation: 242 / 242 tests passed**
 
-Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures.
+Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
 ## Completed work
 
@@ -200,7 +200,7 @@ These measures are currently used to verify pipeline behavior. Later benchmark s
 | Week | Planned work | Main outcome |
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
-| Week 3 | Monomodal intensity and frequency-domain baselines | In progress: Days 1 to 4 implemented; integrated baseline benchmark remains |
+| Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
 | Week 4 | Feature-based registration | ORB matching with RANSAC for similarity and affine estimation, match diagnostics, failure checks, and optional SIFT comparison |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
@@ -331,7 +331,7 @@ pip check
 pytest -v
 ```
 
-The current suite contains 242 tests. With SimpleITK installed, all 242 tests are expected to run.
+The current suite contains 242 tests. The target Windows environment with the full project dependencies installed passes all 242 tests.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 

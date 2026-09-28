@@ -2,7 +2,7 @@
 
 ## Week 3 Day 3: ECC Translation and Rigid Registration
 
-**Status:** Implementation complete, local validation pending on the target Windows environment.
+**Status:** Complete and locally validated on the target Windows environment.
 
 ## Objective
 
@@ -59,7 +59,10 @@ Rigid rotation error <= 1.0 degree
 
 These are Week 3 development criteria and are not yet the final Week 6 benchmark success policy.
 
-## Reference development run
+## Local validation result
+
+
+The target Windows environment passed all 214 automated tests present at this stage.
 
 ```text
 Optimizer successes: 23/24
@@ -98,4 +101,4 @@ The project now also contains `reports/progress_registry.json`, Week 1 and Week 
 
 ## Next step
 
-Run the complete automated test suite and Day 3 ECC experiment on the target Windows environment. After local validation, Week 3 Day 4 will extend ECC to affine motion and add coarse-to-fine multiresolution pyramids.
+The next stage after this validation was affine ECC with coarse-to-fine multiresolution pyramids. That stage has since been completed and locally validated.

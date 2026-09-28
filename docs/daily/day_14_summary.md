@@ -2,7 +2,7 @@
 
 ## Week 3 Day 4: ECC Affine and Multiresolution Pyramids
 
-**Status:** Implementation complete, target-machine validation pending
+**Status:** Complete and locally validated on the target Windows environment
 
 ## Objective
 
@@ -36,27 +36,34 @@ Both strategies use phase-correlation initialization so the experiment isolates 
 
 The configured affine cases cover identity, small and moderate transforms, anisotropic scaling, shear, larger changes, and deliberately difficult capture-range conditions.
 
-## Development reference result
+## Local validation result
 
-The reference run completed 18 registrations:
+The target Windows environment passed all 232 automated tests present at this stage. The locally executed affine experiment completed all 18 optimizer calls:
 
 ```text
-Single-resolution: 7/9 within tolerance
-Multiresolution:    9/9 within tolerance
-Overall:           16/18 within tolerance
+Optimizer successes: 18/18
+Within tolerance:    16/18
+
+Single-resolution:   7/9
+Median TRE:           0.503 px
+Mean runtime:        82.49 ms
+
+Multiresolution:     9/9
+Median TRE:           0.503 px
+Mean runtime:        41.90 ms
 ```
 
 The multiresolution procedure recovered two difficult cases where full-resolution ECC reached incorrect affine solutions.
 
-Representative capture-range results:
+Representative target-machine capture-range results:
 
 ```text
 affine_capture_range
-single-resolution TRE: 97.483 px
+single-resolution TRE: 86.562 px
 multiresolution TRE:     0.595 px
 
 affine_strong_capture_range
-single-resolution TRE: 82.202 px
+single-resolution TRE: 81.584 px
 multiresolution TRE:     0.552 px
 ```
 
@@ -80,4 +87,4 @@ This preserves the quantitative result for future report generation even though 
 
 ## Next step
 
-Run the complete automated test suite and Day 4 experiment on the target Windows environment. After validation, Week 3 Day 5 will integrate phase correlation and ECC into a standardized monomodal baseline comparison.
+The next stage after this validation was the integrated monomodal baseline comparison combining Phase Correlation and ECC. That stage has since been completed and locally validated.
