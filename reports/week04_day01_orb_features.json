@@ -556,7 +556,7 @@
     "successful_case_count": 8
   },
   "findings": {
-    "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, and match spatial-coverage diagnostics after target-machine validation.",
+    "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, match-distance diagnostics, and match spatial-coverage diagnostics.",
     "interpretation": [
       "ORB feature availability changes with image content and appearance or geometric modification, so later matching quality should be interpreted together with keypoint count and spatial coverage.",
       "A large keypoint count alone is not evidence that a reliable transform can be estimated. Day 17 must test descriptor correspondence quality before any geometric conclusion is made."
@@ -576,15 +576,32 @@
   },
   "global_day": 16,
   "local_validation": {
-    "note": "Run the experiment and full test suite on the target Windows environment before marking Day 16 complete.",
-    "status": "pending"
+    "status": "complete",
+    "date": "2026-09-28",
+    "environment": "Windows PowerShell project virtual environment",
+    "pytest_exit_code": 0,
+    "pytest_note": "The full pytest suite reached 100% and returned exit code 0. The console capture did not include the final numeric test-count summary, so no target-machine pass count is inferred here.",
+    "experiment_command": "python scripts/week04_day01_orb_features.py --config configs/week04_day01_orb_features.yaml",
+    "experiment_case_count": 8,
+    "experiment_successful_case_count": 8,
+    "mean_moving_detection_runtime_ms": 4.489412500220169
   },
   "method": "ORB",
   "raw_output_directory": "outputs/week04_day01_orb_features",
   "scope": "feature detection and descriptor extraction only",
-  "status": "implementation_complete_local_validation_pending",
+  "status": "complete",
   "technical_note": "docs/ORB_FEATURES.md",
   "title": "ORB keypoint detection and binary descriptor extraction",
   "week": 4,
-  "week_day": 1
+  "week_day": 1,
+  "target_windows_run": {
+    "case_count": 8,
+    "failed_case_count": 0,
+    "mean_moving_detection_runtime_ms": 4.489412500220169,
+    "mean_moving_keypoint_count": 652.0,
+    "mean_moving_spatial_coverage": 0.6953125,
+    "mean_moving_to_fixed_keypoint_count_ratio": 0.817995361848479,
+    "median_moving_keypoint_count": 800.0,
+    "successful_case_count": 8
+  }
 }

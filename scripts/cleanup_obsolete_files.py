@@ -8,6 +8,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 OBSOLETE_PATHS = [
+    Path("PROJECT_MANIFEST.json"),
     Path("scripts/scripts.txt"),
     Path("src/image_registration_pipeline.egg-info"),
 ]

@@ -4,12 +4,12 @@
   "purpose": "Consolidated findings registry for feature-based registration experiments",
   "days": {
     "day_16": {
-      "status": "implementation_complete_local_validation_pending",
+      "status": "complete",
       "title": "ORB keypoint detection and binary descriptor extraction",
       "measured_evidence": {
         "case_count": 8,
         "failed_case_count": 0,
-        "mean_moving_detection_runtime_ms": 3.1543657501060807,
+        "mean_moving_detection_runtime_ms": 4.489412500220169,
         "mean_moving_keypoint_count": 652.0,
         "mean_moving_spatial_coverage": 0.6953125,
         "mean_moving_to_fixed_keypoint_count_ratio": 0.817995361848479,
@@ -32,9 +32,17 @@
         "Day 16 measures detection and descriptor extraction only. It does not measure keypoint repeatability, correspondence correctness, or registration accuracy because descriptor matching has not been introduced yet.",
         "The observations are specific to the tracked images, configured transformations, OpenCV ORB settings, and the machine used for this run."
       ],
-      "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, and match spatial-coverage diagnostics after target-machine validation.",
+      "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, match-distance diagnostics, and match spatial-coverage diagnostics.",
       "source_report": "reports/week04_day01_orb_features.json",
-      "daily_summary": "docs/daily/day_16_summary.md"
+      "daily_summary": "docs/daily/day_16_summary.md",
+      "validation": {
+        "date": "2026-09-28",
+        "pytest_exit_code": 0,
+        "pytest_status": "full_suite_completed_successfully",
+        "target_windows_experiment": "8 / 8 configured cases produced descriptors in both images",
+        "mean_moving_detection_runtime_ms": 4.489412500220169,
+        "note": "The captured pytest console output did not include the final numeric test-count summary, so the findings registry records the successful exit code rather than inferring a pass count."
+      }
     }
   }
 }

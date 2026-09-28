@@ -16,11 +16,11 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Status: Complete, 5 of 5 working days**
 
 **Week 4: Feature-Based Registration with Robust Model Estimation**  
-**Status: Day 16 implementation complete, target Windows validation pending**
+**Status: Day 16 complete and validated on the target Windows environment**
 
 **Current repository test suite: 257 tests**  
 **Development environment: 253 passed, 4 SimpleITK-dependent tests skipped**  
-**Last full Windows validation before Day 16: 242 / 242 tests passed**
+**Day 16 target Windows validation: full pytest suite completed successfully with exit code 0**
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
@@ -218,13 +218,15 @@ Day 16 adds the feature-detection layer used by the planned ORB + RANSAC registr
 
 Day 16 intentionally does not perform descriptor matching, RANSAC, or transform estimation. Those steps are introduced separately so feature availability can be measured before correspondence and geometric-estimation effects are mixed together.
 
+Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in both images, with 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. The full pytest suite also completed successfully with exit code 0.
+
 ## Future planned tasks
 
 | Week | Planned work | Main outcome |
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | In progress: Day 16 ORB keypoint detection and descriptor extraction implemented; matching and RANSAC remain |
+| Week 4 | Feature-based registration | In progress: Day 16 ORB keypoint detection and descriptor extraction complete and validated; matching and RANSAC remain |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |

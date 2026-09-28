@@ -2,9 +2,9 @@
 
 ## Status
 
-Implementation complete. Target Windows validation is pending.
+Complete and validated on the target Windows environment.
 
-The complete development-environment test suite currently contains 257 tests. In the available development environment, 253 passed and four SimpleITK-dependent tests were skipped because SimpleITK is not installed there. The last fully validated target Windows state before Day 16 remains 242 / 242 tests passed.
+The full pytest suite reached 100% and returned exit code 0 on the target Windows project environment. The console capture did not include the final numeric pytest summary, so this record does not infer a target-machine pass count. The Day 16 ORB experiment also completed successfully for all 8 configured cases.
 
 ## 1. Purpose
 
@@ -66,7 +66,7 @@ For fixed and moving images the script records:
 
 The experiment also records the moving-to-fixed keypoint-count ratio and the change in spatial coverage.
 
-## 6. Development-run results
+## 6. Target Windows results
 
 All eight configured cases produced descriptors in both fixed and moving images.
 
@@ -81,46 +81,53 @@ All eight configured cases produced descriptors in both fixed and moving images.
 | coins_rotation | 794 | 786 | 0.938 |
 | moon_blur | 585 | 36 | 0.375 |
 
-Development-run aggregate values:
+Validated aggregate values:
 
 - configured cases: 8
 - cases producing descriptors in both images: 8 / 8
 - mean moving-image keypoint count: 652.0
+- median moving-image keypoint count: 800.0
 - mean moving-image 4 x 4 spatial coverage: 0.695
+- mean moving-image detection runtime: 4.489 ms
 
-Runtime values are recorded in the compact report and full local output. They should be treated as machine-specific and should be replaced by the target Windows run before final reporting.
+Runtime is machine-specific and should be interpreted as the target Windows measurement for this configuration, not as a universal ORB runtime.
 
 ## 7. Observations
 
-The camera identity, translation, rotation, scale, and illumination cases all reached the configured 800-feature cap in the moving image. This means their count is censored by configuration and does not show the total number of potentially detectable features.
+The camera identity, translation, rotation, scale, and illumination cases all reached the configured 800-feature cap in the moving image. Their counts are therefore censored by configuration and do not represent the total number of potentially detectable features.
 
-Gaussian blur reduced the number of detected features. The camera blur case dropped to 394 moving-image keypoints. The moon blur case dropped from 585 fixed-image keypoints to 36 moving-image keypoints and had the lowest measured spatial coverage at 0.375.
+Gaussian blur reduced feature availability. The camera blur case dropped from the 800-feature cap in the fixed image to 394 moving-image keypoints. The moon blur case dropped from 585 fixed-image keypoints to 36 moving-image keypoints, a moving-to-fixed count ratio of about 0.062. It also had the lowest measured spatial coverage at 0.375.
 
-The rotated coins image retained 786 moving-image keypoints and had high spatial coverage at 0.938 in this configured case.
+The rotated coins image retained 786 moving-image keypoints and had the highest measured moving-image spatial coverage in this experiment at 0.938.
+
+The geometric camera cases retained the configured maximum number of features, but their spatial coverage changed. For example, translation reduced moving-image coverage from 0.750 to 0.625, while the scale case produced 0.875 coverage. This shows why feature count and feature distribution should be recorded separately.
 
 ## 8. Interpretation
 
-The main Day 16 finding is that feature availability depends strongly on image content and condition. Blur can substantially reduce both keypoint count and spatial support, while textured content can retain many detected features under moderate geometric change.
+The main Day 16 finding is that feature availability depends on both image content and image condition. Moderate geometric changes did not reduce the capped camera feature count in these cases, while blur substantially reduced the number and spatial support of detected features, especially for the moon image.
 
-A large number of detected keypoints does not prove that a transform can be estimated correctly. The features may not repeat at corresponding locations, may produce ambiguous descriptors, or may cluster in a geometrically weak region. These questions require descriptor matching and later RANSAC analysis.
+A large feature count does not prove that a transform can be estimated correctly. Features can fail to repeat at corresponding locations, produce ambiguous descriptors, or be distributed in a geometrically weak pattern. Descriptor matching is required before correspondence quality can be evaluated.
+
+The high coins coverage and the strong feature reduction in the blurred moon case provide useful contrasting cases for Day 17. They should help test whether descriptor filtering behaves differently when many well-distributed features are available versus when only a small number survive.
 
 ## 9. Failure cases
 
-No configured development case failed to produce descriptors in both images.
+No configured Day 16 experiment failed to produce descriptors in both images.
 
-The implementation nevertheless includes safe behavior for low-information input. A constant image returns `no_keypoints_detected` instead of producing an uncaught error.
+The implementation still includes safe behavior for low-information input. A constant image returns `no_keypoints_detected` rather than producing an uncaught error.
 
 ## 10. Limitations
 
-- This stage measures detection and descriptor extraction only.
+- Day 16 measures detection and descriptor extraction only.
 - No feature correspondences are established yet.
 - No registration transform is estimated.
 - No TRE or parameter error is reported.
 - Several camera cases hit the configured feature cap, so their counts cannot be compared as uncapped feature totals.
-- The current numerical observations are from the development environment and must be validated on the target Windows environment before Day 16 is marked complete.
+- Spatial coverage only measures occupied grid cells. It does not measure repeatability or geometric quality.
+- The observations are specific to the tracked images, transformations, ORB settings, and target machine used for this experiment.
 
 ## 11. Decision and next experiment
 
-After target-machine validation, proceed to Day 17 with Hamming-distance descriptor matching, KNN matching, ratio filtering, cross-check comparison, match-distance diagnostics, and spatial distribution of accepted correspondences.
+Proceed to Day 17 with Hamming-distance descriptor matching, KNN matching, ratio filtering, cross-check comparison, match-distance diagnostics, and spatial distribution of accepted correspondences.
 
-Day 17 should answer a different question from Day 16: not how many features are detected, but how many plausible correspondences survive filtering and how they are distributed across the image.
+Day 17 should answer a different question from Day 16: not how many features are detected, but how many plausible correspondences survive filtering and how those correspondences are distributed across the image.

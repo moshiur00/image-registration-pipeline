@@ -63,15 +63,17 @@ The configured development experiment uses tracked `camera`, `coins`, and `moon`
 
 Geometric cases are generated from exact Moving -> Fixed transforms already supported by the benchmark infrastructure.
 
-## Current development-run observation
+## Validated Day 16 observation
 
-The development run produced descriptors in both fixed and moving images for all eight configured cases.
+The target Windows run produced descriptors in both fixed and moving images for all eight configured cases.
 
 Several camera cases reached the configured `n_features = 800` limit. Those counts are capped values, so they should not be interpreted as the total number of detectable camera features.
 
 Blur reduced the available feature count substantially. In the configured camera blur case, the moving image produced 394 keypoints compared with the 800-feature cap in the fixed image. In the configured moon blur case, the moving image produced 36 keypoints compared with 585 in the fixed image. The moon blur case also had the lowest measured 4 x 4 spatial coverage, 0.375.
 
 These are detection observations only. They do not yet establish whether the surviving keypoints form correct or stable correspondences.
+
+The validated target-machine aggregate values were 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. Runtime is machine-specific.
 
 ## Interpretation boundary
 

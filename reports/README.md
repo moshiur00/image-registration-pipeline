@@ -33,6 +33,6 @@ Future experimental days should follow `docs/EXPERIMENT_REPORTING_STANDARD.md` s
 
 `week04_day01_orb_features.json` stores Day 16 ORB detection and descriptor evidence, including per-case feature counts, descriptor counts, response statistics, spatial coverage, runtime, observations, interpretation, limitations, and target-machine validation status.
 
-Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Development-environment measurements are kept separate from final target-machine validation.
+Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Day 16 now includes completed target Windows validation, while future experimental days should keep development measurements separate until their target-machine validation is complete.
 
 `findings_week04.json` is the consolidated Week 4 findings registry. Each completed experimental day should append its measured evidence, observations, interpretation, limitations, decision, and source-record paths there.
