@@ -358,6 +358,23 @@ def _findings(records: list[dict[str, Any]], *, n_features: int) -> dict[str, An
     }
 
 
+def _validated_report_exists(path: Path) -> bool:
+    """Return True when a tracked report already contains completed target validation."""
+    if not path.exists():
+        return False
+    try:
+        existing = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+
+    local_validation = existing.get("local_validation")
+    return bool(
+        existing.get("status") == "complete"
+        and isinstance(local_validation, dict)
+        and local_validation.get("status") == "complete"
+    )
+
+
 def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
     rows: list[dict[str, Any]] = []
     for record in records:
@@ -513,10 +530,16 @@ def main() -> None:
             "note": "Run the experiment and full test suite on the target Windows environment before marking Day 16 complete.",
         },
     }
-    write_report_snapshot(
-        PROJECT_ROOT / "reports/week04_day01_orb_features.json",
-        report_payload,
-    )
+    report_path = PROJECT_ROOT / "reports/week04_day01_orb_features.json"
+    if _validated_report_exists(report_path):
+        report_action = "preserved"
+        print(
+            "Tracked Day 16 report already contains completed target validation; "
+            "preserving it."
+        )
+    else:
+        write_report_snapshot(report_path, report_payload)
+        report_action = "refreshed"
 
     print("\nDay 16 development run summary")
     print(f"Cases: {summary['case_count']}")
@@ -524,7 +547,10 @@ def main() -> None:
     print(f"Mean moving keypoints: {summary['mean_moving_keypoint_count']:.1f}")
     print(f"Mean moving spatial coverage: {summary['mean_moving_spatial_coverage']:.3f}")
     print(f"Mean moving detection runtime: {summary['mean_moving_detection_runtime_ms']:.3f} ms")
-    print("Report snapshot: reports/week04_day01_orb_features.json")
+    print(
+        "Tracked report "
+        f"({report_action}): reports/week04_day01_orb_features.json"
+    )
 
 
 if __name__ == "__main__":

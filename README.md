@@ -81,7 +81,7 @@ Current visual outputs:
 - Alpha overlay
 - Checkerboard comparison
 
-These measures are currently used to verify pipeline behavior. Later benchmark stages will add geometric and task-specific evaluation such as parameter error, TRE, Dice, success rate, and physical-space error.
+These measures remain useful descriptive checks. Controlled synthetic registration experiments now also use geometric measures such as parameter error and TRE. Dice and physical-space error are reserved for later evaluation stages where suitable masks, landmarks, or physical metadata are available.
 
 ### Week 2 benchmark foundation
 
@@ -220,7 +220,7 @@ Day 16 intentionally does not perform descriptor matching, RANSAC, or transform 
 
 Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in both images, with 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. The full pytest suite also completed successfully with exit code 0.
 
-## Future planned tasks
+## Roadmap and current status
 
 | Week | Planned work | Main outcome |
 |---|---|---|
@@ -260,80 +260,26 @@ Image resampling uses inverse source lookup internally. The stored project trans
 
 ```text
 image-registration-pipeline/
-├── configs/
-│   ├── day01_translation_demo.yaml
-│   ├── day02_rigid_demo.yaml
-│   ├── day03_warping_demo.yaml
-│   ├── day04_io_preprocessing_evaluation_demo.yaml
-│   ├── day05_week01_smoke_test.yaml
-│   ├── week02_day01_synthetic_ground_truth.yaml
-│   ├── week02_day02_degradations_overlap.yaml
-│   ├── week02_day03_multimodal_difficulty.yaml
-│   ├── week02_day04_real_datasets.yaml
-│   ├── week02_day05_integrated_benchmark.yaml
-│   ├── week03_day01_phase_correlation.yaml
-│   ├── week03_day02_phase_robustness.yaml
-│   └── week03_day03_ecc_translation_rigid.yaml
+├── configs/                    # experiment configurations through Day 16
 ├── data/
-│   ├── manifests/
-│   │   └── general_real_sources.json
-│   ├── raw/
-│   ├── processed/
-│   └── samples/
-│       ├── week01/
-│       │   ├── fixed.png
-│       │   └── moving.png
-│       └── week02_real_general/
-│           ├── camera.png
-│           ├── coins.png
-│           └── moon.png
+│   ├── manifests/              # tracked dataset metadata
+│   └── samples/                # small tracked sample images
 ├── docs/
-│   ├── daily/
-│   ├── weekly/
-│   ├── datasets/
-│   ├── CONFIGURATION_AND_RUN_OUTPUTS.md
-│   ├── CONTROLLED_DEGRADATIONS_PARTIAL_OVERLAP.md
-│   ├── SIMULATED_MULTIMODAL_DIFFICULTY_TIERS.md
-│   ├── IMAGE_IO_PREPROCESSING_EVALUATION.md
-│   ├── ROTATION_RIGID_TRANSFORMS.md
-│   ├── SIMILARITY_AFFINE_WARPING.md
-│   ├── PHASE_CORRELATION.md
-│   ├── PHASE_CORRELATION_ROBUSTNESS.md
-│   ├── ECC_REGISTRATION.md
-│   ├── SYNTHETIC_GROUND_TRUTH_BENCHMARK.md
-│   └── TRANSFORM_CONVENTIONS.md
-├── outputs/
-├── scripts/
-│   ├── day01_demo.py
-│   ├── day02_rigid_demo.py
-│   ├── day03_warping_demo.py
-│   ├── day04_io_preprocessing_evaluation_demo.py
-│   ├── week02_day01_synthetic_demo.py
-│   ├── week02_day02_degradations_overlap_demo.py
-│   ├── week02_day03_multimodal_difficulty_demo.py
-│   ├── week02_day04_prepare_real_data.py
-│   ├── week02_day05_generate_benchmark.py
-│   ├── week03_day01_phase_correlation_demo.py
-│   ├── week03_day02_phase_robustness.py
-│   ├── week03_day03_ecc_demo.py
-│   ├── run_experiment.py
-│   ├── cleanup_obsolete_files.py
-│   └── zip_project.py
-├── reports/
-│   ├── progress_registry.json
-│   ├── week01_summary.json
-│   ├── week02_summary.json
-│   ├── week03_day01_phase_correlation.json
-│   ├── week03_day02_phase_robustness.json
-│   └── week03_day03_ecc_translation_rigid.json
-├── src/
-│   └── image_registration/
-├── tests/
+│   ├── daily/                  # Day 1 to Day 16 summaries
+│   ├── weekly/                 # weekly progress summaries
+│   └── datasets/               # dataset provenance and preparation notes
+├── reports/                    # compact tracked quantitative snapshots and findings
+├── scripts/                    # experiment, cleanup, and archive commands
+├── src/image_registration/     # reusable registration modules
+├── tests/                      # automated test suite
 ├── .gitattributes
 ├── .gitignore
 ├── pyproject.toml
+├── README.md
 └── requirements.txt
 ```
+
+Generated experiment artifacts are written under local `outputs/` directories and are intentionally excluded from Git and lightweight project archives. Large raw and processed datasets are also kept outside the tracked project snapshot.
 
 ## Environment setup
 
@@ -356,7 +302,7 @@ pip check
 pytest -v
 ```
 
-The current suite contains 242 tests. The target Windows environment with the full project dependencies installed passes all 242 tests.
+The current repository suite contains 257 tests. In the review environment, 253 pass and 4 SimpleITK-dependent tests are skipped because SimpleITK is unavailable there. On the target Windows environment, the full suite completed successfully with exit code 0.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 
@@ -548,7 +494,7 @@ When an update retires an old file, extracting a ZIP does not remove the old loc
 python scripts/cleanup_obsolete_files.py
 ```
 
-The cleanup currently removes an obsolete `scripts/scripts.txt` file and generated `src/image_registration_pipeline.egg-info` directory if either exists.
+The cleanup currently removes the obsolete `PROJECT_MANIFEST.json`, `scripts/scripts.txt`, and generated `src/image_registration_pipeline.egg-info` paths if they exist.
 
 ## Generate the final Week 2 benchmark
 
