@@ -2,7 +2,7 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 has started with ORB keypoint detection and binary descriptor extraction as the first feature-based component.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 now includes ORB keypoint detection, binary descriptor extraction, and descriptor correspondence filtering. RANSAC transform estimation is the next step.
 
 ## Current status
 
@@ -16,9 +16,9 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Status: Complete, 5 of 5 working days**
 
 **Week 4: Feature-Based Registration with Robust Model Estimation**  
-**Status: Day 16 complete and validated on the target Windows environment**
+**Status: Days 16 and 17 complete and validated; Day 18 is next**
 
-**Current repository test suite: 257 tests**  
+**Current repository test suite: 270 tests**  
 **Development environment: 253 passed, 4 SimpleITK-dependent tests skipped**  
 **Day 16 target Windows validation: full pytest suite completed successfully with exit code 0**
 
@@ -216,9 +216,20 @@ Day 16 adds the feature-detection layer used by the planned ORB + RANSAC registr
 - controlled feature-detection experiment using camera, coins, and moon source images;
 - tracked Day 16 report containing quantitative results, observations, interpretation, limitations, and the next experimental decision.
 
-Day 16 intentionally does not perform descriptor matching, RANSAC, or transform estimation. Those steps are introduced separately so feature availability can be measured before correspondence and geometric-estimation effects are mixed together.
+Day 16 intentionally separated feature detection from later correspondence and geometric-estimation stages. Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in both images, with 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. The full pytest suite also completed successfully with exit code 0.
 
-Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in both images, with 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. The full pytest suite also completed successfully with exit code 0.
+Day 17 adds descriptor correspondence filtering:
+
+- Hamming-distance matching for ORB descriptors;
+- KNN matching with configurable ratio filtering;
+- mutual nearest-neighbor cross-check matching;
+- accepted-match distance summaries and 4 x 4 spatial coverage;
+- ratio-threshold sweep;
+- tentative and filtered match visualizations;
+- safe failures for unavailable descriptors or insufficient matches;
+- tracked observations and limitations for later report writing.
+
+The Day 17 target Windows run used 9 controlled cases. At ratio threshold 0.75, all 9 retained at least 8 KNN-filtered matches with 471.3 mean accepted matches and 0.569 mean minimum coverage. Cross-check also retained at least 8 matches in all 9 cases, with 509.0 mean accepted matches and 0.597 mean minimum coverage. These are correspondence-filtering results only. Day 18 will determine which matches are geometrically consistent through RANSAC similarity estimation.
 
 ## Roadmap and current status
 
@@ -226,7 +237,7 @@ Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in bot
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | In progress: Day 16 ORB keypoint detection and descriptor extraction complete and validated; matching and RANSAC remain |
+| Week 4 | Feature-based registration | In progress: Days 16 and 17 validated; RANSAC similarity estimation is next |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
@@ -260,12 +271,12 @@ Image resampling uses inverse source lookup internally. The stored project trans
 
 ```text
 image-registration-pipeline/
-├── configs/                    # experiment configurations through Day 16
+├── configs/                    # experiment configurations through Day 17
 ├── data/
 │   ├── manifests/              # tracked dataset metadata
 │   └── samples/                # small tracked sample images
 ├── docs/
-│   ├── daily/                  # Day 1 to Day 16 summaries
+│   ├── daily/                  # Day 1 to Day 17 summaries
 │   ├── weekly/                 # weekly progress summaries
 │   └── datasets/               # dataset provenance and preparation notes
 ├── reports/                    # compact tracked quantitative snapshots and findings
@@ -302,7 +313,7 @@ pip check
 pytest -v
 ```
 
-The current repository suite contains 257 tests. In the review environment, 253 pass and 4 SimpleITK-dependent tests are skipped because SimpleITK is unavailable there. On the target Windows environment, the full suite completed successfully with exit code 0.
+The current repository suite contains 270 tests. The target Windows environment completed the full suite with `270 passed in 3.93s`. In the current development environment, 266 pass and 4 SimpleITK-dependent tests are skipped because SimpleITK is unavailable there.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 
@@ -473,6 +484,14 @@ python scripts/week04_day01_orb_features.py --config configs/week04_day01_orb_fe
 ```
 
 The Day 16 script measures feature availability before matching is introduced. It records keypoint and descriptor counts, response statistics, 4 x 4 spatial coverage, runtime, safe failure reasons, per-case keypoint figures, CSV/JSON results, and a compact tracked report with observations and limitations.
+
+Week 4 Day 2, ORB descriptor matching and correspondence filtering:
+
+```powershell
+python scripts/week04_day02_orb_matching.py --config configs/week04_day02_orb_matching.yaml
+```
+
+The Day 17 script compares KNN Hamming matching with ratio filtering against mutual nearest-neighbor cross-check matching. It records accepted-match counts, Hamming-distance summaries, 4 x 4 correspondence coverage, a ratio-threshold sweep, match visualizations, CSV/JSON results, and a compact tracked report. It does not fit a geometric model; RANSAC is introduced on Day 18.
 
 ## Data and generated outputs
 

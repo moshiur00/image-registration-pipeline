@@ -1,0 +1,837 @@
+{
+  "case_results": [
+    {
+      "case_id": "camera_identity",
+      "condition_metadata": {
+        "operation": "identity"
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 800,
+        "distance": {
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.75,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.75,
+        "rejected_match_count": 0,
+        "runtime_ms": 3.1861000006756512,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 800,
+        "distance": {
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.75,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.75,
+        "rejected_match_count": 0,
+        "runtime_ms": 2.0617000009224284,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "identity",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_translation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              1.0,
+              0.0,
+              -24.0
+            ],
+            [
+              0.0,
+              1.0,
+              18.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              1.0,
+              0.0,
+              24.0
+            ],
+            [
+              0.0,
+              1.0,
+              -18.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "tx": 24.0,
+            "ty": -18.0
+          },
+          "transform_type": "translation"
+        },
+        "operation": "translation"
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 650,
+        "distance": {
+          "maximum": 61.0,
+          "mean": 10.556923076923077,
+          "median": 7.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 18.75
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.625,
+        "moving_spatial_coverage": 0.625,
+        "rejected_match_count": 0,
+        "runtime_ms": 2.511800001229858,
+        "success": true,
+        "tentative_match_count": 650
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.82125,
+        "accepted_match_count": 657,
+        "distance": {
+          "maximum": 54.0,
+          "mean": 10.95890410958904,
+          "median": 7.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 19.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.625,
+        "moving_spatial_coverage": 0.625,
+        "rejected_match_count": 143,
+        "runtime_ms": 1.5204000010271557,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "translation",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9396926207859083,
+              -0.3420201433256687,
+              102.79468200890875
+            ],
+            [
+              0.34202014332566866,
+              0.9396926207859084,
+              -71.97761123050797
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9396926207859084,
+              0.3420201433256687,
+              -71.97761123050793
+            ],
+            [
+              -0.3420201433256687,
+              0.9396926207859084,
+              102.79468200890878
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 20.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 551,
+        "distance": {
+          "maximum": 76.0,
+          "mean": 21.76769509981851,
+          "median": 20.0,
+          "minimum": 6.0,
+          "q25": 15.0,
+          "q75": 26.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.5625,
+        "minimum_spatial_coverage": 0.5625,
+        "moving_spatial_coverage": 0.6875,
+        "rejected_match_count": 0,
+        "runtime_ms": 4.05499999942549,
+        "success": true,
+        "tentative_match_count": 551
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.63625,
+        "accepted_match_count": 509,
+        "distance": {
+          "maximum": 54.0,
+          "mean": 20.402750491159136,
+          "median": 19.0,
+          "minimum": 6.0,
+          "q25": 14.0,
+          "q75": 25.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.5625,
+        "minimum_spatial_coverage": 0.5625,
+        "moving_spatial_coverage": 0.625,
+        "rejected_match_count": 291,
+        "runtime_ms": 2.7276000000711065,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "rigid",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_scale",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.8695652173913044,
+              0.0,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.8695652173913044,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              1.15,
+              0.0,
+              -38.32499999999999
+            ],
+            [
+              -0.0,
+              1.15,
+              -38.32499999999999
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 0.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "scale": 1.15,
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "similarity"
+        },
+        "operation": "similarity"
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 480,
+        "distance": {
+          "maximum": 77.0,
+          "mean": 23.052083333333332,
+          "median": 21.0,
+          "minimum": 5.0,
+          "q25": 16.0,
+          "q75": 27.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.5,
+        "moving_spatial_coverage": 0.5,
+        "rejected_match_count": 0,
+        "runtime_ms": 3.181199999744422,
+        "success": true,
+        "tentative_match_count": 480
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.54,
+        "accepted_match_count": 432,
+        "distance": {
+          "maximum": 50.0,
+          "mean": 21.69212962962963,
+          "median": 20.0,
+          "minimum": 5.0,
+          "q25": 15.0,
+          "q75": 27.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.5,
+        "moving_spatial_coverage": 0.5,
+        "rejected_match_count": 368,
+        "runtime_ms": 2.418599999145954,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "similarity",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_illumination",
+      "condition_metadata": {
+        "direction": "diagonal",
+        "operation": "illumination_gradient",
+        "strength_fraction": 0.35
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 652,
+        "distance": {
+          "maximum": 68.0,
+          "mean": 21.254601226993866,
+          "median": 19.0,
+          "minimum": 0.0,
+          "q25": 11.0,
+          "q75": 30.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.6875,
+        "minimum_spatial_coverage": 0.6875,
+        "moving_spatial_coverage": 0.6875,
+        "rejected_match_count": 0,
+        "runtime_ms": 2.665500000148313,
+        "success": true,
+        "tentative_match_count": 652
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.7325,
+        "accepted_match_count": 586,
+        "distance": {
+          "maximum": 55.0,
+          "mean": 19.341296928327644,
+          "median": 18.0,
+          "minimum": 0.0,
+          "q25": 11.0,
+          "q75": 26.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.625,
+        "moving_spatial_coverage": 0.625,
+        "rejected_match_count": 214,
+        "runtime_ms": 1.5821000015421305,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "illumination_gradient",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 237,
+        "distance": {
+          "maximum": 70.0,
+          "mean": 28.160337552742615,
+          "median": 28.0,
+          "minimum": 2.0,
+          "q25": 17.0,
+          "q75": 38.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.5625,
+        "minimum_spatial_coverage": 0.5625,
+        "moving_spatial_coverage": 0.5625,
+        "rejected_match_count": 0,
+        "runtime_ms": 2.0593999997799983,
+        "success": true,
+        "tentative_match_count": 237
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.40609137055837563,
+        "accepted_match_count": 160,
+        "distance": {
+          "maximum": 52.0,
+          "mean": 21.75625,
+          "median": 22.0,
+          "minimum": 2.0,
+          "q25": 11.75,
+          "q75": 29.25
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.4375,
+        "minimum_spatial_coverage": 0.4375,
+        "moving_spatial_coverage": 0.4375,
+        "rejected_match_count": 234,
+        "runtime_ms": 1.2403999990056036,
+        "success": true,
+        "tentative_match_count": 394
+      },
+      "moving_keypoints": 394,
+      "operation": "gaussian_blur",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_partial_overlap",
+      "condition_metadata": {
+        "center_x_fraction": 0.62,
+        "center_y_fraction": 0.5,
+        "height_fraction": 0.72,
+        "operation": "restricted_fov",
+        "visible_fraction": 0.4180641174316406,
+        "width_fraction": 0.58
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 676,
+        "distance": {
+          "maximum": 82.0,
+          "mean": 2.5,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.5,
+        "minimum_spatial_coverage": 0.5,
+        "moving_spatial_coverage": 0.5625,
+        "rejected_match_count": 0,
+        "runtime_ms": 2.839799999492243,
+        "success": true,
+        "tentative_match_count": 676
+      },
+      "fixed_keypoints": 800,
+      "knn_ratio": {
+        "acceptance_rate": 0.81875,
+        "accepted_match_count": 655,
+        "distance": {
+          "maximum": 47.0,
+          "mean": 1.0076335877862594,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.4375,
+        "minimum_spatial_coverage": 0.4375,
+        "moving_spatial_coverage": 0.4375,
+        "rejected_match_count": 145,
+        "runtime_ms": 2.2117000007710885,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_keypoints": 800,
+      "operation": "restricted_fov",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "coins_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9659258262890682,
+              0.25881904510252074,
+              -32.5564715448372
+            ],
+            [
+              -0.25881904510252074,
+              0.9659258262890684,
+              54.70904736748339
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9659258262890683,
+              -0.25881904510252074,
+              45.60688007612404
+            ],
+            [
+              0.25881904510252074,
+              0.9659258262890683,
+              -44.418646906782016
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": -15.0,
+            "center": [
+              191.5,
+              151.0
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 503,
+        "distance": {
+          "maximum": 83.0,
+          "mean": 24.037773359840955,
+          "median": 22.0,
+          "minimum": 6.0,
+          "q25": 18.0,
+          "q75": 28.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.875,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 0,
+        "runtime_ms": 4.540800000540912,
+        "success": true,
+        "tentative_match_count": 503
+      },
+      "fixed_keypoints": 794,
+      "knn_ratio": {
+        "acceptance_rate": 0.5267175572519084,
+        "accepted_match_count": 414,
+        "distance": {
+          "maximum": 69.0,
+          "mean": 21.714975845410628,
+          "median": 21.0,
+          "minimum": 6.0,
+          "q25": 17.0,
+          "q75": 25.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.875,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 372,
+        "runtime_ms": 2.105500001562177,
+        "success": true,
+        "tentative_match_count": 786
+      },
+      "moving_keypoints": 786,
+      "operation": "rigid",
+      "source_id": "coins"
+    },
+    {
+      "case_id": "moon_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "cross_check": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 32,
+        "distance": {
+          "maximum": 50.0,
+          "mean": 19.6875,
+          "median": 16.0,
+          "minimum": 3.0,
+          "q25": 9.75,
+          "q75": 28.25
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.4375,
+        "minimum_spatial_coverage": 0.375,
+        "moving_spatial_coverage": 0.375,
+        "rejected_match_count": 0,
+        "runtime_ms": 0.17309999930148479,
+        "success": true,
+        "tentative_match_count": 32
+      },
+      "fixed_keypoints": 585,
+      "knn_ratio": {
+        "acceptance_rate": 0.8055555555555556,
+        "accepted_match_count": 29,
+        "distance": {
+          "maximum": 36.0,
+          "mean": 17.17241379310345,
+          "median": 15.0,
+          "minimum": 3.0,
+          "q25": 9.0,
+          "q75": 26.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.375,
+        "minimum_spatial_coverage": 0.375,
+        "moving_spatial_coverage": 0.375,
+        "rejected_match_count": 7,
+        "runtime_ms": 0.21129999913682695,
+        "success": true,
+        "tentative_match_count": 36
+      },
+      "moving_keypoints": 36,
+      "operation": "gaussian_blur",
+      "source_id": "moon"
+    }
+  ],
+  "configuration": {
+    "matching": {
+      "knn_ratio_threshold": 0.75,
+      "maximum_distance": null,
+      "maximum_drawn_matches": 80,
+      "minimum_matches": 8,
+      "norm": "hamming",
+      "ratio_sweep": [
+        0.6,
+        0.7,
+        0.75,
+        0.8,
+        0.9
+      ],
+      "spatial_grid": {
+        "columns": 4,
+        "rows": 4
+      }
+    },
+    "orb": {
+      "edge_threshold": 31,
+      "fast_threshold": 20,
+      "first_level": 0,
+      "n_features": 800,
+      "n_levels": 8,
+      "patch_size": 31,
+      "scale_factor": 1.2,
+      "score_type": "harris",
+      "wta_k": 2
+    }
+  },
+  "daily_summary": "docs/daily/day_17_summary.md",
+  "development_run": {
+    "cross_check": {
+      "case_count": 9,
+      "failed_case_count": 0,
+      "mean_accepted_match_count": 509.0,
+      "mean_case_median_hamming_distance": 14.777777777777779,
+      "mean_matching_runtime_ms": 2.801411111148708,
+      "mean_minimum_spatial_coverage": 0.5972222222222222,
+      "median_accepted_match_count": 551.0,
+      "successful_case_count": 9
+    },
+    "knn_ratio": {
+      "case_count": 9,
+      "failed_case_count": 0,
+      "mean_accepted_match_count": 471.3333333333333,
+      "mean_case_median_hamming_distance": 13.555555555555555,
+      "mean_matching_runtime_ms": 1.786588889242719,
+      "mean_minimum_spatial_coverage": 0.5694444444444444,
+      "median_accepted_match_count": 509.0,
+      "successful_case_count": 9
+    },
+    "ratio_sweep": [
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 404.22222222222223,
+        "mean_minimum_spatial_coverage": 0.5347222222222222,
+        "ratio_threshold": 0.6,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 448.6666666666667,
+        "mean_minimum_spatial_coverage": 0.5555555555555556,
+        "ratio_threshold": 0.7,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 471.3333333333333,
+        "mean_minimum_spatial_coverage": 0.5694444444444444,
+        "ratio_threshold": 0.75,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 494.3333333333333,
+        "mean_minimum_spatial_coverage": 0.5763888888888888,
+        "ratio_threshold": 0.8,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 556.6666666666666,
+        "mean_minimum_spatial_coverage": 0.6041666666666666,
+        "ratio_threshold": 0.9,
+        "successful_case_count": 9
+      }
+    ]
+  },
+  "findings": {
+    "decision": "Use the Day 17 correspondences as input to Day 18 RANSAC similarity estimation, where geometric inliers and outliers can be measured explicitly.",
+    "interpretation": [
+      "The ratio threshold controls a trade-off between retaining more correspondences and accepting more ambiguous descriptor matches.",
+      "Accepted-match count and spatial coverage should be interpreted together. Many matches concentrated in a small region may still provide weak geometric support.",
+      "Cross-check and ratio filtering apply different correspondence rules, so their match counts should not be interpreted as direct quality scores without geometric validation."
+    ],
+    "limitations": [
+      "Day 17 evaluates descriptor correspondence filtering only. No RANSAC model is fitted and no registration transform is estimated.",
+      "A descriptor match can pass the current filter and still be geometrically incorrect.",
+      "The development findings are specific to the tracked images, ORB settings, matching thresholds, and selected controlled conditions."
+    ],
+    "observations": [
+      "At the default ratio threshold, camera_identity produced the largest accepted KNN match count with 800 matches.",
+      "At the default ratio threshold, moon_blur produced the smallest accepted KNN match count with 29 matches.",
+      "The lowest accepted-correspondence grid coverage occurred in moon_blur with minimum fixed/moving coverage 0.375.",
+      "Across the configured cases, relaxing the ratio threshold from 0.60 to 0.90 changed the mean accepted-match count from 404.2 to 556.7."
+    ]
+  },
+  "global_day": 17,
+  "local_validation": {
+    "status": "complete",
+    "date": "2026-09-28",
+    "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
+    "pytest_result": "270 passed in 3.93s",
+    "pytest_passed": 270,
+    "pytest_failed": 0,
+    "pytest_skipped": 0,
+    "experiment_command": "python scripts/week04_day02_orb_matching.py --config configs/week04_day02_orb_matching.yaml",
+    "experiment_case_count": 9,
+    "knn_successful_case_count": 9,
+    "cross_check_successful_case_count": 9,
+    "mean_knn_accepted_match_count": 471.3333333333333,
+    "mean_knn_minimum_spatial_coverage": 0.5694444444444444,
+    "mean_cross_check_accepted_match_count": 509.0,
+    "mean_cross_check_minimum_spatial_coverage": 0.5972222222222222
+  },
+  "raw_output_directory": "outputs/week04_day02_orb_matching",
+  "scope": "descriptor correspondence filtering only; no RANSAC transform estimation",
+  "status": "complete",
+  "technical_note": "docs/FEATURE_MATCHING.md",
+  "title": "ORB descriptor matching and correspondence filtering",
+  "week": 4,
+  "week_day": 2,
+  "target_windows_run": {
+    "cross_check": {
+      "case_count": 9,
+      "failed_case_count": 0,
+      "mean_accepted_match_count": 509.0,
+      "mean_case_median_hamming_distance": 14.777777777777779,
+      "mean_matching_runtime_ms": 2.801411111148708,
+      "mean_minimum_spatial_coverage": 0.5972222222222222,
+      "median_accepted_match_count": 551.0,
+      "successful_case_count": 9
+    },
+    "knn_ratio": {
+      "case_count": 9,
+      "failed_case_count": 0,
+      "mean_accepted_match_count": 471.3333333333333,
+      "mean_case_median_hamming_distance": 13.555555555555555,
+      "mean_matching_runtime_ms": 1.786588889242719,
+      "mean_minimum_spatial_coverage": 0.5694444444444444,
+      "median_accepted_match_count": 509.0,
+      "successful_case_count": 9
+    },
+    "ratio_sweep": [
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 404.22222222222223,
+        "mean_minimum_spatial_coverage": 0.5347222222222222,
+        "ratio_threshold": 0.6,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 448.6666666666667,
+        "mean_minimum_spatial_coverage": 0.5555555555555556,
+        "ratio_threshold": 0.7,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 471.3333333333333,
+        "mean_minimum_spatial_coverage": 0.5694444444444444,
+        "ratio_threshold": 0.75,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 494.3333333333333,
+        "mean_minimum_spatial_coverage": 0.5763888888888888,
+        "ratio_threshold": 0.8,
+        "successful_case_count": 9
+      },
+      {
+        "case_count": 9,
+        "mean_accepted_match_count": 556.6666666666666,
+        "mean_minimum_spatial_coverage": 0.6041666666666666,
+        "ratio_threshold": 0.9,
+        "successful_case_count": 9
+      }
+    ]
+  }
+}

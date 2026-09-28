@@ -83,6 +83,10 @@
     "day_16": {
       "status": "complete",
       "summary": "reports/week04_day01_orb_features.json"
+    },
+    "day_17": {
+      "status": "complete",
+      "summary": "reports/week04_day02_orb_matching.json"
     }
   },
   "findings_registry": "reports/findings_days_01_15.json",

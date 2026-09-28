@@ -1,0 +1,90 @@
+experiment:
+  name: week04_day02_orb_matching
+  seed: 42
+
+orb:
+  n_features: 800
+  scale_factor: 1.2
+  n_levels: 8
+  edge_threshold: 31
+  first_level: 0
+  wta_k: 2
+  score_type: harris
+  patch_size: 31
+  fast_threshold: 20
+
+matching:
+  minimum_matches: 8
+  knn_ratio_threshold: 0.75
+  ratio_sweep: [0.60, 0.70, 0.75, 0.80, 0.90]
+  maximum_distance: null
+  norm: hamming
+  spatial_grid:
+    rows: 4
+    columns: 4
+  maximum_drawn_matches: 80
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+cases:
+  - id: camera_identity
+    source: camera
+    operation: identity
+
+  - id: camera_translation
+    source: camera
+    operation: translation
+    tx: 24.0
+    ty: -18.0
+
+  - id: camera_rotation
+    source: camera
+    operation: rigid
+    angle_degrees: 20.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_scale
+    source: camera
+    operation: similarity
+    scale: 1.15
+    angle_degrees: 0.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_illumination
+    source: camera
+    operation: illumination_gradient
+    strength_fraction: 0.35
+    direction: diagonal
+
+  - id: camera_blur
+    source: camera
+    operation: gaussian_blur
+    sigma: 3.0
+
+  - id: camera_partial_overlap
+    source: camera
+    operation: restricted_fov
+    width_fraction: 0.58
+    height_fraction: 0.72
+    center_x_fraction: 0.62
+    center_y_fraction: 0.50
+
+  - id: coins_rotation
+    source: coins
+    operation: rigid
+    angle_degrees: -15.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: moon_blur
+    source: moon
+    operation: gaussian_blur
+    sigma: 3.0
+
+output:
+  directory: outputs/week04_day02_orb_matching

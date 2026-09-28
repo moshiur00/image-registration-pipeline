@@ -43,6 +43,100 @@
         "mean_moving_detection_runtime_ms": 4.489412500220169,
         "note": "The captured pytest console output did not include the final numeric test-count summary, so the findings registry records the successful exit code rather than inferring a pass count."
       }
+    },
+    "day_17": {
+      "status": "complete",
+      "title": "ORB descriptor matching and correspondence filtering",
+      "measured_evidence": {
+        "cross_check": {
+          "case_count": 9,
+          "failed_case_count": 0,
+          "mean_accepted_match_count": 509.0,
+          "mean_case_median_hamming_distance": 14.777777777777779,
+          "mean_matching_runtime_ms": 2.801411111148708,
+          "mean_minimum_spatial_coverage": 0.5972222222222222,
+          "median_accepted_match_count": 551.0,
+          "successful_case_count": 9
+        },
+        "knn_ratio": {
+          "case_count": 9,
+          "failed_case_count": 0,
+          "mean_accepted_match_count": 471.3333333333333,
+          "mean_case_median_hamming_distance": 13.555555555555555,
+          "mean_matching_runtime_ms": 1.786588889242719,
+          "mean_minimum_spatial_coverage": 0.5694444444444444,
+          "median_accepted_match_count": 509.0,
+          "successful_case_count": 9
+        },
+        "ratio_sweep": [
+          {
+            "case_count": 9,
+            "mean_accepted_match_count": 404.22222222222223,
+            "mean_minimum_spatial_coverage": 0.5347222222222222,
+            "ratio_threshold": 0.6,
+            "successful_case_count": 9
+          },
+          {
+            "case_count": 9,
+            "mean_accepted_match_count": 448.6666666666667,
+            "mean_minimum_spatial_coverage": 0.5555555555555556,
+            "ratio_threshold": 0.7,
+            "successful_case_count": 9
+          },
+          {
+            "case_count": 9,
+            "mean_accepted_match_count": 471.3333333333333,
+            "mean_minimum_spatial_coverage": 0.5694444444444444,
+            "ratio_threshold": 0.75,
+            "successful_case_count": 9
+          },
+          {
+            "case_count": 9,
+            "mean_accepted_match_count": 494.3333333333333,
+            "mean_minimum_spatial_coverage": 0.5763888888888888,
+            "ratio_threshold": 0.8,
+            "successful_case_count": 9
+          },
+          {
+            "case_count": 9,
+            "mean_accepted_match_count": 556.6666666666666,
+            "mean_minimum_spatial_coverage": 0.6041666666666666,
+            "ratio_threshold": 0.9,
+            "successful_case_count": 9
+          }
+        ]
+      },
+      "observations": [
+        "At the default ratio threshold, camera_identity produced the largest accepted KNN match count with 800 matches.",
+        "At the default ratio threshold, moon_blur produced the smallest accepted KNN match count with 29 matches.",
+        "The lowest accepted-correspondence grid coverage occurred in moon_blur with minimum fixed/moving coverage 0.375.",
+        "Across the configured cases, relaxing the ratio threshold from 0.60 to 0.90 changed the mean accepted-match count from 404.2 to 556.7."
+      ],
+      "interpretation": [
+        "The ratio threshold controls a trade-off between retaining more correspondences and accepting more ambiguous descriptor matches.",
+        "Accepted-match count and spatial coverage should be interpreted together. Many matches concentrated in a small region may still provide weak geometric support.",
+        "Cross-check and ratio filtering apply different correspondence rules, so their match counts should not be interpreted as direct quality scores without geometric validation."
+      ],
+      "limitations": [
+        "Day 17 evaluates descriptor correspondence filtering only. No RANSAC model is fitted and no registration transform is estimated.",
+        "A descriptor match can pass the current filter and still be geometrically incorrect.",
+        "The development findings are specific to the tracked images, ORB settings, matching thresholds, and selected controlled conditions."
+      ],
+      "decision": "Use the Day 17 correspondences as input to Day 18 RANSAC similarity estimation, where geometric inliers and outliers can be measured explicitly.",
+      "source_report": "reports/week04_day02_orb_matching.json",
+      "daily_summary": "docs/daily/day_17_summary.md",
+      "validation": {
+        "status": "complete",
+        "date": "2026-09-28",
+        "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
+        "pytest_result": "270 passed in 3.93s",
+        "pytest_passed": 270,
+        "pytest_failed": 0,
+        "pytest_skipped": 0,
+        "target_windows_experiment": "9 / 9 configured cases retained at least 8 matches for both KNN ratio filtering and cross-check matching",
+        "mean_knn_accepted_match_count": 471.3333333333333,
+        "mean_cross_check_accepted_match_count": 509.0
+      }
     }
   }
 }

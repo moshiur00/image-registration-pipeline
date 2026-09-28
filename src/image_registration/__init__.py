@@ -53,6 +53,18 @@ from .evaluation import (
     normalized_cross_correlation,
     structural_similarity,
 )
+from .feature_matching import (
+    CorrespondenceCoverage,
+    FeatureMatch,
+    FeatureMatchResult,
+    correspondence_grid_coverage,
+    correspondence_points,
+    draw_feature_matches,
+    match_distance_summary,
+    match_orb_cross_check,
+    match_orb_knn_ratio,
+)
+
 from .io import LoadedImage, load_image, validate_image_pair
 from .medical import MedicalImageMetadata, read_medical_image_metadata
 from .pipeline import ExperimentResult, run_experiment
@@ -159,6 +171,9 @@ from .warping import warp_image, warp_mask
 
 __all__ = [
     "BaselineThresholds",
+    "CorrespondenceCoverage",
+    "FeatureMatch",
+    "FeatureMatchResult",
     "BenchmarkCasePlan",
     "benchmark_manifest_fingerprint",
     "build_case_plan",
@@ -240,6 +255,12 @@ __all__ = [
     "edge_overlay",
     "detect_orb_features",
     "draw_orb_keypoints",
+    "draw_feature_matches",
+    "correspondence_grid_coverage",
+    "correspondence_points",
+    "match_distance_summary",
+    "match_orb_cross_check",
+    "match_orb_knn_ratio",
     "clip_percentiles",
     "combine_valid_masks",
     "compose_transforms",
@@ -290,4 +311,3 @@ __all__ = [
     "with_defaults",
     "within_model_tolerance",
 ]
-
