@@ -13,6 +13,10 @@
     "week_03": {
       "status": "complete",
       "summary": "reports/week03_summary.json"
+    },
+    "week_04": {
+      "status": "in_progress",
+      "summary": "docs/weekly/week_04_summary.md"
     }
   },
   "days": {
@@ -75,8 +79,13 @@
     "day_15": {
       "status": "complete",
       "summary": "reports/week03_day05_integrated_baselines.json"
+    },
+    "day_16": {
+      "status": "implementation_complete_local_validation_pending",
+      "summary": "reports/week04_day01_orb_features.json"
     }
   },
   "findings_registry": "reports/findings_days_01_15.json",
-  "reporting_standard": "docs/EXPERIMENT_REPORTING_STANDARD.md"
+  "reporting_standard": "docs/EXPERIMENT_REPORTING_STANDARD.md",
+  "week04_findings_registry": "reports/findings_week04.json"
 }

@@ -1,0 +1,590 @@
+{
+  "case_results": [
+    {
+      "case_id": "camera_identity",
+      "condition_metadata": {
+        "operation": "identity"
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 149.65380000012374,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 5.029700000704906,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": 0,
+      "moving_minus_fixed_spatial_coverage": 0.0,
+      "moving_to_fixed_keypoint_count_ratio": 1.0,
+      "operation": "identity",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "camera_translation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              1.0,
+              0.0,
+              -24.0
+            ],
+            [
+              0.0,
+              1.0,
+              18.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              1.0,
+              0.0,
+              24.0
+            ],
+            [
+              0.0,
+              1.0,
+              -18.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "tx": 24.0,
+            "ty": -18.0
+          },
+          "transform_type": "translation"
+        },
+        "operation": "translation"
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 4.94410000010248,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008868813135995879,
+          "median": 0.0006208707054611295,
+          "minimum": 0.00022272202477324754
+        },
+        "runtime_ms": 4.4616000004680245,
+        "spatial_coverage": 0.625,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": 0,
+      "moving_minus_fixed_spatial_coverage": -0.125,
+      "moving_to_fixed_keypoint_count_ratio": 1.0,
+      "operation": "translation",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "camera_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9396926207859083,
+              -0.3420201433256687,
+              102.79468200890875
+            ],
+            [
+              0.34202014332566866,
+              0.9396926207859084,
+              -71.97761123050797
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9396926207859084,
+              0.3420201433256687,
+              -71.97761123050793
+            ],
+            [
+              -0.3420201433256687,
+              0.9396926207859084,
+              102.79468200890878
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 20.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 4.36840000020311,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.004886189475655556,
+          "mean": 0.000742690650804434,
+          "median": 0.0005291821144055575,
+          "minimum": 0.0001900724892038852
+        },
+        "runtime_ms": 5.258799999865005,
+        "spatial_coverage": 0.6875,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": 0,
+      "moving_minus_fixed_spatial_coverage": -0.0625,
+      "moving_to_fixed_keypoint_count_ratio": 1.0,
+      "operation": "rigid",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "camera_scale",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.8695652173913044,
+              0.0,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.8695652173913044,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              1.15,
+              0.0,
+              -38.32499999999999
+            ],
+            [
+              -0.0,
+              1.15,
+              -38.32499999999999
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 0.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "scale": 1.15,
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "similarity"
+        },
+        "operation": "similarity"
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 4.696500000136439,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.006426709238439798,
+          "mean": 0.0008302339576766826,
+          "median": 0.0005882462137378752,
+          "minimum": 0.00017441873205825686
+        },
+        "runtime_ms": 5.791700000372657,
+        "spatial_coverage": 0.875,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": 0,
+      "moving_minus_fixed_spatial_coverage": 0.125,
+      "moving_to_fixed_keypoint_count_ratio": 1.0,
+      "operation": "similarity",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "camera_illumination",
+      "condition_metadata": {
+        "direction": "diagonal",
+        "operation": "illumination_gradient",
+        "strength_fraction": 0.35
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 8.019800000511168,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.0077621955424547195,
+          "mean": 0.0008687911121160141,
+          "median": 0.0006304538110271096,
+          "minimum": 0.00020400293578859419
+        },
+        "runtime_ms": 4.923100000269187,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": 0,
+      "moving_minus_fixed_spatial_coverage": 0.0,
+      "moving_to_fixed_keypoint_count_ratio": 1.0,
+      "operation": "illumination_gradient",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "camera_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 800,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.007846193388104439,
+          "mean": 0.0008908270036044996,
+          "median": 0.0006340934487525374,
+          "minimum": 0.00021070570801384747
+        },
+        "runtime_ms": 7.628299999851151,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 394,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 394,
+        "response": {
+          "maximum": 0.0010791998356580734,
+          "mean": 0.00010234601339148581,
+          "median": 6.02380223426735e-05,
+          "minimum": -2.4642340576974675e-05
+        },
+        "runtime_ms": 4.829200000131095,
+        "spatial_coverage": 0.5625,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": -406,
+      "moving_minus_fixed_spatial_coverage": -0.1875,
+      "moving_to_fixed_keypoint_count_ratio": 0.4925,
+      "operation": "gaussian_blur",
+      "source_id": "camera",
+      "success": true
+    },
+    {
+      "case_id": "coins_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9659258262890682,
+              0.25881904510252074,
+              -32.5564715448372
+            ],
+            [
+              -0.25881904510252074,
+              0.9659258262890684,
+              54.70904736748339
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9659258262890683,
+              -0.25881904510252074,
+              45.60688007612404
+            ],
+            [
+              0.25881904510252074,
+              0.9659258262890683,
+              -44.418646906782016
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": -15.0,
+            "center": [
+              191.5,
+              151.0
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 794,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 794,
+        "response": {
+          "maximum": 0.003565034829080105,
+          "mean": 0.00035924570927300676,
+          "median": 0.00024408457829849795,
+          "minimum": 2.1282481611706316e-05
+        },
+        "runtime_ms": 3.014900000380294,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 786,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 786,
+        "response": {
+          "maximum": 0.0023671931121498346,
+          "mean": 0.0002702582317445772,
+          "median": 0.00019059536134591326,
+          "minimum": 6.115240103099495e-05
+        },
+        "runtime_ms": 2.9518999999709195,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": -8,
+      "moving_minus_fixed_spatial_coverage": 0.0,
+      "moving_to_fixed_keypoint_count_ratio": 0.9899244332493703,
+      "operation": "rigid",
+      "source_id": "coins",
+      "success": true
+    },
+    {
+      "case_id": "moon_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "failure_reason": null,
+      "fixed": {
+        "descriptor_count": 585,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 585,
+        "response": {
+          "maximum": 0.0003618355840444565,
+          "mean": 2.8293162676283778e-05,
+          "median": 1.3335720723262057e-05,
+          "minimum": -4.0429611544823274e-05
+        },
+        "runtime_ms": 3.819100000328035,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "moving": {
+        "descriptor_count": 36,
+        "descriptor_length_bytes": 32,
+        "failure_reason": null,
+        "keypoint_count": 36,
+        "response": {
+          "maximum": 0.00016601414245087653,
+          "mean": 1.9904873492275026e-05,
+          "median": 8.875133062247187e-06,
+          "minimum": 5.923235448790365e-07
+        },
+        "runtime_ms": 2.6692999999795575,
+        "spatial_coverage": 0.375,
+        "success": true
+      },
+      "moving_minus_fixed_keypoints": -549,
+      "moving_minus_fixed_spatial_coverage": -0.5625,
+      "moving_to_fixed_keypoint_count_ratio": 0.06153846153846154,
+      "operation": "gaussian_blur",
+      "source_id": "moon",
+      "success": true
+    }
+  ],
+  "configuration": {
+    "edge_threshold": 31,
+    "fast_threshold": 20,
+    "first_level": 0,
+    "n_features": 800,
+    "n_levels": 8,
+    "patch_size": 31,
+    "scale_factor": 1.2,
+    "score_type": "harris",
+    "spatial_grid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "wta_k": 2
+  },
+  "daily_summary": "docs/daily/day_16_summary.md",
+  "development_run": {
+    "case_count": 8,
+    "failed_case_count": 0,
+    "mean_moving_detection_runtime_ms": 4.489412500220169,
+    "mean_moving_keypoint_count": 652.0,
+    "mean_moving_spatial_coverage": 0.6953125,
+    "mean_moving_to_fixed_keypoint_count_ratio": 0.817995361848479,
+    "median_moving_keypoint_count": 800.0,
+    "successful_case_count": 8
+  },
+  "findings": {
+    "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, and match spatial-coverage diagnostics after target-machine validation.",
+    "interpretation": [
+      "ORB feature availability changes with image content and appearance or geometric modification, so later matching quality should be interpreted together with keypoint count and spatial coverage.",
+      "A large keypoint count alone is not evidence that a reliable transform can be estimated. Day 17 must test descriptor correspondence quality before any geometric conclusion is made."
+    ],
+    "limitations": [
+      "Day 16 measures detection and descriptor extraction only. It does not measure keypoint repeatability, correspondence correctness, or registration accuracy because descriptor matching has not been introduced yet.",
+      "The observations are specific to the tracked images, configured transformations, OpenCV ORB settings, and the machine used for this run."
+    ],
+    "observations": [
+      "The largest moving-image keypoint count occurred in camera_identity with 800 keypoints.",
+      "The smallest moving-image keypoint count occurred in moon_blur with 36 keypoints.",
+      "The strongest keypoint-count reduction relative to its fixed image occurred in moon_blur, with a moving-to-fixed count ratio of 0.062.",
+      "The lowest 4x4 spatial coverage occurred in moon_blur at 0.375.",
+      "The configured n_features cap of 800 was reached in camera_identity, camera_translation, camera_rotation, camera_scale, camera_illumination. Counts in those cases are capped and should not be interpreted as the total number of detectable features.",
+      "All configured Day 16 cases produced ORB descriptors in both images."
+    ]
+  },
+  "global_day": 16,
+  "local_validation": {
+    "note": "Run the experiment and full test suite on the target Windows environment before marking Day 16 complete.",
+    "status": "pending"
+  },
+  "method": "ORB",
+  "raw_output_directory": "outputs/week04_day01_orb_features",
+  "scope": "feature detection and descriptor extraction only",
+  "status": "implementation_complete_local_validation_pending",
+  "technical_note": "docs/ORB_FEATURES.md",
+  "title": "ORB keypoint detection and binary descriptor extraction",
+  "week": 4,
+  "week_day": 1
+}

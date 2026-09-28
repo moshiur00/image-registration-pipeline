@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "week": 4,
+  "purpose": "Consolidated findings registry for feature-based registration experiments",
+  "days": {
+    "day_16": {
+      "status": "implementation_complete_local_validation_pending",
+      "title": "ORB keypoint detection and binary descriptor extraction",
+      "measured_evidence": {
+        "case_count": 8,
+        "failed_case_count": 0,
+        "mean_moving_detection_runtime_ms": 3.1543657501060807,
+        "mean_moving_keypoint_count": 652.0,
+        "mean_moving_spatial_coverage": 0.6953125,
+        "mean_moving_to_fixed_keypoint_count_ratio": 0.817995361848479,
+        "median_moving_keypoint_count": 800.0,
+        "successful_case_count": 8
+      },
+      "observations": [
+        "The largest moving-image keypoint count occurred in camera_identity with 800 keypoints.",
+        "The smallest moving-image keypoint count occurred in moon_blur with 36 keypoints.",
+        "The strongest keypoint-count reduction relative to its fixed image occurred in moon_blur, with a moving-to-fixed count ratio of 0.062.",
+        "The lowest 4x4 spatial coverage occurred in moon_blur at 0.375.",
+        "The configured n_features cap of 800 was reached in camera_identity, camera_translation, camera_rotation, camera_scale, camera_illumination. Counts in those cases are capped and should not be interpreted as the total number of detectable features.",
+        "All configured Day 16 cases produced ORB descriptors in both images."
+      ],
+      "interpretation": [
+        "ORB feature availability changes with image content and appearance or geometric modification, so later matching quality should be interpreted together with keypoint count and spatial coverage.",
+        "A large keypoint count alone is not evidence that a reliable transform can be estimated. Day 17 must test descriptor correspondence quality before any geometric conclusion is made."
+      ],
+      "limitations": [
+        "Day 16 measures detection and descriptor extraction only. It does not measure keypoint repeatability, correspondence correctness, or registration accuracy because descriptor matching has not been introduced yet.",
+        "The observations are specific to the tracked images, configured transformations, OpenCV ORB settings, and the machine used for this run."
+      ],
+      "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, and match spatial-coverage diagnostics after target-machine validation.",
+      "source_report": "reports/week04_day01_orb_features.json",
+      "daily_summary": "docs/daily/day_16_summary.md"
+    }
+  }
+}

@@ -78,6 +78,15 @@ from .multimodal import (
     multiplicative_bias_field,
     nonlinear_gamma_mapping,
 )
+from .orb import (
+    ORBConfig,
+    ORBFeatureResult,
+    ORBKeypoint,
+    detect_orb_features,
+    draw_orb_keypoints,
+    keypoint_grid_coverage,
+    keypoint_response_summary,
+)
 from .overlap import (
     apply_field_of_view,
     combine_valid_masks,
@@ -175,6 +184,9 @@ __all__ = [
     "rigid_angle_degrees",
     "MultimodalResult",
     "MedicalImageMetadata",
+    "ORBConfig",
+    "ORBFeatureResult",
+    "ORBKeypoint",
     "apply_multimodal_mapping",
     "edge_emphasized_representation",
     "histogram_remap",
@@ -226,6 +238,8 @@ __all__ = [
     "apply_transform",
     "checkerboard",
     "edge_overlay",
+    "detect_orb_features",
+    "draw_orb_keypoints",
     "clip_percentiles",
     "combine_valid_masks",
     "compose_transforms",
@@ -247,6 +261,8 @@ __all__ = [
     "mean_absolute_error",
     "mean_squared_error",
     "normalized_cross_correlation",
+    "keypoint_grid_coverage",
+    "keypoint_response_summary",
     "overlap_fraction",
     "overlap_mask_in_fixed_space",
     "preprocess_image",

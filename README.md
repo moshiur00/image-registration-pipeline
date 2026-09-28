@@ -2,7 +2,7 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 now contains phase-correlation baselines, controlled robustness evaluation, ECC translation and rigid registration, affine ECC, and coarse-to-fine multiresolution refinement.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 has started with ORB keypoint detection and binary descriptor extraction as the first feature-based component.
 
 ## Current status
 
@@ -15,8 +15,12 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Week 3: Monomodal Intensity and Frequency-Domain Baselines**  
 **Status: Complete, 5 of 5 working days**
 
-**Current automated test suite: 242 tests**  
-**Local Windows validation: 242 / 242 tests passed**
+**Week 4: Feature-Based Registration with Robust Model Estimation**  
+**Status: Day 16 implementation complete, target Windows validation pending**
+
+**Current repository test suite: 257 tests**  
+**Development environment: 253 passed, 4 SimpleITK-dependent tests skipped**  
+**Last full Windows validation before Day 16: 242 / 242 tests passed**
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
@@ -197,13 +201,30 @@ These measures are currently used to verify pipeline behavior. Later benchmark s
 - Single-resolution versus multiresolution affine comparison
 - Pyramid-level visualization and capture-range case analysis
 
+### Week 4 feature-based registration
+
+Day 16 adds the feature-detection layer used by the planned ORB + RANSAC registration method:
+
+- configurable OpenCV ORB keypoint detection;
+- 32-byte binary descriptor extraction;
+- serializable keypoint coordinates, orientation, scale, response, and octave metadata;
+- deterministic conversion of grayscale intensity images to ORB-compatible uint8 input;
+- optional detection masks;
+- safe `no_keypoints_detected` failure records;
+- 4 x 4 keypoint spatial-coverage diagnostic;
+- fixed and moving keypoint visualizations;
+- controlled feature-detection experiment using camera, coins, and moon source images;
+- tracked Day 16 report containing quantitative results, observations, interpretation, limitations, and the next experimental decision.
+
+Day 16 intentionally does not perform descriptor matching, RANSAC, or transform estimation. Those steps are introduced separately so feature availability can be measured before correspondence and geometric-estimation effects are mixed together.
+
 ## Future planned tasks
 
 | Week | Planned work | Main outcome |
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | ORB matching with RANSAC for similarity and affine estimation, match diagnostics, failure checks, and optional SIFT comparison |
+| Week 4 | Feature-based registration | In progress: Day 16 ORB keypoint detection and descriptor extraction implemented; matching and RANSAC remain |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
@@ -496,6 +517,14 @@ python scripts/week03_day05_integrated_baselines.py --config configs/week03_day0
 ```
 
 The Day 5 script consolidates the Week 3 baselines across 14 controlled cases and 24 registrations using the tracked camera, coins, and moon images. Phase correlation and ECC translation are compared on the same translation cases. ECC rigid is evaluated on rigid cases, while single-resolution and multiresolution ECC are evaluated on affine cases. The script writes standardized CSV/JSON results, an aggregated method table, success/runtime/TRE plots, representative alpha/checkerboard/difference/edge overlays, and a tracked compact report snapshot.
+
+Week 4 Day 1, ORB keypoint detection and descriptor extraction:
+
+```powershell
+python scripts/week04_day01_orb_features.py --config configs/week04_day01_orb_features.yaml
+```
+
+The Day 16 script measures feature availability before matching is introduced. It records keypoint and descriptor counts, response statistics, 4 x 4 spatial coverage, runtime, safe failure reasons, per-case keypoint figures, CSV/JSON results, and a compact tracked report with observations and limitations.
 
 ## Data and generated outputs
 

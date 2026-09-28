@@ -28,3 +28,11 @@ Week 3 stores one compact JSON snapshot for each experimental day. Day 5 also wr
 
 Future experimental days should follow `docs/EXPERIMENT_REPORTING_STANDARD.md` so quantitative evidence and narrative observations are stored together.
 
+
+## Week 4 feature-based snapshots
+
+`week04_day01_orb_features.json` stores Day 16 ORB detection and descriptor evidence, including per-case feature counts, descriptor counts, response statistics, spatial coverage, runtime, observations, interpretation, limitations, and target-machine validation status.
+
+Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Development-environment measurements are kept separate from final target-machine validation.
+
+`findings_week04.json` is the consolidated Week 4 findings registry. Each completed experimental day should append its measured evidence, observations, interpretation, limitations, decision, and source-record paths there.
