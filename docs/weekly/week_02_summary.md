@@ -97,12 +97,12 @@ Build a deterministic benchmark layer that produces monomodal and simulated mult
 
 ## Current validation
 
-The full project now contains 172 automated tests when all dependencies are available. In the validation environment, 168 tests passed and 4 SimpleITK-dependent tests were skipped because SimpleITK was unavailable there.
+The final target Windows environment ran the complete 172-test suite with all project dependencies available, and all 172 tests passed. Earlier build-environment runs skipped the SimpleITK-dependent tests when SimpleITK was unavailable.
 
 The integrated benchmark was generated twice with seed 42. Both runs produced the same dataset fingerprint:
 
 ```text
-7f5e0730a150ef0a89dcc3ad459d72cea99c392f5e91ff083d1bf5d1a5660c15
+9d74385564129b5bb714b9fb0b088c46097efad1422b20fc09c67e056ed9cd81
 ```
 
 The second run reported a reproducibility `MATCH`.

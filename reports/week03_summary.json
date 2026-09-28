@@ -1,0 +1,33 @@
+{
+  "week": 3,
+  "title": "Monomodal Intensity and Frequency-Domain Baselines",
+  "status": "complete",
+  "working_days_complete": 5,
+  "final_local_test_suite": "242 passed",
+  "daily_reports": [
+    "reports/week03_day01_phase_correlation.json",
+    "reports/week03_day02_phase_robustness.json",
+    "reports/week03_day03_ecc_translation_rigid.json",
+    "reports/week03_day04_ecc_affine_multiresolution.json",
+    "reports/week03_day05_integrated_baselines.json"
+  ],
+  "weekly_summary": "docs/weekly/week_03_summary.md",
+  "findings_registry": "reports/findings_days_01_15.json",
+  "validated_results": {
+    "integrated_base_cases": 14,
+    "integrated_registrations": 24,
+    "optimizer_successes": 23,
+    "within_development_tolerance": 21,
+    "phase_correlation_shared_translation_cases": "6/6",
+    "ecc_translation_shared_translation_cases": "4/6",
+    "ecc_rigid_cases": "4/4",
+    "ecc_affine_single_cases": "3/4",
+    "ecc_affine_multiresolution_cases": "4/4"
+  },
+  "reporting_notes": [
+    "Development thresholds are provisional until the unified evaluation stage.",
+    "Direct comparisons should use common cases and compatible motion models.",
+    "Optimizer completion is recorded separately from geometric correctness.",
+    "Runtime measurements are machine-dependent."
+  ]
+}

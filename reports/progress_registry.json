@@ -12,7 +12,7 @@
     },
     "week_03": {
       "status": "complete",
-      "summary": "docs/weekly/week_03_summary.md"
+      "summary": "reports/week03_summary.json"
     }
   },
   "days": {
@@ -76,5 +76,7 @@
       "status": "complete",
       "summary": "reports/week03_day05_integrated_baselines.json"
     }
-  }
+  },
+  "findings_registry": "reports/findings_days_01_15.json",
+  "reporting_standard": "docs/EXPERIMENT_REPORTING_STANDARD.md"
 }

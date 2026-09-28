@@ -20,6 +20,8 @@ The project is organized as an eight-week implementation and evaluation plan. We
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
+Reporting evidence from Days 1 to 15 is consolidated in `reports/findings_days_01_15.json` and `docs/EXPERIMENT_FINDINGS_DAYS_01_15.md`. Future experiment summaries follow `docs/EXPERIMENT_REPORTING_STANDARD.md`.
+
 ## Completed work
 
 ### Transformation foundation

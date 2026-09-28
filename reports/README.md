@@ -20,3 +20,11 @@ Week 3 experiment scripts write or refresh their compact report snapshot automat
 ## Week 3 baseline snapshots
 
 Week 3 stores one compact JSON snapshot for each experimental day. Day 5 also writes an integrated baseline snapshot containing method-level, condition-level, and motion-model summaries. The raw CSV/JSON tables and figures remain under `outputs/`, while the compact snapshot stays tracked with the repository.
+## Consolidated findings
+
+`findings_days_01_15.json` preserves the main measured evidence, observations, interpretations, limitations, and source-record paths from Days 1 to 15. It is intended as a compact input for later technical-report writing.
+
+`week03_summary.json` provides a compact Week 3 milestone summary and links the five detailed Week 3 experiment snapshots.
+
+Future experimental days should follow `docs/EXPERIMENT_REPORTING_STANDARD.md` so quantitative evidence and narrative observations are stored together.
+
