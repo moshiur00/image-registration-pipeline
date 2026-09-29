@@ -2,7 +2,7 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 core work is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases. The optional three-stage SIFT comparison is complete. The frozen target Windows comparison retained SIFT as an optional complement: it recovered one additional difficult case and reduced median TRE on the controlled subset, while requiring substantially higher runtime. ORB remains the core feature baseline. Week 5 Mutual Information work has started with the Day 21 rigid Mattes MI foundation. Target Windows validation for the new stage is pending.
 
 ## Current status
 
@@ -16,10 +16,14 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Status: Complete, 5 of 5 working days**
 
 **Week 4: Feature-Based Registration with Robust Model Estimation**  
-**Status: Complete, 5 of 5 working days**
+**Status: Complete, including optional SIFT extension**
 
-**Current repository test suite: 314 tests**  
-**Latest target Windows validation: 314 passed in 4.36s**  
+**Current repository test suite: 338 tests**  
+**Latest target Windows validation: 329 passed in 8.73s**  
+**SIFT Stage 1 target Windows validation: Complete, 7 / 7 matching cases passed**  
+**SIFT Stage 2 target Windows validation: Complete, 12 / 13 within configured geometric tolerances**  
+**SIFT Stage 3 target Windows validation: Complete, final decision RETAIN AS OPTIONAL COMPLEMENT**  
+**Week 5 Day 21: Rigid Mattes Mutual Information implementation complete, target Windows validation pending**  
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
@@ -236,14 +240,33 @@ Day 19 extends the feature-based path to general affine estimation. It adds spat
 
 Day 20 closes the feature-based stage with an integrated 13-case, 32-registration benchmark. The target Windows run produced 30 / 32 method-level successes and 26 / 32 results inside the configured development tolerances. Translation, rigid, and affine comparison groups remain separate, while low-texture and repeated-pattern cases are preserved as feature-specific failure diagnostics.
 
+### Optional SIFT extension before Week 5
+
+After the validated ORB + RANSAC baseline was completed, an optional three-stage SIFT comparison was started. The extension is kept separate from the five completed Week 4 working days.
+
+Stage 1 adds:
+
+- configurable OpenCV SIFT keypoint detection;
+- 128-dimensional `float32` descriptors;
+- L2 KNN descriptor matching with ratio filtering;
+- a ratio-threshold sweep from 0.60 to 0.85;
+- keypoint, match, descriptor-distance, and spatial-coverage visualizations;
+- tracked observations, interpretation, limitations, and target-validation status.
+
+The Stage 1 subset contains seven controlled cases. At ratio threshold 0.75, all seven retained at least eight accepted matches, with 359.0 mean accepted matches and 0.759 mean minimum correspondence coverage. The moon blur case was weakest with 11 accepted matches and 0.375 coverage. Target Windows validation completed with `327 passed in 9.44s`.
+
+Stage 2 reuses the existing similarity and affine RANSAC modules with SIFT correspondences. Target Windows validation completed on 2026-09-29 with `329 passed in 8.73s`. The 13-case experiment produced 12 / 13 matching successes, 12 / 13 RANSAC successes, and 12 / 13 results inside the configured geometric tolerances. The repeated-pattern affine probe failed before RANSAC because no SIFT matches survived ratio filtering. The low-texture affine probe retained 17 filtered matches, 15 inliers, and produced 1.247 px TRE.
+
+Stage 3 is complete as a frozen 12-case, 24-registration ORB versus SIFT comparison. Target Windows validation produced `333 passed in 3.57s`. ORB was inside tolerance on 10 / 12 cases and SIFT on 11 / 12. SIFT recovered the low-texture affine probe, both front-ends failed the repeated-pattern probe, and SIFT produced lower median TRE while requiring substantially higher mean runtime. Final decision: RETAIN AS OPTIONAL COMPLEMENT. ORB remains the core feature baseline.
+
 ## Roadmap and current status
 
 | Week | Planned work | Main outcome |
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | Complete: ORB detection and matching, similarity and affine RANSAC, robustness diagnostics, and integrated shared-case benchmark |
-| Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
+| Week 4 | Feature-based registration | Complete: validated ORB + RANSAC core baseline plus completed optional SIFT comparison; SIFT retained as an optional complement |
+| Week 5 | Multimodal registration | In progress: Day 21 rigid Mattes Mutual Information foundation implemented; target Windows validation pending before affine and real-data expansion |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
 | Week 8 | Final benchmark and documentation | Frozen benchmark, final tables and plots, technical analysis, documentation, presentation, and reproducible release snapshot |
@@ -276,7 +299,7 @@ Image resampling uses inverse source lookup internally. The stored project trans
 
 ```text
 image-registration-pipeline/
-├── configs/                    # experiment configurations through Day 20
+├── configs/                    # experiment configurations and optional SIFT comparison
 ├── data/
 │   ├── manifests/              # tracked dataset metadata
 │   └── samples/                # small tracked sample images
@@ -318,7 +341,7 @@ pip check
 pytest -v
 ```
 
-The current repository suite contains 314 tests. Day 20 target Windows validation completed with 314 / 314 tests passed in 4.36 seconds.
+The repository now collects 338 tests after adding Week 5 Day 21 coverage. In the current development container, 331 tests pass and 7 SimpleITK-dependent tests are skipped because SimpleITK is unavailable. The latest target Windows validation is the completed Week 4 result, `333 passed in 3.57s`. Week 5 Day 21 must now be validated on the target Windows environment.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 
@@ -521,6 +544,30 @@ python scripts/week04_day05_integrated_feature_baseline.py --config configs/week
 ```
 
 The Day 20 script compares Phase Correlation, ECC, and ORB + RANSAC only on explicitly shared case groups. Translation, rigid, and affine summaries remain separate, while low-texture and repeated-pattern feature diagnostics are reported separately from cross-family comparisons.
+
+Week 4 optional SIFT extension Stage 1, SIFT detection and L2 matching:
+
+```powershell
+python scripts/week04_sift_stage01_features_matching.py --config configs/week04_sift_stage01_features_matching.yaml
+```
+
+Stage 1 measures SIFT keypoint availability, 128-dimensional descriptors, L2 KNN ratio filtering, accepted-match spatial coverage, runtime, and ratio-threshold sensitivity. It does not fit RANSAC or report TRE. The tracked Stage 1 report is now validated on the target Windows environment.
+
+Week 4 optional SIFT extension Stage 2, shared similarity and affine RANSAC:
+
+```powershell
+python scripts/week04_sift_stage02_ransac.py --config configs/week04_sift_stage02_ransac.yaml
+```
+
+Stage 2 stores filtered-match diagnostics, RANSAC inliers and outliers, reprojection residuals, estimated transforms, TRE, model-aware parameter errors, runtime, execution success, geometric tolerance status, and explicit failure reasons. The tracked report `reports/week04_sift_stage02_ransac.json` now contains the completed target Windows validation.
+
+Week 4 optional SIFT extension Stage 3, frozen ORB versus SIFT comparison:
+
+```powershell
+python scripts/week04_orb_vs_sift_comparison.py --config configs/week04_orb_vs_sift_comparison.yaml
+```
+
+Stage 3 runs both feature front-ends on the same 12 cases and writes paired feature, matching, RANSAC, TRE, parameter-error, failure, and runtime evidence. The target Windows run is recorded in `reports/week04_orb_vs_sift_comparison.json`. The final decision is RETAIN AS OPTIONAL COMPLEMENT.
 
 ## Data and generated outputs
 

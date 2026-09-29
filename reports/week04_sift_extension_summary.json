@@ -1,0 +1,244 @@
+{
+  "current_repository_test_count": 333,
+  "decision_rule": [
+    "registration success rate",
+    "TRE and geometric correctness",
+    "difficult-case recovery",
+    "RANSAC inlier consistency",
+    "runtime"
+  ],
+  "extension": "Optional SIFT feature comparison",
+  "latest_target_windows_validation": "333 passed in 3.57s",
+  "next_action": "Begin Week 5 Mutual Information registration while keeping ORB as the core feature baseline and SIFT as an optional complement.",
+  "purpose": "Evaluate whether SIFT + RANSAC provides a meaningful complementary capability over the validated ORB + RANSAC baseline before Week 5.",
+  "stages": {
+    "stage_01": {
+      "development_run": {
+        "case_count": 7,
+        "mean_accepted_match_count": 359.0,
+        "mean_matching_runtime_ms": 2.777835714368848,
+        "mean_minimum_spatial_coverage": 0.7589285714285714,
+        "mean_total_detection_runtime_ms": 72.04053300006308,
+        "median_accepted_match_count": 393.0,
+        "successful_case_count": 7
+      },
+      "ratio_sweep": [
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 341.42857142857144,
+          "mean_minimum_spatial_coverage": 0.75,
+          "ratio_threshold": 0.6,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 353.42857142857144,
+          "mean_minimum_spatial_coverage": 0.75,
+          "ratio_threshold": 0.7,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 359.0,
+          "mean_minimum_spatial_coverage": 0.7589285714285714,
+          "ratio_threshold": 0.75,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 367.2857142857143,
+          "mean_minimum_spatial_coverage": 0.7678571428571429,
+          "ratio_threshold": 0.8,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 380.7142857142857,
+          "mean_minimum_spatial_coverage": 0.7678571428571429,
+          "ratio_threshold": 0.85,
+          "successful_case_count": 7
+        }
+      ],
+      "report": "reports/week04_sift_stage01_features_matching.json",
+      "status": "complete",
+      "summary": "docs/experiments/sift_stage01_summary.md",
+      "target_windows_run": {
+        "case_count": 7,
+        "mean_accepted_match_count": 359.0,
+        "mean_matching_runtime_ms": 3.4250428579980507,
+        "mean_minimum_spatial_coverage": 0.7589285714285714,
+        "mean_total_detection_runtime_ms": 79.38240000346143,
+        "median_accepted_match_count": 393.0,
+        "successful_case_count": 7
+      },
+      "target_windows_validation": {
+        "date": "2026-09-29",
+        "pytest_result": "327 passed in 9.44s",
+        "status": "complete"
+      },
+      "title": "SIFT detection, description, and L2 matching"
+    },
+    "stage_02": {
+      "development_run": {
+        "affine": {
+          "case_count": 6,
+          "maximum_tre_pixels": 1.2467384591678428,
+          "mean_inlier_ratio": 0.9482190132966121,
+          "mean_total_runtime_ms": 71.71183466670072,
+          "median_tre_pixels": 0.11554471717556772,
+          "ransac_success_count": 5,
+          "within_tolerance_count": 5
+        },
+        "case_count": 13,
+        "matching_success_count": 12,
+        "ransac_success_count": 12,
+        "similarity": {
+          "case_count": 7,
+          "maximum_tre_pixels": 0.23626240673911,
+          "mean_inlier_ratio": 0.9473840784721095,
+          "mean_total_runtime_ms": 80.14094871428564,
+          "median_tre_pixels": 0.06051860257310847,
+          "ransac_success_count": 7,
+          "within_tolerance_count": 7
+        },
+        "within_tolerance_count": 12
+      },
+      "local_validation": {
+        "pytest_result": "325 passed, 4 skipped in 2.61s",
+        "status": "complete",
+        "tests_collected": 329
+      },
+      "report": "reports/week04_sift_stage02_ransac.json",
+      "status": "complete",
+      "summary": "docs/experiments/sift_stage02_summary.md",
+      "target_windows_run": {
+        "affine": {
+          "case_count": 6,
+          "maximum_tre_pixels": 1.2467384591678428,
+          "mean_inlier_ratio": 0.9482190132966121,
+          "mean_total_runtime_ms": 68.8932666622956,
+          "median_tre_pixels": 0.11554473791457694,
+          "ransac_success_count": 5,
+          "within_tolerance_count": 5
+        },
+        "case_count": 13,
+        "matching_success_count": 12,
+        "ransac_success_count": 12,
+        "similarity": {
+          "case_count": 7,
+          "maximum_tre_pixels": 0.23626232091999966,
+          "mean_inlier_ratio": 0.9473840784721095,
+          "mean_total_runtime_ms": 91.73428572414976,
+          "median_tre_pixels": 0.06051859233508596,
+          "ransac_success_count": 7,
+          "within_tolerance_count": 7
+        },
+        "within_tolerance_count": 12
+      },
+      "target_windows_validation": {
+        "date": "2026-09-29",
+        "experiment_result": "12/13 matching successes; 12/13 RANSAC successes; 12/13 within configured geometric tolerances.",
+        "pytest_result": "329 passed in 8.73s",
+        "status": "complete"
+      },
+      "title": "SIFT + RANSAC similarity and affine registration"
+    },
+    "stage_03": {
+      "development_run": {
+        "frontends": {
+          "orb": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 15.598862468310674,
+            "mean_filtered_matches": 301.8333333333333,
+            "mean_fixed_keypoints": 690.6666666666666,
+            "mean_inlier_ratio": 0.8663372501929142,
+            "mean_moving_keypoints": 636.75,
+            "mean_total_runtime_ms": 8.212291749960817,
+            "median_tre_pixels": 0.28782839816696193,
+            "ransac_success_count": 10,
+            "within_tolerance_count": 10
+          },
+          "sift": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 1.2467384591678428,
+            "mean_filtered_matches": 268.75,
+            "mean_fixed_keypoints": 664.75,
+            "mean_inlier_ratio": 0.945241988146773,
+            "mean_moving_keypoints": 568.0833333333334,
+            "mean_total_runtime_ms": 74.25965966660897,
+            "median_tre_pixels": 0.11554471717556772,
+            "ransac_success_count": 11,
+            "within_tolerance_count": 11
+          }
+        },
+        "paired_outcomes": {
+          "both_within_tolerance": 10,
+          "neither_within_tolerance": 1,
+          "orb_only_within_tolerance": 0,
+          "sift_only_within_tolerance": 1
+        }
+      },
+      "final_sift_decision": {
+        "outcome": "retain_as_optional_complement",
+        "reason": "SIFT recovered low_texture_affine and produced lower median TRE on the frozen target run, but its mean runtime was substantially higher than ORB.",
+        "status": "complete"
+      },
+      "local_validation": {
+        "pytest_result": "329 passed, 4 skipped",
+        "scope": "development environment; SimpleITK unavailable for four skipped tests",
+        "status": "complete",
+        "tests_collected": 333
+      },
+      "report": "reports/week04_orb_vs_sift_comparison.json",
+      "status": "complete",
+      "target_windows_run": {
+        "frontends": {
+          "orb": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 15.598862468310667,
+            "mean_filtered_matches": 301.8333333333333,
+            "mean_fixed_keypoints": 690.6666666666666,
+            "mean_inlier_ratio": 0.8649603119290347,
+            "mean_moving_keypoints": 636.75,
+            "mean_total_runtime_ms": 18.981758335333627,
+            "median_tre_pixels": 0.4016044848900019,
+            "ransac_success_count": 10,
+            "within_tolerance_count": 10
+          },
+          "sift": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 1.2467384591678428,
+            "mean_filtered_matches": 268.75,
+            "mean_fixed_keypoints": 664.75,
+            "mean_inlier_ratio": 0.945241988146773,
+            "mean_moving_keypoints": 568.0833333333334,
+            "mean_total_runtime_ms": 55.565750004461734,
+            "median_tre_pixels": 0.11554473791457694,
+            "ransac_success_count": 11,
+            "within_tolerance_count": 11
+          }
+        },
+        "paired_outcomes": {
+          "both_within_tolerance": 10,
+          "neither_within_tolerance": 1,
+          "orb_only_within_tolerance": 0,
+          "sift_only_within_tolerance": 1
+        }
+      },
+      "target_windows_validation": {
+        "date": "2026-09-29",
+        "experiment_result": "ORB 10/12 within tolerance; SIFT 11/12 within tolerance; 10 both; 0 ORB-only; 1 SIFT-only; 1 neither.",
+        "pytest_result": "333 passed in 3.57s",
+        "status": "complete"
+      },
+      "technical_note": "docs/ORB_VS_SIFT_COMPARISON.md",
+      "title": "Frozen ORB versus SIFT controlled comparison"
+    }
+  },
+  "status": "complete",
+  "week": 4
+}

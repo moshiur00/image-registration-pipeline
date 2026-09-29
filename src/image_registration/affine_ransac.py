@@ -9,8 +9,7 @@ import cv2
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from .feature_matching import FeatureMatchResult, correspondence_points
-from .orb import ORBFeatureResult
+from .feature_matching import FeatureMatchResult, FeatureResult, correspondence_points
 from .transforms import apply_transform
 
 FloatArray = NDArray[np.float64]
@@ -511,14 +510,14 @@ def estimate_affine_ransac(
 
 def estimate_affine_ransac_from_matches(
     matches: FeatureMatchResult,
-    fixed_features: ORBFeatureResult,
-    moving_features: ORBFeatureResult,
+    fixed_features: FeatureResult,
+    moving_features: FeatureResult,
     *,
     fixed_shape: tuple[int, ...],
     moving_shape: tuple[int, ...],
     **kwargs: object,
 ) -> RANSACAffineResult:
-    """Estimate affine geometry from accepted ORB matches."""
+    """Estimate affine geometry from accepted feature correspondences."""
     if not matches.success:
         minimum_inliers = int(kwargs.get("minimum_inliers", 6))
         minimum_inlier_ratio = float(kwargs.get("minimum_inlier_ratio", 0.0))

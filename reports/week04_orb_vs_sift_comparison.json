@@ -1,0 +1,519 @@
+{
+  "development_run": {
+    "frontends": {
+      "orb": {
+        "case_count": 12,
+        "matching_success_count": 11,
+        "maximum_tre_pixels": 15.598862468310667,
+        "mean_filtered_matches": 301.8333333333333,
+        "mean_fixed_keypoints": 690.6666666666666,
+        "mean_inlier_ratio": 0.8649603119290347,
+        "mean_moving_keypoints": 636.75,
+        "mean_total_runtime_ms": 18.981758335333627,
+        "median_tre_pixels": 0.4016044848900019,
+        "ransac_success_count": 10,
+        "within_tolerance_count": 10
+      },
+      "sift": {
+        "case_count": 12,
+        "matching_success_count": 11,
+        "maximum_tre_pixels": 1.2467384591678428,
+        "mean_filtered_matches": 268.75,
+        "mean_fixed_keypoints": 664.75,
+        "mean_inlier_ratio": 0.945241988146773,
+        "mean_moving_keypoints": 568.0833333333334,
+        "mean_total_runtime_ms": 55.565750004461734,
+        "median_tre_pixels": 0.11554473791457694,
+        "ransac_success_count": 11,
+        "within_tolerance_count": 11
+      }
+    },
+    "paired_outcomes": {
+      "both_within_tolerance": 10,
+      "neither_within_tolerance": 1,
+      "orb_only_within_tolerance": 0,
+      "sift_only_within_tolerance": 1
+    }
+  },
+  "extension": "SIFT optional feature comparison",
+  "final_sift_decision": {
+    "evidence": {
+      "orb_mean_inlier_ratio": 0.8649603119290347,
+      "orb_mean_total_runtime_ms": 18.981758335333627,
+      "orb_median_tre_pixels": 0.4016044848900019,
+      "orb_within_tolerance": "10/12",
+      "shared_failure": "repeated_pattern_affine",
+      "sift_mean_inlier_ratio": 0.945241988146773,
+      "sift_mean_total_runtime_ms": 55.565750004461734,
+      "sift_median_tre_pixels": 0.11554473791457694,
+      "sift_only_recovery": "low_texture_affine",
+      "sift_to_orb_mean_runtime_ratio": 2.9273236453036477,
+      "sift_within_tolerance": "11/12"
+    },
+    "interpretation": "SIFT provides a measurable complementary benefit on this frozen subset: it has one additional within-tolerance recovery, lower median TRE, and a higher mean inlier ratio. It is retained as optional rather than promoted to the core baseline because the target Windows mean runtime is substantially higher and the evidence comes from a small controlled subset.",
+    "label": "RETAIN AS OPTIONAL COMPLEMENT",
+    "outcome": "retain_as_optional_complement",
+    "priority": [
+      "success rate",
+      "TRE and geometric correctness",
+      "difficult-case recovery",
+      "RANSAC consistency",
+      "runtime"
+    ],
+    "status": "complete"
+  },
+  "frontend_difference": {
+    "orb": "binary descriptor with Hamming distance",
+    "sift": "128-dimensional float descriptor with L2 distance"
+  },
+  "frozen_factors": [
+    "same fixed and moving image pair for both front-ends",
+    "same known Moving -> Fixed ground-truth transform",
+    "same transform model per case",
+    "same KNN ratio threshold 0.75 and minimum-match rule",
+    "same similarity or affine RANSAC settings",
+    "same control points and geometric evaluation thresholds",
+    "same output result schema"
+  ],
+  "interpretation": [
+    "Feature count and raw match count are diagnostics, not the deciding criteria.",
+    "The target Windows run reproduced the development outcome pattern: 10 shared passes, one SIFT-only recovery, and one shared failure.",
+    "SIFT had lower median TRE and a higher mean inlier ratio on the frozen subset, while its mean total runtime was substantially higher.",
+    "The evidence supports retaining SIFT as an optional complement to the core ORB baseline rather than replacing ORB."
+  ],
+  "limitations": [
+    "The frozen comparison contains 12 controlled cases and does not establish universal superiority of either feature method.",
+    "Runtime depends on the target machine, OpenCV build, and thread scheduling.",
+    "The repeated-pattern probe remained unresolved by both feature front-ends."
+  ],
+  "metrics_and_thresholds": {
+    "matching": {
+      "maximum_distance": null,
+      "maximum_drawn_matches": 100,
+      "minimum_matches": 8,
+      "orb_metric": "hamming",
+      "ratio_threshold": 0.75,
+      "sift_metric": "l2"
+    },
+    "ransac_affine": {
+      "confidence": 0.99,
+      "grid_cols": 4,
+      "grid_rows": 4,
+      "max_trials": 3000,
+      "minimum_inlier_ratio": 0.25,
+      "minimum_inliers": 8,
+      "minimum_linearity_ratio": 0.01,
+      "minimum_spatial_coverage": 0.125,
+      "plausibility": {
+        "allow_reflection": false,
+        "max_condition_number": 3.0,
+        "max_principal_scale": 1.8,
+        "max_shear_cosine": 0.65,
+        "max_translation_fraction_of_diagonal": 1.5,
+        "min_abs_determinant": 0.1,
+        "min_principal_scale": 0.5
+      },
+      "refine_iterations": 10,
+      "reprojection_threshold": 3.0
+    },
+    "ransac_similarity": {
+      "confidence": 0.99,
+      "max_trials": 2000,
+      "minimum_inlier_ratio": 0.25,
+      "minimum_inliers": 8,
+      "refine_iterations": 10,
+      "reprojection_threshold": 3.0
+    },
+    "validation": {
+      "affine": {
+        "affine_linear_error_threshold": 0.05,
+        "translation_error_threshold_pixels": 4.0,
+        "tre_threshold_pixels": 3.0
+      },
+      "similarity": {
+        "rotation_error_threshold_degrees": 1.0,
+        "scale_error_threshold": 0.03,
+        "translation_error_threshold_pixels": 3.0,
+        "tre_threshold_pixels": 2.0
+      }
+    }
+  },
+  "observations": [
+    "ORB was inside tolerance on 10 / 12 cases in this development run.",
+    "SIFT was inside tolerance on 11 / 12 cases in this development run.",
+    "Paired outcomes: 10 both passed, 0 ORB-only passes, 1 SIFT-only passes, 1 neither passed.",
+    "low_texture_affine: sift_only_within_tolerance.",
+    "repeated_pattern_affine: neither_within_tolerance."
+  ],
+  "paired_case_results": [
+    {
+      "case_id": "camera_affine_medium",
+      "model": "affine",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 344,
+        "inlier_count": 280,
+        "inlier_ratio": 0.813953488372093,
+        "total_runtime_ms": 14.82350000878796,
+        "tre_pixels": 0.7060582525886221,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 355,
+        "inlier_count": 337,
+        "inlier_ratio": 0.9492957746478873,
+        "total_runtime_ms": 56.22840000432916,
+        "tre_pixels": 0.15299865270353696,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.5530595998850851,
+      "sift_to_orb_runtime_ratio": 3.79319323850607
+    },
+    {
+      "case_id": "camera_affine_mild",
+      "model": "affine",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 489,
+        "inlier_count": 465,
+        "inlier_ratio": 0.950920245398773,
+        "total_runtime_ms": 10.684000008041039,
+        "tre_pixels": 0.11125556496008318,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 430,
+        "inlier_count": 422,
+        "inlier_ratio": 0.9813953488372092,
+        "total_runtime_ms": 57.2060000122292,
+        "tre_pixels": 0.0579220001627484,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.05333356479733478,
+      "sift_to_orb_runtime_ratio": 5.354361659413568
+    },
+    {
+      "case_id": "camera_blur",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 144,
+        "inlier_count": 121,
+        "inlier_ratio": 0.8402777777777778,
+        "total_runtime_ms": 10.032000005594455,
+        "tre_pixels": 0.5304488686100283,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "challenging",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 47,
+        "inlier_count": 38,
+        "inlier_ratio": 0.8085106382978723,
+        "total_runtime_ms": 49.62370000430383,
+        "tre_pixels": 0.23626232091999966,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.2941865476900286,
+      "sift_to_orb_runtime_ratio": 4.94654106625106
+    },
+    {
+      "case_id": "camera_partial_overlap",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 556,
+        "inlier_count": 538,
+        "inlier_ratio": 0.9676258992805755,
+        "total_runtime_ms": 10.953399978461675,
+        "tre_pixels": 0.12017523242547049,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "challenging",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 424,
+        "inlier_count": 416,
+        "inlier_ratio": 0.9811320754716981,
+        "total_runtime_ms": 96.8579000182217,
+        "tre_pixels": 0.005311634356603167,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.11486359806886731,
+      "sift_to_orb_runtime_ratio": 8.842724652498692
+    },
+    {
+      "case_id": "camera_rotation",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 509,
+        "inlier_count": 478,
+        "inlier_ratio": 0.9390962671905697,
+        "total_runtime_ms": 119.03089999395888,
+        "tre_pixels": 0.2519493794035863,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 437,
+        "inlier_count": 415,
+        "inlier_ratio": 0.9496567505720824,
+        "total_runtime_ms": 63.19079997774679,
+        "tre_pixels": 0.13941291637556116,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.11253646302802514,
+      "sift_to_orb_runtime_ratio": 0.5308772762446884
+    },
+    {
+      "case_id": "camera_scale",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 432,
+        "inlier_count": 374,
+        "inlier_ratio": 0.8657407407407407,
+        "total_runtime_ms": 11.298299999907613,
+        "tre_pixels": 0.4016044848900019,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 393,
+        "inlier_count": 383,
+        "inlier_ratio": 0.9745547073791349,
+        "total_runtime_ms": 57.89340000774246,
+        "tre_pixels": 0.057861818719186955,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.34374266617081495,
+      "sift_to_orb_runtime_ratio": 5.124080614624843
+    },
+    {
+      "case_id": "camera_similarity_medium",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 419,
+        "inlier_count": 393,
+        "inlier_ratio": 0.9379474940334129,
+        "total_runtime_ms": 10.610800003632903,
+        "tre_pixels": 0.3017633278210822,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 397,
+        "inlier_count": 382,
+        "inlier_ratio": 0.9622166246851386,
+        "total_runtime_ms": 59.11649999325164,
+        "tre_pixels": 0.1256473154088908,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.17611601241219138,
+      "sift_to_orb_runtime_ratio": 5.571351827667231
+    },
+    {
+      "case_id": "coins_affine",
+      "model": "affine",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 278,
+        "inlier_count": 223,
+        "inlier_ratio": 0.802158273381295,
+        "total_runtime_ms": 10.017300010076724,
+        "tre_pixels": 0.5025933331187776,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 324,
+        "inlier_count": 306,
+        "inlier_ratio": 0.9444444444444444,
+        "total_runtime_ms": 43.22140000294894,
+        "tre_pixels": 0.11554473791457694,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.3870485952042007,
+      "sift_to_orb_runtime_ratio": 4.314675607146751
+    },
+    {
+      "case_id": "coins_rotation",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 414,
+        "inlier_count": 382,
+        "inlier_ratio": 0.9227053140096618,
+        "total_runtime_ms": 7.339399991906248,
+        "tre_pixels": 0.14744917387953155,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "normal",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 390,
+        "inlier_count": 376,
+        "inlier_ratio": 0.9641025641025641,
+        "total_runtime_ms": 38.04440000385512,
+        "tre_pixels": 0.10096072492225769,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -0.04648844895727386,
+      "sift_to_orb_runtime_ratio": 5.183584495436924
+    },
+    {
+      "case_id": "low_texture_affine",
+      "model": "affine",
+      "orb": {
+        "failure_reason": "insufficient_ransac_inliers",
+        "filtered_matches": 8,
+        "inlier_count": 6,
+        "inlier_ratio": 0.75,
+        "total_runtime_ms": 5.067000020062551,
+        "tre_pixels": 15.598862468310667,
+        "within_tolerance": false
+      },
+      "outcome": "sift_only_within_tolerance",
+      "scope": "failure_probe",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 17,
+        "inlier_count": 15,
+        "inlier_ratio": 0.8823529411764706,
+        "total_runtime_ms": 43.94630000751931,
+        "tre_pixels": 1.2467384591678428,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -14.352124009142825,
+      "sift_to_orb_runtime_ratio": 8.673041214429837
+    },
+    {
+      "case_id": "moon_blur",
+      "model": "similarity",
+      "orb": {
+        "failure_reason": null,
+        "filtered_matches": 29,
+        "inlier_count": 21,
+        "inlier_ratio": 0.7241379310344828,
+        "total_runtime_ms": 5.949699989287183,
+        "tre_pixels": 1.1131764541531086,
+        "within_tolerance": true
+      },
+      "outcome": "both_within_tolerance",
+      "scope": "challenging",
+      "sift": {
+        "failure_reason": null,
+        "filtered_matches": 11,
+        "inlier_count": 11,
+        "inlier_ratio": 1.0,
+        "total_runtime_ms": 45.96660000970587,
+        "tre_pixels": 0.0908655694370875,
+        "within_tolerance": true
+      },
+      "sift_minus_orb_tre_pixels": -1.0223108847160212,
+      "sift_to_orb_runtime_ratio": 7.72586854672869
+    },
+    {
+      "case_id": "repeated_pattern_affine",
+      "model": "affine",
+      "orb": {
+        "failure_reason": "insufficient_filtered_matches",
+        "filtered_matches": 0,
+        "inlier_count": 0,
+        "inlier_ratio": null,
+        "total_runtime_ms": 11.974800014286302,
+        "tre_pixels": null,
+        "within_tolerance": false
+      },
+      "outcome": "neither_within_tolerance",
+      "scope": "failure_probe",
+      "sift": {
+        "failure_reason": "insufficient_filtered_matches",
+        "filtered_matches": 0,
+        "inlier_count": 0,
+        "inlier_ratio": null,
+        "total_runtime_ms": 55.493600011686794,
+        "tre_pixels": null,
+        "within_tolerance": false
+      },
+      "sift_minus_orb_tre_pixels": null,
+      "sift_to_orb_runtime_ratio": 4.6341984789291875
+    }
+  ],
+  "purpose": "Compare ORB and SIFT feature front-ends under identical image pairs, ground truth, transform models, RANSAC settings, evaluation points, success criteria, and result schema.",
+  "raw_output_directory": "outputs/week04_orb_vs_sift_comparison",
+  "setup": {
+    "case_count": 12,
+    "challenging_case_count": 3,
+    "failure_probe_count": 2,
+    "normal_case_count": 7,
+    "registration_count": 24,
+    "seed": 42
+  },
+  "stage": 3,
+  "status": "implementation_complete_target_validation_pending",
+  "target_windows_run": {
+    "frontends": {
+      "orb": {
+        "case_count": 12,
+        "matching_success_count": 11,
+        "maximum_tre_pixels": 15.598862468310667,
+        "mean_filtered_matches": 301.8333333333333,
+        "mean_fixed_keypoints": 690.6666666666666,
+        "mean_inlier_ratio": 0.8649603119290347,
+        "mean_moving_keypoints": 636.75,
+        "mean_total_runtime_ms": 18.981758335333627,
+        "median_tre_pixels": 0.4016044848900019,
+        "ransac_success_count": 10,
+        "within_tolerance_count": 10
+      },
+      "sift": {
+        "case_count": 12,
+        "matching_success_count": 11,
+        "maximum_tre_pixels": 1.2467384591678428,
+        "mean_filtered_matches": 268.75,
+        "mean_fixed_keypoints": 664.75,
+        "mean_inlier_ratio": 0.945241988146773,
+        "mean_moving_keypoints": 568.0833333333334,
+        "mean_total_runtime_ms": 55.565750004461734,
+        "median_tre_pixels": 0.11554473791457694,
+        "ransac_success_count": 11,
+        "within_tolerance_count": 11
+      }
+    },
+    "paired_outcomes": {
+      "both_within_tolerance": 10,
+      "neither_within_tolerance": 1,
+      "orb_only_within_tolerance": 0,
+      "sift_only_within_tolerance": 1
+    }
+  },
+  "target_windows_validation": {
+    "date": "2026-09-29",
+    "experiment_result": "ORB 10/12 within tolerance; SIFT 11/12 within tolerance; paired outcomes 10 both, 0 ORB-only, 1 SIFT-only, 1 neither.",
+    "pytest_result": "333 passed in 3.57s",
+    "status": "complete"
+  },
+  "technical_note": "docs/ORB_VS_SIFT_COMPARISON.md",
+  "title": "Frozen ORB versus SIFT controlled comparison",
+  "week": 4
+}

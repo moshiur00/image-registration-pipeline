@@ -1,0 +1,92 @@
+experiment:
+  name: week05_day01_mi_rigid
+  seed: 42
+
+mutual_information:
+  histogram_bins: 50
+  sampling_strategy: random
+  sampling_percentage: 0.20
+  sampling_seed: 42
+  learning_rate: 2.0
+  minimum_step: 0.001
+  number_of_iterations: 200
+  relaxation_factor: 0.5
+  gradient_magnitude_tolerance: 0.0001
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+  initialization: geometry
+
+validation:
+  tre_threshold_pixels: 3.0
+  rotation_error_threshold_degrees: 1.5
+  translation_error_threshold_pixels: 4.0
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+cases:
+  - id: camera_monomodal_rigid
+    source: camera
+    scope: monomodal_reference
+    angle_degrees: 6.0
+    tx: 14.0
+    ty: -10.0
+
+  - id: camera_inversion_rigid
+    source: camera
+    scope: simulated_multimodal
+    angle_degrees: 6.0
+    tx: 14.0
+    ty: -10.0
+    modality_mapping:
+      type: intensity_inversion
+
+  - id: camera_gamma_rigid
+    source: camera
+    scope: simulated_multimodal
+    angle_degrees: -8.0
+    tx: -16.0
+    ty: 11.0
+    modality_mapping:
+      type: nonlinear_gamma
+      gamma: 1.8
+
+  - id: camera_histogram_rigid
+    source: camera
+    scope: simulated_multimodal
+    angle_degrees: 10.0
+    tx: 18.0
+    ty: -12.0
+    modality_mapping:
+      type: histogram_remap
+      input_knots: [0.0, 0.25, 0.5, 0.75, 1.0]
+      output_knots: [0.0, 0.10, 0.65, 0.88, 1.0]
+
+  - id: coins_bias_rigid
+    source: coins
+    scope: simulated_multimodal
+    angle_degrees: -7.0
+    tx: 12.0
+    ty: 9.0
+    modality_mapping:
+      type: bias_field
+      strength_fraction: 0.30
+      center_x_fraction: 0.60
+      center_y_fraction: 0.40
+      sigma_fraction: 0.35
+
+  - id: moon_edge_rigid
+    source: moon
+    scope: challenging_simulated_multimodal
+    angle_degrees: 5.0
+    tx: -10.0
+    ty: 8.0
+    modality_mapping:
+      type: edge_emphasis
+      blend: 0.85
+
+output:
+  directory: outputs/week05_day01_mi_rigid
+  report_snapshot: reports/week05_day01_mi_rigid.json

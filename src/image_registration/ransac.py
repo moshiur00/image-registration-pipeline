@@ -15,8 +15,7 @@ import cv2
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from .feature_matching import FeatureMatchResult, correspondence_points
-from .orb import ORBFeatureResult
+from .feature_matching import FeatureMatchResult, FeatureResult, correspondence_points
 from .transforms import apply_transform
 
 FloatArray = NDArray[np.float64]
@@ -286,8 +285,8 @@ def estimate_similarity_ransac(
 
 def estimate_similarity_ransac_from_matches(
     matches: FeatureMatchResult,
-    fixed_features: ORBFeatureResult,
-    moving_features: ORBFeatureResult,
+    fixed_features: FeatureResult,
+    moving_features: FeatureResult,
     **kwargs: object,
 ) -> RANSACSimilarityResult:
     """Estimate similarity directly from accepted descriptor correspondences."""

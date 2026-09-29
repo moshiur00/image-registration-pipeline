@@ -1,24 +1,4 @@
 {
-  "schema_version": 1,
-  "purpose": "Compact index of completed internship work for future report generation",
-  "weeks": {
-    "week_01": {
-      "status": "complete",
-      "summary": "reports/week01_summary.json"
-    },
-    "week_02": {
-      "status": "complete",
-      "summary": "reports/week02_summary.json"
-    },
-    "week_03": {
-      "status": "complete",
-      "summary": "reports/week03_summary.json"
-    },
-    "week_04": {
-      "status": "complete",
-      "summary": "reports/week04_summary.json"
-    }
-  },
   "days": {
     "day_01": {
       "status": "complete",
@@ -99,9 +79,56 @@
     "day_20": {
       "status": "complete",
       "summary": "reports/week04_day05_integrated_feature_baseline.json"
+    },
+    "day_21": {
+      "documentation": "docs/daily/day_21_summary.md",
+      "status": "implementation_complete_target_validation_pending",
+      "summary": "reports/week05_day01_mi_rigid.json"
+    }
+  },
+  "extensions": {
+    "week04_sift": {
+      "current_stage": "stage_03_complete",
+      "final_decision": "retain_as_optional_complement",
+      "latest_target_windows_validation": "333 passed in 3.57s",
+      "stage_01_report": "reports/week04_sift_stage01_features_matching.json",
+      "stage_01_status": "complete",
+      "stage_01_summary": "docs/experiments/sift_stage01_summary.md",
+      "stage_02_report": "reports/week04_sift_stage02_ransac.json",
+      "stage_02_status": "complete",
+      "stage_02_summary": "docs/experiments/sift_stage02_summary.md",
+      "stage_03_documentation": "docs/ORB_VS_SIFT_COMPARISON.md",
+      "stage_03_report": "reports/week04_orb_vs_sift_comparison.json",
+      "stage_03_status": "complete",
+      "status": "complete",
+      "summary": "reports/week04_sift_extension_summary.json"
     }
   },
   "findings_registry": "reports/findings_days_01_15.json",
+  "purpose": "Compact index of completed internship work for future report generation",
   "reporting_standard": "docs/EXPERIMENT_REPORTING_STANDARD.md",
-  "week04_findings_registry": "reports/findings_week04.json"
+  "schema_version": 1,
+  "week04_findings_registry": "reports/findings_week04.json",
+  "weeks": {
+    "week_01": {
+      "status": "complete",
+      "summary": "reports/week01_summary.json"
+    },
+    "week_02": {
+      "status": "complete",
+      "summary": "reports/week02_summary.json"
+    },
+    "week_03": {
+      "status": "complete",
+      "summary": "reports/week03_summary.json"
+    },
+    "week_04": {
+      "status": "complete",
+      "summary": "reports/week04_summary.json"
+    },
+    "week_05": {
+      "status": "in_progress",
+      "summary": "reports/week05_summary.json"
+    }
+  }
 }

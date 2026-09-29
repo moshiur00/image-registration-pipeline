@@ -1,0 +1,23 @@
+{
+  "day": 21,
+  "implementation": {
+    "initialization": [
+      "identity",
+      "geometry",
+      "moments"
+    ],
+    "metric": "Mattes mutual information",
+    "motion_model": "2D rigid",
+    "multiresolution": true,
+    "physical_geometry_support": "2D SimpleITK image spacing, origin, and direction are preserved by register_sitk",
+    "sampling": [
+      "none",
+      "regular",
+      "random with fixed seed"
+    ]
+  },
+  "next_step": "Run the full test suite and the Day 21 experiment on the target Windows environment before interpreting registration performance.",
+  "status": "implementation_complete_target_validation_pending",
+  "title": "Rigid Mattes Mutual Information registration foundation",
+  "week": 5
+}

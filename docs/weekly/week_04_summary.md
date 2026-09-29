@@ -137,4 +137,18 @@ The low-texture diagnostic failed before matching because too few descriptors we
 
 ## Week 4 conclusion
 
-The feature-based stage is complete. ORB detection, descriptor filtering, similarity and affine RANSAC, degeneracy checks, texture diagnostics, threshold sweeps, and the integrated shared-case benchmark are all validated. The next stage is multimodal registration with mutual information.
+The core feature-based stage is complete. ORB detection, descriptor filtering, similarity and affine RANSAC, degeneracy checks, texture diagnostics, threshold sweeps, and the integrated shared-case benchmark are all validated. Before multimodal registration begins, the optional three-stage SIFT comparison is being completed.
+
+## Optional SIFT extension before Week 5
+
+The three-stage optional SIFT extension is complete and validated on the target Windows environment.
+
+Stage 1 implemented SIFT detection, 128-dimensional floating-point descriptors, L2 KNN matching, ratio filtering, spatial-coverage diagnostics, and the threshold sweep. Target validation produced 7 / 7 matching successes and `327 passed in 9.44s`.
+
+Stage 2 reused the existing similarity and affine RANSAC modules. Target validation produced 12 / 13 matching successes, 12 / 13 RANSAC successes, 12 / 13 results inside tolerance, and `329 passed in 8.73s`.
+
+Stage 3 used a frozen 12-case paired ORB versus SIFT comparison. Target Windows validation produced `333 passed in 3.57s`. ORB was within tolerance on 10 / 12 cases and SIFT on 11 / 12. Ten cases passed with both methods, `low_texture_affine` passed only with SIFT, and `repeated_pattern_affine` failed for both. Median numeric TRE was 0.402 px for ORB and 0.116 px for SIFT. Mean total runtime was 18.982 ms for ORB and 55.566 ms for SIFT.
+
+The final decision is **RETAIN AS OPTIONAL COMPLEMENT**. SIFT provides a measurable geometric benefit on this subset and recovers one difficult low-texture case, but it has a substantially higher runtime cost. ORB therefore remains the core feature baseline. SIFT is retained as an optional method for selected difficult cases and later robustness analysis.
+
+Week 4 and its optional extension are now closed. The next stage is Week 5 Mutual Information registration.

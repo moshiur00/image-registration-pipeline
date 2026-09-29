@@ -1,0 +1,742 @@
+{
+  "case_results": [
+    {
+      "case_id": "camera_identity",
+      "condition_metadata": {
+        "operation": "identity"
+      },
+      "fixed_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 66.18460000026971,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 1.0,
+        "accepted_match_count": 791,
+        "distance": {
+          "maximum": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.9375,
+        "minimum_spatial_coverage": 0.9375,
+        "moving_spatial_coverage": 0.9375,
+        "rejected_match_count": 0,
+        "runtime_ms": 4.806600001757033,
+        "success": true,
+        "tentative_match_count": 791
+      },
+      "moving_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 48.920400004135445,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "operation": "identity",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9396926207859083,
+              -0.3420201433256687,
+              102.79468200890875
+            ],
+            [
+              0.34202014332566866,
+              0.9396926207859084,
+              -71.97761123050797
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9396926207859084,
+              0.3420201433256687,
+              -71.97761123050793
+            ],
+            [
+              -0.3420201433256687,
+              0.9396926207859084,
+              102.79468200890878
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 20.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "fixed_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 40.41279999364633,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.54625,
+        "accepted_match_count": 437,
+        "distance": {
+          "maximum": 283.67938232421875,
+          "mean": 72.10521336060094,
+          "median": 55.44366455078125,
+          "minimum": 5.830951690673828,
+          "q25": 36.660606384277344,
+          "q75": 89.62142944335938
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.75,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.9375,
+        "rejected_match_count": 363,
+        "runtime_ms": 4.491600004257634,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "moving_features": {
+        "descriptor_count": 800,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "response": {
+          "maximum": 0.10137513279914856,
+          "mean": 0.03228341586887837,
+          "median": 0.029032650403678417,
+          "minimum": 0.014835895039141178
+        },
+        "runtime_ms": 46.8101000005845,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "operation": "rigid",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_scale",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.8695652173913044,
+              0.0,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.8695652173913044,
+              33.326086956521735
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              1.15,
+              0.0,
+              -38.32499999999999
+            ],
+            [
+              -0.0,
+              1.15,
+              -38.32499999999999
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": 0.0,
+            "center": [
+              255.5,
+              255.5
+            ],
+            "scale": 1.15,
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "similarity"
+        },
+        "operation": "similarity"
+      },
+      "fixed_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 42.49350000463892,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.5383561643835616,
+        "accepted_match_count": 393,
+        "distance": {
+          "maximum": 268.4976806640625,
+          "mean": 82.4687936991529,
+          "median": 73.14369201660156,
+          "minimum": 18.275667190551758,
+          "q25": 49.949974060058594,
+          "q75": 106.01886749267578
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.8125,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 337,
+        "runtime_ms": 6.959999998798594,
+        "success": true,
+        "tentative_match_count": 730
+      },
+      "moving_features": {
+        "descriptor_count": 730,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 730,
+        "response": {
+          "maximum": 0.10136174410581589,
+          "mean": 0.034119367126171314,
+          "median": 0.031200401484966278,
+          "minimum": 0.01346481405198574
+        },
+        "runtime_ms": 37.484000000404194,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "operation": "similarity",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "fixed_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 44.66110000794288,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.5135135135135135,
+        "accepted_match_count": 57,
+        "distance": {
+          "maximum": 301.0332336425781,
+          "mean": 104.73866496378915,
+          "median": 93.33809661865234,
+          "minimum": 1.4142135381698608,
+          "q25": 35.028560638427734,
+          "q75": 157.25775146484375
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.6875,
+        "minimum_spatial_coverage": 0.6875,
+        "moving_spatial_coverage": 0.6875,
+        "rejected_match_count": 54,
+        "runtime_ms": 0.7355999987339601,
+        "success": true,
+        "tentative_match_count": 111
+      },
+      "moving_features": {
+        "descriptor_count": 111,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 111,
+        "response": {
+          "maximum": 0.07702670991420746,
+          "mean": 0.03318465186434018,
+          "median": 0.03243597596883774,
+          "minimum": 0.0136107811704278
+        },
+        "runtime_ms": 32.15179999824613,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "operation": "gaussian_blur",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_partial_overlap",
+      "condition_metadata": {
+        "center_x_fraction": 0.62,
+        "center_y_fraction": 0.5,
+        "height_fraction": 0.72,
+        "operation": "restricted_fov",
+        "visible_fraction": 0.4180641174316406,
+        "width_fraction": 0.58
+      },
+      "fixed_features": {
+        "descriptor_count": 791,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "response": {
+          "maximum": 0.10164633393287659,
+          "mean": 0.03179750315651919,
+          "median": 0.027764759957790375,
+          "minimum": 0.0134079335257411
+        },
+        "runtime_ms": 39.78980000829324,
+        "spatial_coverage": 0.9375,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.8427184466019417,
+        "accepted_match_count": 434,
+        "distance": {
+          "maximum": 273.1849060058594,
+          "mean": 9.483716416468818,
+          "median": 0.0,
+          "minimum": 0.0,
+          "q25": 0.0,
+          "q75": 0.0
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.875,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.75,
+        "rejected_match_count": 81,
+        "runtime_ms": 3.6988999927416444,
+        "success": true,
+        "tentative_match_count": 515
+      },
+      "moving_features": {
+        "descriptor_count": 515,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 515,
+        "response": {
+          "maximum": 0.11274641007184982,
+          "mean": 0.03642197474113946,
+          "median": 0.0326775424182415,
+          "minimum": 0.013336703181266785
+        },
+        "runtime_ms": 37.432900004205294,
+        "spatial_coverage": 0.75,
+        "success": true
+      },
+      "operation": "restricted_fov",
+      "source_id": "camera"
+    },
+    {
+      "case_id": "coins_rotation",
+      "condition_metadata": {
+        "ground_truth_transform": {
+          "fixed_to_moving": [
+            [
+              0.9659258262890682,
+              0.25881904510252074,
+              -32.5564715448372
+            ],
+            [
+              -0.25881904510252074,
+              0.9659258262890684,
+              54.70904736748339
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "moving_to_fixed": [
+            [
+              0.9659258262890683,
+              -0.25881904510252074,
+              45.60688007612404
+            ],
+            [
+              0.25881904510252074,
+              0.9659258262890683,
+              -44.418646906782016
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "parameters": {
+            "angle_degrees": -15.0,
+            "center": [
+              191.5,
+              151.0
+            ],
+            "tx": 0.0,
+            "ty": 0.0
+          },
+          "transform_type": "rigid"
+        },
+        "operation": "rigid"
+      },
+      "fixed_features": {
+        "descriptor_count": 655,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 655,
+        "response": {
+          "maximum": 0.08342606574296951,
+          "mean": 0.029677705998525365,
+          "median": 0.026258952915668488,
+          "minimum": 0.013362009078264236
+        },
+        "runtime_ms": 25.529699996695854,
+        "spatial_coverage": 1.0,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.499359795134443,
+        "accepted_match_count": 390,
+        "distance": {
+          "maximum": 288.0173645019531,
+          "mean": 76.87562057299492,
+          "median": 64.51345825195312,
+          "minimum": 5.830951690673828,
+          "q25": 43.928887367248535,
+          "q75": 94.30134582519531
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 1.0,
+        "minimum_spatial_coverage": 1.0,
+        "moving_spatial_coverage": 1.0,
+        "rejected_match_count": 391,
+        "runtime_ms": 3.1790000066393986,
+        "success": true,
+        "tentative_match_count": 781
+      },
+      "moving_features": {
+        "descriptor_count": 781,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 781,
+        "response": {
+          "maximum": 0.08039949834346771,
+          "mean": 0.0286849121707426,
+          "median": 0.025296267122030258,
+          "minimum": 0.013348722830414772
+        },
+        "runtime_ms": 28.313000002526678,
+        "spatial_coverage": 1.0,
+        "success": true
+      },
+      "operation": "rigid",
+      "source_id": "coins"
+    },
+    {
+      "case_id": "moon_blur",
+      "condition_metadata": {
+        "operation": "gaussian_blur",
+        "sigma": 3.0
+      },
+      "fixed_features": {
+        "descriptor_count": 95,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 95,
+        "response": {
+          "maximum": 0.06916210800409317,
+          "mean": 0.02439350975971473,
+          "median": 0.020159954205155373,
+          "minimum": 0.013391776941716671
+        },
+        "runtime_ms": 30.063500002142973,
+        "spatial_coverage": 0.875,
+        "success": true
+      },
+      "matching": {
+        "acceptance_rate": 0.5238095238095238,
+        "accepted_match_count": 11,
+        "distance": {
+          "maximum": 141.1807403564453,
+          "mean": 42.40181372382424,
+          "median": 28.861740112304688,
+          "minimum": 4.898979663848877,
+          "q25": 14.736313819885254,
+          "q75": 48.160654067993164
+        },
+        "failure_reason": null,
+        "fixed_spatial_coverage": 0.375,
+        "minimum_spatial_coverage": 0.375,
+        "moving_spatial_coverage": 0.375,
+        "rejected_match_count": 10,
+        "runtime_ms": 0.1036000030580908,
+        "success": true,
+        "tentative_match_count": 21
+      },
+      "moving_features": {
+        "descriptor_count": 21,
+        "descriptor_dtype": "float32",
+        "descriptor_length": 128,
+        "failure_reason": null,
+        "keypoint_count": 21,
+        "response": {
+          "maximum": 0.06219888851046562,
+          "mean": 0.027165199496916363,
+          "median": 0.021154826506972313,
+          "minimum": 0.013777634128928185
+        },
+        "runtime_ms": 35.429600000497885,
+        "spatial_coverage": 0.625,
+        "success": true
+      },
+      "operation": "gaussian_blur",
+      "source_id": "moon"
+    }
+  ],
+  "configuration": {
+    "matching": {
+      "maximum_distance": null,
+      "maximum_drawn_matches": 80,
+      "metric": "l2",
+      "minimum_matches": 8,
+      "ratio_sweep": [
+        0.6,
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "ratio_threshold": 0.75
+    },
+    "sift": {
+      "contrast_threshold": 0.04,
+      "edge_threshold": 10.0,
+      "n_features": 800,
+      "n_octave_layers": 3,
+      "sigma": 1.6,
+      "spatial_grid": {
+        "columns": 4,
+        "rows": 4
+      }
+    }
+  },
+  "development_run": {
+    "case_count": 7,
+    "successful_case_count": 7,
+    "mean_accepted_match_count": 359.0,
+    "median_accepted_match_count": 393.0,
+    "mean_minimum_spatial_coverage": 0.7589285714285714,
+    "mean_total_detection_runtime_ms": 79.38240000346143,
+    "mean_matching_runtime_ms": 3.4250428579980507
+  },
+  "experiment_summary": "docs/experiments/sift_stage01_summary.md",
+  "extension": "SIFT optional feature comparison",
+  "findings": {
+    "decision": "Carry ratio threshold 0.75 provisionally into SIFT Stage 2, where similarity and affine RANSAC will determine whether the retained correspondences are geometrically consistent.",
+    "interpretation": [
+      "SIFT uses 128-dimensional floating-point descriptors and L2 distance, so its descriptor distances are not directly comparable with ORB Hamming distances.",
+      "Accepted-match count and spatial coverage are descriptive inputs to later geometric estimation. They are not registration-accuracy metrics.",
+      "The ratio threshold remains provisional because Stage 1 does not test geometric inliers or ground-truth registration error."
+    ],
+    "limitations": [
+      "Stage 1 evaluates SIFT detection, description, and correspondence filtering only. No RANSAC transform is estimated.",
+      "The subset is intentionally small and uses tracked monomodal images with controlled transformations and degradations.",
+      "Runtime measurements are machine-dependent. The stored 79.382 ms mean detection time and 3.425 ms mean L2 matching time are from the validated target Windows run."
+    ],
+    "observations": [
+      "moon_blur produced the fewest accepted SIFT matches at the provisional threshold with 11 matches.",
+      "camera_identity produced the most accepted SIFT matches at the provisional threshold with 791 matches.",
+      "moon_blur had the lowest accepted-correspondence spatial coverage at 0.375.",
+      "coins_rotation retained 390 accepted matches with full 4 x 4 correspondence coverage.",
+      "Relaxing the ratio threshold from 0.60 to 0.85 increased the mean accepted-match count from 341.4 to 380.7. Stage 1 does not establish that the looser threshold is geometrically better."
+    ]
+  },
+  "local_validation": {
+    "status": "complete",
+    "note": "Validated on the target Windows environment. The full repository test suite passed and the seven-case SIFT Stage 1 experiment completed successfully.",
+    "pytest_result": "327 passed in 9.44s"
+  },
+  "ratio_sweep": [
+    {
+      "case_count": 7,
+      "mean_accepted_match_count": 341.42857142857144,
+      "mean_minimum_spatial_coverage": 0.75,
+      "ratio_threshold": 0.6,
+      "successful_case_count": 7
+    },
+    {
+      "case_count": 7,
+      "mean_accepted_match_count": 353.42857142857144,
+      "mean_minimum_spatial_coverage": 0.75,
+      "ratio_threshold": 0.7,
+      "successful_case_count": 7
+    },
+    {
+      "case_count": 7,
+      "mean_accepted_match_count": 359.0,
+      "mean_minimum_spatial_coverage": 0.7589285714285714,
+      "ratio_threshold": 0.75,
+      "successful_case_count": 7
+    },
+    {
+      "case_count": 7,
+      "mean_accepted_match_count": 367.2857142857143,
+      "mean_minimum_spatial_coverage": 0.7678571428571429,
+      "ratio_threshold": 0.8,
+      "successful_case_count": 7
+    },
+    {
+      "case_count": 7,
+      "mean_accepted_match_count": 380.7142857142857,
+      "mean_minimum_spatial_coverage": 0.7678571428571429,
+      "ratio_threshold": 0.85,
+      "successful_case_count": 7
+    }
+  ],
+  "raw_output_directory": "outputs/week04_sift_stage01_features_matching",
+  "scope": "SIFT feature extraction and descriptor filtering only; no RANSAC transform estimation",
+  "stage": 1,
+  "status": "complete",
+  "technical_note": "docs/SIFT_FEATURES.md",
+  "title": "SIFT detection, description, and L2 matching",
+  "week": 4,
+  "target_windows_validation": {
+    "status": "complete",
+    "date": "2026-09-29",
+    "pytest_result": "327 passed in 9.44s",
+    "experiment": {
+      "case_count": 7,
+      "successful_case_count": 7,
+      "mean_accepted_match_count": 359.0,
+      "median_accepted_match_count": 393.0,
+      "mean_minimum_spatial_coverage": 0.7589285714285714,
+      "mean_total_detection_runtime_ms": 79.38240000346143,
+      "mean_matching_runtime_ms": 3.4250428579980507,
+      "case_results": [
+        {
+          "case_id": "camera_identity",
+          "fixed_keypoints": 791,
+          "moving_keypoints": 791,
+          "accepted_matches": 791,
+          "minimum_spatial_coverage": 0.9375
+        },
+        {
+          "case_id": "camera_rotation",
+          "fixed_keypoints": 791,
+          "moving_keypoints": 800,
+          "accepted_matches": 437,
+          "minimum_spatial_coverage": 0.75
+        },
+        {
+          "case_id": "camera_scale",
+          "fixed_keypoints": 791,
+          "moving_keypoints": 730,
+          "accepted_matches": 393,
+          "minimum_spatial_coverage": 0.8125
+        },
+        {
+          "case_id": "camera_blur",
+          "fixed_keypoints": 791,
+          "moving_keypoints": 111,
+          "accepted_matches": 57,
+          "minimum_spatial_coverage": 0.6875
+        },
+        {
+          "case_id": "camera_partial_overlap",
+          "fixed_keypoints": 791,
+          "moving_keypoints": 515,
+          "accepted_matches": 434,
+          "minimum_spatial_coverage": 0.75
+        },
+        {
+          "case_id": "coins_rotation",
+          "fixed_keypoints": 655,
+          "moving_keypoints": 781,
+          "accepted_matches": 390,
+          "minimum_spatial_coverage": 1.0
+        },
+        {
+          "case_id": "moon_blur",
+          "fixed_keypoints": 95,
+          "moving_keypoints": 21,
+          "accepted_matches": 11,
+          "minimum_spatial_coverage": 0.375
+        }
+      ]
+    }
+  }
+}

@@ -1,9 +1,4 @@
 {
-  "week": 4,
-  "title": "Feature-Based Registration with Robust Model Estimation",
-  "status": "complete",
-  "working_days_complete": 5,
-  "final_local_test_suite": "314 passed in 4.36s",
   "daily_reports": [
     "reports/week04_day01_orb_features.json",
     "reports/week04_day02_orb_matching.json",
@@ -11,28 +6,24 @@
     "reports/week04_day04_ransac_affine_robustness.json",
     "reports/week04_day05_integrated_feature_baseline.json"
   ],
-  "weekly_summary": "docs/weekly/week_04_summary.md",
+  "final_local_test_suite": "329 passed, 4 skipped after Stage 3 implementation before target validation",
   "findings_registry": "reports/findings_week04.json",
-  "validated_results": {
-    "day16_orb_cases_with_descriptors": "8/8",
-    "day17_knn_cases_with_minimum_matches": "9/9",
-    "day17_cross_check_cases_with_minimum_matches": "9/9",
-    "day18_ransac_similarity_successes": "8/8",
-    "day18_injected_outliers_rejected": "126/126",
-    "day19_affine_ransac_successes": "7/9",
-    "day19_degeneracy_probes": "3/3 expected failures",
-    "day20_integrated_cases": 13,
-    "day20_integrated_registrations": 32,
-    "day20_method_successes": 30,
-    "day20_within_development_tolerance": 26,
-    "day20_translation_phase_correlation": "4/4",
-    "day20_translation_ecc": "4/4",
-    "day20_translation_orb_similarity": "3/4",
-    "day20_rigid_ecc": "2/3",
-    "day20_rigid_orb_similarity": "3/3",
-    "day20_affine_ecc_single": "3/4",
-    "day20_affine_ecc_multiresolution": "3/4",
-    "day20_affine_orb_ransac": "4/4"
+  "next_stage": "Start Week 5 Mutual Information registration.",
+  "optional_sift_extension": {
+    "final_decision": "retain_as_optional_complement",
+    "purpose": "Controlled optional comparison of SIFT + RANSAC against the validated ORB + RANSAC baseline before Week 5.",
+    "stage_01": "complete",
+    "stage_01_report": "reports/week04_sift_stage01_features_matching.json",
+    "stage_01_validation": "327 passed in 9.44s",
+    "stage_02": "complete",
+    "stage_02_development_result": "12/13 matching successes, 12/13 RANSAC successes, 12/13 within development tolerance",
+    "stage_02_report": "reports/week04_sift_stage02_ransac.json",
+    "stage_02_target_windows_validation": "329 passed in 8.73s; 12/13 matching successes; 12/13 RANSAC successes; 12/13 within tolerance",
+    "stage_03": "complete",
+    "stage_03_development_result": "ORB 10/12 within tolerance; SIFT 11/12 within tolerance; paired outcomes 10 both, 0 ORB-only, 1 SIFT-only, 1 neither",
+    "stage_03_report": "reports/week04_orb_vs_sift_comparison.json",
+    "stage_03_target_windows_validation": "333 passed in 3.57s; ORB 10/12 within tolerance; SIFT 11/12 within tolerance; paired outcomes 10 both, 0 ORB-only, 1 SIFT-only, 1 neither",
+    "status": "complete"
   },
   "reporting_notes": [
     "Translation, rigid, and affine comparisons remain separate because motion-model flexibility differs.",
@@ -41,5 +32,30 @@
     "Development thresholds remain provisional until the unified evaluation stage.",
     "Runtime measurements are machine-dependent."
   ],
-  "next_stage": "Week 5 multimodal registration with mutual information"
+  "status": "complete",
+  "title": "Feature-Based Registration with Robust Model Estimation",
+  "validated_results": {
+    "day16_orb_cases_with_descriptors": "8/8",
+    "day17_cross_check_cases_with_minimum_matches": "9/9",
+    "day17_knn_cases_with_minimum_matches": "9/9",
+    "day18_injected_outliers_rejected": "126/126",
+    "day18_ransac_similarity_successes": "8/8",
+    "day19_affine_ransac_successes": "7/9",
+    "day19_degeneracy_probes": "3/3 expected failures",
+    "day20_affine_ecc_multiresolution": "3/4",
+    "day20_affine_ecc_single": "3/4",
+    "day20_affine_orb_ransac": "4/4",
+    "day20_integrated_cases": 13,
+    "day20_integrated_registrations": 32,
+    "day20_method_successes": 30,
+    "day20_rigid_ecc": "2/3",
+    "day20_rigid_orb_similarity": "3/3",
+    "day20_translation_ecc": "4/4",
+    "day20_translation_orb_similarity": "3/4",
+    "day20_translation_phase_correlation": "4/4",
+    "day20_within_development_tolerance": 26
+  },
+  "week": 4,
+  "weekly_summary": "docs/weekly/week_04_summary.md",
+  "working_days_complete": 5
 }

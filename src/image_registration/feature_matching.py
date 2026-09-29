@@ -1,9 +1,8 @@
-"""ORB descriptor matching and correspondence diagnostics.
+"""Feature descriptor matching and correspondence diagnostics.
 
-Day 17 keeps descriptor matching separate from robust transform estimation.
-The module establishes candidate correspondences, applies configurable filters,
-and records enough diagnostics to explain why a later geometric estimator has
-strong or weak input data.
+The module supports the validated ORB matching path and the optional SIFT
+extension. Matching stays separate from robust transform estimation so
+descriptor filtering can be measured before geometric validation.
 """
 
 from __future__ import annotations
@@ -17,9 +16,12 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from .orb import ORBFeatureResult, keypoint_grid_coverage
+from .sift import SIFTFeatureResult
 
 MatchStrategy = Literal["knn_ratio", "cross_check"]
 HammingNorm = Literal["hamming", "hamming2"]
+DescriptorMetric = Literal["hamming", "hamming2", "l2"]
+FeatureResult = ORBFeatureResult | SIFTFeatureResult
 
 
 @dataclass(frozen=True)
@@ -84,8 +86,8 @@ def _norm_flag(norm: HammingNorm) -> int:
 
 
 def _validate_matching_inputs(
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     *,
     minimum_matches: int,
 ) -> tuple[NDArray[np.uint8], NDArray[np.uint8]] | str:
@@ -114,9 +116,175 @@ def _validate_matching_inputs(
     )
 
 
+
+
+def _descriptor_norm_flag(metric: DescriptorMetric) -> int:
+    if metric == "hamming":
+        return cv2.NORM_HAMMING
+    if metric == "hamming2":
+        return cv2.NORM_HAMMING2
+    if metric == "l2":
+        return cv2.NORM_L2
+    raise ValueError("metric must be hamming, hamming2, or l2.")
+
+
+def _validate_feature_inputs(
+    fixed: FeatureResult,
+    moving: FeatureResult,
+    *,
+    minimum_matches: int,
+    metric: DescriptorMetric,
+) -> tuple[NDArray[np.generic], NDArray[np.generic]] | str:
+    if minimum_matches <= 0:
+        raise ValueError("minimum_matches must be greater than zero.")
+    if not fixed.success or fixed.descriptors is None:
+        return "fixed_descriptors_unavailable"
+    if not moving.success or moving.descriptors is None:
+        return "moving_descriptors_unavailable"
+
+    fixed_descriptors = np.asarray(fixed.descriptors)
+    moving_descriptors = np.asarray(moving.descriptors)
+    if fixed_descriptors.ndim != 2 or moving_descriptors.ndim != 2:
+        raise ValueError("Descriptor arrays must have shape (N, D).")
+    if fixed_descriptors.shape[1] != moving_descriptors.shape[1]:
+        raise ValueError("Fixed and moving descriptors must have the same descriptor length.")
+    if fixed_descriptors.shape[0] != fixed.keypoint_count:
+        raise ValueError("Fixed keypoint and descriptor counts are inconsistent.")
+    if moving_descriptors.shape[0] != moving.keypoint_count:
+        raise ValueError("Moving keypoint and descriptor counts are inconsistent.")
+
+    if metric in {"hamming", "hamming2"}:
+        if fixed_descriptors.dtype != np.uint8 or moving_descriptors.dtype != np.uint8:
+            raise ValueError("Hamming matching requires uint8 binary descriptors.")
+        return (
+            np.ascontiguousarray(fixed_descriptors),
+            np.ascontiguousarray(moving_descriptors),
+        )
+
+    if not np.issubdtype(fixed_descriptors.dtype, np.floating) or not np.issubdtype(
+        moving_descriptors.dtype, np.floating
+    ):
+        raise ValueError("L2 matching requires floating-point descriptors.")
+    return (
+        np.ascontiguousarray(fixed_descriptors.astype(np.float32, copy=False)),
+        np.ascontiguousarray(moving_descriptors.astype(np.float32, copy=False)),
+    )
+
+
+def match_feature_knn_ratio(
+    fixed: FeatureResult,
+    moving: FeatureResult,
+    *,
+    metric: DescriptorMetric,
+    ratio_threshold: float = 0.75,
+    maximum_distance: float | None = None,
+    minimum_matches: int = 4,
+) -> FeatureMatchResult:
+    """Match binary or floating-point descriptors with a 2-NN ratio filter.
+
+    Moving descriptors are queries and fixed descriptors are the reference set,
+    preserving the project Moving -> Fixed convention.
+    """
+    if not 0.0 < ratio_threshold < 1.0:
+        raise ValueError("ratio_threshold must be in the range (0, 1).")
+    if maximum_distance is not None and (
+        not np.isfinite(maximum_distance) or maximum_distance < 0.0
+    ):
+        raise ValueError("maximum_distance must be finite and non-negative when provided.")
+
+    validated = _validate_feature_inputs(
+        fixed,
+        moving,
+        minimum_matches=minimum_matches,
+        metric=metric,
+    )
+    if isinstance(validated, str):
+        return FeatureMatchResult(
+            strategy="knn_ratio",
+            tentative_matches=(),
+            accepted_matches=(),
+            success=False,
+            runtime_seconds=0.0,
+            failure_reason=validated,
+            ratio_threshold=float(ratio_threshold),
+            maximum_distance=maximum_distance,
+            minimum_matches=minimum_matches,
+        )
+    fixed_descriptors, moving_descriptors = validated
+    if fixed_descriptors.shape[0] < 2:
+        return FeatureMatchResult(
+            strategy="knn_ratio",
+            tentative_matches=(),
+            accepted_matches=(),
+            success=False,
+            runtime_seconds=0.0,
+            failure_reason="insufficient_fixed_descriptors_for_knn",
+            ratio_threshold=float(ratio_threshold),
+            maximum_distance=maximum_distance,
+            minimum_matches=minimum_matches,
+        )
+
+    matcher = cv2.BFMatcher(_descriptor_norm_flag(metric), crossCheck=False)
+    start = perf_counter()
+    try:
+        groups = matcher.knnMatch(moving_descriptors, fixed_descriptors, k=2)
+    except cv2.error as exc:
+        return FeatureMatchResult(
+            strategy="knn_ratio",
+            tentative_matches=(),
+            accepted_matches=(),
+            success=False,
+            runtime_seconds=perf_counter() - start,
+            failure_reason=f"opencv_error: {exc}",
+            ratio_threshold=float(ratio_threshold),
+            maximum_distance=maximum_distance,
+            minimum_matches=minimum_matches,
+        )
+    runtime = perf_counter() - start
+
+    tentative: list[FeatureMatch] = []
+    accepted: list[FeatureMatch] = []
+    for group in groups:
+        if not group:
+            continue
+        best = group[0]
+        second_distance: float | None = None
+        ratio: float | None = None
+        if len(group) >= 2:
+            second_distance = float(group[1].distance)
+            if second_distance > 0.0:
+                ratio = float(best.distance / second_distance)
+
+        item = FeatureMatch(
+            moving_index=int(best.queryIdx),
+            fixed_index=int(best.trainIdx),
+            distance=float(best.distance),
+            second_distance=second_distance,
+            ratio=ratio,
+        )
+        tentative.append(item)
+        ratio_pass = ratio is not None and ratio < ratio_threshold
+        distance_pass = maximum_distance is None or item.distance <= maximum_distance
+        if ratio_pass and distance_pass:
+            accepted.append(item)
+
+    accepted.sort(key=lambda match: (match.distance, match.moving_index, match.fixed_index))
+    success = len(accepted) >= minimum_matches
+    return FeatureMatchResult(
+        strategy="knn_ratio",
+        tentative_matches=tuple(tentative),
+        accepted_matches=tuple(accepted),
+        success=success,
+        runtime_seconds=runtime,
+        failure_reason=None if success else "insufficient_filtered_matches",
+        ratio_threshold=float(ratio_threshold),
+        maximum_distance=maximum_distance,
+        minimum_matches=minimum_matches,
+    )
+
 def match_orb_knn_ratio(
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     *,
     ratio_threshold: float = 0.75,
     maximum_distance: float | None = None,
@@ -224,8 +392,8 @@ def match_orb_knn_ratio(
 
 
 def match_orb_cross_check(
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     *,
     maximum_distance: float | None = None,
     minimum_matches: int = 4,
@@ -298,7 +466,7 @@ def match_orb_cross_check(
 
 
 def match_distance_summary(matches: tuple[FeatureMatch, ...]) -> dict[str, float | None]:
-    """Return compact Hamming-distance statistics for a match collection."""
+    """Return compact descriptor-distance statistics for a match collection."""
     if not matches:
         return {
             "mean": None,
@@ -321,8 +489,8 @@ def match_distance_summary(matches: tuple[FeatureMatch, ...]) -> dict[str, float
 
 def correspondence_points(
     result: FeatureMatchResult,
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     *,
     accepted_only: bool = True,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
@@ -345,8 +513,8 @@ def correspondence_points(
 
 def correspondence_grid_coverage(
     result: FeatureMatchResult,
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     *,
     rows: int = 4,
     columns: int = 4,
@@ -383,7 +551,7 @@ def _draw_uint8(image: ArrayLike) -> NDArray[np.uint8]:
     return np.ascontiguousarray(np.clip(np.rint(normalized * 255.0), 0, 255).astype(np.uint8))
 
 
-def _cv_keypoints(result: ORBFeatureResult) -> list[cv2.KeyPoint]:
+def _cv_keypoints(result: FeatureResult) -> list[cv2.KeyPoint]:
     return [
         cv2.KeyPoint(
             x=float(keypoint.x),
@@ -401,8 +569,8 @@ def _cv_keypoints(result: ORBFeatureResult) -> list[cv2.KeyPoint]:
 def draw_feature_matches(
     fixed_image: ArrayLike,
     moving_image: ArrayLike,
-    fixed: ORBFeatureResult,
-    moving: ORBFeatureResult,
+    fixed: FeatureResult,
+    moving: FeatureResult,
     matches: tuple[FeatureMatch, ...],
     *,
     maximum_drawn: int = 80,

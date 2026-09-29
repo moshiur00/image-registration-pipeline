@@ -1,0 +1,225 @@
+experiment:
+  name: week04_orb_vs_sift_comparison
+  seed: 42
+
+orb:
+  n_features: 800
+  scale_factor: 1.2
+  n_levels: 8
+  edge_threshold: 31
+  first_level: 0
+  wta_k: 2
+  score_type: harris
+  patch_size: 31
+  fast_threshold: 20
+  spatial_grid:
+    rows: 4
+    columns: 4
+
+sift:
+  n_features: 800
+  n_octave_layers: 3
+  contrast_threshold: 0.04
+  edge_threshold: 10.0
+  sigma: 1.6
+  spatial_grid:
+    rows: 4
+    columns: 4
+
+matching:
+  minimum_matches: 8
+  ratio_threshold: 0.75
+  maximum_distance: null
+  maximum_drawn_matches: 100
+  orb_metric: hamming
+  sift_metric: l2
+
+ransac_similarity:
+  reprojection_threshold: 3.0
+  confidence: 0.99
+  max_trials: 2000
+  refine_iterations: 10
+  minimum_inliers: 8
+  minimum_inlier_ratio: 0.25
+
+ransac_affine:
+  reprojection_threshold: 3.0
+  confidence: 0.99
+  max_trials: 3000
+  refine_iterations: 10
+  minimum_inliers: 8
+  minimum_inlier_ratio: 0.25
+  grid_rows: 4
+  grid_cols: 4
+  minimum_spatial_coverage: 0.125
+  minimum_linearity_ratio: 0.01
+  plausibility:
+    min_abs_determinant: 0.10
+    min_principal_scale: 0.50
+    max_principal_scale: 1.80
+    max_condition_number: 3.0
+    max_shear_cosine: 0.65
+    max_translation_fraction_of_diagonal: 1.50
+    allow_reflection: false
+
+validation:
+  similarity:
+    tre_threshold_pixels: 2.0
+    rotation_error_threshold_degrees: 1.0
+    scale_error_threshold: 0.03
+    translation_error_threshold_pixels: 3.0
+  affine:
+    tre_threshold_pixels: 3.0
+    affine_linear_error_threshold: 0.05
+    translation_error_threshold_pixels: 4.0
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+generated_sources:
+  low_texture:
+    type: gaussian_blur
+    base_source: camera
+    sigma: 8.0
+  repeated_pattern:
+    type: checkerboard
+    height: 512
+    width: 512
+    block_size: 32
+
+cases:
+  - id: camera_rotation
+    source: camera
+    model: similarity
+    scope: normal
+    scale: 1.0
+    angle_degrees: 20.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_scale
+    source: camera
+    model: similarity
+    scope: normal
+    scale: 1.15
+    angle_degrees: 0.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_similarity_medium
+    source: camera
+    model: similarity
+    scope: normal
+    scale: 1.15
+    angle_degrees: 18.0
+    tx: 28.0
+    ty: -20.0
+
+  - id: camera_affine_mild
+    source: camera
+    model: affine
+    scope: normal
+    angle_degrees: 8.0
+    scale_x: 1.06
+    scale_y: 0.96
+    shear_x: 0.04
+    tx: 16.0
+    ty: -12.0
+
+  - id: camera_affine_medium
+    source: camera
+    model: affine
+    scope: normal
+    angle_degrees: 16.0
+    scale_x: 1.12
+    scale_y: 0.90
+    shear_x: 0.08
+    tx: 28.0
+    ty: -20.0
+
+  - id: coins_rotation
+    source: coins
+    model: similarity
+    scope: normal
+    scale: 1.0
+    angle_degrees: -15.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: coins_affine
+    source: coins
+    model: affine
+    scope: normal
+    angle_degrees: -13.0
+    scale_x: 0.95
+    scale_y: 1.10
+    shear_x: -0.06
+    tx: 14.0
+    ty: 12.0
+
+  - id: camera_blur
+    source: camera
+    model: similarity
+    scope: challenging
+    scale: 1.0
+    angle_degrees: 0.0
+    tx: -36.0
+    ty: 24.0
+    postprocess:
+      type: gaussian_blur
+      sigma: 3.0
+
+  - id: camera_partial_overlap
+    source: camera
+    model: similarity
+    scope: challenging
+    scale: 1.0
+    angle_degrees: 0.0
+    tx: -50.0
+    ty: 30.0
+    postprocess:
+      type: restricted_fov
+      width_fraction: 0.70
+      height_fraction: 0.75
+      center_x_fraction: 0.50
+      center_y_fraction: 0.50
+
+  - id: moon_blur
+    source: moon
+    model: similarity
+    scope: challenging
+    scale: 1.0
+    angle_degrees: 0.0
+    tx: 0.0
+    ty: 0.0
+    postprocess:
+      type: gaussian_blur
+      sigma: 3.0
+
+  - id: low_texture_affine
+    source: low_texture
+    model: affine
+    scope: failure_probe
+    angle_degrees: 9.0
+    scale_x: 1.06
+    scale_y: 0.95
+    shear_x: 0.04
+    tx: 14.0
+    ty: -10.0
+
+  - id: repeated_pattern_affine
+    source: repeated_pattern
+    model: affine
+    scope: failure_probe
+    angle_degrees: 8.0
+    scale_x: 1.04
+    scale_y: 0.97
+    shear_x: 0.03
+    tx: 18.0
+    ty: -14.0
+
+output:
+  directory: outputs/week04_orb_vs_sift_comparison
+  report_snapshot: reports/week04_orb_vs_sift_comparison.json

@@ -44,3 +44,11 @@ Future experimental days should follow `docs/EXPERIMENT_REPORTING_STANDARD.md` s
 Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Days 16 through 20 include completed target Windows validation. `week04_summary.json` provides the compact completed-week milestone summary.
 
 `findings_week04.json` is the consolidated Week 4 findings registry. Each completed experimental day should append its measured evidence, observations, interpretation, limitations, decision, and source-record paths there.
+
+## Week 4 optional SIFT extension
+
+`week04_sift_extension_summary.json` records the three-stage optional SIFT comparison started after completion of the core Week 4 ORB + RANSAC work.
+
+`week04_sift_stage01_features_matching.json` stores Stage 1 SIFT detection, 128-dimensional float descriptors, L2 KNN ratio matching, spatial coverage, runtime, ratio-threshold sweep, observations, interpretation, limitations, and target-validation status.
+
+The extension is intentionally kept separate from the five completed Week 4 working days. Stage 1 is complete and validated on the target Windows environment with 327 tests passing in 9.44s. `week04_sift_stage02_ransac.json` stores the completed Stage 2 SIFT + shared RANSAC evidence. Target Windows validation on 2026-09-29 recorded 329 tests passing in 8.73s and 12 / 13 cases inside the configured geometric tolerances. `week04_orb_vs_sift_comparison.json` stores the frozen Stage 3 paired comparison. Its development run is complete and target Windows validation is pending before the final SIFT retention decision and Week 5.

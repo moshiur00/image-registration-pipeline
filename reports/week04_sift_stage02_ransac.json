@@ -1,0 +1,1903 @@
+{
+  "case_results": [
+    {
+      "case_id": "camera_translation",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 2.9165965997890453e-06,
+        "scale_error": 2.9732455275599534e-06,
+        "translation_error_pixels": 0.00826889809357777,
+        "tre_pixels": 0.008240658452500594,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 42.81880000780802,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            1.0,
+            0.0,
+            -24.0
+          ],
+          [
+            0.0,
+            1.0,
+            18.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0,
+            0.0,
+            24.0
+          ],
+          [
+            -0.0,
+            1.0,
+            -18.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 0.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": 24.0,
+          "ty": -18.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.9397759103641457,
+        "failure_reason": null,
+        "filtered_match_count": 671,
+        "fixed_spatial_coverage": 0.9375,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 43,
+        "runtime_ms": 3.909100007149391,
+        "success": true,
+        "tentative_match_count": 714
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 714,
+        "runtime_ms": 36.124599995673634,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0000029732455262,
+            -5.090436515845643e-08,
+            23.997796853573714
+          ],
+          [
+            5.090436515845643e-08,
+            1.0000029732455262,
+            -18.00891228439325
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 668,
+        "inlier_ratio": 0.9955290611028316,
+        "outlier_count": 3,
+        "reprojection_residuals": {
+          "all_maximum": 364.577049052244,
+          "all_mean": 0.6788074541773697,
+          "all_median": 0.008234873214558014,
+          "all_q95": 0.008804010662412012,
+          "inlier_maximum": 2.640409620353551,
+          "inlier_mean": 0.024489046401764653,
+          "inlier_median": 0.00823482348068754,
+          "inlier_q95": 0.008786925683909314
+        },
+        "runtime_ms": 0.26649999199435115,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 83.1190000026254
+    },
+    {
+      "case_id": "camera_rotation",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.0022556021908712864,
+        "scale_error": 1.8002980866960172e-05,
+        "translation_error_pixels": 0.1392865146154491,
+        "tre_pixels": 0.13941291637556116,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 44.079300001612864,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9396926207859083,
+            -0.3420201433256687,
+            102.79468200890875
+          ],
+          [
+            0.34202014332566866,
+            0.9396926207859084,
+            -71.97761123050797
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            0.9396926207859084,
+            0.3420201433256687,
+            -71.97761123050793
+          ],
+          [
+            -0.3420201433256687,
+            0.9396926207859084,
+            102.79468200890878
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 20.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": 0.0,
+          "ty": 0.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.54625,
+        "failure_reason": null,
+        "filtered_match_count": 437,
+        "fixed_spatial_coverage": 0.75,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.9375,
+        "rejected_match_count": 363,
+        "runtime_ms": 5.592599991359748,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "runtime_ms": 47.83550000865944,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            0.939662238490666,
+            0.34205097853548705,
+            -72.05610163192023
+          ],
+          [
+            -0.34205097853548705,
+            0.939662238490666,
+            102.92546708874771
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 415,
+        "inlier_ratio": 0.9496567505720824,
+        "outlier_count": 22,
+        "reprojection_residuals": {
+          "all_maximum": 254.75149882606078,
+          "all_mean": 4.5207867016268795,
+          "all_median": 0.11142450169543228,
+          "all_q95": 2.8878327116832727,
+          "inlier_maximum": 2.7683394283237956,
+          "inlier_mean": 0.18153442659719188,
+          "inlier_median": 0.10402602776785556,
+          "inlier_q95": 0.5459211187470494
+        },
+        "runtime_ms": 0.155999994603917,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 97.66339999623597
+    },
+    {
+      "case_id": "camera_similarity_small",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.003006240640957003,
+        "scale_error": 8.821346824983145e-05,
+        "translation_error_pixels": 0.057237114156342826,
+        "tre_pixels": 0.06051859233508596,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 38.46890000568237,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9118590305668594,
+            -0.16078534969160216,
+            47.08150585100284
+          ],
+          [
+            0.16078534969160216,
+            0.9118590305668594,
+            -10.190896384300235
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0635923732531847,
+            0.18754003188028476,
+            -48.164329511601466
+          ],
+          [
+            -0.18754003188028476,
+            1.0635923732531847,
+            19.66862677922407
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 10.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.08,
+          "tx": 16.0,
+          "ty": -12.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.56375,
+        "failure_reason": null,
+        "filtered_match_count": 451,
+        "fixed_spatial_coverage": 0.8125,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 349,
+        "runtime_ms": 7.767600007355213,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "runtime_ms": 49.123200005851686,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0636890859001311,
+            0.18749953975937855,
+            -48.22998814339904
+          ],
+          [
+            -0.18749953975937855,
+            1.0636890859001311,
+            19.658967482800637
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 433,
+        "inlier_ratio": 0.9600886917960089,
+        "outlier_count": 18,
+        "reprojection_residuals": {
+          "all_maximum": 461.42976988026163,
+          "all_mean": 2.9383411084310658,
+          "all_median": 0.15190346491218987,
+          "all_q95": 0.9559537089172768,
+          "inlier_maximum": 2.464195656393138,
+          "inlier_mean": 0.21089412409516212,
+          "inlier_median": 0.14391644163000777,
+          "inlier_q95": 0.5032253687131203
+        },
+        "runtime_ms": 0.2356000040890649,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 95.59530002297834
+    },
+    {
+      "case_id": "camera_similarity_medium",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.0019138824814035615,
+        "scale_error": 9.713394736610148e-05,
+        "translation_error_pixels": 0.12233986378618347,
+        "tre_pixels": 0.1256473154088908,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 39.6716999966884,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.8270056663436121,
+            -0.2687104298912587,
+            84.32519983097747
+          ],
+          [
+            0.2687104298912587,
+            0.827005666343612,
+            -15.439241298092483
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0937149937394264,
+            0.3553695435311895,
+            -86.74109927264237
+          ],
+          [
+            -0.3553695435311895,
+            1.0937149937394264,
+            46.85273747179551
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 18.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.15,
+          "tx": 28.0,
+          "ty": -20.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.5521557719054242,
+        "failure_reason": null,
+        "filtered_match_count": 397,
+        "fixed_spatial_coverage": 0.875,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.75,
+        "rejected_match_count": 322,
+        "runtime_ms": 7.114099993486889,
+        "success": true,
+        "tentative_match_count": 719
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 719,
+        "runtime_ms": 47.24780000105966,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0937955013955496,
+            0.35543609642353924,
+            -86.88878182140641
+          ],
+          [
+            -0.35543609642353924,
+            1.0937955013955496,
+            46.902493162267554
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 382,
+        "inlier_ratio": 0.9622166246851386,
+        "outlier_count": 15,
+        "reprojection_residuals": {
+          "all_maximum": 308.17980798789586,
+          "all_mean": 3.1919549391767705,
+          "all_median": 0.14150681616389996,
+          "all_q95": 0.89868821400643,
+          "inlier_maximum": 1.6104824879257111,
+          "inlier_mean": 0.20191402568717454,
+          "inlier_median": 0.13661048332237177,
+          "inlier_q95": 0.5500524634278291
+        },
+        "runtime_ms": 0.14980000560171902,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 94.18339999683667
+    },
+    {
+      "case_id": "camera_scale",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.0022430791352689994,
+        "scale_error": 7.533938309611798e-05,
+        "translation_error_pixels": 0.05688983910704539,
+        "tre_pixels": 0.057861818719186955,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 37.86409999884199,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.8695652173913044,
+            0.0,
+            33.326086956521735
+          ],
+          [
+            0.0,
+            0.8695652173913044,
+            33.326086956521735
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.15,
+            0.0,
+            -38.32499999999999
+          ],
+          [
+            -0.0,
+            1.15,
+            -38.32499999999999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 0.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.15,
+          "tx": 0.0,
+          "ty": 0.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.5383561643835616,
+        "failure_reason": null,
+        "filtered_match_count": 393,
+        "fixed_spatial_coverage": 0.8125,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 337,
+        "runtime_ms": 3.8483999960590154,
+        "success": true,
+        "tentative_match_count": 730
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 730,
+        "runtime_ms": 34.18459999375045,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.1500753385017626,
+            4.502443319592505e-05,
+            -38.39988346231813
+          ],
+          [
+            -4.502443319592505e-05,
+            1.1500753385017626,
+            -38.368646947100494
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 383,
+        "inlier_ratio": 0.9745547073791349,
+        "outlier_count": 10,
+        "reprojection_residuals": {
+          "all_maximum": 478.64140978463416,
+          "all_mean": 4.06895590958619,
+          "all_median": 0.14673394118253572,
+          "all_q95": 0.7730928711908496,
+          "inlier_maximum": 2.761834368266149,
+          "inlier_mean": 0.21069395544516453,
+          "inlier_median": 0.14439062316014914,
+          "inlier_q95": 0.6198798561724068
+        },
+        "runtime_ms": 0.11039999662898481,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 76.00749998528045
+    },
+    {
+      "case_id": "camera_blur",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.015588816963685304,
+        "scale_error": 0.00050816385551955,
+        "translation_error_pixels": 0.2109012695240802,
+        "tre_pixels": 0.23626232091999966,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 74.70160000957549,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            1.0,
+            0.0,
+            36.0
+          ],
+          [
+            0.0,
+            1.0,
+            -24.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0,
+            0.0,
+            -36.0
+          ],
+          [
+            -0.0,
+            1.0,
+            24.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 0.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": -36.0,
+          "ty": 24.0
+        },
+        "postprocess": {
+          "sigma": 3.0,
+          "type": "gaussian_blur"
+        },
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.38524590163934425,
+        "failure_reason": null,
+        "filtered_match_count": 47,
+        "fixed_spatial_coverage": 0.5625,
+        "minimum_spatial_coverage": 0.5625,
+        "moving_spatial_coverage": 0.5625,
+        "rejected_match_count": 75,
+        "runtime_ms": 0.8252000116044655,
+        "success": true,
+        "tentative_match_count": 122
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 122,
+        "runtime_ms": 32.86840001237579,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0005081268239866,
+            0.00027221443843053906,
+            -35.98903531256344
+          ],
+          [
+            -0.00027221443843053906,
+            1.0005081268239866,
+            23.955074923318215
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 38,
+        "inlier_ratio": 0.8085106382978723,
+        "outlier_count": 9,
+        "reprojection_residuals": {
+          "all_maximum": 255.24767535629087,
+          "all_mean": 12.401914503979055,
+          "all_median": 0.9464713854387172,
+          "all_q95": 21.52929845845661,
+          "inlier_maximum": 2.3482606908170736,
+          "inlier_mean": 0.9294031407857083,
+          "inlier_median": 0.8770554016715769,
+          "inlier_q95": 2.256097646762504
+        },
+        "runtime_ms": 0.07229999755509198,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 108.46750003111083
+    },
+    {
+      "case_id": "camera_partial_overlap",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": 0.0011899907615600114,
+        "scale_error": 9.176326318582895e-06,
+        "translation_error_pixels": 0.0028694799373392282,
+        "tre_pixels": 0.005311634356603167,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 43.68380000232719,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            1.0,
+            0.0,
+            50.0
+          ],
+          [
+            0.0,
+            1.0,
+            -30.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0,
+            0.0,
+            -50.0
+          ],
+          [
+            -0.0,
+            1.0,
+            30.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 0.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": -50.0,
+          "ty": 30.0
+        },
+        "postprocess": {
+          "center_x_fraction": 0.5,
+          "center_y_fraction": 0.5,
+          "height_fraction": 0.75,
+          "type": "restricted_fov",
+          "visible_fraction": 0.5244140625,
+          "width_fraction": 0.7
+        },
+        "transform_type": "similarity"
+      },
+      "matching": {
+        "acceptance_rate": 0.8362919132149902,
+        "failure_reason": null,
+        "filtered_match_count": 424,
+        "fixed_spatial_coverage": 0.625,
+        "minimum_spatial_coverage": 0.625,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 83,
+        "runtime_ms": 4.437200012034737,
+        "success": true,
+        "tentative_match_count": 507
+      },
+      "model": "similarity",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 507,
+        "runtime_ms": 38.859400010551326,
+        "success": true
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0000091761106356,
+            2.0769447441351342e-05,
+            -50.010240707536454
+          ],
+          [
+            -2.0769447441351342e-05,
+            1.0000091761106356,
+            30.001726056864907
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 416,
+        "inlier_ratio": 0.9811320754716981,
+        "outlier_count": 8,
+        "reprojection_residuals": {
+          "all_maximum": 281.3362702995763,
+          "all_mean": 3.369542081320677,
+          "all_median": 0.00458609113950191,
+          "all_q95": 0.006763541852456434,
+          "inlier_maximum": 0.559990943368319,
+          "inlier_mean": 0.00972090789633005,
+          "inlier_median": 0.004439666864130758,
+          "inlier_q95": 0.006473595230513761
+        },
+        "runtime_ms": 0.12350000906735659,
+        "success": true
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 87.10390003398061
+    },
+    {
+      "case_id": "camera_affine_mild",
+      "evaluation": {
+        "affine_linear_error": 0.0002236775384248576,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": 0.057497735125787416,
+        "tre_pixels": 0.0579220001627484,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 38.055099998018704,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9289633440595922,
+            -0.16866398463181909,
+            44.35613234566869
+          ],
+          [
+            0.14497198016673485,
+            1.031529238272469,
+            -35.03726213461472
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0496841528660645,
+            0.1716324707613391,
+            -40.54639733680165
+          ],
+          [
+            -0.14752348701766937,
+            0.945313098915041,
+            39.66475416022155
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 8.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "linear": [
+            [
+              1.0496841528660645,
+              0.1716324707613391
+            ],
+            [
+              -0.14752348701766937,
+              0.945313098915041
+            ]
+          ],
+          "scale_x": 1.06,
+          "scale_y": 0.96,
+          "shear_x": 0.04,
+          "tx": 16.0,
+          "ty": -12.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.5375,
+        "failure_reason": null,
+        "filtered_match_count": 430,
+        "fixed_spatial_coverage": 0.75,
+        "minimum_spatial_coverage": 0.75,
+        "moving_spatial_coverage": 0.8125,
+        "rejected_match_count": 370,
+        "runtime_ms": 4.5630000095115975,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "runtime_ms": 36.990599997807294,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": {
+          "fixed_grid_coverage": 0.75,
+          "fixed_linearity_ratio": 0.660727371085973,
+          "minimum_grid_coverage": 0.75,
+          "moving_grid_coverage": 0.8125,
+          "moving_linearity_ratio": 0.5460669241220523
+        },
+        "estimated_transform": [
+          [
+            1.049591404332712,
+            0.171495615855796,
+            -40.536369773084644
+          ],
+          [
+            -0.14743766791656854,
+            0.945436934158295,
+            39.641855339038
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 422,
+        "inlier_ratio": 0.9813953488372092,
+        "outlier_count": 8,
+        "reprojection_residuals": {
+          "all_maximum": 314.99260841911115,
+          "all_mean": 2.2014221631773667,
+          "all_median": 0.17410989383955572,
+          "all_q95": 0.8411760544689779,
+          "inlier_maximum": 1.6638011954723724,
+          "inlier_mean": 0.24593449379250296,
+          "inlier_median": 0.1728907639178141,
+          "inlier_q95": 0.7388272876987085
+        },
+        "runtime_ms": 0.3580000047804788,
+        "success": true,
+        "transform_diagnostics": {
+          "condition_number": 1.1117312683743605,
+          "determinant": 1.0176073930909129,
+          "plausible": true,
+          "principal_scale_max": 1.0636286747865005,
+          "principal_scale_min": 0.9567318155418992,
+          "rejection_reasons": [],
+          "shear_cosine": 0.039872956079580794,
+          "translation_fraction_of_diagonal": 0.07830392071859246,
+          "translation_norm_pixels": 56.69809493361718
+        }
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 79.96670001011807
+    },
+    {
+      "case_id": "camera_affine_medium",
+      "evaluation": {
+        "affine_linear_error": 0.00034534354471475325,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": 0.14288752907018695,
+        "tre_pixels": 0.15299865270353696,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 791,
+        "runtime_ms": 35.202699989895336,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.8385809888151418,
+            -0.3147663316893434,
+            91.8897607837477
+          ],
+          [
+            0.30626372868555457,
+            1.0680685510425765,
+            -82.85591085288148
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0766130994509173,
+            0.31728446234285823,
+            -72.64082703830968
+          ],
+          [
+            -0.3087138385150391,
+            0.8452896367256632,
+            98.40488355718557
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 16.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "linear": [
+            [
+              1.0766130994509173,
+              0.31728446234285823
+            ],
+            [
+              -0.3087138385150391,
+              0.8452896367256632
+            ]
+          ],
+          "scale_x": 1.12,
+          "scale_y": 0.9,
+          "shear_x": 0.08,
+          "tx": 28.0,
+          "ty": -20.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.47019867549668876,
+        "failure_reason": null,
+        "filtered_match_count": 355,
+        "fixed_spatial_coverage": 0.8125,
+        "minimum_spatial_coverage": 0.8125,
+        "moving_spatial_coverage": 0.875,
+        "rejected_match_count": 400,
+        "runtime_ms": 3.5973999911220744,
+        "success": true,
+        "tentative_match_count": 755
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 755,
+        "runtime_ms": 35.7479000085732,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": {
+          "fixed_grid_coverage": 0.8125,
+          "fixed_linearity_ratio": 0.6811102678969773,
+          "minimum_grid_coverage": 0.8125,
+          "moving_grid_coverage": 0.875,
+          "moving_linearity_ratio": 0.504328856877147
+        },
+        "estimated_transform": [
+          [
+            1.0766747070388454,
+            0.31724952913727267,
+            -72.75429819873497
+          ],
+          [
+            -0.30904538144690713,
+            0.8452238672459503,
+            98.6014830203465
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 337,
+        "inlier_ratio": 0.9492957746478873,
+        "outlier_count": 18,
+        "reprojection_residuals": {
+          "all_maximum": 254.75195380128696,
+          "all_mean": 3.6198678984539194,
+          "all_median": 0.2789416830213058,
+          "all_q95": 3.2085062091089984,
+          "inlier_maximum": 2.965353391328183,
+          "inlier_mean": 0.3910508822076204,
+          "inlier_median": 0.25181068306807747,
+          "inlier_q95": 1.2394839435589462
+        },
+        "runtime_ms": 0.13210000179242343,
+        "success": true,
+        "transform_diagnostics": {
+          "condition_number": 1.2587993074913637,
+          "determinant": 1.0080756613953537,
+          "plausible": true,
+          "principal_scale_max": 1.1264834417173515,
+          "principal_scale_min": 0.894887242957178,
+          "rejection_reasons": [],
+          "shear_cosine": 0.07946613030930084,
+          "translation_fraction_of_diagonal": 0.16923261991149685,
+          "translation_norm_pixels": 122.53750593268222
+        }
+      },
+      "scope": "controlled",
+      "source_id": "camera",
+      "total_runtime_ms": 74.68009999138303
+    },
+    {
+      "case_id": "coins_affine",
+      "evaluation": {
+        "affine_linear_error": 0.0002121264564994116,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": 0.11246696940981062,
+        "tre_pixels": 0.11554473791457694,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 655,
+        "runtime_ms": 27.624999987892807,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            1.0114452647627405,
+            0.2983297455062939,
+            -64.97975042626906
+          ],
+          [
+            -0.20450095849442274,
+            0.8857909679865774,
+            48.64101918879173
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            0.9256515615459734,
+            -0.3117545840540771,
+            75.31266815611173
+          ],
+          [
+            0.21370350162667173,
+            1.0569603016770637,
+            -37.52522611474424
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": -13.0,
+          "center": [
+            191.5,
+            151.0
+          ],
+          "linear": [
+            [
+              0.9256515615459734,
+              -0.3117545840540771
+            ],
+            [
+              0.21370350162667173,
+              1.0569603016770637
+            ]
+          ],
+          "scale_x": 0.95,
+          "scale_y": 1.1,
+          "shear_x": -0.06,
+          "tx": 14.0,
+          "ty": 12.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.43142476697736354,
+        "failure_reason": null,
+        "filtered_match_count": 324,
+        "fixed_spatial_coverage": 1.0,
+        "minimum_spatial_coverage": 1.0,
+        "moving_spatial_coverage": 1.0,
+        "rejected_match_count": 427,
+        "runtime_ms": 3.262199999880977,
+        "success": true,
+        "tentative_match_count": 751
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 751,
+        "runtime_ms": 24.135600004228763,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": {
+          "fixed_grid_coverage": 1.0,
+          "fixed_linearity_ratio": 0.5653866210153032,
+          "minimum_grid_coverage": 1.0,
+          "moving_grid_coverage": 1.0,
+          "moving_linearity_ratio": 0.5583296487976313
+        },
+        "estimated_transform": [
+          [
+            0.925670159339203,
+            -0.31179338819115376,
+            75.40802839410316
+          ],
+          [
+            0.2138900167638075,
+            1.0568688790420167,
+            -37.610291374376
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 306,
+        "inlier_ratio": 0.9444444444444444,
+        "outlier_count": 18,
+        "reprojection_residuals": {
+          "all_maximum": 281.8110716186359,
+          "all_mean": 6.621886879010693,
+          "all_median": 0.17895127430116736,
+          "all_q95": 14.020789901278123,
+          "inlier_maximum": 1.7611150289964317,
+          "inlier_mean": 0.24037707904138852,
+          "inlier_median": 0.1631937350299787,
+          "inlier_q95": 0.7836985125035898
+        },
+        "runtime_ms": 0.12889999197795987,
+        "success": true,
+        "transform_diagnostics": {
+          "condition_number": 1.1734724877740428,
+          "determinant": 1.0450014766905187,
+          "plausible": true,
+          "principal_scale_max": 1.1073754930372857,
+          "principal_scale_min": 0.9436740141542335,
+          "rejection_reasons": [],
+          "shear_cosine": 0.05976288781448292,
+          "translation_fraction_of_diagonal": 0.1722730159719219,
+          "translation_norm_pixels": 84.26686634467505
+        }
+      },
+      "scope": "controlled",
+      "source_id": "coins",
+      "total_runtime_ms": 55.15169998398051
+    },
+    {
+      "case_id": "moon_affine",
+      "evaluation": {
+        "affine_linear_error": 0.000602244981097462,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": 0.08258989061857328,
+        "tre_pixels": 0.10407455937098445,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 95,
+        "runtime_ms": 31.598500005202368,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9122666767559453,
+            -0.20830707039022495,
+            59.87124971831702
+          ],
+          [
+            0.18671847060960248,
+            1.0589330677550624,
+            -54.9754144337653
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0537442957230627,
+            0.2072863657453129,
+            -51.69333400516996
+          ],
+          [
+            -0.18580355010361546,
+            0.9077965700398413,
+            61.03078340629432
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 10.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "linear": [
+            [
+              1.0537442957230627,
+              0.2072863657453129
+            ],
+            [
+              -0.18580355010361546,
+              0.9077965700398413
+            ]
+          ],
+          "scale_x": 1.07,
+          "scale_y": 0.93,
+          "shear_x": 0.05,
+          "tx": 15.0,
+          "ty": -10.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.6703296703296703,
+        "failure_reason": null,
+        "filtered_match_count": 61,
+        "fixed_spatial_coverage": 0.875,
+        "minimum_spatial_coverage": 0.6875,
+        "moving_spatial_coverage": 0.6875,
+        "rejected_match_count": 30,
+        "runtime_ms": 0.20009999570902437,
+        "success": true,
+        "tentative_match_count": 91
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 91,
+        "runtime_ms": 31.084300004295073,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": {
+          "fixed_grid_coverage": 0.875,
+          "fixed_linearity_ratio": 0.39593308998101545,
+          "minimum_grid_coverage": 0.6875,
+          "moving_grid_coverage": 0.6875,
+          "moving_linearity_ratio": 0.29609948887029325
+        },
+        "estimated_transform": [
+          [
+            1.0532548017621264,
+            0.20702207418587731,
+            -51.563237303546586
+          ],
+          [
+            -0.1859018208581292,
+            0.9075877938202128,
+            61.163228376961506
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 60,
+        "inlier_ratio": 0.9836065573770492,
+        "outlier_count": 1,
+        "reprojection_residuals": {
+          "all_maximum": 3.184392243697704,
+          "all_mean": 0.19771843973977124,
+          "all_median": 0.10706730415621919,
+          "all_q95": 0.4249797624887767,
+          "inlier_maximum": 0.5958512637428425,
+          "inlier_mean": 0.14794054300713902,
+          "inlier_median": 0.10408293569231022,
+          "inlier_q95": 0.3811734255445024
+        },
+        "runtime_ms": 0.08149999484885484,
+        "success": true,
+        "transform_diagnostics": {
+          "condition_number": 1.1588983384437046,
+          "determinant": 0.9944069824108152,
+          "plausible": true,
+          "principal_scale_max": 1.0735066835621994,
+          "principal_scale_min": 0.9263165266107996,
+          "rejection_reasons": [],
+          "shear_cosine": 0.04954128849915066,
+          "translation_fraction_of_diagonal": 0.11048291362271649,
+          "translation_norm_pixels": 79.99817464613932
+        }
+      },
+      "scope": "controlled",
+      "source_id": "moon",
+      "total_runtime_ms": 62.96440000005532
+    },
+    {
+      "case_id": "low_texture_affine",
+      "evaluation": {
+        "affine_linear_error": 0.010315824537654878,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": 0.4496402101586506,
+        "tre_pixels": 1.2467384591678428,
+        "within_tolerance": true
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 27,
+        "runtime_ms": 32.43099999963306,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9258782660316306,
+            -0.18485094213588338,
+            51.35671359883495
+          ],
+          [
+            0.16466785793708516,
+            1.0396719374685661,
+            -44.11744836257742
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.046949641030846,
+            0.18614489873083456,
+            -45.55565490910942
+          ],
+          [
+            -0.16582053294264473,
+            0.932359413893852,
+            49.64931591696654
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 9.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "linear": [
+            [
+              1.046949641030846,
+              0.18614489873083456
+            ],
+            [
+              -0.16582053294264473,
+              0.932359413893852
+            ]
+          ],
+          "scale_x": 1.06,
+          "scale_y": 0.95,
+          "shear_x": 0.04,
+          "tx": 14.0,
+          "ty": -10.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.5483870967741935,
+        "failure_reason": null,
+        "filtered_match_count": 17,
+        "fixed_spatial_coverage": 0.3125,
+        "minimum_spatial_coverage": 0.3125,
+        "moving_spatial_coverage": 0.375,
+        "rejected_match_count": 14,
+        "runtime_ms": 0.07670000195503235,
+        "success": true,
+        "tentative_match_count": 31
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 31,
+        "runtime_ms": 27.53649999795016,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": {
+          "fixed_grid_coverage": 0.3125,
+          "fixed_linearity_ratio": 0.6743944901550114,
+          "minimum_grid_coverage": 0.3125,
+          "moving_grid_coverage": 0.375,
+          "moving_linearity_ratio": 0.5603806869293952
+        },
+        "estimated_transform": [
+          [
+            1.0380227631491301,
+            0.18557588945261966,
+            -43.52871578675345
+          ],
+          [
+            -0.1607525249445219,
+            0.93320712289397,
+            48.34465383475485
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 15,
+        "inlier_ratio": 0.8823529411764706,
+        "outlier_count": 2,
+        "reprojection_residuals": {
+          "all_maximum": 9.608476424363008,
+          "all_mean": 1.397071874823294,
+          "all_median": 0.6740073452507105,
+          "all_q95": 3.7887992500236143,
+          "inlier_maximum": 2.333879956438772,
+          "inlier_mean": 0.8044370454368951,
+          "inlier_median": 0.5694666545391507,
+          "inlier_q95": 1.9153721458949418
+        },
+        "runtime_ms": 0.0661999947624281,
+        "success": true,
+        "transform_diagnostics": {
+          "condition_number": 1.1137609723468633,
+          "determinant": 0.9985220290951826,
+          "plausible": true,
+          "principal_scale_max": 1.0545685686738504,
+          "principal_scale_min": 0.9468535842584918,
+          "rejection_reasons": [],
+          "shear_cosine": 0.04264085690350766,
+          "translation_fraction_of_diagonal": 0.08984326864305318,
+          "translation_norm_pixels": 65.05347532950285
+        }
+      },
+      "scope": "failure_probe",
+      "source_id": "low_texture",
+      "total_runtime_ms": 60.11039999430068
+    },
+    {
+      "case_id": "repeated_pattern_affine",
+      "evaluation": {
+        "affine_linear_error": null,
+        "rotation_error_degrees": null,
+        "scale_error": null,
+        "translation_error_pixels": null,
+        "tre_pixels": null,
+        "within_tolerance": false
+      },
+      "fixed_features": {
+        "failure_reason": null,
+        "keypoint_count": 1008,
+        "runtime_ms": 37.651099992217496,
+        "success": true
+      },
+      "ground_truth": {
+        "fixed_to_moving": [
+          [
+            0.9481662266468924,
+            -0.16238571444453126,
+            35.3926870504292
+          ],
+          [
+            0.14347742367017055,
+            1.020894916228423,
+            -30.287197642955825
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0298787914912333,
+            0.16381470873164317,
+            -31.488689306944934
+          ],
+          [
+            -0.14474002499846805,
+            0.9565100894413853,
+            34.09274853483467
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 8.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "linear": [
+            [
+              1.0298787914912333,
+              0.16381470873164317
+            ],
+            [
+              -0.14474002499846805,
+              0.9565100894413853
+            ]
+          ],
+          "scale_x": 1.04,
+          "scale_y": 0.97,
+          "shear_x": 0.03,
+          "tx": 18.0,
+          "ty": -14.0
+        },
+        "postprocess": null,
+        "transform_type": "affine"
+      },
+      "matching": {
+        "acceptance_rate": 0.0,
+        "failure_reason": "insufficient_filtered_matches",
+        "filtered_match_count": 0,
+        "fixed_spatial_coverage": 0.0,
+        "minimum_spatial_coverage": 0.0,
+        "moving_spatial_coverage": 0.0,
+        "rejected_match_count": 800,
+        "runtime_ms": 6.6547000024002045,
+        "success": false,
+        "tentative_match_count": 800
+      },
+      "model": "affine",
+      "moving_features": {
+        "failure_reason": null,
+        "keypoint_count": 800,
+        "runtime_ms": 36.18049999931827,
+        "success": true
+      },
+      "ransac": {
+        "correspondence_geometry": null,
+        "estimated_transform": null,
+        "failure_reason": "insufficient_filtered_matches",
+        "inlier_count": 0,
+        "inlier_ratio": null,
+        "outlier_count": 0,
+        "reprojection_residuals": {
+          "all_maximum": null,
+          "all_mean": null,
+          "all_median": null,
+          "all_q95": null,
+          "inlier_maximum": null,
+          "inlier_mean": null,
+          "inlier_median": null,
+          "inlier_q95": null
+        },
+        "runtime_ms": 0.0,
+        "success": false,
+        "transform_diagnostics": null
+      },
+      "scope": "failure_probe",
+      "source_id": "repeated_pattern",
+      "total_runtime_ms": 80.48629999393597
+    }
+  ],
+  "development_run": {
+    "affine": {
+      "case_count": 6,
+      "maximum_tre_pixels": 1.2467384591678428,
+      "mean_inlier_ratio": 0.9482190132966121,
+      "mean_total_runtime_ms": 71.71183466670072,
+      "median_tre_pixels": 0.11554471717556772,
+      "ransac_success_count": 5,
+      "within_tolerance_count": 5
+    },
+    "case_count": 13,
+    "matching_success_count": 12,
+    "ransac_success_count": 12,
+    "similarity": {
+      "case_count": 7,
+      "maximum_tre_pixels": 0.23626240673911,
+      "mean_inlier_ratio": 0.9473840784721095,
+      "mean_total_runtime_ms": 80.14094871428564,
+      "median_tre_pixels": 0.06051860257310847,
+      "ransac_success_count": 7,
+      "within_tolerance_count": 7
+    },
+    "within_tolerance_count": 12
+  },
+  "experiment_summary": "docs/experiments/sift_stage02_summary.md",
+  "extension": "SIFT optional feature comparison",
+  "factors_kept_fixed": [
+    "SIFT configuration from validated Stage 1",
+    "L2 KNN matching with ratio threshold 0.75",
+    "shared RANSAC implementations and development thresholds from the validated ORB stage",
+    "Moving -> Fixed transform convention"
+  ],
+  "findings": {
+    "observations": [
+      "Lowest target Windows TRE was 0.005 px for camera_partial_overlap.",
+      "Largest returned target Windows TRE was 1.247 px for low_texture_affine.",
+      "repeated_pattern_affine retained no filtered SIFT matches and failed before RANSAC."
+    ],
+    "interpretation": [
+      "Stage 2 separates SIFT descriptor filtering, RANSAC execution success, and geometric correctness against known ground truth.",
+      "The same similarity and affine RANSAC implementations used by the ORB pipeline are reused here; only the feature front-end and descriptor metric differ.",
+      "Target Windows validation confirms the Stage 2 implementation and allows the frozen Stage 3 ORB versus SIFT comparison to proceed without retuning Stage 2 thresholds."
+    ],
+    "limitations": [
+      "The controlled case set is small, so observations remain case-specific.",
+      "Runtime values depend on machine, OpenCV build, and thread scheduling.",
+      "Stage 2 evaluates SIFT only; the final SIFT retention decision requires the paired Stage 3 comparison."
+    ],
+    "decision": "Stage 2 is complete on the target Windows environment. Proceed with the frozen Stage 3 ORB versus SIFT comparison."
+  },
+  "metrics_and_thresholds": {
+    "matching": {
+      "maximum_distance": null,
+      "maximum_drawn_matches": 100,
+      "metric": "l2",
+      "minimum_matches": 8,
+      "ratio_threshold": 0.75
+    },
+    "ransac_affine": {
+      "confidence": 0.99,
+      "grid_cols": 4,
+      "grid_rows": 4,
+      "max_trials": 3000,
+      "minimum_inlier_ratio": 0.25,
+      "minimum_inliers": 8,
+      "minimum_linearity_ratio": 0.01,
+      "minimum_spatial_coverage": 0.125,
+      "plausibility": {
+        "allow_reflection": false,
+        "max_condition_number": 3.0,
+        "max_principal_scale": 1.8,
+        "max_shear_cosine": 0.65,
+        "max_translation_fraction_of_diagonal": 1.5,
+        "min_abs_determinant": 0.1,
+        "min_principal_scale": 0.5
+      },
+      "refine_iterations": 10,
+      "reprojection_threshold": 3.0
+    },
+    "ransac_similarity": {
+      "confidence": 0.99,
+      "max_trials": 2000,
+      "minimum_inlier_ratio": 0.25,
+      "minimum_inliers": 8,
+      "refine_iterations": 10,
+      "reprojection_threshold": 3.0
+    },
+    "validation": {
+      "affine": {
+        "affine_linear_error_threshold": 0.05,
+        "translation_error_threshold_pixels": 4.0,
+        "tre_threshold_pixels": 3.0
+      },
+      "similarity": {
+        "rotation_error_threshold_degrees": 1.0,
+        "scale_error_threshold": 0.03,
+        "translation_error_threshold_pixels": 3.0,
+        "tre_threshold_pixels": 2.0
+      }
+    }
+  },
+  "purpose": "Test whether Stage 1 SIFT correspondences recover correct Moving -> Fixed geometry under the existing similarity and affine RANSAC estimators.",
+  "raw_output_directory": "outputs/week04_sift_stage02_ransac",
+  "setup": {
+    "affine_case_count": 6,
+    "case_count": 13,
+    "failure_probe_count": 2,
+    "seed": 42,
+    "similarity_case_count": 7
+  },
+  "stage": 2,
+  "status": "complete",
+  "target_windows_validation": {
+    "status": "complete",
+    "date": "2026-09-29",
+    "pytest_result": "329 passed in 8.73s",
+    "experiment_result": "12/13 matching successes; 12/13 RANSAC successes; 12/13 within configured geometric tolerances."
+  },
+  "technical_note": "docs/SIFT_FEATURES.md",
+  "title": "SIFT + RANSAC similarity and affine registration",
+  "variables_changed": [
+    "controlled transform model and parameters by case",
+    "blur or restricted field of view on the named robustness cases",
+    "image texture structure on the two failure probes"
+  ],
+  "week": 4,
+  "local_validation": {
+    "pytest_result": "325 passed, 4 skipped in 2.61s",
+    "status": "complete",
+    "tests_collected": 329
+  },
+  "target_windows_run": {
+    "affine": {
+      "case_count": 6,
+      "maximum_tre_pixels": 1.2467384591678428,
+      "mean_inlier_ratio": 0.9482190132966121,
+      "mean_total_runtime_ms": 68.8932666622956,
+      "median_tre_pixels": 0.11554473791457694,
+      "ransac_success_count": 5,
+      "within_tolerance_count": 5
+    },
+    "case_count": 13,
+    "matching_success_count": 12,
+    "ransac_success_count": 12,
+    "similarity": {
+      "case_count": 7,
+      "maximum_tre_pixels": 0.23626232091999966,
+      "mean_inlier_ratio": 0.9473840784721095,
+      "mean_total_runtime_ms": 91.73428572414976,
+      "median_tre_pixels": 0.06051859233508596,
+      "ransac_success_count": 7,
+      "within_tolerance_count": 7
+    },
+    "within_tolerance_count": 12
+  }
+}

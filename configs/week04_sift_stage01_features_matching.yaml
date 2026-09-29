@@ -1,0 +1,75 @@
+experiment:
+  name: week04_sift_stage01_features_matching
+  seed: 42
+
+sift:
+  n_features: 800
+  n_octave_layers: 3
+  contrast_threshold: 0.04
+  edge_threshold: 10.0
+  sigma: 1.6
+  spatial_grid:
+    rows: 4
+    columns: 4
+
+matching:
+  metric: l2
+  minimum_matches: 8
+  ratio_threshold: 0.75
+  ratio_sweep: [0.60, 0.70, 0.75, 0.80, 0.85]
+  maximum_distance: null
+  maximum_drawn_matches: 80
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+cases:
+  - id: camera_identity
+    source: camera
+    operation: identity
+
+  - id: camera_rotation
+    source: camera
+    operation: rigid
+    angle_degrees: 20.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_scale
+    source: camera
+    operation: similarity
+    scale: 1.15
+    angle_degrees: 0.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_blur
+    source: camera
+    operation: gaussian_blur
+    sigma: 3.0
+
+  - id: camera_partial_overlap
+    source: camera
+    operation: restricted_fov
+    width_fraction: 0.58
+    height_fraction: 0.72
+    center_x_fraction: 0.62
+    center_y_fraction: 0.50
+
+  - id: coins_rotation
+    source: coins
+    operation: rigid
+    angle_degrees: -15.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: moon_blur
+    source: moon
+    operation: gaussian_blur
+    sigma: 3.0
+
+output:
+  directory: outputs/week04_sift_stage01_features_matching
+  report_snapshot: reports/week04_sift_stage01_features_matching.json

@@ -1,11 +1,16 @@
 {
-  "schema_version": 1,
-  "week": 4,
-  "purpose": "Consolidated findings registry for feature-based registration experiments",
   "days": {
     "day_16": {
-      "status": "complete",
-      "title": "ORB keypoint detection and binary descriptor extraction",
+      "daily_summary": "docs/daily/day_16_summary.md",
+      "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, match-distance diagnostics, and match spatial-coverage diagnostics.",
+      "interpretation": [
+        "ORB feature availability changes with image content and appearance or geometric modification, so later matching quality should be interpreted together with keypoint count and spatial coverage.",
+        "A large keypoint count alone is not evidence that a reliable transform can be estimated. Day 17 must test descriptor correspondence quality before any geometric conclusion is made."
+      ],
+      "limitations": [
+        "Day 16 measures detection and descriptor extraction only. It does not measure keypoint repeatability, correspondence correctness, or registration accuracy because descriptor matching has not been introduced yet.",
+        "The observations are specific to the tracked images, configured transformations, OpenCV ORB settings, and the machine used for this run."
+      ],
       "measured_evidence": {
         "case_count": 8,
         "failed_case_count": 0,
@@ -24,29 +29,31 @@
         "The configured n_features cap of 800 was reached in camera_identity, camera_translation, camera_rotation, camera_scale, camera_illumination. Counts in those cases are capped and should not be interpreted as the total number of detectable features.",
         "All configured Day 16 cases produced ORB descriptors in both images."
       ],
-      "interpretation": [
-        "ORB feature availability changes with image content and appearance or geometric modification, so later matching quality should be interpreted together with keypoint count and spatial coverage.",
-        "A large keypoint count alone is not evidence that a reliable transform can be estimated. Day 17 must test descriptor correspondence quality before any geometric conclusion is made."
-      ],
-      "limitations": [
-        "Day 16 measures detection and descriptor extraction only. It does not measure keypoint repeatability, correspondence correctness, or registration accuracy because descriptor matching has not been introduced yet.",
-        "The observations are specific to the tracked images, configured transformations, OpenCV ORB settings, and the machine used for this run."
-      ],
-      "decision": "Proceed to Day 17 with KNN Hamming matching, ratio filtering, cross-check comparison, match-distance diagnostics, and match spatial-coverage diagnostics.",
       "source_report": "reports/week04_day01_orb_features.json",
-      "daily_summary": "docs/daily/day_16_summary.md",
+      "status": "complete",
+      "title": "ORB keypoint detection and binary descriptor extraction",
       "validation": {
         "date": "2026-09-28",
+        "mean_moving_detection_runtime_ms": 4.489412500220169,
+        "note": "The captured pytest console output did not include the final numeric test-count summary, so the findings registry records the successful exit code rather than inferring a pass count.",
         "pytest_exit_code": 0,
         "pytest_status": "full_suite_completed_successfully",
-        "target_windows_experiment": "8 / 8 configured cases produced descriptors in both images",
-        "mean_moving_detection_runtime_ms": 4.489412500220169,
-        "note": "The captured pytest console output did not include the final numeric test-count summary, so the findings registry records the successful exit code rather than inferring a pass count."
+        "target_windows_experiment": "8 / 8 configured cases produced descriptors in both images"
       }
     },
     "day_17": {
-      "status": "complete",
-      "title": "ORB descriptor matching and correspondence filtering",
+      "daily_summary": "docs/daily/day_17_summary.md",
+      "decision": "Use the Day 17 correspondences as input to Day 18 RANSAC similarity estimation, where geometric inliers and outliers can be measured explicitly.",
+      "interpretation": [
+        "The ratio threshold controls a trade-off between retaining more correspondences and accepting more ambiguous descriptor matches.",
+        "Accepted-match count and spatial coverage should be interpreted together. Many matches concentrated in a small region may still provide weak geometric support.",
+        "Cross-check and ratio filtering apply different correspondence rules, so their match counts should not be interpreted as direct quality scores without geometric validation."
+      ],
+      "limitations": [
+        "Day 17 evaluates descriptor correspondence filtering only. No RANSAC model is fitted and no registration transform is estimated.",
+        "A descriptor match can pass the current filter and still be geometrically incorrect.",
+        "The development findings are specific to the tracked images, ORB settings, matching thresholds, and selected controlled conditions."
+      ],
       "measured_evidence": {
         "cross_check": {
           "case_count": 9,
@@ -112,35 +119,35 @@
         "The lowest accepted-correspondence grid coverage occurred in moon_blur with minimum fixed/moving coverage 0.375.",
         "Across the configured cases, relaxing the ratio threshold from 0.60 to 0.90 changed the mean accepted-match count from 404.2 to 556.7."
       ],
-      "interpretation": [
-        "The ratio threshold controls a trade-off between retaining more correspondences and accepting more ambiguous descriptor matches.",
-        "Accepted-match count and spatial coverage should be interpreted together. Many matches concentrated in a small region may still provide weak geometric support.",
-        "Cross-check and ratio filtering apply different correspondence rules, so their match counts should not be interpreted as direct quality scores without geometric validation."
-      ],
-      "limitations": [
-        "Day 17 evaluates descriptor correspondence filtering only. No RANSAC model is fitted and no registration transform is estimated.",
-        "A descriptor match can pass the current filter and still be geometrically incorrect.",
-        "The development findings are specific to the tracked images, ORB settings, matching thresholds, and selected controlled conditions."
-      ],
-      "decision": "Use the Day 17 correspondences as input to Day 18 RANSAC similarity estimation, where geometric inliers and outliers can be measured explicitly.",
       "source_report": "reports/week04_day02_orb_matching.json",
-      "daily_summary": "docs/daily/day_17_summary.md",
+      "status": "complete",
+      "title": "ORB descriptor matching and correspondence filtering",
       "validation": {
-        "status": "complete",
         "date": "2026-09-28",
         "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
-        "pytest_result": "270 passed in 3.93s",
-        "pytest_passed": 270,
-        "pytest_failed": 0,
-        "pytest_skipped": 0,
-        "target_windows_experiment": "9 / 9 configured cases retained at least 8 matches for both KNN ratio filtering and cross-check matching",
+        "mean_cross_check_accepted_match_count": 509.0,
         "mean_knn_accepted_match_count": 471.3333333333333,
-        "mean_cross_check_accepted_match_count": 509.0
+        "pytest_failed": 0,
+        "pytest_passed": 270,
+        "pytest_result": "270 passed in 3.93s",
+        "pytest_skipped": 0,
+        "status": "complete",
+        "target_windows_experiment": "9 / 9 configured cases retained at least 8 matches for both KNN ratio filtering and cross-check matching"
       }
     },
     "day_18": {
-      "status": "complete",
-      "title": "ORB + RANSAC similarity estimation and outlier rejection",
+      "daily_summary": "docs/daily/day_18_summary.md",
+      "decision": "Proceed to Day 19 with affine RANSAC, degeneracy checks, texture stratification, and threshold sweeps while retaining the Day 18 similarity baseline.",
+      "interpretation": [
+        "RANSAC adds a geometric consistency test after descriptor filtering. Accepted ORB matches are not automatically treated as correct correspondences.",
+        "Inlier ratio, reprojection residuals, and ground-truth TRE describe different parts of the result and should be reported together.",
+        "A successful RANSAC call is not sufficient evidence of correct registration. Geometric correctness is evaluated separately against the known transform."
+      ],
+      "limitations": [
+        "Day 18 evaluates only the similarity model. General affine estimation and degeneracy checks are reserved for Day 19.",
+        "The current development thresholds are working thresholds for controlled experiments and are not final benchmark thresholds.",
+        "The findings are specific to the tracked images, ORB configuration, ratio filter, RANSAC settings, and selected controlled transformations."
+      ],
       "measured_evidence": {
         "case_count": 8,
         "failed_count": 0,
@@ -151,6 +158,12 @@
         "ransac_success_count": 8,
         "within_tolerance_count": 8
       },
+      "observations": [
+        "The smallest geometric error occurred in camera_similarity_illumination with TRE 0.110 px.",
+        "The largest geometric error occurred in camera_similarity_large with TRE 0.556 px.",
+        "The lowest RANSAC inlier ratio occurred in camera_similarity_blur at 0.788.",
+        "The controlled outlier experiment injected 126 incorrect correspondences; RANSAC rejected 126 of those injected correspondences."
+      ],
       "outlier_injection": {
         "case_id": "camera_similarity_medium",
         "geometry": {
@@ -201,76 +214,30 @@
           "success": true
         }
       },
-      "observations": [
-        "The smallest geometric error occurred in camera_similarity_illumination with TRE 0.110 px.",
-        "The largest geometric error occurred in camera_similarity_large with TRE 0.556 px.",
-        "The lowest RANSAC inlier ratio occurred in camera_similarity_blur at 0.788.",
-        "The controlled outlier experiment injected 126 incorrect correspondences; RANSAC rejected 126 of those injected correspondences."
-      ],
-      "interpretation": [
-        "RANSAC adds a geometric consistency test after descriptor filtering. Accepted ORB matches are not automatically treated as correct correspondences.",
-        "Inlier ratio, reprojection residuals, and ground-truth TRE describe different parts of the result and should be reported together.",
-        "A successful RANSAC call is not sufficient evidence of correct registration. Geometric correctness is evaluated separately against the known transform."
-      ],
-      "limitations": [
-        "Day 18 evaluates only the similarity model. General affine estimation and degeneracy checks are reserved for Day 19.",
-        "The current development thresholds are working thresholds for controlled experiments and are not final benchmark thresholds.",
-        "The findings are specific to the tracked images, ORB configuration, ratio filter, RANSAC settings, and selected controlled transformations."
-      ],
-      "decision": "Proceed to Day 19 with affine RANSAC, degeneracy checks, texture stratification, and threshold sweeps while retaining the Day 18 similarity baseline.",
       "source_report": "reports/week04_day03_ransac_similarity.json",
-      "daily_summary": "docs/daily/day_18_summary.md",
+      "status": "complete",
+      "title": "ORB + RANSAC similarity estimation and outlier rejection",
       "validation": {
-        "status": "complete",
         "date": "2026-09-28",
         "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
-        "pytest_result": "283 passed",
-        "pytest_passed": 283,
-        "pytest_failed": 0,
-        "pytest_skipped": 0,
-        "pytest_exit_code": 0,
-        "target_windows_experiment": "8 / 8 RANSAC estimates succeeded and 8 / 8 were within the configured Day 18 development tolerances",
+        "maximum_tre_pixels": 0.5561615034922126,
         "mean_inlier_ratio": 0.8843645806144089,
         "median_tre_pixels": 0.27685635361233424,
-        "maximum_tre_pixels": 0.5561615034922126,
-        "outlier_injection_rejected_count": 126,
         "outlier_injection_count": 126,
-        "outlier_injection_tre_pixels": 0.3602585909353012
+        "outlier_injection_rejected_count": 126,
+        "outlier_injection_tre_pixels": 0.3602585909353012,
+        "pytest_exit_code": 0,
+        "pytest_failed": 0,
+        "pytest_passed": 283,
+        "pytest_result": "283 passed",
+        "pytest_skipped": 0,
+        "status": "complete",
+        "target_windows_experiment": "8 / 8 RANSAC estimates succeeded and 8 / 8 were within the configured Day 18 development tolerances"
       }
     },
     "day_19": {
-      "status": "complete",
-      "title": "Affine RANSAC, degeneracy checks, texture diagnostics, and threshold sweeps",
-      "measured_evidence": {
-        "by_texture": {
-          "high": {
-            "case_count": 7,
-            "success_count": 6,
-            "within_tolerance_count": 6,
-            "median_tre_pixels": 0.523088033943091
-          },
-          "medium": {
-            "case_count": 1,
-            "success_count": 1,
-            "within_tolerance_count": 1,
-            "median_tre_pixels": 0.19987537398279148
-          },
-          "low": {
-            "case_count": 1,
-            "success_count": 0,
-            "within_tolerance_count": 0,
-            "median_tre_pixels": 15.598862468310667
-          }
-        },
-        "case_count": 9,
-        "failed_count": 2,
-        "maximum_tre_pixels": 15.598862468310667,
-        "mean_affine_ransac_runtime_ms": 0.0978666672987553,
-        "mean_inlier_ratio": 0.8714187794052007,
-        "median_tre_pixels": 0.523088033943091,
-        "ransac_success_count": 7,
-        "within_tolerance_count": 7
-      },
+      "daily_summary": "docs/daily/day_19_summary.md",
+      "decision": "Carry the validated affine model, explicit failure rules, texture diagnostics, and threshold-sweep evidence into the Day 20 integrated feature-based benchmark.",
       "degeneracy_probes": [
         {
           "expected_failure": "degenerate_correspondences_collinear",
@@ -294,20 +261,6 @@
           "probe": "implausible_scale"
         }
       ],
-      "observations": [
-        "The smallest affine TRE occurred in camera_affine_mild at 0.111 px.",
-        "The largest returned affine TRE occurred in low_texture_affine at 15.599 px, and that estimate was rejected for insufficient RANSAC inliers.",
-        "The lowest successful-case affine RANSAC inlier ratio occurred in coins_affine at 0.802. The rejected low_texture_affine case had an inlier ratio of 0.750.",
-        "Affine RANSAC produced lower TRE than similarity RANSAC on all seven true-affine cases where both models returned a numeric TRE. The repeated-pattern case produced no filtered matches, so no model comparison was possible there.",
-        "The three controlled degeneracy and plausibility probes produced their expected failure labels in 3 of 3 probes.",
-        "The threshold sweep produced 80 within-tolerance results across 120 case and threshold combinations."
-      ],
-      "interpretation": [
-        "The affine model can represent anisotropic scale and shear that a similarity model cannot, but the additional freedom requires stronger geometric guardrails.",
-        "Feature count alone is not sufficient for reliable affine estimation. Spatial coverage, collinearity, RANSAC inlier consistency, and transform plausibility are recorded separately.",
-        "Ratio filtering and RANSAC reprojection thresholds interact. A threshold that retains more correspondences is not automatically the setting with the lowest geometric error.",
-        "Texture diagnostics are descriptive stratification variables. They help explain feature availability but do not by themselves determine registration success."
-      ],
       "failure_cases": [
         {
           "case_id": "low_texture_affine",
@@ -318,39 +271,125 @@
           "reason": "insufficient_filtered_matches"
         }
       ],
+      "interpretation": [
+        "The affine model can represent anisotropic scale and shear that a similarity model cannot, but the additional freedom requires stronger geometric guardrails.",
+        "Feature count alone is not sufficient for reliable affine estimation. Spatial coverage, collinearity, RANSAC inlier consistency, and transform plausibility are recorded separately.",
+        "Ratio filtering and RANSAC reprojection thresholds interact. A threshold that retains more correspondences is not automatically the setting with the lowest geometric error.",
+        "Texture diagnostics are descriptive stratification variables. They help explain feature availability but do not by themselves determine registration success."
+      ],
       "limitations": [
         "The Day 19 thresholds are development settings and are not frozen final benchmark settings.",
         "Texture labels use configured gradient-energy thresholds and a capped ORB detector, so the categories are specific to this experiment setup.",
         "The procedural repeated-pattern case is a controlled ambiguity probe and is not a substitute for diverse real repeated structures.",
         "Similarity and affine model comparisons are limited to the shared Day 19 cases and should not be generalized beyond the current benchmark."
       ],
-      "decision": "Carry the validated affine model, explicit failure rules, texture diagnostics, and threshold-sweep evidence into the Day 20 integrated feature-based benchmark.",
+      "measured_evidence": {
+        "by_texture": {
+          "high": {
+            "case_count": 7,
+            "median_tre_pixels": 0.523088033943091,
+            "success_count": 6,
+            "within_tolerance_count": 6
+          },
+          "low": {
+            "case_count": 1,
+            "median_tre_pixels": 15.598862468310667,
+            "success_count": 0,
+            "within_tolerance_count": 0
+          },
+          "medium": {
+            "case_count": 1,
+            "median_tre_pixels": 0.19987537398279148,
+            "success_count": 1,
+            "within_tolerance_count": 1
+          }
+        },
+        "case_count": 9,
+        "failed_count": 2,
+        "maximum_tre_pixels": 15.598862468310667,
+        "mean_affine_ransac_runtime_ms": 0.0978666672987553,
+        "mean_inlier_ratio": 0.8714187794052007,
+        "median_tre_pixels": 0.523088033943091,
+        "ransac_success_count": 7,
+        "within_tolerance_count": 7
+      },
+      "observations": [
+        "The smallest affine TRE occurred in camera_affine_mild at 0.111 px.",
+        "The largest returned affine TRE occurred in low_texture_affine at 15.599 px, and that estimate was rejected for insufficient RANSAC inliers.",
+        "The lowest successful-case affine RANSAC inlier ratio occurred in coins_affine at 0.802. The rejected low_texture_affine case had an inlier ratio of 0.750.",
+        "Affine RANSAC produced lower TRE than similarity RANSAC on all seven true-affine cases where both models returned a numeric TRE. The repeated-pattern case produced no filtered matches, so no model comparison was possible there.",
+        "The three controlled degeneracy and plausibility probes produced their expected failure labels in 3 of 3 probes.",
+        "The threshold sweep produced 80 within-tolerance results across 120 case and threshold combinations."
+      ],
       "source_report": "reports/week04_day04_ransac_affine_robustness.json",
-      "daily_summary": "docs/daily/day_19_summary.md",
+      "status": "complete",
+      "title": "Affine RANSAC, degeneracy checks, texture diagnostics, and threshold sweeps",
       "validation": {
-        "status": "complete",
         "date": "2026-09-29",
+        "degeneracy_probe_result": "3 / 3 expected failure labels recorded",
         "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
-        "pytest_result": "304 passed in 4.27s",
-        "pytest_passed": 304,
-        "pytest_failed": 0,
-        "pytest_skipped": 0,
-        "target_windows_experiment": "7 / 9 affine RANSAC cases succeeded and 7 / 9 were within the configured Day 19 development tolerances",
+        "maximum_returned_tre_pixels": 15.598862468310667,
         "mean_successful_case_inlier_ratio": 0.8714187794052007,
         "median_affine_tre_pixels": 0.523088033943091,
-        "maximum_returned_tre_pixels": 15.598862468310667,
-        "degeneracy_probe_result": "3 / 3 expected failure labels recorded",
+        "pytest_failed": 0,
+        "pytest_passed": 304,
+        "pytest_result": "304 passed in 4.27s",
+        "pytest_skipped": 0,
+        "status": "complete",
+        "target_windows_experiment": "7 / 9 affine RANSAC cases succeeded and 7 / 9 were within the configured Day 19 development tolerances",
         "threshold_sweep_combinations": 120
       }
     },
     "day_20": {
-      "status": "complete",
-      "title": "Integrated feature-based benchmark and shared-case comparison",
+      "daily_summary": "docs/daily/day_20_summary.md",
+      "decision": "Close Week 4 and carry the shared-case comparison policy, explicit feature failure records, and integrated result schema into the multimodal mutual-information stage.",
+      "failure_cases": [
+        {
+          "case_id": "low_texture_affine",
+          "failure_reason": "insufficient_fixed_descriptors_for_knn"
+        },
+        {
+          "case_id": "repeated_pattern_affine",
+          "failure_reason": "insufficient_ransac_inliers"
+        }
+      ],
+      "interpretation": [
+        "The integrated benchmark keeps comparison groups separate so methods are compared only on shared cases with compatible geometric intent.",
+        "Translation, rigid, and affine results are not combined into one universal ranking because the supported motion models and model flexibility differ.",
+        "Feature matching success, RANSAC estimation success, and ground-truth geometric success remain separate recorded states.",
+        "The low-texture and repeated-pattern cases are diagnostic failure probes and are reported separately from the shared comparison groups."
+      ],
+      "limitations": [
+        "The current thresholds are development thresholds and are not frozen final benchmark criteria.",
+        "The integrated comparison uses a compact controlled subset and does not establish general method superiority.",
+        "ORB similarity has one scale degree of freedom beyond ECC rigid on the rigid comparison group, so that comparison is a shared-case behavior comparison rather than an equal-complexity model comparison.",
+        "The current comparison remains monomodal. Real and simulated multimodal method comparison is reserved for the mutual-information stage."
+      ],
       "measured_evidence": {
         "case_count": 13,
+        "feature_diagnostic_results": [
+          {
+            "accepted_matches": 0,
+            "case_id": "low_texture_affine",
+            "failure_reason": "insufficient_fixed_descriptors_for_knn",
+            "inlier_count": 0,
+            "inlier_ratio": null,
+            "mean_tre_pixels": null,
+            "success": false,
+            "within_tolerance": false
+          },
+          {
+            "accepted_matches": 62,
+            "case_id": "repeated_pattern_affine",
+            "failure_reason": "insufficient_ransac_inliers",
+            "inlier_count": 7,
+            "inlier_ratio": 0.11290322580645161,
+            "mean_tre_pixels": 107.42920036447087,
+            "success": false,
+            "within_tolerance": false
+          }
+        ],
         "registration_count": 32,
-        "success_count": 30,
-        "within_tolerance_count": 26,
         "shared_group_summaries": {
           "affine": {
             "ecc_affine_multiresolution": {
@@ -447,28 +486,8 @@
             }
           }
         },
-        "feature_diagnostic_results": [
-          {
-            "case_id": "low_texture_affine",
-            "success": false,
-            "within_tolerance": false,
-            "failure_reason": "insufficient_fixed_descriptors_for_knn",
-            "mean_tre_pixels": null,
-            "accepted_matches": 0,
-            "inlier_count": 0,
-            "inlier_ratio": null
-          },
-          {
-            "case_id": "repeated_pattern_affine",
-            "success": false,
-            "within_tolerance": false,
-            "failure_reason": "insufficient_ransac_inliers",
-            "mean_tre_pixels": 107.42920036447087,
-            "accepted_matches": 62,
-            "inlier_count": 7,
-            "inlier_ratio": 0.11290322580645161
-          }
-        ]
+        "success_count": 30,
+        "within_tolerance_count": 26
       },
       "observations": [
         "ECC Translation recorded median TRE 0.485 px across the shared translation cases assigned to that comparison.",
@@ -482,37 +501,243 @@
         "Feature diagnostic case low_texture_affine did not meet the development criterion; recorded reason: insufficient_fixed_descriptors_for_knn.",
         "Feature diagnostic case repeated_pattern_affine did not meet the development criterion; recorded reason: insufficient_ransac_inliers."
       ],
-      "interpretation": [
-        "The integrated benchmark keeps comparison groups separate so methods are compared only on shared cases with compatible geometric intent.",
-        "Translation, rigid, and affine results are not combined into one universal ranking because the supported motion models and model flexibility differ.",
-        "Feature matching success, RANSAC estimation success, and ground-truth geometric success remain separate recorded states.",
-        "The low-texture and repeated-pattern cases are diagnostic failure probes and are reported separately from the shared comparison groups."
-      ],
-      "limitations": [
-        "The current thresholds are development thresholds and are not frozen final benchmark criteria.",
-        "The integrated comparison uses a compact controlled subset and does not establish general method superiority.",
-        "ORB similarity has one scale degree of freedom beyond ECC rigid on the rigid comparison group, so that comparison is a shared-case behavior comparison rather than an equal-complexity model comparison.",
-        "The current comparison remains monomodal. Real and simulated multimodal method comparison is reserved for the mutual-information stage."
-      ],
-      "failure_cases": [
-        {
-          "case_id": "low_texture_affine",
-          "failure_reason": "insufficient_fixed_descriptors_for_knn"
-        },
-        {
-          "case_id": "repeated_pattern_affine",
-          "failure_reason": "insufficient_ransac_inliers"
-        }
-      ],
-      "decision": "Close Week 4 and carry the shared-case comparison policy, explicit feature failure records, and integrated result schema into the multimodal mutual-information stage.",
       "source_report": "reports/week04_day05_integrated_feature_baseline.json",
-      "daily_summary": "docs/daily/day_20_summary.md",
+      "status": "complete",
+      "title": "Integrated feature-based benchmark and shared-case comparison",
       "validation": {
-        "status": "complete",
         "date": "2026-09-29",
         "pytest_result": "314 passed in 4.36s",
+        "status": "complete",
         "target_windows_experiment": "13 cases, 32 registrations, 30 method successes, 26 results within the Day 20 development tolerances"
       }
     }
-  }
+  },
+  "extensions": {
+    "sift_stage_01": {
+      "decision": "Carry ratio threshold 0.75 provisionally into SIFT Stage 2, where similarity and affine RANSAC will determine whether the retained correspondences are geometrically consistent.",
+      "experiment_summary": "docs/experiments/sift_stage01_summary.md",
+      "interpretation": [
+        "SIFT uses 128-dimensional floating-point descriptors and L2 distance, so its descriptor distances are not directly comparable with ORB Hamming distances.",
+        "Accepted-match count and spatial coverage are descriptive inputs to later geometric estimation. They are not registration-accuracy metrics.",
+        "The ratio threshold remains provisional because Stage 1 does not test geometric inliers or ground-truth registration error."
+      ],
+      "limitations": [
+        "Stage 1 evaluates SIFT detection, description, and correspondence filtering only. No RANSAC transform is estimated.",
+        "The subset is intentionally small and uses tracked monomodal images with controlled transformations and degradations.",
+        "Runtime measurements are machine-dependent and the stored runtime values refer to the validated target Windows run."
+      ],
+      "measured_evidence": {
+        "case_count": 7,
+        "mean_accepted_match_count": 359.0,
+        "mean_matching_runtime_ms": 3.4250428579980507,
+        "mean_minimum_spatial_coverage": 0.7589285714285714,
+        "mean_total_detection_runtime_ms": 79.38240000346143,
+        "median_accepted_match_count": 393.0,
+        "successful_case_count": 7
+      },
+      "observations": [
+        "moon_blur produced the fewest accepted SIFT matches at the provisional threshold with 11 matches.",
+        "camera_identity produced the most accepted SIFT matches at the provisional threshold with 791 matches.",
+        "moon_blur had the lowest accepted-correspondence spatial coverage at 0.375.",
+        "coins_rotation retained 390 accepted matches with full 4 x 4 correspondence coverage.",
+        "Relaxing the ratio threshold from 0.60 to 0.85 increased the mean accepted-match count from 341.4 to 380.7. Geometric quality will be evaluated in Stage 2."
+      ],
+      "ratio_sweep": [
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 341.42857142857144,
+          "mean_minimum_spatial_coverage": 0.75,
+          "ratio_threshold": 0.6,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 353.42857142857144,
+          "mean_minimum_spatial_coverage": 0.75,
+          "ratio_threshold": 0.7,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 359.0,
+          "mean_minimum_spatial_coverage": 0.7589285714285714,
+          "ratio_threshold": 0.75,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 367.2857142857143,
+          "mean_minimum_spatial_coverage": 0.7678571428571429,
+          "ratio_threshold": 0.8,
+          "successful_case_count": 7
+        },
+        {
+          "case_count": 7,
+          "mean_accepted_match_count": 380.7142857142857,
+          "mean_minimum_spatial_coverage": 0.7678571428571429,
+          "ratio_threshold": 0.85,
+          "successful_case_count": 7
+        }
+      ],
+      "source_report": "reports/week04_sift_stage01_features_matching.json",
+      "status": "complete",
+      "title": "SIFT detection, description, and L2 matching",
+      "validation": {
+        "date": "2026-09-29",
+        "pytest_result": "327 passed in 9.44s",
+        "status": "complete",
+        "target_windows_experiment": "7/7 matching cases passed at ratio threshold 0.75; mean accepted matches 359.0; mean minimum spatial coverage 0.759; mean total detection runtime 79.382 ms; mean L2 matching runtime 3.425 ms."
+      }
+    },
+    "sift_stage_02": {
+      "decision": "Proceed with the frozen Stage 3 ORB versus SIFT comparison without retuning the validated Stage 2 thresholds.",
+      "experiment_summary": "docs/experiments/sift_stage02_summary.md",
+      "interpretation": [
+        "Stage 2 separates SIFT descriptor filtering, RANSAC execution success, and geometric correctness against known ground truth.",
+        "The same similarity and affine RANSAC implementations used by the ORB pipeline are reused here; only the feature front-end and descriptor metric differ.",
+        "Target Windows validation confirms the Stage 2 implementation and permits the Stage 3 comparison to proceed with frozen settings."
+      ],
+      "limitations": [
+        "The controlled case set is small, so observations remain case-specific.",
+        "Runtime values depend on machine, OpenCV build, and thread scheduling.",
+        "Stage 2 does not by itself determine whether SIFT should be retained in the final method set."
+      ],
+      "local_validation": {
+        "pytest_result": "325 passed, 4 skipped in 2.61s",
+        "scope": "development environment only",
+        "status": "complete",
+        "tests_collected": 329
+      },
+      "measured_development_evidence": {
+        "affine": {
+          "case_count": 6,
+          "maximum_tre_pixels": 1.2467384591678428,
+          "mean_inlier_ratio": 0.9482190132966121,
+          "mean_total_runtime_ms": 71.71183466670072,
+          "median_tre_pixels": 0.11554471717556772,
+          "ransac_success_count": 5,
+          "within_tolerance_count": 5
+        },
+        "case_count": 13,
+        "matching_success_count": 12,
+        "ransac_success_count": 12,
+        "similarity": {
+          "case_count": 7,
+          "maximum_tre_pixels": 0.23626240673911,
+          "mean_inlier_ratio": 0.9473840784721095,
+          "mean_total_runtime_ms": 80.14094871428564,
+          "median_tre_pixels": 0.06051860257310847,
+          "ransac_success_count": 7,
+          "within_tolerance_count": 7
+        },
+        "within_tolerance_count": 12
+      },
+      "measured_target_windows_evidence": {
+        "affine": {
+          "case_count": 6,
+          "maximum_tre_pixels": 1.2467384591678428,
+          "mean_inlier_ratio": 0.9482190132966121,
+          "mean_total_runtime_ms": 68.8932666622956,
+          "median_tre_pixels": 0.11554473791457694,
+          "ransac_success_count": 5,
+          "within_tolerance_count": 5
+        },
+        "case_count": 13,
+        "matching_success_count": 12,
+        "ransac_success_count": 12,
+        "similarity": {
+          "case_count": 7,
+          "maximum_tre_pixels": 0.23626232091999966,
+          "mean_inlier_ratio": 0.9473840784721095,
+          "mean_total_runtime_ms": 91.73428572414976,
+          "median_tre_pixels": 0.06051859233508596,
+          "ransac_success_count": 7,
+          "within_tolerance_count": 7
+        },
+        "within_tolerance_count": 12
+      },
+      "observations": [
+        "Lowest target Windows TRE was 0.005 px for camera_partial_overlap.",
+        "Largest returned target Windows TRE was 1.247 px for low_texture_affine.",
+        "repeated_pattern_affine retained no filtered SIFT matches and failed before RANSAC."
+      ],
+      "source_report": "reports/week04_sift_stage02_ransac.json",
+      "status": "complete",
+      "title": "SIFT + RANSAC similarity and affine registration",
+      "validation": {
+        "date": "2026-09-29",
+        "pytest_result": "329 passed in 8.73s",
+        "status": "complete",
+        "target_windows_experiment": "12/13 matching successes; 12/13 RANSAC successes; 12/13 within configured geometric tolerances."
+      }
+    },
+    "sift_stage_03": {
+      "decision": "Validate the frozen Stage 3 comparison on the target Windows environment before selecting one of the three documented SIFT retention outcomes.",
+      "interpretation": [
+        "Feature count and raw match count are diagnostics, not the deciding criteria.",
+        "Registration success and geometric correctness are evaluated before difficult-case recovery, RANSAC consistency, and runtime.",
+        "A final SIFT retention decision is intentionally deferred until the same Stage 3 experiment is validated on the target Windows environment."
+      ],
+      "limitations": [
+        "This tracked Stage 3 snapshot records a development-machine run until target Windows validation is supplied.",
+        "The comparison is a small controlled subset and does not establish universal superiority of either feature method.",
+        "Runtime depends on machine, OpenCV build, and thread scheduling."
+      ],
+      "measured_development_evidence": {
+        "frontends": {
+          "orb": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 15.598862468310674,
+            "mean_filtered_matches": 301.8333333333333,
+            "mean_fixed_keypoints": 690.6666666666666,
+            "mean_inlier_ratio": 0.8663372501929142,
+            "mean_moving_keypoints": 636.75,
+            "mean_total_runtime_ms": 8.212291749960817,
+            "median_tre_pixels": 0.28782839816696193,
+            "ransac_success_count": 10,
+            "within_tolerance_count": 10
+          },
+          "sift": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 1.2467384591678428,
+            "mean_filtered_matches": 268.75,
+            "mean_fixed_keypoints": 664.75,
+            "mean_inlier_ratio": 0.945241988146773,
+            "mean_moving_keypoints": 568.0833333333334,
+            "mean_total_runtime_ms": 74.25965966660897,
+            "median_tre_pixels": 0.11554471717556772,
+            "ransac_success_count": 11,
+            "within_tolerance_count": 11
+          }
+        },
+        "paired_outcomes": {
+          "both_within_tolerance": 10,
+          "neither_within_tolerance": 1,
+          "orb_only_within_tolerance": 0,
+          "sift_only_within_tolerance": 1
+        }
+      },
+      "observations": [
+        "ORB was inside tolerance on 10 / 12 cases in this development run.",
+        "SIFT was inside tolerance on 11 / 12 cases in this development run.",
+        "Paired outcomes: 10 both passed, 0 ORB-only passes, 1 SIFT-only passes, 1 neither passed.",
+        "low_texture_affine: sift_only_within_tolerance.",
+        "repeated_pattern_affine: neither_within_tolerance."
+      ],
+      "source_report": "reports/week04_orb_vs_sift_comparison.json",
+      "status": "implementation_complete_target_validation_pending",
+      "technical_note": "docs/ORB_VS_SIFT_COMPARISON.md",
+      "title": "Frozen ORB versus SIFT controlled comparison",
+      "validation": {
+        "local_pytest_result": "329 passed, 4 skipped in development environment after Stage 3 implementation",
+        "status": "pending",
+        "tests_collected": 333
+      }
+    }
+  },
+  "purpose": "Consolidated findings registry for feature-based registration experiments",
+  "schema_version": 1,
+  "week": 4
 }
