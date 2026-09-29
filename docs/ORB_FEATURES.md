@@ -79,7 +79,7 @@ The validated target-machine aggregate values were 652.0 mean moving-image keypo
 
 Day 16 does not report registration accuracy, TRE, matching precision, or RANSAC inlier quality. No geometric method comparison should be made from these results.
 
-The next stage will add Hamming-distance descriptor matching and correspondence filtering. Only after matching is available can keypoint repeatability and correspondence quality be evaluated directly.
+Day 17 added Hamming-distance descriptor matching and correspondence filtering. Those results measure correspondence availability and spatial support, while geometric consistency is evaluated separately by the Day 18 RANSAC stage.
 
 ## Files
 

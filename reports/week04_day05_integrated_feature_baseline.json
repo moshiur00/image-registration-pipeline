@@ -1,0 +1,648 @@
+{
+  "daily_summary": "docs/daily/day_20_summary.md",
+  "development_run": {
+    "case_count": 13,
+    "feature_diagnostic_case_count": 2,
+    "feature_diagnostic_results": [
+      {
+        "affine_linear_error": null,
+        "case_id": "low_texture_affine",
+        "comparison_group": "feature_diagnostic",
+        "condition": "clean",
+        "condition_metadata": {
+          "type": "clean"
+        },
+        "diagnostics": {
+          "accepted_matches": 0,
+          "fixed_keypoints": 1,
+          "inlier_count": 0,
+          "inlier_ratio": null,
+          "matching_failure_reason": "insufficient_fixed_descriptors_for_knn",
+          "matching_success": false,
+          "moving_keypoints": 2,
+          "ransac_failure_reason": "insufficient_fixed_descriptors_for_knn"
+        },
+        "estimated_transform": null,
+        "failure_reason": "insufficient_fixed_descriptors_for_knn",
+        "ground_truth_model": "affine",
+        "ground_truth_transform": [
+          [
+            1.046949641030846,
+            0.18614489873083456,
+            -15.719553819614276
+          ],
+          [
+            -0.16582053294264473,
+            0.932359413893852,
+            19.766292678721072
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "mean_tre_pixels": null,
+        "method_family": "feature",
+        "method_id": "orb_affine",
+        "method_label": "ORB + RANSAC Affine",
+        "method_model": "affine",
+        "ncc_after": 0.6300465552876727,
+        "overlap_fraction": 0.89581298828125,
+        "rotation_error_degrees": null,
+        "runtime_ms": 1.8165000001317821,
+        "scope": "feature_diagnostic",
+        "source_id": "low_texture",
+        "ssim_after": 0.7069950862690532,
+        "success": false,
+        "translation_error_pixels": null,
+        "within_tolerance": false
+      },
+      {
+        "affine_linear_error": 1.3465610815894986,
+        "case_id": "repeated_pattern_affine",
+        "comparison_group": "feature_diagnostic",
+        "condition": "clean",
+        "condition_metadata": {
+          "type": "clean"
+        },
+        "diagnostics": {
+          "accepted_matches": 62,
+          "affine_plausible": false,
+          "affine_rejection_reasons": [
+            "near_singular_transform",
+            "implausible_principal_scale",
+            "implausible_condition_number",
+            "implausible_shear"
+          ],
+          "fixed_keypoints": 310,
+          "inlier_count": 7,
+          "inlier_ratio": 0.11290322580645161,
+          "matching_failure_reason": null,
+          "matching_success": true,
+          "minimum_correspondence_coverage": 0.3125,
+          "moving_keypoints": 734,
+          "ransac_failure_reason": "insufficient_ransac_inliers"
+        },
+        "estimated_transform": [
+          [
+            -0.12890421265258267,
+            0.23733342643345684,
+            69.9502780556378
+          ],
+          [
+            -0.17057648071777196,
+            0.27505857138433476,
+            144.46320498981527
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": "insufficient_ransac_inliers",
+        "ground_truth_model": "affine",
+        "ground_truth_transform": [
+          [
+            1.0298787914912333,
+            0.16381470873164317,
+            -6.695921278416762
+          ],
+          [
+            -0.14474002499846805,
+            0.9565100894413853,
+            9.999316783528059
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "mean_tre_pixels": 107.42920036447087,
+        "method_family": "feature",
+        "method_id": "orb_affine",
+        "method_label": "ORB + RANSAC Affine",
+        "method_model": "affine",
+        "ncc_after": 0.036133753172542825,
+        "overlap_fraction": 0.88409423828125,
+        "rotation_error_degrees": null,
+        "runtime_ms": 10.135500000615139,
+        "scope": "feature_diagnostic",
+        "source_id": "repeated_pattern",
+        "ssim_after": 0.28905901013647056,
+        "success": false,
+        "translation_error_pixels": 75.96780510220188,
+        "within_tolerance": false
+      }
+    ],
+    "findings": {
+      "decision": "Carry the shared-case comparison policy, explicit feature failure records, and integrated result schema into the later unified evaluation framework.",
+      "failure_cases": [
+        {
+          "case_id": "low_texture_affine",
+          "failure_reason": "insufficient_fixed_descriptors_for_knn"
+        },
+        {
+          "case_id": "repeated_pattern_affine",
+          "failure_reason": "insufficient_ransac_inliers"
+        }
+      ],
+      "interpretation": [
+        "The integrated benchmark keeps comparison groups separate so methods are compared only on shared cases with compatible geometric intent.",
+        "Translation, rigid, and affine results are not combined into one universal ranking because the supported motion models and model flexibility differ.",
+        "Feature matching success, RANSAC estimation success, and ground-truth geometric success remain separate recorded states.",
+        "The low-texture and repeated-pattern cases are diagnostic failure probes and are reported separately from the shared comparison groups."
+      ],
+      "limitations": [
+        "The current thresholds are development thresholds and are not frozen final benchmark criteria.",
+        "The integrated comparison uses a compact controlled subset and does not establish general method superiority.",
+        "ORB similarity has one scale degree of freedom beyond ECC rigid on the rigid comparison group, so that comparison is a shared-case behavior comparison rather than an equal-complexity model comparison.",
+        "The current comparison remains monomodal. Real and simulated multimodal method comparison is reserved for the mutual-information stage."
+      ],
+      "observations": [
+        "ECC Translation recorded median TRE 0.485 px across the shared translation cases assigned to that comparison.",
+        "ORB + RANSAC Similarity recorded median TRE 0.177 px across the shared translation cases assigned to that comparison.",
+        "Phase Correlation recorded median TRE 0.043 px across the shared translation cases assigned to that comparison.",
+        "ECC Rigid recorded median TRE 0.262 px across the shared rigid cases assigned to that comparison.",
+        "ORB + RANSAC Similarity recorded median TRE 0.369 px across the shared rigid cases assigned to that comparison.",
+        "ECC Affine Multiresolution recorded median TRE 0.977 px across the shared affine cases assigned to that comparison.",
+        "ECC Affine Single recorded median TRE 0.952 px across the shared affine cases assigned to that comparison.",
+        "ORB + RANSAC Affine recorded median TRE 0.327 px across the shared affine cases assigned to that comparison.",
+        "Feature diagnostic case low_texture_affine did not meet the development criterion; recorded reason: insufficient_fixed_descriptors_for_knn.",
+        "Feature diagnostic case repeated_pattern_affine did not meet the development criterion; recorded reason: insufficient_ransac_inliers."
+      ]
+    },
+    "method_summary": {
+      "ecc_affine_multiresolution": {
+        "maximum_tre_pixels": 109.34246861649467,
+        "mean_runtime_ms": 132.93659999908414,
+        "median_runtime_ms": 131.64299999698414,
+        "median_tre_pixels": 0.9766800121595449,
+        "registration_count": 4,
+        "success_count": 4,
+        "success_rate": 1.0,
+        "within_tolerance_count": 3,
+        "within_tolerance_rate": 0.75
+      },
+      "ecc_affine_single": {
+        "maximum_tre_pixels": 39.13930013519008,
+        "mean_runtime_ms": 105.20132499914325,
+        "median_runtime_ms": 74.05699999799253,
+        "median_tre_pixels": 0.9517823778399381,
+        "registration_count": 4,
+        "success_count": 4,
+        "success_rate": 1.0,
+        "within_tolerance_count": 3,
+        "within_tolerance_rate": 0.75
+      },
+      "ecc_rigid": {
+        "maximum_tre_pixels": 119.55725308663386,
+        "mean_runtime_ms": 43.47913333428247,
+        "median_runtime_ms": 48.2244000013452,
+        "median_tre_pixels": 0.2623364470746582,
+        "registration_count": 3,
+        "success_count": 3,
+        "success_rate": 1.0,
+        "within_tolerance_count": 2,
+        "within_tolerance_rate": 0.6666666666666666
+      },
+      "ecc_translation": {
+        "maximum_tre_pixels": 0.8494833026788429,
+        "mean_runtime_ms": 78.65079999828595,
+        "median_runtime_ms": 78.95839999764576,
+        "median_tre_pixels": 0.4850953676451218,
+        "registration_count": 4,
+        "success_count": 4,
+        "success_rate": 1.0,
+        "within_tolerance_count": 4,
+        "within_tolerance_rate": 1.0
+      },
+      "orb_affine": {
+        "maximum_tre_pixels": 107.42920036447087,
+        "mean_runtime_ms": 7.947500000833922,
+        "median_runtime_ms": 9.858800003712531,
+        "median_tre_pixels": 0.3400011732252627,
+        "registration_count": 6,
+        "success_count": 4,
+        "success_rate": 0.6666666666666666,
+        "within_tolerance_count": 4,
+        "within_tolerance_rate": 0.6666666666666666
+      },
+      "orb_similarity": {
+        "maximum_tre_pixels": 1.7827468724322526,
+        "mean_runtime_ms": 25.46851428529148,
+        "median_runtime_ms": 9.984999996959232,
+        "median_tre_pixels": 0.22142873265333773,
+        "registration_count": 7,
+        "success_count": 7,
+        "success_rate": 1.0,
+        "within_tolerance_count": 6,
+        "within_tolerance_rate": 0.8571428571428571
+      },
+      "phase_correlation": {
+        "maximum_tre_pixels": 0.06921681818314664,
+        "mean_runtime_ms": 3.367174998857081,
+        "median_runtime_ms": 3.339150000101654,
+        "median_tre_pixels": 0.04327876895254018,
+        "registration_count": 4,
+        "success_count": 4,
+        "success_rate": 1.0,
+        "within_tolerance_count": 4,
+        "within_tolerance_rate": 1.0
+      }
+    },
+    "paired_shared_case_comparisons": {
+      "affine": {
+        "case_count": 4,
+        "cases": [
+          {
+            "case_id": "camera_affine_medium",
+            "ecc_affine_multiresolution": {
+              "mean_tre_pixels": 0.602005048499909,
+              "runtime_ms": 18.60560000204714,
+              "success": true,
+              "within_tolerance": true
+            },
+            "ecc_affine_single": {
+              "mean_tre_pixels": 0.6018264078443244,
+              "runtime_ms": 63.485899998340756,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_affine": {
+              "mean_tre_pixels": 0.1316215377077185,
+              "runtime_ms": 10.715199998230673,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_affine_mild",
+            "ecc_affine_multiresolution": {
+              "mean_tre_pixels": 0.5399791058770465,
+              "runtime_ms": 25.82569999503903,
+              "success": true,
+              "within_tolerance": true
+            },
+            "ecc_affine_single": {
+              "mean_tre_pixels": 0.5397471429104329,
+              "runtime_ms": 37.82630000205245,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_affine": {
+              "mean_tre_pixels": 0.3400011732252627,
+              "runtime_ms": 10.528899998462293,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_affine_occlusion",
+            "ecc_affine_multiresolution": {
+              "mean_tre_pixels": 1.351354975819181,
+              "runtime_ms": 249.85480000032112,
+              "success": true,
+              "within_tolerance": true
+            },
+            "ecc_affine_single": {
+              "mean_tre_pixels": 1.3017383478355518,
+              "runtime_ms": 234.8649999985355,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_affine": {
+              "mean_tre_pixels": 2.285440141764829,
+              "runtime_ms": 9.582100006809924,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "moon_affine",
+            "ecc_affine_multiresolution": {
+              "mean_tre_pixels": 109.34246861649467,
+              "runtime_ms": 237.46029999892926,
+              "success": true,
+              "within_tolerance": false
+            },
+            "ecc_affine_single": {
+              "mean_tre_pixels": 39.13930013519008,
+              "runtime_ms": 84.62809999764431,
+              "success": true,
+              "within_tolerance": false
+            },
+            "orb_affine": {
+              "mean_tre_pixels": 0.31495373627562406,
+              "runtime_ms": 4.906800000753719,
+              "success": true,
+              "within_tolerance": true
+            }
+          }
+        ],
+        "comparison_group": "affine",
+        "complete_case_count": 4,
+        "methods": [
+          "ecc_affine_single",
+          "ecc_affine_multiresolution",
+          "orb_affine"
+        ]
+      },
+      "rigid": {
+        "case_count": 3,
+        "cases": [
+          {
+            "case_id": "camera_rigid_clean",
+            "ecc_rigid": {
+              "mean_tre_pixels": 0.2623364470746582,
+              "runtime_ms": 48.2244000013452,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.1808083692203112,
+              "runtime_ms": 9.597099997336045,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_rigid_illumination",
+            "ecc_rigid": {
+              "mean_tre_pixels": 0.2296269260743391,
+              "runtime_ms": 28.335000002698507,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.36856140925575614,
+              "runtime_ms": 9.027400003105868,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "coins_rigid_occlusion",
+            "ecc_rigid": {
+              "mean_tre_pixels": 119.55725308663386,
+              "runtime_ms": 53.877999998803716,
+              "success": true,
+              "within_tolerance": false
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.38807951812948593,
+              "runtime_ms": 9.984999996959232,
+              "success": true,
+              "within_tolerance": true
+            }
+          }
+        ],
+        "comparison_group": "rigid",
+        "complete_case_count": 3,
+        "methods": [
+          "ecc_rigid",
+          "orb_similarity"
+        ]
+      },
+      "translation": {
+        "case_count": 4,
+        "cases": [
+          {
+            "case_id": "camera_translation_blur",
+            "ecc_translation": {
+              "mean_tre_pixels": 0.6050126336960414,
+              "runtime_ms": 132.34389999706764,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 1.7827468724322526,
+              "runtime_ms": 6.257299995922949,
+              "success": true,
+              "within_tolerance": false
+            },
+            "phase_correlation": {
+              "mean_tre_pixels": 0.06921681818314664,
+              "runtime_ms": 3.2328999950550497,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_translation_clean",
+            "ecc_translation": {
+              "mean_tre_pixels": 0.36517810159420216,
+              "runtime_ms": 24.34250000078464,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.13187916264627816,
+              "runtime_ms": 101.30719999870053,
+              "success": true,
+              "within_tolerance": true
+            },
+            "phase_correlation": {
+              "mean_tre_pixels": 0.019030719239229228,
+              "runtime_ms": 3.788099995290395,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_translation_illumination",
+            "ecc_translation": {
+              "mean_tre_pixels": 0.21786829324510287,
+              "runtime_ms": 31.92769999441225,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.22142873265333773,
+              "runtime_ms": 10.463200000231154,
+              "success": true,
+              "within_tolerance": true
+            },
+            "phase_correlation": {
+              "mean_tre_pixels": 0.011548922431954762,
+              "runtime_ms": 3.002299999934621,
+              "success": true,
+              "within_tolerance": true
+            }
+          },
+          {
+            "case_id": "camera_translation_partial_overlap",
+            "ecc_translation": {
+              "mean_tre_pixels": 0.8494833026788429,
+              "runtime_ms": 125.98910000087926,
+              "success": true,
+              "within_tolerance": true
+            },
+            "orb_similarity": {
+              "mean_tre_pixels": 0.10955478764096475,
+              "runtime_ms": 31.642400004784577,
+              "success": true,
+              "within_tolerance": true
+            },
+            "phase_correlation": {
+              "mean_tre_pixels": 0.06752681866585113,
+              "runtime_ms": 3.445400005148258,
+              "success": true,
+              "within_tolerance": true
+            }
+          }
+        ],
+        "comparison_group": "translation",
+        "complete_case_count": 4,
+        "methods": [
+          "phase_correlation",
+          "ecc_translation",
+          "orb_similarity"
+        ]
+      }
+    },
+    "registration_count": 32,
+    "shared_case_count": 11,
+    "shared_group_summaries": {
+      "affine": {
+        "ecc_affine_multiresolution": {
+          "maximum_tre_pixels": 109.34246861649467,
+          "mean_runtime_ms": 132.93659999908414,
+          "median_runtime_ms": 131.64299999698414,
+          "median_tre_pixels": 0.9766800121595449,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 3,
+          "within_tolerance_rate": 0.75
+        },
+        "ecc_affine_single": {
+          "maximum_tre_pixels": 39.13930013519008,
+          "mean_runtime_ms": 105.20132499914325,
+          "median_runtime_ms": 74.05699999799253,
+          "median_tre_pixels": 0.9517823778399381,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 3,
+          "within_tolerance_rate": 0.75
+        },
+        "orb_affine": {
+          "maximum_tre_pixels": 2.285440141764829,
+          "mean_runtime_ms": 8.933250001064152,
+          "median_runtime_ms": 10.055500002636109,
+          "median_tre_pixels": 0.3274774547504434,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 4,
+          "within_tolerance_rate": 1.0
+        }
+      },
+      "rigid": {
+        "ecc_rigid": {
+          "maximum_tre_pixels": 119.55725308663386,
+          "mean_runtime_ms": 43.47913333428247,
+          "median_runtime_ms": 48.2244000013452,
+          "median_tre_pixels": 0.2623364470746582,
+          "registration_count": 3,
+          "success_count": 3,
+          "success_rate": 1.0,
+          "within_tolerance_count": 2,
+          "within_tolerance_rate": 0.6666666666666666
+        },
+        "orb_similarity": {
+          "maximum_tre_pixels": 0.38807951812948593,
+          "mean_runtime_ms": 9.536499999133715,
+          "median_runtime_ms": 9.597099997336045,
+          "median_tre_pixels": 0.36856140925575614,
+          "registration_count": 3,
+          "success_count": 3,
+          "success_rate": 1.0,
+          "within_tolerance_count": 3,
+          "within_tolerance_rate": 1.0
+        }
+      },
+      "translation": {
+        "ecc_translation": {
+          "maximum_tre_pixels": 0.8494833026788429,
+          "mean_runtime_ms": 78.65079999828595,
+          "median_runtime_ms": 78.95839999764576,
+          "median_tre_pixels": 0.4850953676451218,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 4,
+          "within_tolerance_rate": 1.0
+        },
+        "orb_similarity": {
+          "maximum_tre_pixels": 1.7827468724322526,
+          "mean_runtime_ms": 37.4175249999098,
+          "median_runtime_ms": 21.052800002507865,
+          "median_tre_pixels": 0.17665394764980796,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 3,
+          "within_tolerance_rate": 0.75
+        },
+        "phase_correlation": {
+          "maximum_tre_pixels": 0.06921681818314664,
+          "mean_runtime_ms": 3.367174998857081,
+          "median_runtime_ms": 3.339150000101654,
+          "median_tre_pixels": 0.04327876895254018,
+          "registration_count": 4,
+          "success_count": 4,
+          "success_rate": 1.0,
+          "within_tolerance_count": 4,
+          "within_tolerance_rate": 1.0
+        }
+      }
+    },
+    "success_count": 30,
+    "within_tolerance_count": 26
+  },
+  "fair_comparison_policy": {
+    "affine": "ECC Affine Single, ECC Affine Multiresolution, and ORB + RANSAC Affine are compared on the same four affine cases with the same affine target geometry.",
+    "feature_diagnostics": "Low-texture and repeated-pattern cases are reported separately and are not included in cross-family method rankings.",
+    "rigid": "ECC Rigid and ORB + RANSAC Similarity are compared on the same three rigid cases. ORB Similarity has one additional scale degree of freedom, so this is a shared-case behavior comparison rather than an equal-complexity model comparison.",
+    "translation": "Phase Correlation, ECC Translation, and ORB + RANSAC Similarity are compared on the same four translation cases."
+  },
+  "global_day": 20,
+  "local_validation": {
+    "status": "complete",
+    "date": "2026-09-29",
+    "platform": "Windows",
+    "pytest_result": "314 passed in 4.36s",
+    "pytest_passed": 314,
+    "pytest_failed": 0,
+    "pytest_skipped": 0,
+    "target_windows_experiment": {
+      "case_count": 13,
+      "registration_count": 32,
+      "method_success_count": 30,
+      "within_tolerance_count": 26
+    },
+    "note": "Day 20 integrated benchmark and the full repository test suite were validated on the target Windows environment."
+  },
+  "raw_output_directory": "outputs/week04_day05_integrated_feature_baseline",
+  "scope": "Integrated monomodal comparison of frequency, intensity, and feature-based registration on explicitly shared case groups",
+  "status": "complete",
+  "technical_note": "docs/WEEK04_FEATURE_BASELINE_COMPARISON.md",
+  "title": "Integrated feature-based benchmark and shared-case comparison",
+  "tolerances": {
+    "affine_linear_error": 0.05,
+    "affine_translation_error_pixels": 4.0,
+    "affine_tre_pixels": 3.0,
+    "rigid_rotation_error_degrees": 1.5,
+    "rigid_translation_error_pixels": 2.0,
+    "rigid_tre_pixels": 2.0,
+    "translation_error_pixels": 1.0,
+    "translation_tre_pixels": 1.0
+  },
+  "week": 4,
+  "week_day": 5,
+  "weekly_summary": "docs/weekly/week_04_summary.md"
+}

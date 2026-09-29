@@ -137,6 +137,382 @@
         "mean_knn_accepted_match_count": 471.3333333333333,
         "mean_cross_check_accepted_match_count": 509.0
       }
+    },
+    "day_18": {
+      "status": "complete",
+      "title": "ORB + RANSAC similarity estimation and outlier rejection",
+      "measured_evidence": {
+        "case_count": 8,
+        "failed_count": 0,
+        "maximum_tre_pixels": 0.5561615034922126,
+        "mean_inlier_ratio": 0.8843645806144089,
+        "mean_ransac_runtime_ms": 0.16410000034738914,
+        "median_tre_pixels": 0.27685635361233424,
+        "ransac_success_count": 8,
+        "within_tolerance_count": 8
+      },
+      "outlier_injection": {
+        "case_id": "camera_similarity_medium",
+        "geometry": {
+          "rotation_error_degrees": 0.050351158058788315,
+          "scale_error": 5.668966344130055e-06,
+          "translation_error_pixels": 0.30891510862908994,
+          "tre_pixels": 0.3602585909353012,
+          "within_tolerance": true
+        },
+        "injected_count": 126,
+        "injected_fraction": 0.3,
+        "injected_rejected_count": 126,
+        "injected_rejection_rate": 1.0,
+        "ransac": {
+          "estimated_transform": [
+            [
+              1.094032260859533,
+              0.35441000388435273,
+              -86.67250670592858
+            ],
+            [
+              -0.35441000388435273,
+              1.094032260859533,
+              46.23273323106406
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "failure_reason": null,
+          "inlier_count": 276,
+          "inlier_ratio": 0.6587112171837709,
+          "input_match_count": 419,
+          "outlier_count": 143,
+          "reprojection_residuals": {
+            "all_maximum": 331.02231927735306,
+            "all_mean": 32.01590469517699,
+            "all_median": 1.6610301468296735,
+            "all_q95": 168.46753863780955,
+            "inlier_maximum": 3.302837057615419,
+            "inlier_mean": 1.1593815207091933,
+            "inlier_median": 1.0080791810084353,
+            "inlier_q95": 2.429860023654504
+          },
+          "runtime_ms": 0.14620000001741573,
+          "success": true
+        }
+      },
+      "observations": [
+        "The smallest geometric error occurred in camera_similarity_illumination with TRE 0.110 px.",
+        "The largest geometric error occurred in camera_similarity_large with TRE 0.556 px.",
+        "The lowest RANSAC inlier ratio occurred in camera_similarity_blur at 0.788.",
+        "The controlled outlier experiment injected 126 incorrect correspondences; RANSAC rejected 126 of those injected correspondences."
+      ],
+      "interpretation": [
+        "RANSAC adds a geometric consistency test after descriptor filtering. Accepted ORB matches are not automatically treated as correct correspondences.",
+        "Inlier ratio, reprojection residuals, and ground-truth TRE describe different parts of the result and should be reported together.",
+        "A successful RANSAC call is not sufficient evidence of correct registration. Geometric correctness is evaluated separately against the known transform."
+      ],
+      "limitations": [
+        "Day 18 evaluates only the similarity model. General affine estimation and degeneracy checks are reserved for Day 19.",
+        "The current development thresholds are working thresholds for controlled experiments and are not final benchmark thresholds.",
+        "The findings are specific to the tracked images, ORB configuration, ratio filter, RANSAC settings, and selected controlled transformations."
+      ],
+      "decision": "Proceed to Day 19 with affine RANSAC, degeneracy checks, texture stratification, and threshold sweeps while retaining the Day 18 similarity baseline.",
+      "source_report": "reports/week04_day03_ransac_similarity.json",
+      "daily_summary": "docs/daily/day_18_summary.md",
+      "validation": {
+        "status": "complete",
+        "date": "2026-09-28",
+        "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
+        "pytest_result": "283 passed",
+        "pytest_passed": 283,
+        "pytest_failed": 0,
+        "pytest_skipped": 0,
+        "pytest_exit_code": 0,
+        "target_windows_experiment": "8 / 8 RANSAC estimates succeeded and 8 / 8 were within the configured Day 18 development tolerances",
+        "mean_inlier_ratio": 0.8843645806144089,
+        "median_tre_pixels": 0.27685635361233424,
+        "maximum_tre_pixels": 0.5561615034922126,
+        "outlier_injection_rejected_count": 126,
+        "outlier_injection_count": 126,
+        "outlier_injection_tre_pixels": 0.3602585909353012
+      }
+    },
+    "day_19": {
+      "status": "complete",
+      "title": "Affine RANSAC, degeneracy checks, texture diagnostics, and threshold sweeps",
+      "measured_evidence": {
+        "by_texture": {
+          "high": {
+            "case_count": 7,
+            "success_count": 6,
+            "within_tolerance_count": 6,
+            "median_tre_pixels": 0.523088033943091
+          },
+          "medium": {
+            "case_count": 1,
+            "success_count": 1,
+            "within_tolerance_count": 1,
+            "median_tre_pixels": 0.19987537398279148
+          },
+          "low": {
+            "case_count": 1,
+            "success_count": 0,
+            "within_tolerance_count": 0,
+            "median_tre_pixels": 15.598862468310667
+          }
+        },
+        "case_count": 9,
+        "failed_count": 2,
+        "maximum_tre_pixels": 15.598862468310667,
+        "mean_affine_ransac_runtime_ms": 0.0978666672987553,
+        "mean_inlier_ratio": 0.8714187794052007,
+        "median_tre_pixels": 0.523088033943091,
+        "ransac_success_count": 7,
+        "within_tolerance_count": 7
+      },
+      "degeneracy_probes": [
+        {
+          "expected_failure": "degenerate_correspondences_collinear",
+          "observed_failure": "degenerate_correspondences_collinear",
+          "observed_success": false,
+          "passed": true,
+          "probe": "collinear_correspondences"
+        },
+        {
+          "expected_failure": "poor_spatial_coverage",
+          "observed_failure": "poor_spatial_coverage",
+          "observed_success": false,
+          "passed": true,
+          "probe": "clustered_correspondences"
+        },
+        {
+          "expected_failure": "implausible_principal_scale",
+          "observed_failure": "implausible_principal_scale",
+          "observed_success": false,
+          "passed": true,
+          "probe": "implausible_scale"
+        }
+      ],
+      "observations": [
+        "The smallest affine TRE occurred in camera_affine_mild at 0.111 px.",
+        "The largest returned affine TRE occurred in low_texture_affine at 15.599 px, and that estimate was rejected for insufficient RANSAC inliers.",
+        "The lowest successful-case affine RANSAC inlier ratio occurred in coins_affine at 0.802. The rejected low_texture_affine case had an inlier ratio of 0.750.",
+        "Affine RANSAC produced lower TRE than similarity RANSAC on all seven true-affine cases where both models returned a numeric TRE. The repeated-pattern case produced no filtered matches, so no model comparison was possible there.",
+        "The three controlled degeneracy and plausibility probes produced their expected failure labels in 3 of 3 probes.",
+        "The threshold sweep produced 80 within-tolerance results across 120 case and threshold combinations."
+      ],
+      "interpretation": [
+        "The affine model can represent anisotropic scale and shear that a similarity model cannot, but the additional freedom requires stronger geometric guardrails.",
+        "Feature count alone is not sufficient for reliable affine estimation. Spatial coverage, collinearity, RANSAC inlier consistency, and transform plausibility are recorded separately.",
+        "Ratio filtering and RANSAC reprojection thresholds interact. A threshold that retains more correspondences is not automatically the setting with the lowest geometric error.",
+        "Texture diagnostics are descriptive stratification variables. They help explain feature availability but do not by themselves determine registration success."
+      ],
+      "failure_cases": [
+        {
+          "case_id": "low_texture_affine",
+          "reason": "insufficient_ransac_inliers"
+        },
+        {
+          "case_id": "repeated_pattern_affine",
+          "reason": "insufficient_filtered_matches"
+        }
+      ],
+      "limitations": [
+        "The Day 19 thresholds are development settings and are not frozen final benchmark settings.",
+        "Texture labels use configured gradient-energy thresholds and a capped ORB detector, so the categories are specific to this experiment setup.",
+        "The procedural repeated-pattern case is a controlled ambiguity probe and is not a substitute for diverse real repeated structures.",
+        "Similarity and affine model comparisons are limited to the shared Day 19 cases and should not be generalized beyond the current benchmark."
+      ],
+      "decision": "Carry the validated affine model, explicit failure rules, texture diagnostics, and threshold-sweep evidence into the Day 20 integrated feature-based benchmark.",
+      "source_report": "reports/week04_day04_ransac_affine_robustness.json",
+      "daily_summary": "docs/daily/day_19_summary.md",
+      "validation": {
+        "status": "complete",
+        "date": "2026-09-29",
+        "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
+        "pytest_result": "304 passed in 4.27s",
+        "pytest_passed": 304,
+        "pytest_failed": 0,
+        "pytest_skipped": 0,
+        "target_windows_experiment": "7 / 9 affine RANSAC cases succeeded and 7 / 9 were within the configured Day 19 development tolerances",
+        "mean_successful_case_inlier_ratio": 0.8714187794052007,
+        "median_affine_tre_pixels": 0.523088033943091,
+        "maximum_returned_tre_pixels": 15.598862468310667,
+        "degeneracy_probe_result": "3 / 3 expected failure labels recorded",
+        "threshold_sweep_combinations": 120
+      }
+    },
+    "day_20": {
+      "status": "complete",
+      "title": "Integrated feature-based benchmark and shared-case comparison",
+      "measured_evidence": {
+        "case_count": 13,
+        "registration_count": 32,
+        "success_count": 30,
+        "within_tolerance_count": 26,
+        "shared_group_summaries": {
+          "affine": {
+            "ecc_affine_multiresolution": {
+              "maximum_tre_pixels": 109.34246861649467,
+              "mean_runtime_ms": 132.93659999908414,
+              "median_runtime_ms": 131.64299999698414,
+              "median_tre_pixels": 0.9766800121595449,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 3,
+              "within_tolerance_rate": 0.75
+            },
+            "ecc_affine_single": {
+              "maximum_tre_pixels": 39.13930013519008,
+              "mean_runtime_ms": 105.20132499914325,
+              "median_runtime_ms": 74.05699999799253,
+              "median_tre_pixels": 0.9517823778399381,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 3,
+              "within_tolerance_rate": 0.75
+            },
+            "orb_affine": {
+              "maximum_tre_pixels": 2.285440141764829,
+              "mean_runtime_ms": 8.933250001064152,
+              "median_runtime_ms": 10.055500002636109,
+              "median_tre_pixels": 0.3274774547504434,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 4,
+              "within_tolerance_rate": 1.0
+            }
+          },
+          "rigid": {
+            "ecc_rigid": {
+              "maximum_tre_pixels": 119.55725308663386,
+              "mean_runtime_ms": 43.47913333428247,
+              "median_runtime_ms": 48.2244000013452,
+              "median_tre_pixels": 0.2623364470746582,
+              "registration_count": 3,
+              "success_count": 3,
+              "success_rate": 1.0,
+              "within_tolerance_count": 2,
+              "within_tolerance_rate": 0.6666666666666666
+            },
+            "orb_similarity": {
+              "maximum_tre_pixels": 0.38807951812948593,
+              "mean_runtime_ms": 9.536499999133715,
+              "median_runtime_ms": 9.597099997336045,
+              "median_tre_pixels": 0.36856140925575614,
+              "registration_count": 3,
+              "success_count": 3,
+              "success_rate": 1.0,
+              "within_tolerance_count": 3,
+              "within_tolerance_rate": 1.0
+            }
+          },
+          "translation": {
+            "ecc_translation": {
+              "maximum_tre_pixels": 0.8494833026788429,
+              "mean_runtime_ms": 78.65079999828595,
+              "median_runtime_ms": 78.95839999764576,
+              "median_tre_pixels": 0.4850953676451218,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 4,
+              "within_tolerance_rate": 1.0
+            },
+            "orb_similarity": {
+              "maximum_tre_pixels": 1.7827468724322526,
+              "mean_runtime_ms": 37.4175249999098,
+              "median_runtime_ms": 21.052800002507865,
+              "median_tre_pixels": 0.17665394764980796,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 3,
+              "within_tolerance_rate": 0.75
+            },
+            "phase_correlation": {
+              "maximum_tre_pixels": 0.06921681818314664,
+              "mean_runtime_ms": 3.367174998857081,
+              "median_runtime_ms": 3.339150000101654,
+              "median_tre_pixels": 0.04327876895254018,
+              "registration_count": 4,
+              "success_count": 4,
+              "success_rate": 1.0,
+              "within_tolerance_count": 4,
+              "within_tolerance_rate": 1.0
+            }
+          }
+        },
+        "feature_diagnostic_results": [
+          {
+            "case_id": "low_texture_affine",
+            "success": false,
+            "within_tolerance": false,
+            "failure_reason": "insufficient_fixed_descriptors_for_knn",
+            "mean_tre_pixels": null,
+            "accepted_matches": 0,
+            "inlier_count": 0,
+            "inlier_ratio": null
+          },
+          {
+            "case_id": "repeated_pattern_affine",
+            "success": false,
+            "within_tolerance": false,
+            "failure_reason": "insufficient_ransac_inliers",
+            "mean_tre_pixels": 107.42920036447087,
+            "accepted_matches": 62,
+            "inlier_count": 7,
+            "inlier_ratio": 0.11290322580645161
+          }
+        ]
+      },
+      "observations": [
+        "ECC Translation recorded median TRE 0.485 px across the shared translation cases assigned to that comparison.",
+        "ORB + RANSAC Similarity recorded median TRE 0.177 px across the shared translation cases assigned to that comparison.",
+        "Phase Correlation recorded median TRE 0.043 px across the shared translation cases assigned to that comparison.",
+        "ECC Rigid recorded median TRE 0.262 px across the shared rigid cases assigned to that comparison.",
+        "ORB + RANSAC Similarity recorded median TRE 0.369 px across the shared rigid cases assigned to that comparison.",
+        "ECC Affine Multiresolution recorded median TRE 0.977 px across the shared affine cases assigned to that comparison.",
+        "ECC Affine Single recorded median TRE 0.952 px across the shared affine cases assigned to that comparison.",
+        "ORB + RANSAC Affine recorded median TRE 0.327 px across the shared affine cases assigned to that comparison.",
+        "Feature diagnostic case low_texture_affine did not meet the development criterion; recorded reason: insufficient_fixed_descriptors_for_knn.",
+        "Feature diagnostic case repeated_pattern_affine did not meet the development criterion; recorded reason: insufficient_ransac_inliers."
+      ],
+      "interpretation": [
+        "The integrated benchmark keeps comparison groups separate so methods are compared only on shared cases with compatible geometric intent.",
+        "Translation, rigid, and affine results are not combined into one universal ranking because the supported motion models and model flexibility differ.",
+        "Feature matching success, RANSAC estimation success, and ground-truth geometric success remain separate recorded states.",
+        "The low-texture and repeated-pattern cases are diagnostic failure probes and are reported separately from the shared comparison groups."
+      ],
+      "limitations": [
+        "The current thresholds are development thresholds and are not frozen final benchmark criteria.",
+        "The integrated comparison uses a compact controlled subset and does not establish general method superiority.",
+        "ORB similarity has one scale degree of freedom beyond ECC rigid on the rigid comparison group, so that comparison is a shared-case behavior comparison rather than an equal-complexity model comparison.",
+        "The current comparison remains monomodal. Real and simulated multimodal method comparison is reserved for the mutual-information stage."
+      ],
+      "failure_cases": [
+        {
+          "case_id": "low_texture_affine",
+          "failure_reason": "insufficient_fixed_descriptors_for_knn"
+        },
+        {
+          "case_id": "repeated_pattern_affine",
+          "failure_reason": "insufficient_ransac_inliers"
+        }
+      ],
+      "decision": "Close Week 4 and carry the shared-case comparison policy, explicit feature failure records, and integrated result schema into the multimodal mutual-information stage.",
+      "source_report": "reports/week04_day05_integrated_feature_baseline.json",
+      "daily_summary": "docs/daily/day_20_summary.md",
+      "validation": {
+        "status": "complete",
+        "date": "2026-09-29",
+        "pytest_result": "314 passed in 4.36s",
+        "target_windows_experiment": "13 cases, 32 registrations, 30 method successes, 26 results within the Day 20 development tolerances"
+      }
     }
   }
 }

@@ -76,4 +76,4 @@ Invalid configuration values still raise `ValueError` because they indicate a ca
 
 Day 17 does not estimate a registration transform and does not calculate TRE from the matches.
 
-A match can pass descriptor filtering and still be geometrically wrong. Day 18 will add RANSAC similarity estimation so accepted correspondences can be separated into geometric inliers and outliers.
+A match can pass descriptor filtering and still be geometrically wrong. Day 18 added RANSAC similarity estimation so accepted correspondences can be separated into geometric inliers and outliers.

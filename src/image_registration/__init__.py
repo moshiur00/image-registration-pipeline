@@ -1,5 +1,24 @@
 """Core package for the image registration internship project."""
 
+from .affine_ransac import (
+    AffineTransformDiagnostics,
+    CorrespondenceGeometryDiagnostics,
+    RANSACAffineResult,
+    affine_transform_diagnostics,
+    correspondence_geometry_diagnostics,
+    estimate_affine_ransac,
+    estimate_affine_ransac_from_matches,
+    point_grid_coverage,
+    point_linearity_ratio,
+    residual_summary as affine_residual_summary,
+)
+from .feature_metrics import (
+    TextureDiagnostics,
+    classify_texture,
+    gradient_energy,
+    keypoint_density_per_megapixel,
+    texture_diagnostics,
+)
 from .benchmark import (
     BenchmarkCasePlan,
     benchmark_manifest_fingerprint,
@@ -129,6 +148,13 @@ from .transforms import (
     to_homogeneous,
     translation_matrix,
 )
+from .ransac import (
+    RANSACSimilarityResult,
+    estimate_similarity_ransac,
+    estimate_similarity_ransac_from_matches,
+    residual_summary,
+    similarity_scale,
+)
 from .registration import RegistrationMethod, RegistrationResult
 from .registration_metrics import (
     affine_linear_error,
@@ -167,10 +193,32 @@ from .visualization import (
     save_rgb_image,
 )
 from .week3_baseline import BaselineThresholds, summarize_by_key, within_model_tolerance
+from .week4_baseline import (
+    Week4Thresholds,
+    paired_case_comparison,
+    summarize_integrated_records,
+    within_week4_tolerance,
+)
 from .warping import warp_image, warp_mask
 
 __all__ = [
     "BaselineThresholds",
+    "Week4Thresholds",
+    "AffineTransformDiagnostics",
+    "CorrespondenceGeometryDiagnostics",
+    "RANSACAffineResult",
+    "TextureDiagnostics",
+    "affine_transform_diagnostics",
+    "correspondence_geometry_diagnostics",
+    "estimate_affine_ransac",
+    "estimate_affine_ransac_from_matches",
+    "point_grid_coverage",
+    "point_linearity_ratio",
+    "affine_residual_summary",
+    "classify_texture",
+    "gradient_energy",
+    "keypoint_density_per_megapixel",
+    "texture_diagnostics",
     "CorrespondenceCoverage",
     "FeatureMatch",
     "FeatureMatchResult",
@@ -216,6 +264,11 @@ __all__ = [
     "ANGLE_UNIT",
     "DegradationResult",
     "ExperimentResult",
+    "RANSACSimilarityResult",
+    "estimate_similarity_ransac",
+    "estimate_similarity_ransac_from_matches",
+    "residual_summary",
+    "similarity_scale",
     "RegistrationMethod",
     "RegistrationResult",
     "affine_linear_error",
@@ -306,6 +359,9 @@ __all__ = [
     "translation_matrix",
     "transformed_support_mask",
     "validate_image_pair",
+    "paired_case_comparison",
+    "summarize_integrated_records",
+    "within_week4_tolerance",
     "warp_image",
     "warp_mask",
     "with_defaults",

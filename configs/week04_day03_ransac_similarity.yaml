@@ -1,0 +1,113 @@
+experiment:
+  name: week04_day03_ransac_similarity
+  seed: 42
+
+orb:
+  n_features: 800
+  scale_factor: 1.2
+  n_levels: 8
+  edge_threshold: 31
+  first_level: 0
+  wta_k: 2
+  score_type: harris
+  patch_size: 31
+  fast_threshold: 20
+
+matching:
+  strategy: knn_ratio
+  minimum_matches: 8
+  knn_ratio_threshold: 0.75
+  maximum_distance: null
+  norm: hamming
+  maximum_drawn_matches: 100
+
+ransac:
+  reprojection_threshold: 3.0
+  confidence: 0.99
+  max_trials: 2000
+  refine_iterations: 10
+  minimum_inliers: 8
+  minimum_inlier_ratio: 0.25
+
+validation:
+  tre_threshold_pixels: 2.0
+  rotation_error_threshold_degrees: 1.0
+  scale_error_threshold: 0.03
+  translation_error_threshold_pixels: 3.0
+
+outlier_injection:
+  enabled: true
+  case_id: camera_similarity_medium
+  fraction: 0.30
+  random_seed: 123
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+
+cases:
+  - id: camera_translation
+    source: camera
+    scale: 1.0
+    angle_degrees: 0.0
+    tx: 24.0
+    ty: -18.0
+
+  - id: camera_rotation
+    source: camera
+    scale: 1.0
+    angle_degrees: 20.0
+    tx: 0.0
+    ty: 0.0
+
+  - id: camera_similarity_small
+    source: camera
+    scale: 1.08
+    angle_degrees: 10.0
+    tx: 16.0
+    ty: -12.0
+
+  - id: camera_similarity_medium
+    source: camera
+    scale: 1.15
+    angle_degrees: 18.0
+    tx: 28.0
+    ty: -20.0
+
+  - id: camera_similarity_large
+    source: camera
+    scale: 0.88
+    angle_degrees: -24.0
+    tx: -30.0
+    ty: 22.0
+
+  - id: camera_similarity_blur
+    source: camera
+    scale: 1.10
+    angle_degrees: 14.0
+    tx: 20.0
+    ty: -14.0
+    postprocess:
+      type: gaussian_blur
+      sigma: 2.0
+
+  - id: camera_similarity_illumination
+    source: camera
+    scale: 1.07
+    angle_degrees: -13.0
+    tx: 18.0
+    ty: 12.0
+    postprocess:
+      type: illumination_gradient
+      strength_fraction: 0.30
+      direction: diagonal
+
+  - id: coins_similarity
+    source: coins
+    scale: 1.12
+    angle_degrees: -16.0
+    tx: 14.0
+    ty: 10.0
+
+output:
+  directory: outputs/week04_day03_ransac_similarity

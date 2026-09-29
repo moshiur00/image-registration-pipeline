@@ -1,0 +1,1114 @@
+{
+  "case_results": [
+    {
+      "case_id": "camera_translation",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            1.0,
+            0.0,
+            -24.0
+          ],
+          [
+            0.0,
+            1.0,
+            18.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0,
+            0.0,
+            24.0
+          ],
+          [
+            -0.0,
+            1.0,
+            -18.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 0.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": 24.0,
+          "ty": -18.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.05075226239972608,
+        "scale_error": 7.233855224009211e-05,
+        "translation_error_pixels": 0.02398202902721896,
+        "tre_pixels": 0.16658258457343872,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0,
+          0.0,
+          24.0
+        ],
+        [
+          -0.0,
+          1.0,
+          -18.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 657,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            0.9999272691605875,
+            0.0008857298888214069,
+            23.813917256309608
+          ],
+          [
+            -0.0008857298888214069,
+            0.9999272691605875,
+            -17.744773436130437
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 615,
+        "inlier_ratio": 0.9360730593607306,
+        "input_match_count": 657,
+        "outlier_count": 42,
+        "reprojection_residuals": {
+          "all_maximum": 7.607305005925589,
+          "all_mean": 0.718911005727912,
+          "all_median": 0.18743572762312313,
+          "all_q95": 2.454267306456171,
+          "inlier_maximum": 3.259183963947275,
+          "inlier_mean": 0.5832955327637857,
+          "inlier_median": 0.12344710298359503,
+          "inlier_q95": 1.797463296489474
+        },
+        "runtime_ms": 0.4989000008208677,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_rotation",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.9396926207859083,
+            -0.3420201433256687,
+            102.79468200890875
+          ],
+          [
+            0.34202014332566866,
+            0.9396926207859084,
+            -71.97761123050797
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            0.9396926207859084,
+            0.3420201433256687,
+            -71.97761123050793
+          ],
+          [
+            -0.3420201433256687,
+            0.9396926207859084,
+            102.79468200890878
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 20.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.0,
+          "tx": 0.0,
+          "ty": 0.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.034760994119153565,
+        "scale_error": 0.0007592147170918384,
+        "translation_error_pixels": 0.20167558706936595,
+        "tre_pixels": 0.2519493794035863,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          0.9396926207859084,
+          0.3420201433256687,
+          -71.97761123050793
+        ],
+        [
+          -0.3420201433256687,
+          0.9396926207859084,
+          102.79468200890878
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 509,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            0.9387716755611216,
+            0.34233008652025776,
+            -71.76437633712135
+          ],
+          [
+            -0.34233008652025776,
+            0.9387716755611216,
+            102.91575759599196
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 478,
+        "inlier_ratio": 0.9390962671905697,
+        "input_match_count": 509,
+        "outlier_count": 31,
+        "reprojection_residuals": {
+          "all_maximum": 6.986615232888501,
+          "all_mean": 1.1456034285773216,
+          "all_median": 0.9169663345342361,
+          "all_q95": 2.7970208085478667,
+          "inlier_maximum": 3.086308282680411,
+          "inlier_mean": 0.9931916346214821,
+          "inlier_median": 0.8522842286706347,
+          "inlier_q95": 2.2141295094494313
+        },
+        "runtime_ms": 0.1426999988325406,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_similarity_small",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.9118590305668594,
+            -0.16078534969160216,
+            47.08150585100284
+          ],
+          [
+            0.16078534969160216,
+            0.9118590305668594,
+            -10.190896384300235
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0635923732531847,
+            0.18754003188028476,
+            -48.164329511601466
+          ],
+          [
+            -0.18754003188028476,
+            1.0635923732531847,
+            19.66862677922407
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 10.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.08,
+          "tx": 16.0,
+          "ty": -12.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.014044009165814941,
+        "scale_error": 0.0008119781556319428,
+        "translation_error_pixels": 0.027680894628997827,
+        "tre_pixels": 0.14314205433859412,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0635923732531847,
+          0.18754003188028476,
+          -48.164329511601466
+        ],
+        [
+          -0.18754003188028476,
+          1.0635923732531847,
+          19.66862677922407
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 356,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0628386331071364,
+            0.18713852213618007,
+            -47.89620854269333
+          ],
+          [
+            -0.18713852213618007,
+            1.0628386331071364,
+            19.752724236056952
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 329,
+        "inlier_ratio": 0.9241573033707865,
+        "input_match_count": 356,
+        "outlier_count": 27,
+        "reprojection_residuals": {
+          "all_maximum": 7.237674673527355,
+          "all_mean": 1.3926274684776,
+          "all_median": 1.143854597147148,
+          "all_q95": 3.3312185700186205,
+          "inlier_maximum": 3.2277831619578032,
+          "inlier_mean": 1.1616298940613545,
+          "inlier_median": 1.0582306897540676,
+          "inlier_q95": 2.5521705587285064
+        },
+        "runtime_ms": 0.10900000052060932,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_similarity_medium",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.8270056663436121,
+            -0.2687104298912587,
+            84.32519983097747
+          ],
+          [
+            0.2687104298912587,
+            0.827005666343612,
+            -15.439241298092483
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0937149937394264,
+            0.3553695435311895,
+            -86.74109927264237
+          ],
+          [
+            -0.3553695435311895,
+            1.0937149937394264,
+            46.85273747179551
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 18.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.15,
+          "tx": 28.0,
+          "ty": -20.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.04978045504978468,
+        "scale_error": 5.850779169169762e-05,
+        "translation_error_pixels": 0.2456987683765462,
+        "tre_pixels": 0.3017633278210822,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0937149937394264,
+          0.3553695435311895,
+          -86.74109927264237
+        ],
+        [
+          -0.3553695435311895,
+          1.0937149937394264,
+          46.85273747179551
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 419,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.09396767772115,
+            0.3544011224638883,
+            -86.57156049256926
+          ],
+          [
+            -0.3544011224638883,
+            1.09396767772115,
+            46.295408340093196
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 393,
+        "inlier_ratio": 0.9379474940334129,
+        "input_match_count": 419,
+        "outlier_count": 26,
+        "reprojection_residuals": {
+          "all_maximum": 325.7940799515914,
+          "all_mean": 2.194307279087842,
+          "all_median": 1.128743810170773,
+          "all_q95": 2.9437725564965755,
+          "inlier_maximum": 2.854914222880083,
+          "inlier_mean": 1.156715039319975,
+          "inlier_median": 1.0413584914762948,
+          "inlier_q95": 2.376075156755721
+        },
+        "runtime_ms": 0.18760000239126384,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_similarity_large",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            1.0381198382302284,
+            0.46220073076795476,
+            -106.85672630902391
+          ],
+          [
+            -0.4622007307679548,
+            1.0381198382302284,
+            71.6480096792855
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            0.8039200027254888,
+            -0.3579282459067042,
+            111.54910613280055
+          ],
+          [
+            0.3579282459067042,
+            0.8039200027254888,
+            -19.352227525525336
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": -24.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 0.88,
+          "tx": -30.0,
+          "ty": 22.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.14827267707292435,
+        "scale_error": 0.0010459884613835957,
+        "translation_error_pixels": 0.3234951981364139,
+        "tre_pixels": 0.5561615034922126,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          0.8039200027254888,
+          -0.3579282459067042,
+          111.54910613280055
+        ],
+        [
+          0.3579282459067042,
+          0.8039200027254888,
+          -19.352227525525336
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 436,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            0.8039455023616409,
+            -0.3604353798066795,
+            111.86395744909007
+          ],
+          [
+            0.3604353798066795,
+            0.8039455023616409,
+            -20.051817972650404
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 362,
+        "inlier_ratio": 0.8302752293577982,
+        "input_match_count": 436,
+        "outlier_count": 74,
+        "reprojection_residuals": {
+          "all_maximum": 112.78488479192283,
+          "all_mean": 1.3578191901102314,
+          "all_median": 0.831427364996583,
+          "all_q95": 2.9404744980383244,
+          "inlier_maximum": 3.407931796891635,
+          "inlier_mean": 0.8678173970754818,
+          "inlier_median": 0.7536597630830314,
+          "inlier_q95": 1.9490775414314507
+        },
+        "runtime_ms": 0.08429999797954224,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_similarity_blur",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.8820870238872695,
+            -0.21992899599969795,
+            65.59787745298433
+          ],
+          [
+            0.21992899599969795,
+            0.8820870238872696,
+            -18.11445466669235
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0673252989035962,
+            0.26611408515963453,
+            -65.19376262815547
+          ],
+          [
+            -0.26611408515963453,
+            1.0673252989035962,
+            36.790534888417795
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": 14.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.1,
+          "tx": 20.0,
+          "ty": -14.0
+        },
+        "postprocess": {
+          "sigma": 2.0,
+          "type": "gaussian_blur"
+        },
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.006809552204941838,
+        "scale_error": 0.0006585293346625942,
+        "translation_error_pixels": 0.5478753468785751,
+        "tre_pixels": 0.5509739340114338,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0673252989035962,
+          0.26611408515963453,
+          -65.19376262815547
+        ],
+        [
+          -0.26611408515963453,
+          1.0673252989035962,
+          36.790534888417795
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 208,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 658
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0679959059154487,
+            0.26614646934532626,
+            -65.4683702819967
+          ],
+          [
+            -0.26614646934532626,
+            1.0679959059154487,
+            36.087891668886684
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 164,
+        "inlier_ratio": 0.7884615384615384,
+        "input_match_count": 208,
+        "outlier_count": 44,
+        "reprojection_residuals": {
+          "all_maximum": 204.07446166754596,
+          "all_mean": 2.9082349050874114,
+          "all_median": 1.7263898618776905,
+          "all_q95": 4.12702131068112,
+          "inlier_maximum": 3.1948909917320303,
+          "inlier_mean": 1.4690861929116905,
+          "inlier_median": 1.4390429317557984,
+          "inlier_q95": 2.675202299499713
+        },
+        "runtime_ms": 0.07750000077066943,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "camera_similarity_illumination",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.9106262287712479,
+            0.2102346302279112,
+            -49.79403715490255
+          ],
+          [
+            -0.21023463022791122,
+            0.9106262287712478,
+            69.40665517102492
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0425759693202017,
+            -0.24069762814793558,
+            68.62008383048601
+          ],
+          [
+            0.24069762814793558,
+            1.0425759693202017,
+            -60.37640415310909
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": -13.0,
+          "center": [
+            255.5,
+            255.5
+          ],
+          "scale": 1.07,
+          "tx": 18.0,
+          "ty": 12.0
+        },
+        "postprocess": {
+          "direction": "diagonal",
+          "strength_fraction": 0.3,
+          "type": "illumination_gradient"
+        },
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.023302630368135624,
+        "scale_error": 0.0004098073828480153,
+        "translation_error_pixels": 0.05804210612680589,
+        "tre_pixels": 0.11005004771031919,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0425759693202017,
+          -0.24069762814793558,
+          68.62008383048601
+        ],
+        [
+          0.24069762814793558,
+          1.0425759693202017,
+          -60.37640415310909
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 319,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 800
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0420787230154114,
+            -0.2410292828296302,
+            68.7750161905693
+          ],
+          [
+            0.2410292828296302,
+            1.0420787230154114,
+            -60.34578968636785
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 289,
+        "inlier_ratio": 0.9059561128526645,
+        "input_match_count": 319,
+        "outlier_count": 30,
+        "reprojection_residuals": {
+          "all_maximum": 325.0581491892725,
+          "all_mean": 2.635021458811274,
+          "all_median": 0.999101383723278,
+          "all_q95": 3.425695619020264,
+          "inlier_maximum": 3.2646198378912934,
+          "inlier_mean": 1.026385832512735,
+          "inlier_median": 0.928787092154938,
+          "inlier_q95": 2.1194442983399493
+        },
+        "runtime_ms": 0.10340000153519213,
+        "success": true
+      },
+      "source_id": "camera"
+    },
+    {
+      "case_id": "coins_similarity",
+      "condition_metadata": {
+        "fixed_to_moving": [
+          [
+            0.8582693713734988,
+            0.24610478197946348,
+            -24.49722571594762
+          ],
+          [
+            -0.24610478197946348,
+            0.8582693713734989,
+            63.393163905646446
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "moving_to_fixed": [
+          [
+            1.0766130994509173,
+            -0.3087138385150391,
+            45.94438107092023
+          ],
+          [
+            0.3087138385150391,
+            1.0766130994509173,
+            -60.687278092718515
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "parameters": {
+          "angle_degrees": -16.0,
+          "center": [
+            191.5,
+            151.0
+          ],
+          "scale": 1.12,
+          "tx": 14.0,
+          "ty": 10.0
+        },
+        "postprocess": null,
+        "transform_type": "similarity"
+      },
+      "geometry": {
+        "rotation_error_degrees": 0.04828836755842758,
+        "scale_error": 0.0009733559329947461,
+        "translation_error_pixels": 0.32592188957746027,
+        "tre_pixels": 0.35424281431702376,
+        "within_tolerance": true
+      },
+      "ground_truth_transform": [
+        [
+          1.0766130994509173,
+          -0.3087138385150391,
+          45.94438107092023
+        ],
+        [
+          0.3087138385150391,
+          1.0766130994509173,
+          -60.687278092718515
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matching": {
+        "accepted_match_count": 278,
+        "failure_reason": null,
+        "ratio_threshold": 0.75,
+        "success": true,
+        "tentative_match_count": 794
+      },
+      "ransac": {
+        "estimated_transform": [
+          [
+            1.0772879592058737,
+            -0.3098901703212359,
+            45.69578251410911
+          ],
+          [
+            0.3098901703212359,
+            1.0772879592058737,
+            -61.14869774225496
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "failure_reason": null,
+        "inlier_count": 226,
+        "inlier_ratio": 0.8129496402877698,
+        "input_match_count": 278,
+        "outlier_count": 52,
+        "reprojection_residuals": {
+          "all_maximum": 173.8965614126455,
+          "all_mean": 9.135336477399713,
+          "all_median": 0.9653152164495451,
+          "all_q95": 81.01393856318359,
+          "inlier_maximum": 3.42922230538903,
+          "inlier_mean": 0.9825582150002568,
+          "inlier_median": 0.8373489476909175,
+          "inlier_q95": 2.2072294689877716
+        },
+        "runtime_ms": 0.10939999992842786,
+        "success": true
+      },
+      "source_id": "coins"
+    }
+  ],
+  "configuration": {
+    "matching": {
+      "knn_ratio_threshold": 0.75,
+      "maximum_distance": null,
+      "maximum_drawn_matches": 100,
+      "minimum_matches": 8,
+      "norm": "hamming",
+      "strategy": "knn_ratio"
+    },
+    "orb": {
+      "edge_threshold": 31,
+      "fast_threshold": 20,
+      "first_level": 0,
+      "n_features": 800,
+      "n_levels": 8,
+      "patch_size": 31,
+      "scale_factor": 1.2,
+      "score_type": "harris",
+      "wta_k": 2
+    },
+    "ransac": {
+      "confidence": 0.99,
+      "max_trials": 2000,
+      "minimum_inlier_ratio": 0.25,
+      "minimum_inliers": 8,
+      "refine_iterations": 10,
+      "reprojection_threshold": 3.0
+    },
+    "validation": {
+      "rotation_error_threshold_degrees": 1.0,
+      "scale_error_threshold": 0.03,
+      "translation_error_threshold_pixels": 3.0,
+      "tre_threshold_pixels": 2.0
+    }
+  },
+  "daily_summary": "docs/daily/day_18_summary.md",
+  "development_run": {
+    "case_count": 8,
+    "failed_count": 0,
+    "maximum_tre_pixels": 0.5561615034922126,
+    "mean_inlier_ratio": 0.8843645806144089,
+    "mean_ransac_runtime_ms": 0.16410000034738914,
+    "median_tre_pixels": 0.27685635361233424,
+    "ransac_success_count": 8,
+    "within_tolerance_count": 8
+  },
+  "findings": {
+    "decision": "Proceed to Day 19 with affine RANSAC, degeneracy checks, texture stratification, and threshold sweeps while retaining the Day 18 similarity baseline.",
+    "interpretation": [
+      "RANSAC adds a geometric consistency test after descriptor filtering. Accepted ORB matches are not automatically treated as correct correspondences.",
+      "Inlier ratio, reprojection residuals, and ground-truth TRE describe different parts of the result and should be reported together.",
+      "A successful RANSAC call is not sufficient evidence of correct registration. Geometric correctness is evaluated separately against the known transform."
+    ],
+    "limitations": [
+      "Day 18 evaluates only the similarity model. General affine estimation and degeneracy checks are reserved for Day 19.",
+      "The current development thresholds are working thresholds for controlled experiments and are not final benchmark thresholds.",
+      "The findings are specific to the tracked images, ORB configuration, ratio filter, RANSAC settings, and selected controlled transformations."
+    ],
+    "observations": [
+      "The smallest geometric error occurred in camera_similarity_illumination with TRE 0.110 px.",
+      "The largest geometric error occurred in camera_similarity_large with TRE 0.556 px.",
+      "The lowest RANSAC inlier ratio occurred in camera_similarity_blur at 0.788.",
+      "The controlled outlier experiment injected 126 incorrect correspondences; RANSAC rejected 126 of those injected correspondences."
+    ]
+  },
+  "global_day": 18,
+  "local_validation": {
+    "status": "complete",
+    "date": "2026-09-28",
+    "environment": "Windows PowerShell project virtual environment, Python 3.12.6",
+    "pytest_result": "283 passed",
+    "pytest_passed": 283,
+    "pytest_failed": 0,
+    "pytest_skipped": 0,
+    "pytest_exit_code": 0,
+    "target_windows_experiment": "8 / 8 RANSAC estimates succeeded and 8 / 8 were within the configured Day 18 development tolerances",
+    "mean_inlier_ratio": 0.8843645806144089,
+    "median_tre_pixels": 0.27685635361233424,
+    "maximum_tre_pixels": 0.5561615034922126,
+    "mean_ransac_runtime_ms": 0.16410000034738914,
+    "outlier_injection_rejected": "126 / 126 injected correspondences",
+    "outlier_injection_tre_pixels": 0.3602585909353012,
+    "note": "The tracked case results and runtime values were refreshed by the target Windows Day 18 run before validation was recorded."
+  },
+  "outlier_injection": {
+    "case_id": "camera_similarity_medium",
+    "geometry": {
+      "rotation_error_degrees": 0.050351158058788315,
+      "scale_error": 5.668966344130055e-06,
+      "translation_error_pixels": 0.30891510862908994,
+      "tre_pixels": 0.3602585909353012,
+      "within_tolerance": true
+    },
+    "injected_count": 126,
+    "injected_fraction": 0.3,
+    "injected_rejected_count": 126,
+    "injected_rejection_rate": 1.0,
+    "ransac": {
+      "estimated_transform": [
+        [
+          1.094032260859533,
+          0.35441000388435273,
+          -86.67250670592858
+        ],
+        [
+          -0.35441000388435273,
+          1.094032260859533,
+          46.23273323106406
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "failure_reason": null,
+      "inlier_count": 276,
+      "inlier_ratio": 0.6587112171837709,
+      "input_match_count": 419,
+      "outlier_count": 143,
+      "reprojection_residuals": {
+        "all_maximum": 331.02231927735306,
+        "all_mean": 32.01590469517699,
+        "all_median": 1.6610301468296735,
+        "all_q95": 168.46753863780955,
+        "inlier_maximum": 3.302837057615419,
+        "inlier_mean": 1.1593815207091933,
+        "inlier_median": 1.0080791810084353,
+        "inlier_q95": 2.429860023654504
+      },
+      "runtime_ms": 0.14620000001741573,
+      "success": true
+    }
+  },
+  "raw_output_directory": "outputs/week04_day03_ransac_similarity",
+  "scope": "similarity transform estimation from ORB correspondences with RANSAC",
+  "status": "complete",
+  "technical_note": "docs/RANSAC_SIMILARITY.md",
+  "title": "ORB + RANSAC similarity estimation and outlier rejection",
+  "week": 4,
+  "week_day": 3,
+  "target_windows_run": {
+    "case_count": 8,
+    "failed_count": 0,
+    "maximum_tre_pixels": 0.5561615034922126,
+    "mean_inlier_ratio": 0.8843645806144089,
+    "mean_ransac_runtime_ms": 0.16410000034738914,
+    "median_tre_pixels": 0.27685635361233424,
+    "ransac_success_count": 8,
+    "within_tolerance_count": 8
+  }
+}

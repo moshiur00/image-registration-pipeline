@@ -1,0 +1,317 @@
+experiment:
+  name: week04_day05_integrated_feature_baseline
+  seed: 42
+
+working_size:
+  width: 256
+  height: 256
+
+sources:
+  camera:
+    image: data/samples/week02_real_general/camera.png
+    color_mode: grayscale
+  coins:
+    image: data/samples/week02_real_general/coins.png
+    color_mode: grayscale
+  moon:
+    image: data/samples/week02_real_general/moon.png
+    color_mode: grayscale
+
+generated_sources:
+  low_texture:
+    type: gaussian_blur
+    base_source: camera
+    sigma: 8.0
+  repeated_pattern:
+    type: checkerboard
+    height: 256
+    width: 256
+    block_size: 24
+
+orb:
+  n_features: 800
+  scale_factor: 1.2
+  n_levels: 8
+  edge_threshold: 31
+  first_level: 0
+  wta_k: 2
+  score_type: harris
+  patch_size: 31
+  fast_threshold: 20
+
+matching:
+  ratio_threshold: 0.75
+  maximum_distance: null
+  minimum_matches: 8
+  norm: hamming
+
+ransac_similarity:
+  reprojection_threshold: 3.0
+  confidence: 0.99
+  max_trials: 2000
+  refine_iterations: 10
+  minimum_inliers: 8
+  minimum_inlier_ratio: 0.25
+
+ransac_affine:
+  reprojection_threshold: 3.0
+  confidence: 0.99
+  max_trials: 3000
+  refine_iterations: 10
+  minimum_inliers: 8
+  minimum_inlier_ratio: 0.25
+  grid_rows: 4
+  grid_cols: 4
+  minimum_spatial_coverage: 0.125
+  minimum_linearity_ratio: 0.01
+  plausibility:
+    min_abs_determinant: 0.10
+    min_principal_scale: 0.50
+    max_principal_scale: 1.80
+    max_condition_number: 3.0
+    max_shear_cosine: 0.65
+    max_translation_fraction_of_diagonal: 1.50
+    allow_reflection: false
+
+phase_correlation:
+  use_hanning_window: true
+  subtract_mean: true
+  min_response: null
+  interpolation: linear
+
+ecc_translation:
+  motion_model: translation
+  initialization: phase_correlation
+  max_iterations: 150
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+
+ecc_rigid:
+  motion_model: rigid
+  initialization: phase_correlation
+  max_iterations: 180
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+
+ecc_affine_single:
+  motion_model: affine
+  initialization: phase_correlation
+  max_iterations: 180
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+
+ecc_affine_multiresolution:
+  motion_model: affine
+  initialization: phase_correlation
+  pyramid_scales: [0.25, 0.5, 1.0]
+  pre_smoothing_sigma: 0.8
+  max_iterations: 140
+  epsilon: 1.0e-6
+  gauss_filt_size: 5
+  interpolation: linear
+
+validation:
+  translation_tre_pixels: 1.0
+  translation_error_pixels: 1.0
+  rigid_tre_pixels: 2.0
+  rigid_translation_error_pixels: 2.0
+  rigid_rotation_error_degrees: 1.5
+  affine_tre_pixels: 3.0
+  affine_translation_error_pixels: 4.0
+  affine_linear_error: 0.05
+
+cases:
+  - id: camera_translation_clean
+    source: camera
+    scope: shared_comparison
+    comparison_group: translation
+    ground_truth_model: translation
+    tx: 28.0
+    ty: -18.0
+    condition: {type: clean}
+    methods: [phase_correlation, ecc_translation, orb_similarity]
+
+  - id: camera_translation_blur
+    source: camera
+    scope: shared_comparison
+    comparison_group: translation
+    ground_truth_model: translation
+    tx: -36.0
+    ty: 24.0
+    condition:
+      type: gaussian_blur
+      sigma: 3.0
+    methods: [phase_correlation, ecc_translation, orb_similarity]
+
+  - id: camera_translation_illumination
+    source: camera
+    scope: shared_comparison
+    comparison_group: translation
+    ground_truth_model: translation
+    tx: 22.0
+    ty: 16.0
+    condition:
+      type: illumination_gradient
+      strength_fraction: 0.25
+      direction: diagonal
+    methods: [phase_correlation, ecc_translation, orb_similarity]
+
+  - id: camera_translation_partial_overlap
+    source: camera
+    scope: shared_comparison
+    comparison_group: translation
+    ground_truth_model: translation
+    tx: -50.0
+    ty: 30.0
+    condition:
+      type: restricted_fov
+      width_fraction: 0.70
+      height_fraction: 0.75
+      center_x_fraction: 0.50
+      center_y_fraction: 0.50
+    methods: [phase_correlation, ecc_translation, orb_similarity]
+
+  - id: camera_rigid_clean
+    source: camera
+    scope: shared_comparison
+    comparison_group: rigid
+    ground_truth_model: rigid
+    angle_degrees: 15.0
+    tx: 24.0
+    ty: -18.0
+    condition: {type: clean}
+    methods: [ecc_rigid, orb_similarity]
+
+  - id: camera_rigid_illumination
+    source: camera
+    scope: shared_comparison
+    comparison_group: rigid
+    ground_truth_model: rigid
+    angle_degrees: -12.0
+    tx: -20.0
+    ty: 16.0
+    condition:
+      type: illumination_gradient
+      strength_fraction: 0.25
+      direction: horizontal
+    methods: [ecc_rigid, orb_similarity]
+
+  - id: coins_rigid_occlusion
+    source: coins
+    scope: shared_comparison
+    comparison_group: rigid
+    ground_truth_model: rigid
+    angle_degrees: 18.0
+    tx: 14.0
+    ty: 12.0
+    condition:
+      type: rectangular_occlusion
+      area_fraction: 0.18
+      fill_value: 0.0
+    methods: [ecc_rigid, orb_similarity]
+
+  - id: camera_affine_mild
+    source: camera
+    scope: shared_comparison
+    comparison_group: affine
+    ground_truth_model: affine
+    angle_degrees: 8.0
+    scale_x: 1.06
+    scale_y: 0.96
+    shear_x: 0.04
+    tx: 16.0
+    ty: -12.0
+    condition: {type: clean}
+    methods: [ecc_affine_single, ecc_affine_multiresolution, orb_affine]
+
+  - id: camera_affine_medium
+    source: camera
+    scope: shared_comparison
+    comparison_group: affine
+    ground_truth_model: affine
+    angle_degrees: 16.0
+    scale_x: 1.12
+    scale_y: 0.90
+    shear_x: 0.08
+    tx: 28.0
+    ty: -20.0
+    condition: {type: clean}
+    methods: [ecc_affine_single, ecc_affine_multiresolution, orb_affine]
+
+  - id: camera_affine_occlusion
+    source: camera
+    scope: shared_comparison
+    comparison_group: affine
+    ground_truth_model: affine
+    angle_degrees: 12.0
+    scale_x: 1.10
+    scale_y: 0.94
+    shear_x: 0.07
+    tx: 22.0
+    ty: -15.0
+    condition:
+      type: rectangular_occlusion
+      area_fraction: 0.18
+      fill_value: 0.0
+    methods: [ecc_affine_single, ecc_affine_multiresolution, orb_affine]
+
+  - id: moon_affine
+    source: moon
+    scope: shared_comparison
+    comparison_group: affine
+    ground_truth_model: affine
+    angle_degrees: 10.0
+    scale_x: 1.07
+    scale_y: 0.93
+    shear_x: 0.05
+    tx: 15.0
+    ty: -10.0
+    condition: {type: clean}
+    methods: [ecc_affine_single, ecc_affine_multiresolution, orb_affine]
+
+  - id: low_texture_affine
+    source: low_texture
+    scope: feature_diagnostic
+    comparison_group: feature_diagnostic
+    ground_truth_model: affine
+    angle_degrees: 9.0
+    scale_x: 1.06
+    scale_y: 0.95
+    shear_x: 0.04
+    tx: 14.0
+    ty: -10.0
+    condition: {type: clean}
+    methods: [orb_affine]
+
+  - id: repeated_pattern_affine
+    source: repeated_pattern
+    scope: feature_diagnostic
+    comparison_group: feature_diagnostic
+    ground_truth_model: affine
+    angle_degrees: 8.0
+    scale_x: 1.04
+    scale_y: 0.97
+    shear_x: 0.03
+    tx: 18.0
+    ty: -14.0
+    condition: {type: clean}
+    methods: [orb_affine]
+
+representative_outputs:
+  - [camera_translation_blur, phase_correlation]
+  - [camera_translation_blur, ecc_translation]
+  - [camera_translation_blur, orb_similarity]
+  - [camera_rigid_illumination, ecc_rigid]
+  - [camera_rigid_illumination, orb_similarity]
+  - [camera_affine_medium, ecc_affine_single]
+  - [camera_affine_medium, ecc_affine_multiresolution]
+  - [camera_affine_medium, orb_affine]
+  - [low_texture_affine, orb_affine]
+  - [repeated_pattern_affine, orb_affine]
+
+output:
+  directory: outputs/week04_day05_integrated_feature_baseline
+  report_snapshot: reports/week04_day05_integrated_feature_baseline.json

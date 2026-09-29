@@ -119,7 +119,7 @@ The KNN threshold sweep behaved monotonically in the expected direction: looser 
 
 The Day 17 evidence shows that descriptor filtering can provide a substantial number of candidate correspondences across all configured cases, including blur and restricted field of view.
 
-However, descriptor acceptance is not equivalent to geometric correctness. A filtered correspondence can still be an outlier with respect to the true transformation. This is why Day 18 will add RANSAC rather than using descriptor matches directly as registration evidence.
+However, descriptor acceptance is not equivalent to geometric correctness. A filtered correspondence can still be an outlier with respect to the true transformation. This motivated the Day 18 RANSAC stage rather than using descriptor matches directly as registration evidence.
 
 Accepted-match count and spatial coverage should be interpreted together. A large number of matches concentrated in a limited area may provide weaker transform support than a smaller but well-distributed set.
 

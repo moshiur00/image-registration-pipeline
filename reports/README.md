@@ -35,6 +35,12 @@ Future experimental days should follow `docs/EXPERIMENT_REPORTING_STANDARD.md` s
 
 `week04_day02_orb_matching.json` stores Day 17 descriptor-matching evidence for KNN ratio filtering and cross-check matching. It includes accepted-match counts, Hamming-distance summaries, correspondence coverage, the ratio-threshold sweep, observations, limitations, and target-validation status.
 
-Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Days 16 and 17 now include completed target Windows validation. Future experimental days should keep development measurements separate until their target-machine validation is complete.
+`week04_day03_ransac_similarity.json` stores the validated Day 18 similarity-model evidence, including RANSAC inlier diagnostics, reprojection residuals, ground-truth transform errors, the controlled correspondence-outlier experiment, and target Windows validation.
+
+`week04_day04_ransac_affine_robustness.json` stores the validated Day 19 affine-model evidence, including correspondence degeneracy checks, transform plausibility diagnostics, texture stratification, similarity-versus-affine comparison, the matching/RANSAC threshold sweep, and target Windows validation.
+
+`week04_day05_integrated_feature_baseline.json` stores the Day 20 integrated monomodal comparison across frequency-, intensity-, and feature-based methods. It keeps translation, rigid, and affine shared-case groups separate, preserves feature-specific diagnostic failures, and records target-validation status.
+
+Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Days 16 through 20 include completed target Windows validation. `week04_summary.json` provides the compact completed-week milestone summary.
 
 `findings_week04.json` is the consolidated Week 4 findings registry. Each completed experimental day should append its measured evidence, observations, interpretation, limitations, decision, and source-record paths there.

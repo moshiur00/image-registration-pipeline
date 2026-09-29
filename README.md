@@ -2,7 +2,7 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 now includes ORB keypoint detection, binary descriptor extraction, and descriptor correspondence filtering. RANSAC transform estimation is the next step.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases.
 
 ## Current status
 
@@ -16,11 +16,10 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Status: Complete, 5 of 5 working days**
 
 **Week 4: Feature-Based Registration with Robust Model Estimation**  
-**Status: Days 16 and 17 complete and validated; Day 18 is next**
+**Status: Complete, 5 of 5 working days**
 
-**Current repository test suite: 270 tests**  
-**Development environment: 253 passed, 4 SimpleITK-dependent tests skipped**  
-**Day 16 target Windows validation: full pytest suite completed successfully with exit code 0**
+**Current repository test suite: 314 tests**  
+**Latest target Windows validation: 314 passed in 4.36s**  
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
@@ -229,7 +228,13 @@ Day 17 adds descriptor correspondence filtering:
 - safe failures for unavailable descriptors or insufficient matches;
 - tracked observations and limitations for later report writing.
 
-The Day 17 target Windows run used 9 controlled cases. At ratio threshold 0.75, all 9 retained at least 8 KNN-filtered matches with 471.3 mean accepted matches and 0.569 mean minimum coverage. Cross-check also retained at least 8 matches in all 9 cases, with 509.0 mean accepted matches and 0.597 mean minimum coverage. These are correspondence-filtering results only. Day 18 will determine which matches are geometrically consistent through RANSAC similarity estimation.
+The Day 17 target Windows run used 9 controlled cases. At ratio threshold 0.75, all 9 retained at least 8 KNN-filtered matches with 471.3 mean accepted matches and 0.569 mean minimum coverage. Cross-check also retained at least 8 matches in all 9 cases, with 509.0 mean accepted matches and 0.597 mean minimum coverage. These are correspondence-filtering results only. Day 18 subsequently added RANSAC similarity estimation to separate geometrically consistent inliers from descriptor-level outliers.
+
+Day 18 adds RANSAC similarity estimation after descriptor filtering. The target Windows run used 8 controlled similarity cases and produced 8 / 8 successful estimates inside the configured working tolerances, with mean inlier ratio 0.884, median TRE 0.277 px, and maximum TRE 0.556 px. A controlled experiment injected 126 incorrect correspondences into one case and RANSAC rejected all 126 while retaining 0.360 px TRE.
+
+Day 19 extends the feature-based path to general affine estimation. It adds spatial-coverage and collinearity checks, transform-plausibility diagnostics, texture stratification, controlled low-texture and repeated-pattern cases, similarity-versus-affine comparison, and a joint matching/RANSAC threshold sweep. The target Windows run produced 7 / 9 successful affine RANSAC estimates and 7 / 9 cases within the configured Day 19 tolerances. Low-texture and repeated-pattern failures remain preserved as explicit evidence.
+
+Day 20 closes the feature-based stage with an integrated 13-case, 32-registration benchmark. The target Windows run produced 30 / 32 method-level successes and 26 / 32 results inside the configured development tolerances. Translation, rigid, and affine comparison groups remain separate, while low-texture and repeated-pattern cases are preserved as feature-specific failure diagnostics.
 
 ## Roadmap and current status
 
@@ -237,7 +242,7 @@ The Day 17 target Windows run used 9 controlled cases. At ratio threshold 0.75, 
 |---|---|---|
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | In progress: Days 16 and 17 validated; RANSAC similarity estimation is next |
+| Week 4 | Feature-based registration | Complete: ORB detection and matching, similarity and affine RANSAC, robustness diagnostics, and integrated shared-case benchmark |
 | Week 5 | Multimodal registration | SimpleITK mutual-information registration for rigid and affine transforms with physical-coordinate handling |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
@@ -271,12 +276,12 @@ Image resampling uses inverse source lookup internally. The stored project trans
 
 ```text
 image-registration-pipeline/
-├── configs/                    # experiment configurations through Day 17
+├── configs/                    # experiment configurations through Day 20
 ├── data/
 │   ├── manifests/              # tracked dataset metadata
 │   └── samples/                # small tracked sample images
 ├── docs/
-│   ├── daily/                  # Day 1 to Day 17 summaries
+│   ├── daily/                  # Day 1 to Day 20 summaries
 │   ├── weekly/                 # weekly progress summaries
 │   └── datasets/               # dataset provenance and preparation notes
 ├── reports/                    # compact tracked quantitative snapshots and findings
@@ -313,7 +318,7 @@ pip check
 pytest -v
 ```
 
-The current repository suite contains 270 tests. The target Windows environment completed the full suite with `270 passed in 3.93s`. In the current development environment, 266 pass and 4 SimpleITK-dependent tests are skipped because SimpleITK is unavailable there.
+The current repository suite contains 314 tests. Day 20 target Windows validation completed with 314 / 314 tests passed in 4.36 seconds.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 
@@ -492,6 +497,30 @@ python scripts/week04_day02_orb_matching.py --config configs/week04_day02_orb_ma
 ```
 
 The Day 17 script compares KNN Hamming matching with ratio filtering against mutual nearest-neighbor cross-check matching. It records accepted-match counts, Hamming-distance summaries, 4 x 4 correspondence coverage, a ratio-threshold sweep, match visualizations, CSV/JSON results, and a compact tracked report. It does not fit a geometric model; RANSAC is introduced on Day 18.
+
+Week 4 Day 3, RANSAC similarity estimation and controlled outlier rejection:
+
+```powershell
+python scripts/week04_day03_ransac_similarity.py --config configs/week04_day03_ransac_similarity.yaml
+```
+
+The Day 18 script fits similarity transforms from the Day 17 ORB correspondences. It records inlier masks, reprojection residuals, TRE, rotation error, scale error, centered translation error, runtime, safe failure reasons, and a controlled correspondence-outlier injection experiment.
+
+Week 4 Day 4, affine RANSAC, degeneracy checks, texture diagnostics, and threshold sweeps:
+
+```powershell
+python scripts/week04_day04_ransac_affine_robustness.py --config configs/week04_day04_ransac_affine_robustness.yaml
+```
+
+The Day 19 script estimates general affine transforms, compares similarity and affine models on shared correspondences, checks spatial coverage and collinearity, validates transform plausibility, records texture diagnostics, exercises low-texture and repeated-pattern failure cases, and sweeps ORB ratio and RANSAC reprojection thresholds.
+
+Week 4 Day 5, integrated feature-based benchmark:
+
+```powershell
+python scripts/week04_day05_integrated_feature_baseline.py --config configs/week04_day05_integrated_feature_baseline.yaml
+```
+
+The Day 20 script compares Phase Correlation, ECC, and ORB + RANSAC only on explicitly shared case groups. Translation, rigid, and affine summaries remain separate, while low-texture and repeated-pattern feature diagnostics are reported separately from cross-family comparisons.
 
 ## Data and generated outputs
 

@@ -15,8 +15,8 @@
       "summary": "reports/week03_summary.json"
     },
     "week_04": {
-      "status": "in_progress",
-      "summary": "docs/weekly/week_04_summary.md"
+      "status": "complete",
+      "summary": "reports/week04_summary.json"
     }
   },
   "days": {
@@ -87,6 +87,18 @@
     "day_17": {
       "status": "complete",
       "summary": "reports/week04_day02_orb_matching.json"
+    },
+    "day_18": {
+      "status": "complete",
+      "summary": "reports/week04_day03_ransac_similarity.json"
+    },
+    "day_19": {
+      "status": "complete",
+      "summary": "reports/week04_day04_ransac_affine_robustness.json"
+    },
+    "day_20": {
+      "status": "complete",
+      "summary": "reports/week04_day05_integrated_feature_baseline.json"
     }
   },
   "findings_registry": "reports/findings_days_01_15.json",
