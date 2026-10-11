@@ -1,287 +1,138 @@
 # Image Registration Pipeline
 
-A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
+A research-focused Python framework for studying classical image registration under controlled monomodal and multimodal conditions. The project combines reproducible experiment design, known-ground-truth synthetic benchmarks, real medical-image handling, quantitative evaluation, and explicit failure analysis.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 core work is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases. The optional three-stage SIFT comparison is complete. The frozen target Windows comparison retained SIFT as an optional complement: it recovered one additional difficult case and reduced median TRE on the controlled subset, while requiring substantially higher runtime. ORB remains the core feature baseline. Week 5 Mutual Information work is complete. Day 21 rigid Mattes MI is complete on the target Windows environment with 340 tests passed, 6 of 6 method executions successful, and 4 of 6 cases inside the configured geometric tolerance. Day 22 is complete on the target Windows environment. The controlled sequential one-factor-at-a-time study froze a rigid MI configuration using identity initialization, 32 histogram bins, full metric sampling, and Gaussian smoothing with sigma 1.0. The frozen confirmation reached 5 of 5 validation cases within tolerance with median TRE 0.0173 px. Day 23 is also complete on the target Windows environment with 352 tests passed. Both affine single-resolution and multiresolution variants reached 5 of 7 cases within tolerance; multiresolution reduced median TRE from 0.1681 px to 0.0887 px but did not add any within-tolerance cases. The limited rigid comparator failed all 3 selected true-affine cases. Day 24 is complete on the target Windows environment with 358 tests passed. Both real RIRE CT/MR-T1 3D rigid MI initialization variants executed successfully, returned plausible physical transforms, preserved metadata, and passed technical validation. The two paths converged to nearly the same transform, while geometry initialization required fewer iterations and lower runtime. Verified landmarks or masks are not integrated, so Day 24 does not report TRE, Dice, or anatomical correctness. Day 25 is complete on the target Windows environment with 364 tests passed in 4.56s. The frozen 13-case, 26-registration final benchmark completed without infrastructure errors. Mutual Information reached 11 of 13 cases within tolerance and ECC reached 7 of 13; paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. Week 5 is complete.
+The central question is not which registration method is universally best. It is **which method is reliable under which geometric and appearance conditions, and why it fails when those conditions change**.
 
-## Current status
+## Project at a glance
 
-**Week 1: Registration Foundations and Pipeline Skeleton**  
-**Status: Complete, 5 of 5 working days**
+| Area | Scope |
+|---|---|
+| Registration methods | Phase Correlation, ECC, ORB + RANSAC, optional SIFT + RANSAC, Mattes Mutual Information |
+| Motion models | Translation, rigid, similarity, affine |
+| Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
+| Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
+| Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
+| Current status | Weeks 1 to 5 complete, Week 6 next |
+| Target validation | 364 / 364 tests passed on Windows for the completed Week 5 repository |
 
-**Week 2: Controlled Dataset and Ground-Truth Benchmark Design**  
-**Status: Complete, 5 of 5 working days**
+## Research objectives
 
-**Week 3: Monomodal Intensity and Frequency-Domain Baselines**  
-**Status: Complete, 5 of 5 working days**
+This project is designed to answer practical registration questions with controlled evidence:
 
-**Week 4: Feature-Based Registration with Robust Model Estimation**  
-**Status: Complete, including optional SIFT extension**
+- How do intensity-based, frequency-domain, feature-based, and multimodal methods behave under different motion models?
+- How sensitive are optimization-based methods to initialization, image pyramids, sampling, and preprocessing?
+- When do feature methods fail because of low texture, repeated structure, poor correspondence geometry, or model mismatch?
+- How do partial overlap, blur, illumination changes, intensity remapping, and simulated modality differences affect registration?
+- How should optimizer completion, transform plausibility, and geometric correctness be separated in evaluation?
+- How can synthetic ground truth and real medical-image validation be combined without overstating conclusions?
 
-**Week 5: Multimodal Registration with Mutual Information**  
-**Status: Complete, 5 of 5 working days**
+## Registration methods
 
-**Current repository test suite: 364 tests**  
-**Latest target Windows validation: 364 passed in 4.56s for the completed Day 25 repository**  
-**Day 22 frozen rigid MI confirmation: 5 / 5 within tolerance, median TRE 0.0173 px**  
-**SIFT Stage 1 target Windows validation: Complete, 7 / 7 matching cases passed**  
-**SIFT Stage 2 target Windows validation: Complete, 12 / 13 within configured geometric tolerances**  
-**SIFT Stage 3 target Windows validation: Complete, final decision RETAIN AS OPTIONAL COMPLEMENT**  
-**Week 5 Day 21: complete, 6 / 6 method executions and 4 / 6 within geometric tolerance**  
-**Week 5 Day 22: complete; frozen rigid MI configuration validated on Windows**  
-**Week 5 Day 23: complete; affine MI target validation recorded**  
-**Week 5 Day 24: complete; real RIRE technical validation recorded**  
-**Week 5 Day 25: complete; frozen integrated benchmark target validation recorded**  
-
-Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
-
-Reporting evidence from Days 1 to 15 is consolidated in `reports/findings_days_01_15.json` and `docs/EXPERIMENT_FINDINGS_DAYS_01_15.md`. Week 4 and Week 5 consolidated machine-readable findings are stored in `reports/findings_week04.json` and `reports/findings_week05.json`. Experiment summaries follow `docs/EXPERIMENT_REPORTING_STANDARD.md`.
-
-The five-day Week 5 execution plan is documented in `docs/weekly/week_05_plan.md`. Day 24 validated real RIRE CT/MR-T1 3D rigid Mattes MI in physical coordinates while preserving the frozen Day 22 metric and optimizer choices where applicable. Day 25 integrated benchmark is target-Windows validated and Week 5 is complete.
-
-## Completed work
-
-### Transformation foundation
-
-- Fixed and moving image conventions
-- Homogeneous coordinates
-- Identity transformation
-- Translation
-- Rotation
-- Rigid transformation
-- Similarity transformation
-- Affine transformation
-- Transform composition and inversion
-- Centered transformations
-- Numerical transform validation
-
-### Warping and interpolation
-
-- Moving -> Fixed transform convention
-- Inverse source lookup during resampling
-- Nearest-neighbor interpolation
-- Bilinear interpolation
-- Bicubic interpolation
-- Nearest-neighbor-only resampling for masks
-
-### Image I/O and preprocessing
-
-- Raster image loading with OpenCV
-- Medical image loading with SimpleITK
-- RGB/RGBA standardization for raster images
-- Preservation of SimpleITK spacing, origin, and direction
-- Fixed/moving compatibility checks
-- Grayscale conversion
-- Percentile clipping
-- Robust intensity normalization
-- Gaussian smoothing
-- Resizing
-- Mask-aware cropping
-
-### Evaluation and visualization
-
-Current descriptive image-similarity measures:
-
-- MAE
-- MSE
-- NCC
-- SSIM
-
-Current visual outputs:
-
-- Fixed, moving, and registered comparison
-- Absolute-difference image
-- Alpha overlay
-- Checkerboard comparison
-
-These measures remain useful descriptive checks. Controlled synthetic registration experiments now also use geometric measures such as parameter error and TRE. Dice and physical-space error are reserved for later evaluation stages where suitable masks, landmarks, or physical metadata are available.
-
-### Week 2 benchmark foundation
-
-- Deterministic synthetic transform sampling from configured ranges
-- Translation, rigid, similarity, and affine ground-truth families
-- Exact Moving -> Fixed and Fixed -> Moving matrices
-- Synthetic moving-image generation from inverse ground truth
-- Deterministic control points with verified correspondence
-- Ground-truth JSON records and experiment manifest output
-- Reproducible generation from a fixed random seed
-- Controlled Gaussian and impulse noise
-- Gaussian blur, contrast, gamma, and illumination changes
-- Rectangular occlusion with an explicit visibility mask
-- Transformed-support masks for geometric validity
-- Restricted field-of-view masks for partial-overlap cases
-- Valid-overlap masks mapped into fixed-image coordinates
-- Overlap-fraction measurement and structured case metadata
-- Synthetic multimodal intensity inversion
-- Nonlinear gamma modality mapping
-- Monotonic histogram remapping
-- Smooth multiplicative bias fields
-- Edge-emphasized modality representations
-- Deterministic signal-dependent modality noise
-- Non-overlapping easy, moderate, and hard difficulty tiers
-- Difficulty sampling for translation magnitude, rotation magnitude, scale deviation, and modality noise
-- Intensity-histogram and joint-histogram outputs within valid overlap
-- Small tracked real-image source subset using `scikit-image` sample data
-- Dataset manifests with IDs, paths, shapes, data types, SHA-256 digests, modality labels, and ground-truth status
-- RIRE training_001 CT and MR-T1 preparation configuration
-- Preferred SimpleITK-compatible MHA workflow using fixed CT and moving MR-T1
-- Medical-volume metadata validation for size, spacing, origin, direction, and pixel type
-- SHA-256 validation for real medical volumes
-- Support for a local Zenodo `data.zip` archive that extracts only the two required MHA files
-- Optional streamed Zenodo download with retries
-- Legacy RIRE raw-header and big-endian voxel support retained as a local fallback
-- Dataset integrity checks for missing files, duplicate IDs, shape mismatches, hashes, modality labels, and medical metadata
-- Dataset cards for the general real-image subset and RIRE multimodal subset
-- Integrated benchmark generator with 20 easy, 20 moderate, and 20 hard cases
-- Balanced 30 monomodal and 30 simulated multimodal cases
-- Translation, rigid, similarity, and affine families in one benchmark
-- Tier-dependent affine shear sampling
-- Integrated degradation, occlusion, and restricted field-of-view factors
-- Valid-overlap and effective evaluation masks for every case
-- Control-point ground-truth verification for every case
-- Per-case SHA-256 file hashes and a complete dataset fingerprint
-- Repeat-run fingerprint comparison for reproducibility validation
-- JSON benchmark manifest, CSV index, and representative visual gallery
-
-### Configuration and reproducibility
-
-- YAML-based experiment configuration
-- Deterministic run identifiers
-- Structured output directories
-- Resolved configuration snapshots
-- Transform parameter storage
-- JSON and CSV metric output
-- Stage-level timing
-- Input SHA-256 hashes
-- Environment metadata
-- Execution logs
-- Non-GUI figure rendering for batch execution
-- Windows-safe log-handler cleanup for repeatable runs
-- Common registration result interface for later algorithms
-- Compact tracked report snapshots under `reports/` for later technical-report generation
-- Progress registry linking completed days to narrative and quantitative summaries
-
-### Week 3 automatic registration
-
-- OpenCV phase-correlation translation estimator
-- Explicit Moving -> Fixed phase-correlation direction
-- Optional Hanning window before frequency-domain estimation
-- Optional mean subtraction
-- Subpixel translation estimates with phase-response diagnostics
-- Standard `RegistrationResult` integration
-- Estimation, warping, and total runtime measurement
-- Safe failure records for invalid or low-information input
-- Optional minimum phase-response threshold
-- Transparent NumPy FFT cross-power correlation surface for diagnostics
-- Clean 12-case translation validation using exact Week 2 ground truth
-- Integer and subpixel translation-error measurement
-- NCC comparison before and after registration
-- CSV, JSON, summary, and representative visual outputs
-- Fixed, moving, registered, overlay, checkerboard, difference, and correlation-surface figures
-- Controlled Gaussian-noise robustness sweep
-- Controlled Gaussian-blur robustness sweep
-- Restricted-field-of-view overlap sweep with measured fixed-space overlap
-- Increasing translation-magnitude sweep
-- Subpixel-shift sensitivity sweep
-- Hanning window on/off comparison under clean and stressed conditions
-- Robustness CSV/JSON outputs and per-sweep summary statistics
-- Error-versus-severity and response-versus-severity plots
-- Representative severe-noise, severe-blur, and extreme-overlap case folders
-- ECC translation registration
-- ECC rigid registration using Euclidean motion
-- Identity and phase-correlation ECC initialization
-- Explicit conversion of OpenCV ECC output into the project Moving -> Fixed convention
-- Configurable ECC iteration limit, termination tolerance, Gaussian filter size, and interpolation
-- Final ECC objective, runtime, success status, and failure reason recording
-- Ground-truth mean TRE, centered translation-parameter error, and rigid rotation error
-- ECC validation under clean, contrast-change, and illumination-gradient conditions
-- Controlled challenging rigid case demonstrating initialization sensitivity
-- TRE, runtime, and NCC comparison plots for ECC
-- Integrated Day 5 monomodal baseline benchmark across camera, coins, and moon source images
-- Standardized 14-case, 24-registration result table across supported translation, rigid, and affine models
-- Direct phase-correlation versus ECC-translation comparison on identical translation cases
-- Single-resolution versus multiresolution affine ECC comparison retained in the integrated benchmark
-- Standardized optimizer status, geometric tolerance status, TRE, parameter error, similarity, response/ECC, and runtime fields
-- Representative alpha overlays, checkerboards, absolute-difference images, and RGB edge overlays
-- Aggregated method, condition, and motion-model summaries for later technical-report generation
-- ECC affine registration using general 2D affine motion
-- Supplied-transform ECC initialization for multilevel refinement
-- Coarse-to-fine image-pyramid construction
-- Configurable pyramid scales and Gaussian pre-smoothing
-- Homogeneous transform scaling between pyramid coordinate systems
-- Multiresolution ECC with per-level convergence diagnostics
-- Affine linear-component error in addition to TRE and translation error
-- Single-resolution versus multiresolution affine comparison
-- Pyramid-level visualization and capture-range case analysis
-
-### Week 4 feature-based registration
-
-Day 16 adds the feature-detection layer used by the planned ORB + RANSAC registration method:
-
-- configurable OpenCV ORB keypoint detection;
-- 32-byte binary descriptor extraction;
-- serializable keypoint coordinates, orientation, scale, response, and octave metadata;
-- deterministic conversion of grayscale intensity images to ORB-compatible uint8 input;
-- optional detection masks;
-- safe `no_keypoints_detected` failure records;
-- 4 x 4 keypoint spatial-coverage diagnostic;
-- fixed and moving keypoint visualizations;
-- controlled feature-detection experiment using camera, coins, and moon source images;
-- tracked Day 16 report containing quantitative results, observations, interpretation, limitations, and the next experimental decision.
-
-Day 16 intentionally separated feature detection from later correspondence and geometric-estimation stages. Target Windows Day 16 result: 8 / 8 configured cases produced descriptors in both images, with 652.0 mean moving-image keypoints, 0.695 mean moving-image spatial coverage, and 4.489 ms mean moving-image detection runtime. The full pytest suite also completed successfully with exit code 0.
-
-Day 17 adds descriptor correspondence filtering:
-
-- Hamming-distance matching for ORB descriptors;
-- KNN matching with configurable ratio filtering;
-- mutual nearest-neighbor cross-check matching;
-- accepted-match distance summaries and 4 x 4 spatial coverage;
-- ratio-threshold sweep;
-- tentative and filtered match visualizations;
-- safe failures for unavailable descriptors or insufficient matches;
-- tracked observations and limitations for later report writing.
-
-The Day 17 target Windows run used 9 controlled cases. At ratio threshold 0.75, all 9 retained at least 8 KNN-filtered matches with 471.3 mean accepted matches and 0.569 mean minimum coverage. Cross-check also retained at least 8 matches in all 9 cases, with 509.0 mean accepted matches and 0.597 mean minimum coverage. These are correspondence-filtering results only. Day 18 subsequently added RANSAC similarity estimation to separate geometrically consistent inliers from descriptor-level outliers.
-
-Day 18 adds RANSAC similarity estimation after descriptor filtering. The target Windows run used 8 controlled similarity cases and produced 8 / 8 successful estimates inside the configured working tolerances, with mean inlier ratio 0.884, median TRE 0.277 px, and maximum TRE 0.556 px. A controlled experiment injected 126 incorrect correspondences into one case and RANSAC rejected all 126 while retaining 0.360 px TRE.
-
-Day 19 extends the feature-based path to general affine estimation. It adds spatial-coverage and collinearity checks, transform-plausibility diagnostics, texture stratification, controlled low-texture and repeated-pattern cases, similarity-versus-affine comparison, and a joint matching/RANSAC threshold sweep. The target Windows run produced 7 / 9 successful affine RANSAC estimates and 7 / 9 cases within the configured Day 19 tolerances. Low-texture and repeated-pattern failures remain preserved as explicit evidence.
-
-Day 20 closes the feature-based stage with an integrated 13-case, 32-registration benchmark. The target Windows run produced 30 / 32 method-level successes and 26 / 32 results inside the configured development tolerances. Translation, rigid, and affine comparison groups remain separate, while low-texture and repeated-pattern cases are preserved as feature-specific failure diagnostics.
-
-### Optional SIFT extension before Week 5
-
-After the validated ORB + RANSAC baseline was completed, an optional three-stage SIFT comparison was started. The extension is kept separate from the five completed Week 4 working days.
-
-Stage 1 adds:
-
-- configurable OpenCV SIFT keypoint detection;
-- 128-dimensional `float32` descriptors;
-- L2 KNN descriptor matching with ratio filtering;
-- a ratio-threshold sweep from 0.60 to 0.85;
-- keypoint, match, descriptor-distance, and spatial-coverage visualizations;
-- tracked observations, interpretation, limitations, and target-validation status.
-
-The Stage 1 subset contains seven controlled cases. At ratio threshold 0.75, all seven retained at least eight accepted matches, with 359.0 mean accepted matches and 0.759 mean minimum correspondence coverage. The moon blur case was weakest with 11 accepted matches and 0.375 coverage. Target Windows validation completed with `327 passed in 9.44s`.
-
-Stage 2 reuses the existing similarity and affine RANSAC modules with SIFT correspondences. Target Windows validation completed on 2026-09-29 with `329 passed in 8.73s`. The 13-case experiment produced 12 / 13 matching successes, 12 / 13 RANSAC successes, and 12 / 13 results inside the configured geometric tolerances. The repeated-pattern affine probe failed before RANSAC because no SIFT matches survived ratio filtering. The low-texture affine probe retained 17 filtered matches, 15 inliers, and produced 1.247 px TRE.
-
-Stage 3 is complete as a frozen 12-case, 24-registration ORB versus SIFT comparison. Target Windows validation produced `333 passed in 3.57s`. ORB was inside tolerance on 10 / 12 cases and SIFT on 11 / 12. SIFT recovered the low-texture affine probe, both front-ends failed the repeated-pattern probe, and SIFT produced lower median TRE while requiring substantially higher mean runtime. Final decision: RETAIN AS OPTIONAL COMPLEMENT. ORB remains the core feature baseline.
-
-## Roadmap and current status
-
-| Week | Planned work | Main outcome |
+| Method | Supported role | Current status |
 |---|---|---|
-| Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
-| Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
-| Week 4 | Feature-based registration | Complete: validated ORB + RANSAC core baseline plus completed optional SIFT comparison; SIFT retained as an optional complement |
-| Week 5 | Multimodal registration | Complete: Days 21 to 25 validated; final frozen synthetic benchmark and separate RIRE technical evidence recorded |
-| Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
-| Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
-| Week 8 | Final benchmark and documentation | Frozen benchmark, final tables and plots, technical analysis, documentation, presentation, and reproducible release snapshot |
+| Phase Correlation | Translation estimation in monomodal data | Complete |
+| ECC | Translation, rigid, and affine intensity registration | Complete |
+| ORB + RANSAC | Similarity and affine feature registration | Complete, core feature baseline |
+| SIFT + RANSAC | Controlled alternative feature front-end | Complete, retained as optional complement |
+| Mattes Mutual Information | Rigid and affine multimodal registration | Complete for Week 5 |
+| 3D Mattes Mutual Information | Rigid physical-space CT/MR registration | Complete technical validation on RIRE pair |
 
-A limited B-spline deformable-registration experiment is reserved as an optional extension after the core benchmark is complete.
+## Selected validated results
+
+The values below are taken from tracked experiment reports and target-machine validation. They are intentionally condition-specific rather than combined into a universal ranking.
+
+| Experiment | Result |
+|---|---|
+| Clean Phase Correlation translation | 12 / 12 within tolerance, mean translation error 0.0544 px |
+| Affine ECC capture-range study | Multiresolution 9 / 9 within tolerance versus single-resolution 7 / 9 |
+| Week 4 integrated feature benchmark | 30 / 32 method executions succeeded, 26 / 32 within development tolerance |
+| Frozen ORB vs SIFT comparison | ORB 10 / 12 within tolerance, SIFT 11 / 12 |
+| ORB vs SIFT runtime | ORB mean 18.98 ms, SIFT mean 55.57 ms on the target Windows run |
+| Week 5 final multimodal benchmark | Mutual Information 11 / 13 within tolerance, ECC 7 / 13 |
+| Week 5 paired outcomes | 7 both-pass, 4 MI-only pass, 0 ECC-only pass, 2 both-CHECK |
+| Real RIRE CT/MR-T1 | 2 / 2 rigid MI variants passed technical validation with metadata preserved |
+| Final Week 5 test suite | 364 / 364 passed in 4.56 s on Windows |
+
+The RIRE result is reported as **technical physical-space validation only**. Verified landmarks or masks are not integrated, so the project does not claim TRE, Dice, or anatomical correctness for that real CT/MR pair.
+
+## Key findings so far
+
+### Frequency-domain and intensity registration
+
+Phase Correlation is highly accurate on clean translation cases and remains robust across a useful range of noise, blur, subpixel shifts, and translation magnitude. Severe blur and very low overlap expose clear limits. Windowing can reduce error under stress but does not guarantee a correct estimate.
+
+ECC works well when the motion model and initialization are appropriate, but optimizer completion is not treated as proof of correct geometry. A difficult rigid case demonstrated strong initialization sensitivity, and coarse-to-fine affine optimization improved recovery on controlled cases with larger capture-range demands.
+
+### Feature-based registration
+
+ORB + RANSAC provides a fast and effective feature baseline on textured images. The project keeps descriptor filtering, RANSAC execution, transform plausibility, and final geometric correctness as separate states.
+
+Low texture and repeated patterns fail for different reasons. Low texture can prevent enough reliable correspondences from being formed, while repeated structure can produce apparently plausible local matches that do not support the correct global transform.
+
+The frozen ORB vs SIFT study retained SIFT as an **optional complement**. SIFT recovered one additional difficult case and reduced median TRE on the controlled comparison subset, but required substantially higher runtime. ORB therefore remains the core feature baseline.
+
+### Multimodal registration
+
+The Week 5 final benchmark showed a clear condition-specific advantage for Mutual Information under several multimodal intensity transformations. MI reached 11 of 13 final synthetic cases within tolerance compared with 7 of 13 for ECC.
+
+Intensity inversion produced one of the clearest differences: MI passed the rigid and affine inversion cases while ECC did not return valid estimates. MI also recovered the affine bias-field and partial-overlap inversion cases where ECC did not meet the final criteria.
+
+Edge-emphasized appearance remained difficult for both methods. These failures are retained in the reports rather than removed from the analysis.
+
+## Experimental design
+
+The project follows a controlled evaluation philosophy:
+
+1. Use known geometric ground truth whenever possible.
+2. Keep the stored transform convention fixed as **Moving -> Fixed**.
+3. Compare methods only on shared cases with compatible motion models.
+4. Separate method execution success from geometric correctness.
+5. Preserve failed and CHECK cases in aggregate reporting.
+6. Freeze validated configurations before final-test evaluation.
+7. Keep simulated multimodal evidence separate from real medical-image evidence.
+8. Avoid conclusions that are not supported by landmarks, masks, or known transforms.
+
+Core evaluation signals include:
+
+- Target Registration Error (TRE)
+- translation, rotation, scale, and affine parameter error
+- RANSAC inlier count and reprojection residuals
+- transform plausibility checks
+- NCC, SSIM, and Mutual Information where meaningful
+- overlap-aware evaluation
+- runtime and stage-level timing
+- optimizer convergence diagnostics
+- explicit success, CHECK, and failure reasons
+
+## Pipeline architecture
+
+```text
+Input data and metadata
+        |
+        v
+Preprocessing and modality handling
+        |
+        v
+Initialization
+        |
+        v
+Registration method
+        |
+        v
+Moving -> Fixed transform
+        |
+        v
+Warping / resampling
+        |
+        v
+Ground-truth and diagnostic evaluation
+        |
+        v
+Structured results, figures, reports, and findings
+```
+
+The framework uses common interfaces so that different registration methods can be evaluated with the same conventions and reporting structure.
 
 ## Core conventions
 
@@ -294,339 +145,87 @@ A limited B-spline deformable-registration experiment is reserved as an optional
 - Positive rotation: counterclockwise on the displayed image.
 - Rotation angles: degrees.
 - Mask interpolation: nearest neighbor only.
-- Raster color order inside the project: RGB or RGBA after loading.
 - SimpleITK physical metadata: spacing, origin, and direction are preserved.
 
-For a moving-image point:
+Image resampling uses inverse source lookup internally while the project-level transform remains Moving -> Fixed.
+
+## Reproducibility and evidence model
+
+The project separates detailed experiment artifacts from compact tracked evidence:
 
 ```text
-p_F = T_MF @ p_M
+outputs/   local detailed experiment evidence
+reports/   tracked quantitative summaries and findings
+docs/      methodology, interpretation, limitations, and progress summaries
 ```
 
-Image resampling uses inverse source lookup internally. The stored project transform remains Moving -> Fixed.
+Each experiment is designed to preserve its purpose, setup, changed variables, fixed factors, thresholds, numerical results, observations, interpretation, failure cases, limitations, and next decision.
 
-## Project structure
+The project also uses:
+
+- configuration-driven experiments with YAML
+- fixed random seeds where applicable
+- dataset hashes and deterministic fingerprints
+- structured JSON and CSV result records
+- target-machine validation
+- automated tests for transforms, metrics, registration methods, data handling, and reporting
+
+Operational setup, dataset preparation, experiment commands, cleanup, and archive creation are documented separately in [docs/REPRODUCTION_GUIDE.md](docs/REPRODUCTION_GUIDE.md). This keeps the main README focused on the research contribution and evidence.
+
+## Repository structure
 
 ```text
 image-registration-pipeline/
-├── configs/                    # experiment configurations and optional SIFT comparison
+├── configs/                    experiment configurations
 ├── data/
-│   ├── manifests/              # tracked dataset metadata
-│   └── samples/                # small tracked sample images
+│   ├── manifests/              dataset metadata and provenance
+│   └── samples/                small tracked sample images
 ├── docs/
-│   ├── daily/                  # daily implementation and experiment summaries
-│   ├── weekly/                 # weekly progress summaries
-│   └── datasets/               # dataset provenance and preparation notes
-├── reports/                    # compact tracked quantitative snapshots and findings
-├── scripts/                    # experiment, cleanup, and archive commands
-├── src/image_registration/     # reusable registration modules
-├── tests/                      # automated test suite
-├── .gitattributes
-├── .gitignore
+│   ├── daily/                  daily experiment summaries
+│   ├── weekly/                 weekly research summaries
+│   └── datasets/               dataset preparation and provenance notes
+├── reports/                    compact quantitative evidence and findings
+├── scripts/                    experiment and maintenance entry points
+├── src/image_registration/     reusable registration modules
+├── tests/                      automated validation suite
 ├── pyproject.toml
 ├── README.md
 └── requirements.txt
 ```
 
-Generated experiment artifacts are written under local `outputs/` directories and are intentionally excluded from Git and lightweight project archives. Large raw and processed datasets are also kept outside the tracked project snapshot.
-
-## Environment setup
-
-Python 3.12 is recommended.
-
-Windows PowerShell:
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-pip install -e .
-```
-
-Verify the environment:
-
-```powershell
-pip check
-pytest -v
-```
-
-The current repository collects 364 tests. Target Windows Day 25 validation completed with `364 passed in 4.56s`. The frozen 13-case, 26-registration final benchmark completed without infrastructure errors. Mutual Information reached 11 of 13 cases within tolerance and ECC reached 7 of 13; paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. Day 24 real RIRE evidence remains separate: both rigid MI variants passed technical validation, but no TRE, Dice, or anatomical correctness claim is made because verified reference landmarks or masks are not integrated. Week 5 is complete.
-
-## Prepare the Week 2 Day 4 real-data subsets
-
-Prepare the tracked general real-image subset and validate any already available RIRE data:
-
-```powershell
-python scripts/week02_day04_prepare_real_data.py --config configs/week02_day04_real_datasets.yaml
-```
-
-The preferred RIRE input is a local SimpleITK-compatible pair:
-
-```text
-data/raw/rire/training_001/mha/
-├── training_001_ct.mha
-└── training_001_mr_T1.mha
-```
-
-If you download the Zenodo `data.zip` archive manually, save it as:
-
-```text
-data/raw/rire/training_001/archives/zenodo_data.zip
-```
-
-The normal preparation command will verify the archive and extract only the required CT and MR-T1 MHA files. An optional network download is also available:
-
-```powershell
-python scripts/week02_day04_prepare_real_data.py --config configs/week02_day04_real_datasets.yaml --download-zenodo
-```
-
-Large medical data remains excluded from Git and project-sharing ZIP files.
-
-## Run the Week 1 end-to-end smoke test
-
-```powershell
-python scripts/run_experiment.py --config configs/day05_week01_smoke_test.yaml
-```
-
-The runner executes:
-
-```text
-load
-  -> validate
-  -> preprocess
-  -> apply configured Moving -> Fixed transform
-  -> warp
-  -> evaluate
-  -> visualize
-  -> save structured results
-```
-
-The provided smoke test uses:
-
-```text
-Fixed image:   data/samples/week01/fixed.png
-Moving image:  data/samples/week01/moving.png
-Transform:     known similarity transform
-Seed:          42
-```
-
-A run is stored under:
-
-```text
-outputs/<experiment_name>_<config_hash>/
-```
-
-Each run contains:
-
-```text
-figures/
-metadata.json
-metrics.csv
-metrics.json
-resolved_config.yaml
-run.log
-run_summary.json
-timing.json
-transform.json
-```
-
-See `docs/CONFIGURATION_AND_RUN_OUTPUTS.md` for the configuration and output schema.
-
-## Daily demonstrations
-
-Day 1, translation and homogeneous-coordinate checks:
-
-```powershell
-python scripts/day01_demo.py --config configs/day01_translation_demo.yaml
-```
-
-Day 2, rotation and rigid-transform checks:
-
-```powershell
-python scripts/day02_rigid_demo.py --config configs/day02_rigid_demo.yaml
-```
-
-Day 3, similarity, affine, image warping, and interpolation:
-
-```powershell
-python scripts/day03_warping_demo.py --config configs/day03_warping_demo.yaml
-```
-
-Day 4, image loading, preprocessing, evaluation, and visualization:
-
-```powershell
-python scripts/day04_io_preprocessing_evaluation_demo.py --config configs/day04_io_preprocessing_evaluation_demo.yaml
-```
-
-Week 2 Day 1, deterministic synthetic pairs and exact ground truth:
-
-```powershell
-python scripts/week02_day01_synthetic_demo.py --config configs/week02_day01_synthetic_ground_truth.yaml
-```
-
-The demonstration creates one translation, rigid, similarity, and affine pair from seed 42. Each pair stores the sampled parameters, Moving -> Fixed matrix, inverse matrix, control-point correspondences, and numerical round-trip error. Generated files are written under `outputs/` and are not committed to Git.
-
-Week 2 Day 2, controlled degradations and partial overlap:
-
-```powershell
-python scripts/week02_day02_degradations_overlap_demo.py --config configs/week02_day02_degradations_overlap.yaml
-```
-
-The demonstration keeps one known rigid geometry fixed while creating separate Gaussian-noise, impulse-noise, blur, contrast, gamma, illumination, occlusion, and restricted-field-of-view cases. It stores visibility masks, valid-overlap masks, overlap fractions, degradation metadata, and the exact ground-truth transform under `outputs/`.
-
-Week 3 Day 1, phase-correlation translation estimation:
-
-```powershell
-python scripts/week03_day01_phase_correlation_demo.py --config configs/week03_day01_phase_correlation.yaml
-```
-
-The validation generates 12 clean translation-only cases from the tracked `camera.png` source image. Ground truth is used only for evaluation. The estimator records the Moving -> Fixed translation, phase response, runtime, translation-vector error, NCC before and after registration, success status, and representative frequency-domain and image-alignment figures.
-
-Week 3 Day 2, phase-correlation robustness:
-
-```powershell
-python scripts/week03_day02_phase_robustness.py --config configs/week03_day02_phase_robustness.yaml
-```
-
-The robustness script performs one-factor sweeps for Gaussian noise, Gaussian blur, partial overlap, translation magnitude, and subpixel displacement. It also compares Hanning windowing on and off under selected clean and stressed conditions. Results include exact ground-truth error, phase response, actual geometric overlap, NCC before and after registration, runtime, CSV/JSON tables, summary statistics, plots, and representative severe cases.
-
-Week 3 Day 3, ECC translation and rigid registration:
-
-```powershell
-python scripts/week03_day03_ecc_demo.py --config configs/week03_day03_ecc_translation_rigid.yaml
-```
-
-The ECC script runs 12 controlled base cases with both identity and phase-correlation initialization, for 24 registrations. It records final ECC, mean TRE, translation-parameter error, rigid rotation error, NCC before and after registration, runtime, optimizer success, failure reason, CSV/JSON tables, plots, and representative cases.
-
-Week 3 Day 4, affine ECC and multiresolution pyramids:
-
-```powershell
-python scripts/week03_day04_ecc_affine_multiresolution.py --config configs/week03_day04_ecc_affine_multiresolution.yaml
-```
-
-The Day 4 script compares single-resolution and three-level coarse-to-fine affine ECC on nine controlled affine cases. Both strategies use phase-correlation initialization so the comparison isolates the contribution of multiresolution refinement. Results include TRE, centered translation error, affine linear error, NCC before and after registration, final ECC, runtime, per-level diagnostics, CSV/JSON tables, plots, representative cases, a pyramid visualization, and a tracked report snapshot.
-
-Week 3 Day 5, integrated monomodal baseline benchmark:
-
-```powershell
-python scripts/week03_day05_integrated_baselines.py --config configs/week03_day05_integrated_baselines.yaml
-```
-
-The Day 5 script consolidates the Week 3 baselines across 14 controlled cases and 24 registrations using the tracked camera, coins, and moon images. Phase correlation and ECC translation are compared on the same translation cases. ECC rigid is evaluated on rigid cases, while single-resolution and multiresolution ECC are evaluated on affine cases. The script writes standardized CSV/JSON results, an aggregated method table, success/runtime/TRE plots, representative alpha/checkerboard/difference/edge overlays, and a tracked compact report snapshot.
-
-Week 4 Day 1, ORB keypoint detection and descriptor extraction:
-
-```powershell
-python scripts/week04_day01_orb_features.py --config configs/week04_day01_orb_features.yaml
-```
-
-The Day 16 script measures feature availability before matching is introduced. It records keypoint and descriptor counts, response statistics, 4 x 4 spatial coverage, runtime, safe failure reasons, per-case keypoint figures, CSV/JSON results, and a compact tracked report with observations and limitations.
-
-Week 4 Day 2, ORB descriptor matching and correspondence filtering:
-
-```powershell
-python scripts/week04_day02_orb_matching.py --config configs/week04_day02_orb_matching.yaml
-```
-
-The Day 17 script compares KNN Hamming matching with ratio filtering against mutual nearest-neighbor cross-check matching. It records accepted-match counts, Hamming-distance summaries, 4 x 4 correspondence coverage, a ratio-threshold sweep, match visualizations, CSV/JSON results, and a compact tracked report. It does not fit a geometric model; RANSAC is introduced on Day 18.
-
-Week 4 Day 3, RANSAC similarity estimation and controlled outlier rejection:
-
-```powershell
-python scripts/week04_day03_ransac_similarity.py --config configs/week04_day03_ransac_similarity.yaml
-```
-
-The Day 18 script fits similarity transforms from the Day 17 ORB correspondences. It records inlier masks, reprojection residuals, TRE, rotation error, scale error, centered translation error, runtime, safe failure reasons, and a controlled correspondence-outlier injection experiment.
-
-Week 4 Day 4, affine RANSAC, degeneracy checks, texture diagnostics, and threshold sweeps:
-
-```powershell
-python scripts/week04_day04_ransac_affine_robustness.py --config configs/week04_day04_ransac_affine_robustness.yaml
-```
-
-The Day 19 script estimates general affine transforms, compares similarity and affine models on shared correspondences, checks spatial coverage and collinearity, validates transform plausibility, records texture diagnostics, exercises low-texture and repeated-pattern failure cases, and sweeps ORB ratio and RANSAC reprojection thresholds.
-
-Week 4 Day 5, integrated feature-based benchmark:
-
-```powershell
-python scripts/week04_day05_integrated_feature_baseline.py --config configs/week04_day05_integrated_feature_baseline.yaml
-```
-
-The Day 20 script compares Phase Correlation, ECC, and ORB + RANSAC only on explicitly shared case groups. Translation, rigid, and affine summaries remain separate, while low-texture and repeated-pattern feature diagnostics are reported separately from cross-family comparisons.
-
-Week 4 optional SIFT extension Stage 1, SIFT detection and L2 matching:
-
-```powershell
-python scripts/week04_sift_stage01_features_matching.py --config configs/week04_sift_stage01_features_matching.yaml
-```
-
-Stage 1 measures SIFT keypoint availability, 128-dimensional descriptors, L2 KNN ratio filtering, accepted-match spatial coverage, runtime, and ratio-threshold sensitivity. It does not fit RANSAC or report TRE. The tracked Stage 1 report is now validated on the target Windows environment.
-
-Week 4 optional SIFT extension Stage 2, shared similarity and affine RANSAC:
-
-```powershell
-python scripts/week04_sift_stage02_ransac.py --config configs/week04_sift_stage02_ransac.yaml
-```
-
-Stage 2 stores filtered-match diagnostics, RANSAC inliers and outliers, reprojection residuals, estimated transforms, TRE, model-aware parameter errors, runtime, execution success, geometric tolerance status, and explicit failure reasons. The tracked report `reports/week04_sift_stage02_ransac.json` now contains the completed target Windows validation.
-
-Week 4 optional SIFT extension Stage 3, frozen ORB versus SIFT comparison:
-
-```powershell
-python scripts/week04_orb_vs_sift_comparison.py --config configs/week04_orb_vs_sift_comparison.yaml
-```
-
-Stage 3 runs both feature front-ends on the same 12 cases and writes paired feature, matching, RANSAC, TRE, parameter-error, failure, and runtime evidence. The target Windows run is recorded in `reports/week04_orb_vs_sift_comparison.json`. The final decision is RETAIN AS OPTIONAL COMPLEMENT.
-
-## Data and generated outputs
-
-Small sample images required for tests and demonstrations are stored under `data/samples/` and are tracked by Git.
-
-Large raw or processed datasets should not be committed. The `.gitignore` file excludes `data/raw/`, `data/processed/`, and generated `outputs/` while allowing directory placeholders.
-
-Full experiment artifacts remain under `outputs/` and are intentionally local. Compact quantitative summaries are stored under `reports/` and are tracked with the project so later report generation retains the key validated results.
-
-## Documentation
-
-Technical notes are available under `docs/`. Daily and weekly summaries record implementation decisions, experiments, validation results, and progress through the internship plan. `reports/progress_registry.json` provides a machine-readable index linking completed days to compact quantitative snapshots and narrative summaries.
-
-## Apply project cleanup after extracting an update
-
-When an update retires an old file, extracting a ZIP does not remove the old local copy automatically. Run:
-
-```powershell
-python scripts/cleanup_obsolete_files.py
-```
-
-The cleanup currently removes the obsolete `PROJECT_MANIFEST.json`, `scripts/scripts.txt`, and generated `src/image_registration_pipeline.egg-info` paths if they exist.
-
-## Generate the final Week 2 benchmark
-
-Run the integrated benchmark generator:
-
-```powershell
-python scripts/week02_day05_generate_benchmark.py --config configs/week02_day05_integrated_benchmark.yaml
-```
-
-The generator creates 60 cases: 20 easy, 20 moderate, and 20 hard. It records exact ground truth, modality class, degradation, overlap, effective evaluation masks, file hashes, and a dataset fingerprint.
-
-Run the same command a second time to compare the new dataset fingerprint with the previous run. With unchanged inputs and configuration, the repeat check should report `MATCH`.
-
-Main outputs are written under:
-
-```text
-outputs/week02_day05_integrated_benchmark/
-```
-
-## Create a lightweight project archive
-
-```powershell
-python scripts/zip_project.py
-```
-
-The archive contains source code, tests, configurations, documentation, compact report snapshots, and small sample data. Virtual environments, caches, generated outputs, Git internals, build artifacts, and large datasets are excluded.
+Large raw datasets and detailed experiment outputs are intentionally excluded from the lightweight repository archive.
+
+## Documentation and evidence
+
+The most useful entry points are:
+
+- [Transform conventions](docs/TRANSFORM_CONVENTIONS.md)
+- [Experiment reporting standard](docs/EXPERIMENT_REPORTING_STANDARD.md)
+- [Configuration and run outputs](docs/CONFIGURATION_AND_RUN_OUTPUTS.md)
+- [Week 3 baseline comparison](docs/WEEK03_BASELINE_COMPARISON.md)
+- [Week 4 feature baseline comparison](docs/WEEK04_FEATURE_BASELINE_COMPARISON.md)
+- [ORB vs SIFT comparison](docs/ORB_VS_SIFT_COMPARISON.md)
+- [Mutual Information registration](docs/MUTUAL_INFORMATION_REGISTRATION.md)
+- [Week 5 summary](docs/weekly/week_05_summary.md)
+- [Reproduction guide](docs/REPRODUCTION_GUIDE.md)
+- [Progress registry](reports/progress_registry.json)
+- [Week 5 findings](reports/findings_week05.json)
+
+## Project status and roadmap
+
+| Week | Focus | Status |
+|---|---|---|
+| 1 | Registration foundations and pipeline skeleton | Complete |
+| 2 | Controlled dataset and ground-truth benchmark | Complete |
+| 3 | Phase Correlation and ECC baselines | Complete |
+| 4 | ORB + RANSAC and optional SIFT comparison | Complete |
+| 5 | Multimodal Mutual Information and RIRE validation | Complete |
+| 6 | Unified evaluation and reproducible benchmarking | Next |
+| 7 | Robustness, runtime analysis, and failure diagnosis | Planned |
+| 8 | Final benchmark, analysis, documentation, and demonstration | Planned |
+
+Week 6 will consolidate model-aware parameter errors, TRE, overlap-aware similarity metrics, runtime accounting, success policies, benchmark execution, and standardized aggregation across the completed registration methods.
 
 ## License
 
-No open-source license has been selected yet. Add an appropriate license before distributing the repository under open-source terms.
+No open-source license has been selected yet. An appropriate license should be added before distributing the repository under open-source terms.
