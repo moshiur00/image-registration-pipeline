@@ -145,6 +145,15 @@ def test_mapping_dispatch_records_parameters() -> None:
     assert result.metadata == {"type": "nonlinear_gamma", "gamma": 1.8}
 
 
+def test_edge_emphasized_mapping_dispatch_records_canonical_type() -> None:
+    result = apply_multimodal_mapping(
+        _image(),
+        {"type": "edge_emphasized", "blend": 0.85},
+        rng=np.random.default_rng(4),
+    )
+    assert result.metadata == {"type": "edge_emphasized", "blend": 0.85}
+
+
 def test_mapping_dispatch_can_add_modality_noise() -> None:
     result = apply_multimodal_mapping(
         _image(),

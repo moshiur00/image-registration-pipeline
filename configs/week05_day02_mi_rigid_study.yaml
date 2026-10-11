@@ -1,0 +1,157 @@
+experiment:
+  name: week05_day02_mi_rigid_study
+  seed: 42
+  purpose: controlled one-factor-at-a-time rigid MI validation study
+
+baseline_mutual_information:
+  histogram_bins: 50
+  sampling_strategy: random
+  sampling_percentage: 0.20
+  sampling_seed: 42
+  learning_rate: 2.0
+  minimum_step: 0.001
+  number_of_iterations: 200
+  relaxation_factor: 0.5
+  gradient_magnitude_tolerance: 0.0001
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+  initialization: geometry
+
+baseline_preprocessing:
+  type: none
+
+validation:
+  tre_threshold_pixels: 3.0
+  rotation_error_threshold_degrees: 1.5
+  translation_error_threshold_pixels: 4.0
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+# These are validation cases for configuration selection, not the final Week 5 test set.
+# They intentionally include the Day 21 histogram-remap and edge-emphasized failure modes.
+validation_cases:
+  - id: camera_inversion_validation
+    source: camera
+    scope: simulated_multimodal_validation
+    angle_degrees: 6.0
+    tx: 14.0
+    ty: -10.0
+    modality_mapping:
+      type: intensity_inversion
+
+  - id: camera_gamma_validation
+    source: camera
+    scope: simulated_multimodal_validation
+    angle_degrees: -8.0
+    tx: -16.0
+    ty: 11.0
+    modality_mapping:
+      type: nonlinear_gamma
+      gamma: 1.8
+
+  - id: camera_histogram_validation
+    source: camera
+    scope: difficult_simulated_multimodal_validation
+    angle_degrees: 10.0
+    tx: 18.0
+    ty: -12.0
+    modality_mapping:
+      type: histogram_remap
+      input_knots: [0.0, 0.25, 0.5, 0.75, 1.0]
+      output_knots: [0.0, 0.10, 0.65, 0.88, 1.0]
+
+  - id: coins_bias_validation
+    source: coins
+    scope: simulated_multimodal_validation
+    angle_degrees: -7.0
+    tx: 12.0
+    ty: 9.0
+    modality_mapping:
+      type: bias_field
+      strength_fraction: 0.30
+      center_x_fraction: 0.60
+      center_y_fraction: 0.40
+      sigma_fraction: 0.35
+
+  - id: moon_edge_validation
+    source: moon
+    scope: difficult_simulated_multimodal_validation
+    angle_degrees: 5.0
+    tx: -10.0
+    ty: 8.0
+    modality_mapping:
+      type: edge_emphasized
+      blend: 0.85
+
+studies:
+  initialization:
+    - id: identity
+      value: identity
+    - id: geometry
+      value: geometry
+    - id: moments
+      value: moments
+
+  histogram_bins:
+    - id: bins_32
+      value: 32
+    - id: bins_50
+      value: 50
+    - id: bins_64
+      value: 64
+
+  sampling_strategy:
+    - id: full
+      value: none
+    - id: regular
+      value: regular
+    - id: random
+      value: random
+
+  sampling_percentage:
+    values: [0.10, 0.20, 0.50]
+
+  random_seed_variability:
+    seeds: [7, 42, 101, 202, 909]
+
+  preprocessing:
+    - id: none
+      spec:
+        type: none
+    - id: robust_clip_1_99
+      spec:
+        type: robust_clip
+        lower_percentile: 1.0
+        upper_percentile: 99.0
+    - id: robust_normalize_1_99
+      spec:
+        type: robust_normalize
+        lower_percentile: 1.0
+        upper_percentile: 99.0
+    - id: zscore
+      spec:
+        type: zscore
+    - id: gaussian_sigma_1
+      spec:
+        type: gaussian_smooth
+        sigma: 1.0
+
+selection:
+  priority:
+    - within_tolerance_count_desc
+    - method_success_count_desc
+    - median_tre_pixels_asc
+    - maximum_tre_pixels_asc
+    - mean_runtime_ms_asc
+  fixed_sampling_seed: 42
+  note: random seed is never selected by best-case accuracy; seed variability is diagnostic only
+
+visualization:
+  joint_histogram_bins: 64
+
+output:
+  directory: outputs/week05_day02_mi_rigid_study
+  report_snapshot: reports/week05_day02_mi_rigid_study.json

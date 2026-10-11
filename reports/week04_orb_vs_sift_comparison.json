@@ -470,7 +470,7 @@
     "seed": 42
   },
   "stage": 3,
-  "status": "implementation_complete_target_validation_pending",
+  "status": "complete_target_windows_validated",
   "target_windows_run": {
     "frontends": {
       "orb": {

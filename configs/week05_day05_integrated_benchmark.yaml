@@ -1,0 +1,259 @@
+experiment:
+  name: week05_day05_integrated_benchmark
+  seed: 42
+  purpose: frozen final synthetic multimodal benchmark with compatible ECC comparison and separate real RIRE evidence
+
+# Frozen from Day 22 validation. These values must not be tuned on the Day 25 test cases.
+frozen_mutual_information:
+  histogram_bins: 32
+  sampling_strategy: none
+  sampling_percentage: 0.20
+  sampling_seed: 42
+  learning_rate: 2.0
+  minimum_step: 0.001
+  number_of_iterations: 200
+  relaxation_factor: 0.5
+  gradient_magnitude_tolerance: 0.0001
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+  initialization: identity
+
+frozen_mi_preprocessing:
+  type: gaussian_smooth
+  sigma: 1.0
+
+# Frozen historical ECC settings from the Week 3 integrated baseline.
+# Each ECC model is compared only with MI using the same geometric motion model.
+frozen_ecc:
+  rigid:
+    implementation: single_resolution
+    motion_model: rigid
+    initialization: phase_correlation
+    max_iterations: 140
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+    min_ecc: null
+    phase_use_hanning_window: true
+    phase_subtract_mean: true
+  affine:
+    implementation: multiresolution
+    motion_model: affine
+    initialization: phase_correlation
+    max_iterations: 160
+    epsilon: 1.0e-6
+    gauss_filt_size: 5
+    interpolation: linear
+    min_ecc: null
+    phase_use_hanning_window: true
+    phase_subtract_mean: true
+    pyramid_scales: [0.25, 0.5, 1.0]
+    pre_smoothing_sigma: 0.5
+
+validation:
+  rigid:
+    tre_threshold_pixels: 3.0
+    rotation_error_threshold_degrees: 1.5
+    translation_error_threshold_pixels: 4.0
+  affine:
+    tre_threshold_pixels: 3.0
+    affine_linear_error_threshold: 0.08
+    translation_error_threshold_pixels: 4.0
+
+plausibility:
+  min_abs_determinant: 0.20
+  min_principal_scale: 0.55
+  max_principal_scale: 1.60
+  max_condition_number: 2.75
+  max_shear_cosine: 0.70
+  max_translation_fraction_of_diagonal: 1.50
+  allow_reflection: false
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+# These are final synthetic test cases. Their geometric parameters differ from the
+# Day 21 to Day 23 validation cases. Do not tune frozen method settings on them.
+cases:
+  - id: rigid_monomodal_reference_test
+    motion_model: rigid
+    source: camera
+    scope: final_test_monomodal_reference
+    angle_degrees: 4.5
+    tx: 9.0
+    ty: -7.0
+
+  - id: rigid_inversion_test
+    motion_model: rigid
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: 7.5
+    tx: 13.0
+    ty: -9.0
+    modality_mapping:
+      type: intensity_inversion
+
+  - id: rigid_gamma_test
+    motion_model: rigid
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: -9.0
+    tx: -14.0
+    ty: 10.0
+    modality_mapping:
+      type: nonlinear_gamma
+      gamma: 1.6
+
+  - id: rigid_histogram_test
+    motion_model: rigid
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: 11.0
+    tx: 20.0
+    ty: -13.0
+    modality_mapping:
+      type: histogram_remap
+      input_knots: [0.0, 0.20, 0.50, 0.80, 1.0]
+      output_knots: [0.0, 0.08, 0.60, 0.90, 1.0]
+
+  - id: rigid_bias_test
+    motion_model: rigid
+    source: coins
+    scope: final_test_simulated_multimodal
+    angle_degrees: -8.0
+    tx: 11.0
+    ty: 10.0
+    modality_mapping:
+      type: bias_field
+      strength_fraction: 0.25
+      center_x_fraction: 0.58
+      center_y_fraction: 0.43
+      sigma_fraction: 0.32
+
+  - id: rigid_edge_test
+    motion_model: rigid
+    source: moon
+    scope: final_test_challenging_multimodal
+    angle_degrees: 6.0
+    tx: -12.0
+    ty: 9.0
+    modality_mapping:
+      type: edge_emphasized
+      blend: 0.80
+
+  - id: affine_monomodal_reference_test
+    motion_model: affine
+    source: camera
+    scope: final_test_monomodal_reference
+    angle_degrees: 5.0
+    scale_x: 1.03
+    scale_y: 0.98
+    shear_x: 0.02
+    tx: 10.0
+    ty: -7.0
+
+  - id: affine_inversion_test
+    motion_model: affine
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: 9.0
+    scale_x: 1.06
+    scale_y: 0.95
+    shear_x: 0.04
+    tx: 16.0
+    ty: -11.0
+    modality_mapping:
+      type: intensity_inversion
+
+  - id: affine_gamma_test
+    motion_model: affine
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: -8.0
+    scale_x: 0.96
+    scale_y: 1.05
+    shear_x: -0.03
+    tx: -15.0
+    ty: 10.0
+    modality_mapping:
+      type: nonlinear_gamma
+      gamma: 1.6
+
+  - id: affine_histogram_test
+    motion_model: affine
+    source: camera
+    scope: final_test_simulated_multimodal
+    angle_degrees: 11.0
+    scale_x: 1.06
+    scale_y: 0.95
+    shear_x: 0.045
+    tx: 19.0
+    ty: -13.0
+    modality_mapping:
+      type: histogram_remap
+      input_knots: [0.0, 0.20, 0.50, 0.80, 1.0]
+      output_knots: [0.0, 0.08, 0.60, 0.90, 1.0]
+
+  - id: affine_bias_test
+    motion_model: affine
+    source: coins
+    scope: final_test_simulated_multimodal
+    angle_degrees: -7.0
+    scale_x: 0.97
+    scale_y: 1.06
+    shear_x: -0.035
+    tx: 12.0
+    ty: 9.0
+    modality_mapping:
+      type: bias_field
+      strength_fraction: 0.25
+      center_x_fraction: 0.58
+      center_y_fraction: 0.43
+      sigma_fraction: 0.32
+
+  - id: affine_edge_test
+    motion_model: affine
+    source: moon
+    scope: final_test_challenging_multimodal
+    angle_degrees: 5.0
+    scale_x: 1.03
+    scale_y: 0.97
+    shear_x: 0.025
+    tx: -9.0
+    ty: 7.0
+    modality_mapping:
+      type: edge_emphasized
+      blend: 0.80
+
+  - id: affine_partial_overlap_test
+    motion_model: affine
+    source: camera
+    scope: final_test_challenging_partial_overlap
+    angle_degrees: -7.0
+    scale_x: 1.04
+    scale_y: 0.95
+    shear_x: -0.035
+    tx: -30.0
+    ty: 22.0
+    modality_mapping:
+      type: intensity_inversion
+    postprocess:
+      type: restricted_fov
+      width_fraction: 0.74
+      height_fraction: 0.80
+      center_x_fraction: 0.51
+      center_y_fraction: 0.49
+      fill_value: 0.0
+
+carried_evidence:
+  day22_seed_variability_report: reports/week05_day02_mi_rigid_study.json
+  day24_rire_report: reports/week05_day04_rire_physical_registration.json
+
+visualization:
+  joint_histogram_bins: 64
+
+output:
+  directory: outputs/week05_day05_integrated_benchmark
+  report_snapshot: reports/week05_day05_integrated_benchmark.json

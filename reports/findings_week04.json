@@ -672,16 +672,17 @@
       }
     },
     "sift_stage_03": {
-      "decision": "Validate the frozen Stage 3 comparison on the target Windows environment before selecting one of the three documented SIFT retention outcomes.",
+      "decision": "Retain SIFT as an optional complement to the core ORB feature baseline based on the frozen target Windows comparison.",
       "interpretation": [
         "Feature count and raw match count are diagnostics, not the deciding criteria.",
-        "Registration success and geometric correctness are evaluated before difficult-case recovery, RANSAC consistency, and runtime.",
-        "A final SIFT retention decision is intentionally deferred until the same Stage 3 experiment is validated on the target Windows environment."
+        "Target Windows validation reproduced the comparison pattern: 10 shared within-tolerance cases, one SIFT-only recovery, and one shared failure.",
+        "SIFT achieved 11 / 12 within tolerance versus 10 / 12 for ORB, with lower median TRE and a higher mean inlier ratio on this frozen subset.",
+        "SIFT is retained as an optional complement rather than replacing ORB because its target Windows mean runtime was substantially higher and the comparison subset is small."
       ],
       "limitations": [
-        "This tracked Stage 3 snapshot records a development-machine run until target Windows validation is supplied.",
-        "The comparison is a small controlled subset and does not establish universal superiority of either feature method.",
-        "Runtime depends on machine, OpenCV build, and thread scheduling."
+        "The frozen comparison contains 12 controlled cases and does not establish universal superiority of either feature method.",
+        "Runtime depends on the target machine, OpenCV build, and thread scheduling.",
+        "The repeated-pattern probe remained unresolved by both feature front-ends."
       ],
       "measured_development_evidence": {
         "frontends": {
@@ -719,20 +720,59 @@
           "sift_only_within_tolerance": 1
         }
       },
+      "measured_target_windows_evidence": {
+        "frontends": {
+          "orb": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 15.598862468310667,
+            "mean_filtered_matches": 301.8333333333333,
+            "mean_fixed_keypoints": 690.6666666666666,
+            "mean_inlier_ratio": 0.8649603119290347,
+            "mean_moving_keypoints": 636.75,
+            "mean_total_runtime_ms": 18.981758335333627,
+            "median_tre_pixels": 0.4016044848900019,
+            "ransac_success_count": 10,
+            "within_tolerance_count": 10
+          },
+          "sift": {
+            "case_count": 12,
+            "matching_success_count": 11,
+            "maximum_tre_pixels": 1.2467384591678428,
+            "mean_filtered_matches": 268.75,
+            "mean_fixed_keypoints": 664.75,
+            "mean_inlier_ratio": 0.945241988146773,
+            "mean_moving_keypoints": 568.0833333333334,
+            "mean_total_runtime_ms": 55.565750004461734,
+            "median_tre_pixels": 0.11554473791457694,
+            "ransac_success_count": 11,
+            "within_tolerance_count": 11
+          }
+        },
+        "paired_outcomes": {
+          "both_within_tolerance": 10,
+          "neither_within_tolerance": 1,
+          "orb_only_within_tolerance": 0,
+          "sift_only_within_tolerance": 1
+        }
+      },
       "observations": [
-        "ORB was inside tolerance on 10 / 12 cases in this development run.",
-        "SIFT was inside tolerance on 11 / 12 cases in this development run.",
-        "Paired outcomes: 10 both passed, 0 ORB-only passes, 1 SIFT-only passes, 1 neither passed.",
-        "low_texture_affine: sift_only_within_tolerance.",
-        "repeated_pattern_affine: neither_within_tolerance."
+        "ORB was inside tolerance on 10 / 12 cases in the target Windows run.",
+        "SIFT was inside tolerance on 11 / 12 cases in the target Windows run.",
+        "Paired outcomes were 10 both passed, 0 ORB-only passes, 1 SIFT-only pass, and 1 neither passed.",
+        "low_texture_affine was recovered only by SIFT within the configured tolerance.",
+        "repeated_pattern_affine remained a shared failure."
       ],
       "source_report": "reports/week04_orb_vs_sift_comparison.json",
-      "status": "implementation_complete_target_validation_pending",
+      "status": "complete_target_windows_validated",
       "technical_note": "docs/ORB_VS_SIFT_COMPARISON.md",
       "title": "Frozen ORB versus SIFT controlled comparison",
       "validation": {
-        "local_pytest_result": "329 passed, 4 skipped in development environment after Stage 3 implementation",
-        "status": "pending",
+        "date": "2026-09-29",
+        "final_decision": "RETAIN AS OPTIONAL COMPLEMENT",
+        "pytest_result": "333 passed in 3.57s",
+        "status": "complete",
+        "target_windows_experiment": "ORB 10/12 within tolerance; SIFT 11/12 within tolerance; paired outcomes 10 both, 0 ORB-only, 1 SIFT-only, 1 neither.",
         "tests_collected": 333
       }
     }

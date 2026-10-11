@@ -1,0 +1,225 @@
+{
+  "days": {
+    "day_21": {
+      "daily_summary": "docs/daily/day_21_summary.md",
+      "decision": "Freeze Day 21 as the initial rigid MI baseline and study configuration sensitivity on Day 22 without loosening the failure thresholds.",
+      "interpretation": "Optimizer completion is not sufficient evidence of geometric correctness. The two CHECK cases remain preserved as baseline failure evidence.",
+      "limitations": [
+        "The experiment uses controlled 2D synthetic geometry with unit spacing.",
+        "Simulated multimodal mappings do not replace real multimodal validation.",
+        "The thresholds are development criteria rather than final benchmark thresholds."
+      ],
+      "measured_evidence": {
+        "experiment_summary": {
+          "case_count": 6,
+          "maximum_tre_pixels": 318.7310002344776,
+          "mean_runtime_ms": 515.7536666665692,
+          "median_tre_pixels": 0.022876806491022417,
+          "method_success_count": 6,
+          "within_tolerance_count": 4
+        },
+        "important_failures": [
+          {
+            "case_id": "camera_histogram_rigid",
+            "interpretation": "optimizer executed but geometric tolerance failed",
+            "tre_pixels": 318.7310002344776
+          },
+          {
+            "case_id": "moon_edge_rigid",
+            "interpretation": "optimizer stop condition was satisfied but geometric tolerance failed",
+            "tre_pixels": 17.991673854776117
+          }
+        ],
+        "median_tre_pixels": 0.022876806491022417,
+        "method_success_count": 6,
+        "tests": "340 passed in 3.73s",
+        "validated_case_count": 6,
+        "within_tolerance_count": 4
+      },
+      "observations": [
+        "The monomodal, intensity-inversion, nonlinear-gamma, and bias-field cases were recovered within the configured geometric tolerance.",
+        "The histogram-remap case completed the optimizer but returned 318.731 px TRE.",
+        "The edge-emphasized case satisfied an optimizer stop condition but returned 17.992 px TRE."
+      ],
+      "source_report": "reports/week05_day01_mi_rigid.json",
+      "status": "complete",
+      "title": "Rigid Mattes Mutual Information registration foundation"
+    },
+    "day_22": {
+      "daily_summary": "docs/daily/day_22_summary.md",
+      "decision": "Freeze identity initialization, 32 histogram bins, full metric sampling, Gaussian smoothing sigma 1.0, and the validated optimizer and multiresolution settings for later Week 5 work.",
+      "frozen_configuration": null,
+      "interpretation": "The selected rigid MI configuration is a validation-selected configuration for this benchmark, not a universal optimum.",
+      "limitations": [
+        "Selection used five simulated multimodal validation cases.",
+        "The design was sequential one-factor-at-a-time rather than an exhaustive grid search.",
+        "The selected settings are not final-test evidence."
+      ],
+      "measured_evidence": {
+        "baseline_within_tolerance_count": 3,
+        "date": "2026-10-11",
+        "frozen_confirmation_maximum_tre_pixels": 0.09503391949405005,
+        "frozen_confirmation_mean_runtime_ms": 1060.837840000113,
+        "frozen_confirmation_median_tre_pixels": 0.017317248183460886,
+        "frozen_confirmation_within_tolerance_count": 5,
+        "platform": "win32",
+        "pytest": "9.1.1",
+        "python": "3.12.6",
+        "sequential_candidate_within_tolerance_count": 5,
+        "study_completed": true,
+        "test_result": "347 passed in 8.65s",
+        "validation_case_count": 5
+      },
+      "observations": [
+        "Full metric sampling increased the validation subset from 3 of 5 to 5 of 5 cases within tolerance.",
+        "Gaussian smoothing with sigma 1.0 produced the selected preprocessing result after full sampling was chosen.",
+        "Random-sampling seed repeats were diagnostic only and were not used to choose a favorable seed."
+      ],
+      "source_report": "reports/week05_day02_mi_rigid_study.json",
+      "status": "complete",
+      "title": "Rigid MI initialization, sampling, and parameter study"
+    },
+    "day_23": {
+      "daily_summary": "docs/daily/day_23_summary.md",
+      "decision": "Keep the multiresolution affine MI path for Week 5 and preserve both difficult CHECK cases without retuning.",
+      "interpretation": "Multiresolution improved median geometric accuracy on this set, but these cases do not demonstrate an expanded capture range. The rigid comparator supports transform-model mismatch as a distinct failure mechanism on the selected examples.",
+      "limitations": [
+        "The capture-range conclusion is limited to seven controlled affine cases.",
+        "The rigid comparator is deliberately limited and is not a universal rigid-versus-affine ranking."
+      ],
+      "measured_evidence": {
+        "affine_multiresolution": {
+          "maximum_tre_pixels": 24.878454713767972,
+          "mean_runtime_ms": 3083.15755714323,
+          "median_tre_pixels": 0.08867625586944339,
+          "method_success_count": 7,
+          "plausible_transform_count": 7,
+          "within_tolerance_count": 5
+        },
+        "affine_single_resolution": {
+          "maximum_tre_pixels": 25.80209324801023,
+          "mean_runtime_ms": 3005.123200000136,
+          "median_tre_pixels": 0.16810832804637538,
+          "method_success_count": 7,
+          "plausible_transform_count": 7,
+          "within_tolerance_count": 5
+        },
+        "capture_range_result": {
+          "both_check": 2,
+          "both_pass": 5,
+          "interpretation": "Multiresolution reduced median TRE on this controlled set but did not increase the number of cases within tolerance. No capture-range expansion is demonstrated by these seven cases.",
+          "multiresolution_only_pass": 0,
+          "single_only_pass": 0
+        },
+        "date": "2026-10-11",
+        "registration_count": 17,
+        "rigid_model_mismatch": {
+          "interpretation": "The restricted rigid comparator failed all three selected true-affine cases, supporting transform-model mismatch as a distinct failure mechanism on these cases.",
+          "median_tre_pixels": 13.985532227709768,
+          "registration_count": 3,
+          "within_tolerance_count": 0
+        },
+        "tests": "352 passed in 8.68s"
+      },
+      "observations": [
+        "Single-resolution and multiresolution affine MI both reached 5 of 7 cases within tolerance.",
+        "Multiresolution reduced median TRE from 0.1681 px to 0.0887 px but did not add any within-tolerance cases.",
+        "The partial-overlap and edge-emphasized cases remained CHECK cases for both affine variants.",
+        "The limited rigid comparator was 0 of 3 within tolerance on selected true-affine cases."
+      ],
+      "source_report": "reports/week05_day03_mi_affine_multiresolution.json",
+      "status": "complete",
+      "title": "Affine Mutual Information and multiresolution validation"
+    },
+    "day_24": {
+      "daily_summary": "docs/daily/day_24_summary.md",
+      "decision": "Mark Day 24 complete as a technical real-data validation. Keep geometry initialization as the primary documented path for this pair because it converged to essentially the same solution as identity with fewer iterations and lower runtime. Do not add a 3D affine extension solely to improve visual or overlap diagnostics. Proceed to Day 25 integrated Week 5 benchmarking while preserving the no-TRE, no-Dice, and no-anatomical-correctness limitation for the real RIRE pair.",
+      "interpretation": "Day 24 validates the real-data physical-space registration path technically. The overlap change is descriptive only and is not anatomical evidence.",
+      "limitations": [
+        "Verified RIRE landmarks or masks are not integrated.",
+        "TRE, Dice, and anatomical correctness are not reported.",
+        "Only one real CT/MR-T1 pair and rigid 3D registration are evaluated."
+      ],
+      "measured_evidence": {
+        "metadata_integrity_count": 2,
+        "method_success_count": 2,
+        "plausible_transform_count": 2,
+        "technical_validation_pass_count": 2,
+        "tests": "358 passed in 4.59s",
+        "variant_count": 2
+      },
+      "observations": [
+        "Both geometry and identity initialization completed technical validation and produced plausible rigid physical transforms while preserving metadata.",
+        "The two initialization paths converged to nearly the same transform and final MI value.",
+        "Geometry initialization required fewer iterations and lower runtime.",
+        "Minimum bidirectional physical field-of-view coverage decreased from about 0.818 before registration to about 0.668 after registration."
+      ],
+      "source_report": "reports/week05_day04_rire_physical_registration.json",
+      "status": "complete",
+      "summary": {
+        "mean_runtime_ms": 12644.294100000025,
+        "metadata_integrity_count": 2,
+        "method_success_count": 2,
+        "plausible_transform_count": 2,
+        "technical_validation_pass_count": 2,
+        "variant_count": 2
+      },
+      "title": "Real RIRE CT/MR-T1 rigid registration in physical coordinates"
+    },
+    "day_25": {
+      "daily_summary": "docs/daily/day_25_summary.md",
+      "decision": "Close Week 5, freeze the Day 25 final-test configurations and evidence, and proceed to Week 6 without retuning Week 5 final-test cases.",
+      "interpretation": "On the frozen final synthetic test set, MI produced more within-tolerance registrations than ECC under the tested multimodal conditions, while generally requiring higher runtime. The evidence supports condition-specific selection rather than a universal method ranking.",
+      "limitations": [
+        "The final quantitative comparison is synthetic and condition-specific.",
+        "Rigid and affine results must remain separate.",
+        "Real RIRE evidence remains technical because verified reference landmarks or masks are not integrated."
+      ],
+      "measured_evidence": {
+        "benchmark_completed_without_infrastructure_error": true,
+        "ecc_method_success_count": 10,
+        "ecc_within_tolerance_count": 7,
+        "failure_check_records_retained": 8,
+        "final_test_case_count": 13,
+        "mutual_information_method_success_count": 13,
+        "mutual_information_within_tolerance_count": 11,
+        "paired_outcomes": {
+          "both_check": 2,
+          "both_pass": 7,
+          "ecc_only_pass": 0,
+          "mutual_information_only_pass": 4
+        },
+        "registration_count": 26,
+        "tests": "364 passed in 4.56s"
+      },
+      "observations": [
+        "On the frozen final synthetic test set, Mutual Information produced more within-tolerance registrations than ECC for both rigid and affine models.",
+        "Rigid Mutual Information reached 5 of 6 within tolerance versus 4 of 6 for rigid ECC; affine Mutual Information reached 6 of 7 versus 3 of 7 for affine ECC.",
+        "Intensity inversion exposed a clear condition-specific difference: Mutual Information passed the rigid and affine inversion cases while ECC failed to return a valid estimate.",
+        "The affine bias-field case was recovered by Mutual Information but not ECC, and the affine partial-overlap inversion case was also recovered only by Mutual Information.",
+        "Edge-emphasized appearance remained a shared failure mode: both methods were outside tolerance for rigid and affine edge-emphasized cases.",
+        "Mutual Information was generally slower than ECC, so the final evidence supports condition-specific method selection rather than a universal ranking.",
+        "The real RIRE CT/MR-T1 result remains technical physical-space evidence only because verified landmarks or masks are not integrated."
+      ],
+      "source_report": "reports/week05_day05_integrated_benchmark.json",
+      "status": "complete",
+      "title": "Integrated Week 5 multimodal benchmark and closure"
+    }
+  },
+  "latest_target_windows_validation": "364 passed in 4.56s",
+  "narrative_summary": "docs/weekly/week_05_summary.md",
+  "purpose": "Consolidated validated findings for Week 5 Mutual Information work. Source reports and daily summaries remain authoritative for full case-level evidence.",
+  "schema_version": 1,
+  "source_summary": "reports/week05_summary.json",
+  "status": "complete_target_windows_validated",
+  "week": 5,
+  "week_conclusions": [
+    "On the frozen final synthetic test set, Mutual Information produced more within-tolerance registrations than ECC for both rigid and affine models.",
+    "Rigid Mutual Information reached 5 of 6 within tolerance versus 4 of 6 for rigid ECC; affine Mutual Information reached 6 of 7 versus 3 of 7 for affine ECC.",
+    "Intensity inversion exposed a clear condition-specific difference: Mutual Information passed the rigid and affine inversion cases while ECC failed to return a valid estimate.",
+    "The affine bias-field case was recovered by Mutual Information but not ECC, and the affine partial-overlap inversion case was also recovered only by Mutual Information.",
+    "Edge-emphasized appearance remained a shared failure mode: both methods were outside tolerance for rigid and affine edge-emphasized cases.",
+    "Mutual Information was generally slower than ECC, so the final evidence supports condition-specific method selection rather than a universal ranking.",
+    "The real RIRE CT/MR-T1 result remains technical physical-space evidence only because verified landmarks or masks are not integrated."
+  ]
+}

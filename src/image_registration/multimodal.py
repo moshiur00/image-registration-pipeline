@@ -11,6 +11,16 @@ from numpy.typing import ArrayLike, NDArray
 
 NumericArray = NDArray[np.generic]
 
+SUPPORTED_MULTIMODAL_MAPPING_TYPES = frozenset(
+    {
+        "intensity_inversion",
+        "nonlinear_gamma",
+        "histogram_remap",
+        "bias_field",
+        "edge_emphasized",
+    }
+)
+
 
 @dataclass(frozen=True)
 class MultimodalResult:

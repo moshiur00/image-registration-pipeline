@@ -84,7 +84,7 @@ cases:
     tx: -10.0
     ty: 8.0
     modality_mapping:
-      type: edge_emphasis
+      type: edge_emphasized
       blend: 0.85
 
 output:

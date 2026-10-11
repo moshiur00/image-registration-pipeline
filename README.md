@@ -2,7 +2,7 @@
 
 A modular and reproducible Python framework for developing, testing, and benchmarking image-registration methods on monomodal and multimodal image pairs.
 
-The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 core work is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases. The optional three-stage SIFT comparison is complete. The frozen target Windows comparison retained SIFT as an optional complement: it recovered one additional difficult case and reduced median TRE on the controlled subset, while requiring substantially higher runtime. ORB remains the core feature baseline. Week 5 Mutual Information work has started with the Day 21 rigid Mattes MI foundation. Target Windows validation for the new stage is pending.
+The project is organized as an eight-week implementation and evaluation plan. Week 1 established the common transformation, warping, preprocessing, evaluation, configuration, logging, and testing infrastructure. Week 2 completed the controlled ground-truth benchmark. Week 3 completed phase-correlation and ECC baselines. Week 4 core work is complete. It includes validated ORB keypoint detection, descriptor correspondence filtering, RANSAC similarity and affine estimation, degeneracy checks, texture diagnostics, threshold sweeps, and an integrated shared-case comparison with compatible Phase Correlation and ECC cases. The optional three-stage SIFT comparison is complete. The frozen target Windows comparison retained SIFT as an optional complement: it recovered one additional difficult case and reduced median TRE on the controlled subset, while requiring substantially higher runtime. ORB remains the core feature baseline. Week 5 Mutual Information work is complete. Day 21 rigid Mattes MI is complete on the target Windows environment with 340 tests passed, 6 of 6 method executions successful, and 4 of 6 cases inside the configured geometric tolerance. Day 22 is complete on the target Windows environment. The controlled sequential one-factor-at-a-time study froze a rigid MI configuration using identity initialization, 32 histogram bins, full metric sampling, and Gaussian smoothing with sigma 1.0. The frozen confirmation reached 5 of 5 validation cases within tolerance with median TRE 0.0173 px. Day 23 is also complete on the target Windows environment with 352 tests passed. Both affine single-resolution and multiresolution variants reached 5 of 7 cases within tolerance; multiresolution reduced median TRE from 0.1681 px to 0.0887 px but did not add any within-tolerance cases. The limited rigid comparator failed all 3 selected true-affine cases. Day 24 is complete on the target Windows environment with 358 tests passed. Both real RIRE CT/MR-T1 3D rigid MI initialization variants executed successfully, returned plausible physical transforms, preserved metadata, and passed technical validation. The two paths converged to nearly the same transform, while geometry initialization required fewer iterations and lower runtime. Verified landmarks or masks are not integrated, so Day 24 does not report TRE, Dice, or anatomical correctness. Day 25 is complete on the target Windows environment with 364 tests passed in 4.56s. The frozen 13-case, 26-registration final benchmark completed without infrastructure errors. Mutual Information reached 11 of 13 cases within tolerance and ECC reached 7 of 13; paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. Week 5 is complete.
 
 ## Current status
 
@@ -18,16 +18,26 @@ The project is organized as an eight-week implementation and evaluation plan. We
 **Week 4: Feature-Based Registration with Robust Model Estimation**  
 **Status: Complete, including optional SIFT extension**
 
-**Current repository test suite: 338 tests**  
-**Latest target Windows validation: 329 passed in 8.73s**  
+**Week 5: Multimodal Registration with Mutual Information**  
+**Status: Complete, 5 of 5 working days**
+
+**Current repository test suite: 364 tests**  
+**Latest target Windows validation: 364 passed in 4.56s for the completed Day 25 repository**  
+**Day 22 frozen rigid MI confirmation: 5 / 5 within tolerance, median TRE 0.0173 px**  
 **SIFT Stage 1 target Windows validation: Complete, 7 / 7 matching cases passed**  
 **SIFT Stage 2 target Windows validation: Complete, 12 / 13 within configured geometric tolerances**  
 **SIFT Stage 3 target Windows validation: Complete, final decision RETAIN AS OPTIONAL COMPLEMENT**  
-**Week 5 Day 21: Rigid Mattes Mutual Information implementation complete, target Windows validation pending**  
+**Week 5 Day 21: complete, 6 / 6 method executions and 4 / 6 within geometric tolerance**  
+**Week 5 Day 22: complete; frozen rigid MI configuration validated on Windows**  
+**Week 5 Day 23: complete; affine MI target validation recorded**  
+**Week 5 Day 24: complete; real RIRE technical validation recorded**  
+**Week 5 Day 25: complete; frozen integrated benchmark target validation recorded**  
 
 Automatic transform estimation is active. Week 3 Day 1 adds a translation-only phase-correlation method. Day 2 adds 43 controlled robustness evaluations across Gaussian noise, Gaussian blur, partial overlap, translation magnitude, subpixel shifts, and Hanning-window comparisons. Day 3 adds ECC translation and rigid registration with identity and phase-correlation initialization. Day 4 adds affine ECC and coarse-to-fine image pyramids with coordinate-correct transform transfer between levels. Day 5 integrates the supported monomodal baselines into one standardized 14-case, 24-registration comparison with tracked summaries and representative success/failure figures. The final target-machine run completed 23 of 24 optimizer calls successfully, with 21 of 24 registrations inside the selected Week 3 development tolerances.
 
-Reporting evidence from Days 1 to 15 is consolidated in `reports/findings_days_01_15.json` and `docs/EXPERIMENT_FINDINGS_DAYS_01_15.md`. Future experiment summaries follow `docs/EXPERIMENT_REPORTING_STANDARD.md`.
+Reporting evidence from Days 1 to 15 is consolidated in `reports/findings_days_01_15.json` and `docs/EXPERIMENT_FINDINGS_DAYS_01_15.md`. Week 4 and Week 5 consolidated machine-readable findings are stored in `reports/findings_week04.json` and `reports/findings_week05.json`. Experiment summaries follow `docs/EXPERIMENT_REPORTING_STANDARD.md`.
+
+The five-day Week 5 execution plan is documented in `docs/weekly/week_05_plan.md`. Day 24 validated real RIRE CT/MR-T1 3D rigid Mattes MI in physical coordinates while preserving the frozen Day 22 metric and optimizer choices where applicable. Day 25 integrated benchmark is target-Windows validated and Week 5 is complete.
 
 ## Completed work
 
@@ -266,7 +276,7 @@ Stage 3 is complete as a frozen 12-case, 24-registration ORB versus SIFT compari
 | Week 2 | Controlled dataset and ground-truth benchmark design | Complete: integrated 60-case benchmark with reproducibility validation |
 | Week 3 | Monomodal intensity and frequency-domain baselines | Complete: Phase Correlation and ECC baselines, robustness analysis, multiresolution refinement, and integrated 24-registration benchmark |
 | Week 4 | Feature-based registration | Complete: validated ORB + RANSAC core baseline plus completed optional SIFT comparison; SIFT retained as an optional complement |
-| Week 5 | Multimodal registration | In progress: Day 21 rigid Mattes Mutual Information foundation implemented; target Windows validation pending before affine and real-data expansion |
+| Week 5 | Multimodal registration | Complete: Days 21 to 25 validated; final frozen synthetic benchmark and separate RIRE technical evidence recorded |
 | Week 6 | Unified evaluation and reproducible benchmarking | Parameter error, TRE, Dice, overlap-aware similarity metrics, runtime measurement, success rules, and resumable benchmark execution |
 | Week 7 | Robustness and failure analysis | Controlled degradation sweeps, runtime analysis, failure taxonomy, failure gallery, and condition-specific method comparison |
 | Week 8 | Final benchmark and documentation | Frozen benchmark, final tables and plots, technical analysis, documentation, presentation, and reproducible release snapshot |
@@ -304,7 +314,7 @@ image-registration-pipeline/
 │   ├── manifests/              # tracked dataset metadata
 │   └── samples/                # small tracked sample images
 ├── docs/
-│   ├── daily/                  # Day 1 to Day 20 summaries
+│   ├── daily/                  # daily implementation and experiment summaries
 │   ├── weekly/                 # weekly progress summaries
 │   └── datasets/               # dataset provenance and preparation notes
 ├── reports/                    # compact tracked quantitative snapshots and findings
@@ -341,7 +351,7 @@ pip check
 pytest -v
 ```
 
-The repository now collects 338 tests after adding Week 5 Day 21 coverage. In the current development container, 331 tests pass and 7 SimpleITK-dependent tests are skipped because SimpleITK is unavailable. The latest target Windows validation is the completed Week 4 result, `333 passed in 3.57s`. Week 5 Day 21 must now be validated on the target Windows environment.
+The current repository collects 364 tests. Target Windows Day 25 validation completed with `364 passed in 4.56s`. The frozen 13-case, 26-registration final benchmark completed without infrastructure errors. Mutual Information reached 11 of 13 cases within tolerance and ECC reached 7 of 13; paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. Day 24 real RIRE evidence remains separate: both rigid MI variants passed technical validation, but no TRE, Dice, or anatomical correctness claim is made because verified reference landmarks or masks are not integrated. Week 5 is complete.
 
 ## Prepare the Week 2 Day 4 real-data subsets
 

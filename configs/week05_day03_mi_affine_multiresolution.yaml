@@ -1,0 +1,169 @@
+experiment:
+  name: week05_day03_mi_affine_multiresolution
+  seed: 42
+  purpose: controlled affine Mutual Information and multiresolution capture-range validation
+
+# Frozen from the validated Day 22 rigid MI study. Day 23 reuses these choices
+# and changes only the transform model or pyramid where the experiment requires it.
+frozen_mutual_information:
+  histogram_bins: 32
+  sampling_strategy: none
+  sampling_percentage: 0.20
+  sampling_seed: 42
+  learning_rate: 2.0
+  minimum_step: 0.001
+  number_of_iterations: 200
+  relaxation_factor: 0.5
+  gradient_magnitude_tolerance: 0.0001
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+  initialization: identity
+
+frozen_preprocessing:
+  type: gaussian_smooth
+  sigma: 1.0
+
+variants:
+  affine_single_resolution:
+    model: affine
+    shrink_factors: [1]
+    smoothing_sigmas: [0.0]
+  affine_multiresolution:
+    model: affine
+    shrink_factors: [4, 2, 1]
+    smoothing_sigmas: [2.0, 1.0, 0.0]
+
+# The rigid comparator is deliberately limited to selected true-affine cases.
+# It is diagnostic evidence for transform-model mismatch, not a universal ranking.
+rigid_comparator:
+  enabled: true
+  case_ids:
+    - camera_affine_mild_monomodal
+    - camera_affine_medium_inversion
+    - camera_affine_histogram
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+
+validation:
+  tre_threshold_pixels: 3.0
+  affine_linear_error_threshold: 0.08
+  translation_error_threshold_pixels: 4.0
+
+plausibility:
+  min_abs_determinant: 0.20
+  min_principal_scale: 0.55
+  max_principal_scale: 1.60
+  max_condition_number: 2.75
+  max_shear_cosine: 0.70
+  max_translation_fraction_of_diagonal: 1.50
+  allow_reflection: false
+
+sources:
+  camera: data/samples/week02_real_general/camera.png
+  coins: data/samples/week02_real_general/coins.png
+  moon: data/samples/week02_real_general/moon.png
+
+cases:
+  - id: camera_affine_mild_monomodal
+    source: camera
+    scope: monomodal_affine_validation
+    angle_degrees: 6.0
+    scale_x: 1.04
+    scale_y: 0.97
+    shear_x: 0.025
+    tx: 12.0
+    ty: -8.0
+
+  - id: camera_affine_medium_inversion
+    source: camera
+    scope: simulated_multimodal_affine_validation
+    angle_degrees: 12.0
+    scale_x: 1.08
+    scale_y: 0.93
+    shear_x: 0.05
+    tx: 20.0
+    ty: -14.0
+    modality_mapping:
+      type: intensity_inversion
+
+  - id: camera_affine_gamma
+    source: camera
+    scope: simulated_multimodal_affine_validation
+    angle_degrees: -10.0
+    scale_x: 0.95
+    scale_y: 1.07
+    shear_x: -0.04
+    tx: -18.0
+    ty: 12.0
+    modality_mapping:
+      type: nonlinear_gamma
+      gamma: 1.8
+
+  - id: coins_affine_bias
+    source: coins
+    scope: simulated_multimodal_affine_validation
+    angle_degrees: -9.0
+    scale_x: 0.96
+    scale_y: 1.08
+    shear_x: -0.04
+    tx: 13.0
+    ty: 10.0
+    modality_mapping:
+      type: bias_field
+      strength_fraction: 0.30
+      center_x_fraction: 0.60
+      center_y_fraction: 0.40
+      sigma_fraction: 0.35
+
+  - id: camera_affine_histogram
+    source: camera
+    scope: difficult_simulated_multimodal_affine_validation
+    angle_degrees: 10.0
+    scale_x: 1.07
+    scale_y: 0.94
+    shear_x: 0.05
+    tx: 18.0
+    ty: -12.0
+    modality_mapping:
+      type: histogram_remap
+      input_knots: [0.0, 0.25, 0.5, 0.75, 1.0]
+      output_knots: [0.0, 0.10, 0.65, 0.88, 1.0]
+
+  - id: camera_affine_partial_overlap
+    source: camera
+    scope: difficult_partial_overlap_affine_validation
+    angle_degrees: -8.0
+    scale_x: 1.05
+    scale_y: 0.94
+    shear_x: -0.04
+    tx: -34.0
+    ty: 24.0
+    modality_mapping:
+      type: intensity_inversion
+    postprocess:
+      type: restricted_fov
+      width_fraction: 0.72
+      height_fraction: 0.78
+      center_x_fraction: 0.52
+      center_y_fraction: 0.48
+      fill_value: 0.0
+
+  - id: moon_affine_edge
+    source: moon
+    scope: difficult_simulated_multimodal_affine_validation
+    angle_degrees: 6.0
+    scale_x: 1.04
+    scale_y: 0.96
+    shear_x: 0.03
+    tx: -10.0
+    ty: 8.0
+    modality_mapping:
+      type: edge_emphasized
+      blend: 0.85
+
+visualization:
+  joint_histogram_bins: 64
+
+output:
+  directory: outputs/week05_day03_mi_affine_multiresolution
+  report_snapshot: reports/week05_day03_mi_affine_multiresolution.json

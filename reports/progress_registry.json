@@ -82,8 +82,33 @@
     },
     "day_21": {
       "documentation": "docs/daily/day_21_summary.md",
-      "status": "implementation_complete_target_validation_pending",
-      "summary": "reports/week05_day01_mi_rigid.json"
+      "status": "complete",
+      "summary": "reports/week05_day01_mi_rigid.json",
+      "validation_note": "Target Windows validation: 340 passed in 3.73s; 6/6 MI cases executed, 4/6 within geometric tolerance. Histogram-remap and edge-emphasized failures are preserved."
+    },
+    "day_22": {
+      "documentation": "docs/daily/day_22_summary.md",
+      "status": "complete",
+      "summary": "reports/week05_day02_mi_rigid_study.json",
+      "validation_note": "Target Windows validation: 347 passed in 8.65s. The five-case rigid MI validation study completed, the sequential candidate and frozen confirmation both reached 5/5 within geometric tolerance, and the frozen confirmation median TRE was 0.0173 px."
+    },
+    "day_23": {
+      "documentation": "docs/daily/day_23_summary.md",
+      "status": "complete",
+      "summary": "reports/week05_day03_mi_affine_multiresolution.json",
+      "validation_note": "Target Windows validation: 352 passed in 8.68s. Affine single-resolution and multiresolution both executed 7/7 cases and each reached 5/7 within tolerance. Multiresolution reduced median TRE from 0.1681 px to 0.0887 px but produced no additional within-tolerance cases. The restricted rigid comparator was 0/3 within tolerance on selected true-affine cases."
+    },
+    "day_24": {
+      "documentation": "docs/daily/day_24_summary.md",
+      "status": "complete",
+      "summary": "reports/week05_day04_rire_physical_registration.json",
+      "validation_note": "Target Windows validation: 358 passed in 4.59s. Both RIRE CT/MR-T1 rigid 3D MI variants executed successfully, returned plausible transforms, preserved metadata, and passed technical validation. No TRE, Dice, or anatomical correctness claim is made because verified reference landmarks or masks are not integrated."
+    },
+    "day_25": {
+      "documentation": "docs/daily/day_25_summary.md",
+      "status": "complete",
+      "summary": "reports/week05_day05_integrated_benchmark.json",
+      "validation_note": "Target Windows validation: 364 passed in 4.56s. The frozen 13-case, 26-registration benchmark completed without infrastructure errors. Mutual Information reached 11/13 within tolerance and ECC reached 7/13. Paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. All 8 failure/CHECK records are preserved."
     }
   },
   "extensions": {
@@ -109,6 +134,7 @@
   "reporting_standard": "docs/EXPERIMENT_REPORTING_STANDARD.md",
   "schema_version": 1,
   "week04_findings_registry": "reports/findings_week04.json",
+  "week05_findings_registry": "reports/findings_week05.json",
   "weeks": {
     "week_01": {
       "status": "complete",
@@ -127,7 +153,11 @@
       "summary": "reports/week04_summary.json"
     },
     "week_05": {
-      "status": "in_progress",
+      "current_day": "day_25",
+      "latest_completed_day": "day_25",
+      "latest_target_validation": "364 passed in 4.56s after validated Day 25",
+      "plan": "docs/weekly/week_05_plan.md",
+      "status": "complete",
       "summary": "reports/week05_summary.json"
     }
   }

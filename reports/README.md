@@ -51,4 +51,22 @@ Week 4 snapshots follow `docs/EXPERIMENT_REPORTING_STANDARD.md`. Days 16 through
 
 `week04_sift_stage01_features_matching.json` stores Stage 1 SIFT detection, 128-dimensional float descriptors, L2 KNN ratio matching, spatial coverage, runtime, ratio-threshold sweep, observations, interpretation, limitations, and target-validation status.
 
-The extension is intentionally kept separate from the five completed Week 4 working days. Stage 1 is complete and validated on the target Windows environment with 327 tests passing in 9.44s. `week04_sift_stage02_ransac.json` stores the completed Stage 2 SIFT + shared RANSAC evidence. Target Windows validation on 2026-09-29 recorded 329 tests passing in 8.73s and 12 / 13 cases inside the configured geometric tolerances. `week04_orb_vs_sift_comparison.json` stores the frozen Stage 3 paired comparison. Its development run is complete and target Windows validation is pending before the final SIFT retention decision and Week 5.
+The extension is intentionally kept separate from the five completed Week 4 working days. Stage 1 is complete and validated on the target Windows environment with 327 tests passing in 9.44s. `week04_sift_stage02_ransac.json` stores the completed Stage 2 SIFT + shared RANSAC evidence. Target Windows validation on 2026-09-29 recorded 329 tests passing in 8.73s and 12 / 13 cases inside the configured geometric tolerances. `week04_orb_vs_sift_comparison.json` stores the frozen Stage 3 paired comparison. Target Windows validation completed with 333 tests passing in 3.57s, and SIFT was retained as an optional complement.
+
+## Week 5 snapshots
+
+`week05_day01_mi_rigid.json` stores the completed Day 21 rigid Mutual Information target evidence. The validated Windows run recorded 340 tests passing in 3.73s, 6 / 6 method executions, 4 / 6 registrations inside the configured geometric tolerance, and preserved the histogram-remap and edge-emphasized CHECK cases.
+
+`week05_day02_mi_rigid_study.json` stores the completed Day 22 validation study. Target Windows validation recorded 347 tests passing in 8.65s. The frozen confirmation reached 5 / 5 cases within tolerance with median TRE 0.0173 px, and the selected rigid MI configuration uses identity initialization, 32 histogram bins, full metric sampling, and Gaussian smoothing with sigma 1.0.
+
+`week05_day03_mi_affine_multiresolution.json` stores the completed Day 23 affine MI comparison. Target Windows validation recorded 352 tests passing in 8.68s. Single-resolution and multiresolution affine MI each reached 5 / 7 cases within tolerance; multiresolution reduced median TRE but did not add any within-tolerance cases.
+
+`week05_day04_rire_physical_registration.json` stores the completed Day 24 real RIRE CT/MR-T1 technical evidence. Target Windows validation recorded 358 tests passing in 4.59s. Both configured rigid 3D initialization variants passed the technical checks and preserved metadata. TRE, Dice, and anatomical correctness are not reported because verified landmarks or masks are not integrated.
+
+`week05_day05_integrated_benchmark.json` stores the frozen Day 25 final synthetic benchmark and Week 5 closure evidence. Target Windows validation recorded 364 tests passing in 4.56s. The benchmark contains 13 final cases and 26 registrations. Mutual Information reached 11 / 13 cases within tolerance and ECC reached 7 / 13; all failure and CHECK records remain retained.
+
+`week05_summary.json` is the compact completed-week index linking Days 21 through 25, their target validations, frozen configuration decisions, and the next Week 6 action.
+
+`findings_week05.json` consolidates the validated Week 5 measured evidence, observations, interpretations, limitations, decisions, and source-record paths for later technical-report generation.
+
+Full figures, CSV tables, resolved configurations, and per-case diagnostics remain under local `outputs/` and are intentionally excluded from Git and lightweight shared ZIPs.

@@ -23,7 +23,7 @@ InitializationMode = Literal["identity", "geometry", "moments"]
 
 @dataclass(frozen=True)
 class MutualInformationConfig:
-    """Configuration for 2D rigid Mattes mutual-information registration."""
+    """Configuration for 2D Mattes mutual-information registration."""
 
     histogram_bins: int = 50
     sampling_strategy: SamplingStrategy = "random"
@@ -169,6 +169,31 @@ def _initialize_rigid_2d(fixed: Any, moving: Any, mode: InitializationMode) -> A
     )
 
 
+
+def _initialize_affine_2d(fixed: Any, moving: Any, mode: InitializationMode) -> Any:
+    itk = _require_sitk()
+    if int(fixed.GetDimension()) != 2 or int(moving.GetDimension()) != 2:
+        raise ValueError("Affine Mutual Information registration currently requires 2D images.")
+
+    if mode == "identity":
+        transform = itk.AffineTransform(2)
+        size = fixed.GetSize()
+        center_index = ((size[0] - 1) / 2.0, (size[1] - 1) / 2.0)
+        transform.SetCenter(fixed.TransformContinuousIndexToPhysicalPoint(center_index))
+        return transform
+
+    initializer = (
+        itk.CenteredTransformInitializerFilter.GEOMETRY
+        if mode == "geometry"
+        else itk.CenteredTransformInitializerFilter.MOMENTS
+    )
+    return itk.CenteredTransformInitializer(
+        fixed,
+        moving,
+        itk.AffineTransform(2),
+        initializer,
+    )
+
 def _configure_sampling(method: Any, config: MutualInformationConfig) -> None:
     if config.sampling_strategy == "none":
         method.SetMetricSamplingStrategy(method.NONE)
@@ -198,45 +223,44 @@ class MutualInformationRigidRegistration:
         """Register two 2D SimpleITK images while preserving physical geometry."""
         itk = _require_sitk()
         if int(fixed.GetDimension()) != 2 or int(moving.GetDimension()) != 2:
-            raise ValueError("Week 5 Day 21 rigid MI registration currently supports 2D images only.")
+            raise ValueError("Rigid Mutual Information registration currently supports 2D images only.")
 
         fixed_float = itk.Cast(fixed, itk.sitkFloat32)
         moving_float = itk.Cast(moving, itk.sitkFloat32)
-        initial = _initialize_rigid_2d(fixed_float, moving_float, self.config.initialization)
-
-        method = itk.ImageRegistrationMethod()
-        method.SetMetricAsMattesMutualInformation(self.config.histogram_bins)
-        _configure_sampling(method, self.config)
-        method.SetInterpolator(itk.sitkLinear)
-        method.SetOptimizerAsRegularStepGradientDescent(
-            learningRate=self.config.learning_rate,
-            minStep=self.config.minimum_step,
-            numberOfIterations=self.config.number_of_iterations,
-            relaxationFactor=self.config.relaxation_factor,
-            gradientMagnitudeTolerance=self.config.gradient_magnitude_tolerance,
-        )
-        method.SetOptimizerScalesFromPhysicalShift()
-        method.SetShrinkFactorsPerLevel(list(self.config.shrink_factors))
-        method.SetSmoothingSigmasPerLevel(list(self.config.smoothing_sigmas))
-        method.SetSmoothingSigmasAreSpecifiedInPhysicalUnits(True)
-        method.SetInitialTransform(initial, inPlace=False)
-
         trace: list[dict[str, Any]] = []
-
-        def record_iteration() -> None:
-            trace.append(
-                {
-                    "level": int(method.GetCurrentLevel()),
-                    "iteration": int(method.GetOptimizerIteration()),
-                    "metric_value": float(method.GetMetricValue()),
-                    "learning_rate": float(method.GetOptimizerLearningRate()),
-                }
-            )
-
-        method.AddCommand(itk.sitkIterationEvent, record_iteration)
-
         start = perf_counter()
+
         try:
+            initial = _initialize_rigid_2d(fixed_float, moving_float, self.config.initialization)
+
+            method = itk.ImageRegistrationMethod()
+            method.SetMetricAsMattesMutualInformation(self.config.histogram_bins)
+            _configure_sampling(method, self.config)
+            method.SetInterpolator(itk.sitkLinear)
+            method.SetOptimizerAsRegularStepGradientDescent(
+                learningRate=self.config.learning_rate,
+                minStep=self.config.minimum_step,
+                numberOfIterations=self.config.number_of_iterations,
+                relaxationFactor=self.config.relaxation_factor,
+                gradientMagnitudeTolerance=self.config.gradient_magnitude_tolerance,
+            )
+            method.SetOptimizerScalesFromPhysicalShift()
+            method.SetShrinkFactorsPerLevel(list(self.config.shrink_factors))
+            method.SetSmoothingSigmasPerLevel(list(self.config.smoothing_sigmas))
+            method.SetSmoothingSigmasAreSpecifiedInPhysicalUnits(True)
+            method.SetInitialTransform(initial, inPlace=False)
+
+            def record_iteration() -> None:
+                trace.append(
+                    {
+                        "level": int(method.GetCurrentLevel()),
+                        "iteration": int(method.GetOptimizerIteration()),
+                        "metric_value": float(method.GetMetricValue()),
+                        "learning_rate": float(method.GetOptimizerLearningRate()),
+                    }
+                )
+
+            method.AddCommand(itk.sitkIterationEvent, record_iteration)
             fixed_to_moving = method.Execute(fixed_float, moving_float)
             runtime = perf_counter() - start
             fixed_to_moving_matrix = sitk_transform_to_homogeneous_2d(fixed_to_moving)
@@ -280,7 +304,7 @@ class MutualInformationRigidRegistration:
                 convergence_info=convergence,
                 failure_reason=None,
             )
-        except RuntimeError as exc:
+        except (RuntimeError, ValueError) as exc:
             runtime = perf_counter() - start
             moving_array = itk.GetArrayFromImage(moving_float).astype(np.float32)
             return RegistrationResult(
@@ -292,9 +316,142 @@ class MutualInformationRigidRegistration:
                     "metric": "mattes_mutual_information",
                     "histogram_bins": self.config.histogram_bins,
                     "sampling_strategy": self.config.sampling_strategy,
-                    "sampling_percentage": self.config.sampling_percentage,
+                    "sampling_percentage": (
+                        1.0 if self.config.sampling_strategy == "none" else self.config.sampling_percentage
+                    ),
+                    "sampling_seed": self.config.sampling_seed,
                     "initialization": self.config.initialization,
+                    "shrink_factors": list(self.config.shrink_factors),
+                    "smoothing_sigmas": list(self.config.smoothing_sigmas),
                     "metric_trace": trace,
                 },
                 failure_reason=f"simpleitk_registration_error: {exc}",
             )
+
+class MutualInformationAffineRegistration:
+    """2D affine registration using SimpleITK Mattes mutual information."""
+
+    def __init__(self, config: MutualInformationConfig | None = None) -> None:
+        self.config = MutualInformationConfig() if config is None else config
+
+    def register(
+        self,
+        fixed: NDArray[np.generic],
+        moving: NDArray[np.generic],
+    ) -> RegistrationResult:
+        """Register NumPy arrays using unit spacing and identity physical geometry."""
+        fixed_itk = array_to_sitk_2d(fixed)
+        moving_itk = array_to_sitk_2d(moving)
+        return self.register_sitk(fixed_itk, moving_itk)
+
+    def register_sitk(self, fixed: Any, moving: Any) -> RegistrationResult:
+        """Register two 2D SimpleITK images with a general affine transform."""
+        itk = _require_sitk()
+        if int(fixed.GetDimension()) != 2 or int(moving.GetDimension()) != 2:
+            raise ValueError("Affine Mutual Information registration currently supports 2D images only.")
+
+        fixed_float = itk.Cast(fixed, itk.sitkFloat32)
+        moving_float = itk.Cast(moving, itk.sitkFloat32)
+        trace: list[dict[str, Any]] = []
+        start = perf_counter()
+
+        try:
+            initial = _initialize_affine_2d(fixed_float, moving_float, self.config.initialization)
+
+            method = itk.ImageRegistrationMethod()
+            method.SetMetricAsMattesMutualInformation(self.config.histogram_bins)
+            _configure_sampling(method, self.config)
+            method.SetInterpolator(itk.sitkLinear)
+            method.SetOptimizerAsRegularStepGradientDescent(
+                learningRate=self.config.learning_rate,
+                minStep=self.config.minimum_step,
+                numberOfIterations=self.config.number_of_iterations,
+                relaxationFactor=self.config.relaxation_factor,
+                gradientMagnitudeTolerance=self.config.gradient_magnitude_tolerance,
+            )
+            method.SetOptimizerScalesFromPhysicalShift()
+            method.SetShrinkFactorsPerLevel(list(self.config.shrink_factors))
+            method.SetSmoothingSigmasPerLevel(list(self.config.smoothing_sigmas))
+            method.SetSmoothingSigmasAreSpecifiedInPhysicalUnits(True)
+            method.SetInitialTransform(initial, inPlace=False)
+
+            def record_iteration() -> None:
+                trace.append(
+                    {
+                        "level": int(method.GetCurrentLevel()),
+                        "iteration": int(method.GetOptimizerIteration()),
+                        "metric_value": float(method.GetMetricValue()),
+                        "learning_rate": float(method.GetOptimizerLearningRate()),
+                    }
+                )
+
+            method.AddCommand(itk.sitkIterationEvent, record_iteration)
+            fixed_to_moving = method.Execute(fixed_float, moving_float)
+            runtime = perf_counter() - start
+            fixed_to_moving_matrix = sitk_transform_to_homogeneous_2d(fixed_to_moving)
+            moving_to_fixed_matrix = np.linalg.inv(fixed_to_moving_matrix)
+            registered = itk.Resample(
+                moving_float,
+                fixed_float,
+                fixed_to_moving,
+                itk.sitkLinear,
+                0.0,
+                itk.sitkFloat32,
+            )
+            registered_array = itk.GetArrayFromImage(registered).astype(np.float32)
+            convergence = {
+                "metric": "mattes_mutual_information",
+                "transform_model": "affine",
+                "histogram_bins": self.config.histogram_bins,
+                "sampling_strategy": self.config.sampling_strategy,
+                "sampling_percentage": (
+                    1.0 if self.config.sampling_strategy == "none" else self.config.sampling_percentage
+                ),
+                "sampling_seed": self.config.sampling_seed,
+                "initialization": self.config.initialization,
+                "shrink_factors": list(self.config.shrink_factors),
+                "smoothing_sigmas": list(self.config.smoothing_sigmas),
+                "final_metric_value": float(method.GetMetricValue()),
+                "optimizer_iteration": int(method.GetOptimizerIteration()),
+                "optimizer_stop_condition": str(method.GetOptimizerStopConditionDescription()),
+                "valid_metric_points": int(method.GetMetricNumberOfValidPoints()),
+                "fixed_to_moving_physical_matrix": fixed_to_moving_matrix.tolist(),
+                "transform_direction_note": (
+                    "SimpleITK registration uses Fixed -> Moving for resampling. "
+                    "The returned project transform is its inverse, Moving -> Fixed."
+                ),
+                "metric_trace": trace,
+            }
+            return RegistrationResult(
+                transform=moving_to_fixed_matrix.astype(np.float64),
+                registered_image=registered_array,
+                success=True,
+                runtime_seconds=float(runtime),
+                convergence_info=convergence,
+                failure_reason=None,
+            )
+        except (RuntimeError, ValueError) as exc:
+            runtime = perf_counter() - start
+            moving_array = itk.GetArrayFromImage(moving_float).astype(np.float32)
+            return RegistrationResult(
+                transform=np.eye(3, dtype=np.float64),
+                registered_image=moving_array,
+                success=False,
+                runtime_seconds=float(runtime),
+                convergence_info={
+                    "metric": "mattes_mutual_information",
+                    "transform_model": "affine",
+                    "histogram_bins": self.config.histogram_bins,
+                    "sampling_strategy": self.config.sampling_strategy,
+                    "sampling_percentage": (
+                        1.0 if self.config.sampling_strategy == "none" else self.config.sampling_percentage
+                    ),
+                    "sampling_seed": self.config.sampling_seed,
+                    "initialization": self.config.initialization,
+                    "shrink_factors": list(self.config.shrink_factors),
+                    "smoothing_sigmas": list(self.config.smoothing_sigmas),
+                    "metric_trace": trace,
+                },
+                failure_reason=f"simpleitk_registration_error: {exc}",
+            )
+

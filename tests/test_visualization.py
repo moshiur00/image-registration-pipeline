@@ -113,3 +113,16 @@ def test_edge_overlay_rejects_shape_mismatch() -> None:
     moving = np.zeros((12, 16), dtype=np.uint8)
     with pytest.raises(ValueError, match="same shape"):
         edge_overlay(fixed, moving)
+
+
+def test_save_metric_trace_creates_file(tmp_path) -> None:
+    from image_registration.visualization import save_metric_trace
+
+    trace = [
+        {"level": 0, "iteration": 0, "metric_value": -0.5, "learning_rate": 2.0},
+        {"level": 0, "iteration": 1, "metric_value": -0.7, "learning_rate": 2.0},
+        {"level": 1, "iteration": 0, "metric_value": -0.9, "learning_rate": 2.0},
+    ]
+    output = save_metric_trace(trace, tmp_path / "trace.png")
+    assert output.exists()
+    assert output.stat().st_size > 0

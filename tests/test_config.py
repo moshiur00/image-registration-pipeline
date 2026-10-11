@@ -7,6 +7,7 @@ import pytest
 import yaml
 
 from image_registration.config import build_transform, config_hash, load_config, with_defaults
+from image_registration.multimodal import SUPPORTED_MULTIMODAL_MAPPING_TYPES
 from image_registration.transforms import apply_transform
 
 
@@ -70,3 +71,15 @@ def test_build_similarity_transform() -> None:
 def test_build_affine_requires_linear_component() -> None:
     with pytest.raises(ValueError, match="linear"):
         build_transform({"type": "affine", "parameters": {}})
+
+
+def test_week05_day01_config_uses_supported_multimodal_mapping_types() -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    config = load_config(project_root / "configs" / "week05_day01_mi_rigid.yaml")
+    mapping_names = {
+        str(case["modality_mapping"]["type"]).strip().lower()
+        for case in config["cases"]
+        if isinstance(case.get("modality_mapping"), dict)
+    }
+    assert mapping_names <= SUPPORTED_MULTIMODAL_MAPPING_TYPES
+    assert "edge_emphasized" in mapping_names

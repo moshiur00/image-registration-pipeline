@@ -60,11 +60,11 @@ The validated Stage 2 snapshot is `reports/week04_sift_stage02_ransac.json`.
 
 ## Stage 3: Frozen ORB versus SIFT comparison
 
-Stage 3 is implemented and has a development run. Both front-ends are evaluated on the same 12 cases with identical geometry, ratio threshold, minimum-match rule, RANSAC settings, control points, and geometric success criteria. Only the feature representation and descriptor metric differ.
+Stage 3 is complete and target-Windows validated. Both front-ends were evaluated on the same 12 cases with identical geometry, ratio threshold, minimum-match rule, RANSAC settings, control points, and geometric success criteria. Only the feature representation and descriptor metric differed.
 
-Development evidence currently shows 10 / 12 ORB results and 11 / 12 SIFT results inside tolerance. SIFT recovered the low-texture affine probe in the development run, while ORB did not. Both front-ends failed the repeated-pattern probe before a valid geometric result was returned. SIFT was substantially slower in this environment.
+Target Windows evidence recorded 10 / 12 ORB results and 11 / 12 SIFT results inside tolerance. SIFT recovered the low-texture affine probe while ORB did not. Both front-ends failed the repeated-pattern probe before a valid geometric result was returned, and SIFT required substantially higher runtime.
 
-These observations are not the final retention decision. The target Windows Stage 3 run must be recorded first. The complete comparison design and current evidence are documented in `docs/ORB_VS_SIFT_COMPARISON.md`.
+The complete comparison design, validated evidence, and retention decision are documented in `docs/ORB_VS_SIFT_COMPARISON.md`.
 
 ## Final extension decision
 

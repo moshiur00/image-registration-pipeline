@@ -1,25 +1,208 @@
 {
-  "current_day": "day_21",
-  "current_day_status": "implementation_complete_target_validation_pending",
-  "current_repository_test_count": 338,
-  "implemented": [
-    "2D rigid SimpleITK Mattes Mutual Information module",
-    "Moving -> Fixed project transform conversion from the SimpleITK Fixed -> Moving resampling transform",
-    "identity, geometry, and moments initialization options",
-    "full, regular, and random metric sampling with deterministic seed support",
-    "Regular Step Gradient Descent with physical-shift parameter scaling",
-    "multiresolution shrink factors and smoothing sigmas",
-    "metric trace and optimizer diagnostics",
-    "controlled monomodal and simulated multimodal Day 21 experiment"
-  ],
-  "latest_target_windows_validation": "333 passed in 3.57s before Week 5 Day 21 files were added",
-  "local_validation": "331 passed, 7 skipped because SimpleITK is unavailable in the development container",
-  "next_action": "Run target Windows tests and Day 21 experiment without retuning, then record the numerical evidence before extending to affine and real multimodal registration.",
-  "pending_validation": [
-    "full 338-test suite on target Windows environment",
-    "frozen Day 21 six-case rigid MI experiment on target Windows environment"
-  ],
-  "status": "in_progress",
+  "current_day": "day_25",
+  "current_day_status": "complete_target_windows_validated",
+  "current_repository_test_count": 364,
+  "day_21": {
+    "case_count": 6,
+    "important_failures": {
+      "camera_histogram_rigid_tre_pixels": 318.7310002344776,
+      "moon_edge_rigid_tre_pixels": 17.991673854776117
+    },
+    "median_tre_pixels": 0.022876806491022417,
+    "method_success_count": 6,
+    "report": "reports/week05_day01_mi_rigid.json",
+    "status": "complete",
+    "summary": "docs/daily/day_21_summary.md",
+    "tests": "340 passed in 3.73s",
+    "within_tolerance_count": 4
+  },
+  "day_22": {
+    "baseline_within_tolerance_count": 3,
+    "configuration": "configs/week05_day02_mi_rigid_study.yaml",
+    "design": "sequential one-factor-at-a-time validation study with seed variability and frozen-candidate confirmation",
+    "frozen_configuration": {
+      "mutual_information": {
+        "gradient_magnitude_tolerance": 0.0001,
+        "histogram_bins": 32,
+        "initialization": "identity",
+        "learning_rate": 2.0,
+        "minimum_step": 0.001,
+        "number_of_iterations": 200,
+        "relaxation_factor": 0.5,
+        "sampling_percentage": 0.2,
+        "sampling_seed": 42,
+        "sampling_strategy": "none",
+        "shrink_factors": [
+          4,
+          2,
+          1
+        ],
+        "smoothing_sigmas": [
+          2.0,
+          1.0,
+          0.0
+        ]
+      },
+      "note": "This configuration is frozen from the Day 22 validation subset for later Week 5 work. It is not selected from the final Day 25 benchmark.",
+      "preprocessing": {
+        "sigma": 1.0,
+        "type": "gaussian_smooth"
+      },
+      "selection_source": "selected_ofat_values",
+      "validation_subset": [
+        "camera_inversion_validation",
+        "camera_gamma_validation",
+        "camera_histogram_validation",
+        "coins_bias_validation",
+        "moon_edge_validation"
+      ],
+      "validation_thresholds": {
+        "rotation_error_threshold_degrees": 1.5,
+        "translation_error_threshold_pixels": 4.0,
+        "tre_threshold_pixels": 3.0
+      }
+    },
+    "frozen_confirmation_maximum_tre_pixels": 0.09503391949405005,
+    "frozen_confirmation_median_tre_pixels": 0.017317248183460886,
+    "frozen_confirmation_within_tolerance_count": 5,
+    "report": "reports/week05_day02_mi_rigid_study.json",
+    "runner": "scripts/week05_day02_mi_rigid_study.py",
+    "sequential_candidate_within_tolerance_count": 5,
+    "status": "complete",
+    "summary": "docs/daily/day_22_summary.md",
+    "tests": "347 passed in 8.65s",
+    "validation_case_count": 5
+  },
+  "day_23": {
+    "affine_multiresolution": {
+      "maximum_tre_pixels": 24.878454713767972,
+      "mean_runtime_ms": 3083.15755714323,
+      "median_tre_pixels": 0.08867625586944339,
+      "method_success_count": 7,
+      "within_tolerance_count": 5
+    },
+    "affine_single_resolution": {
+      "maximum_tre_pixels": 25.80209324801023,
+      "mean_runtime_ms": 3005.123200000136,
+      "median_tre_pixels": 0.16810832804637538,
+      "method_success_count": 7,
+      "within_tolerance_count": 5
+    },
+    "capture_range_paired_outcomes": {
+      "both_check": 2,
+      "both_pass": 5,
+      "multiresolution_only_pass": 0,
+      "single_only_pass": 0
+    },
+    "case_count": 7,
+    "configuration": "configs/week05_day03_mi_affine_multiresolution.yaml",
+    "important_failures": {
+      "camera_affine_partial_overlap_multiresolution_tre_pixels": 10.41351946199305,
+      "camera_affine_partial_overlap_single_tre_pixels": 10.370032209805911,
+      "moon_affine_edge_multiresolution_tre_pixels": 24.878454713767972,
+      "moon_affine_edge_single_tre_pixels": 25.80209324801023
+    },
+    "interpretation": "Multiresolution improved median geometric accuracy but did not expand the within-tolerance capture range on this seven-case set. The partial-overlap and edge-emphasized failures remain preserved.",
+    "registration_count": 17,
+    "report": "reports/week05_day03_mi_affine_multiresolution.json",
+    "rigid_model_mismatch": {
+      "median_tre_pixels": 13.985532227709768,
+      "registration_count": 3,
+      "within_tolerance_count": 0
+    },
+    "runner": "scripts/week05_day03_mi_affine_multiresolution.py",
+    "status": "complete",
+    "summary": "docs/daily/day_23_summary.md",
+    "tests": "352 passed in 8.68s"
+  },
+  "day_24": {
+    "coordinate_system": "physical",
+    "geometry_initialization": {
+      "final_metric_value": -0.6468492463206581,
+      "minimum_bidirectional_fov_coverage_after": 0.6681481723127694,
+      "minimum_bidirectional_fov_coverage_before": 0.8178113740066002,
+      "optimizer_iteration": 10,
+      "rotation_magnitude_degrees": 5.435485021244052,
+      "runtime_ms": 10969.643100000212,
+      "translation_norm_mm": 33.575769807290406
+    },
+    "ground_truth_limitation": "Verified landmarks or masks are not integrated, so TRE, Dice, and anatomical correctness are not reported.",
+    "identity_initialization": {
+      "final_metric_value": -0.6468279059403274,
+      "minimum_bidirectional_fov_coverage_after": 0.6681473830650593,
+      "minimum_bidirectional_fov_coverage_before": 0.8178113740066002,
+      "optimizer_iteration": 15,
+      "rotation_magnitude_degrees": 5.424135135205597,
+      "runtime_ms": 14318.945099999837,
+      "translation_norm_mm": 33.50777181024198
+    },
+    "metadata_integrity_count": 2,
+    "method_success_count": 2,
+    "pair_id": "training001_mr_t1_to_ct",
+    "plausible_transform_count": 2,
+    "report": "reports/week05_day04_rire_physical_registration.json",
+    "status": "complete",
+    "summary": "docs/daily/day_24_summary.md",
+    "technical_validation_pass_count": 2,
+    "tests": "358 passed in 4.59s",
+    "transform_model": "rigid_3d",
+    "variants": [
+      "geometry_multiresolution",
+      "identity_multiresolution"
+    ]
+  },
+  "day_25": {
+    "carried_evidence": [
+      "Day 22 random-sampling seed variability",
+      "Day 24 real RIRE CT/MR-T1 technical evidence"
+    ],
+    "case_count": 13,
+    "comparison_scope": "Frozen MI versus compatible frozen ECC on identical final synthetic test cases, with rigid and affine models summarized separately.",
+    "configuration": "configs/week05_day05_integrated_benchmark.yaml",
+    "planned_registration_count": 26,
+    "report": "reports/week05_day05_integrated_benchmark.json",
+    "runner": "scripts/week05_day05_integrated_benchmark.py",
+    "status": "complete_target_windows_validated",
+    "summary": "docs/daily/day_25_summary.md",
+    "registration_count": 26,
+    "tests": "364 passed in 4.56s",
+    "mutual_information": {
+      "method_success_count": 13,
+      "within_tolerance_count": 11,
+      "rigid_within_tolerance_count": 5,
+      "rigid_case_count": 6,
+      "rigid_median_tre_pixels": 0.016136502199242776,
+      "affine_within_tolerance_count": 6,
+      "affine_case_count": 7,
+      "affine_median_tre_pixels": 0.08621052748889717
+    },
+    "ecc": {
+      "method_success_count": 10,
+      "within_tolerance_count": 7,
+      "rigid_within_tolerance_count": 4,
+      "rigid_case_count": 6,
+      "rigid_median_tre_pixels": 0.12599827447986392,
+      "affine_within_tolerance_count": 3,
+      "affine_case_count": 7,
+      "affine_median_tre_pixels": 0.3928080333633611
+    },
+    "paired_outcomes": {
+      "both_pass": 7,
+      "mutual_information_only_pass": 4,
+      "ecc_only_pass": 0,
+      "both_check": 2
+    },
+    "failure_check_records_retained": 8,
+    "interpretation": "The frozen final synthetic benchmark supports condition-specific use of Mutual Information for multimodal intensity changes, with higher within-tolerance counts than ECC on this test set but substantially higher runtime. Edge-emphasized appearance remains a shared difficult condition. Real RIRE evidence remains separate and non-anatomical because verified landmarks or masks are not integrated."
+  },
+  "latest_target_windows_validation": "364 passed in 4.56s for the completed Day 25 repository",
+  "local_validation_after_day22_implementation": "340 passed, 7 skipped in the development container; all 7 skips require SimpleITK",
+  "local_validation_after_day23_implementation": "343 passed, 9 skipped in the development container; all 9 skips require SimpleITK",
+  "local_validation_after_day24_implementation": "347 passed, 11 skipped in the development container; all 11 skips require SimpleITK",
+  "local_validation_after_day25_implementation": "353 passed, 11 skipped in the development container; all 11 skips require SimpleITK",
+  "next_action": "Start Week 6 unified evaluation and reproducible benchmarking. Keep Day 25 final-test configurations and evidence frozen.",
+  "status": "complete",
   "title": "Multimodal Registration with Mutual Information",
-  "week": 5
+  "week": 5,
+  "week_plan": "docs/weekly/week_05_plan.md"
 }

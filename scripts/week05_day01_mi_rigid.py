@@ -17,7 +17,10 @@ if str(SRC_ROOT) not in sys.path:
 
 from image_registration.config import load_config
 from image_registration.io import load_image
-from image_registration.multimodal import apply_multimodal_mapping
+from image_registration.multimodal import (
+    SUPPORTED_MULTIMODAL_MAPPING_TYPES,
+    apply_multimodal_mapping,
+)
 from image_registration.mutual_information import (
     MutualInformationConfig,
     MutualInformationRigidRegistration,
@@ -62,6 +65,25 @@ def _mi_config(config: dict[str, Any]) -> MutualInformationConfig:
         initialization=str(values.get("initialization", "geometry")),
     )
 
+
+
+def _validate_case_definitions(cases: list[dict[str, Any]]) -> None:
+    """Validate modality mapping names before any registration work starts."""
+    for case in cases:
+        mapping_spec = case.get("modality_mapping")
+        if mapping_spec is None:
+            continue
+        if not isinstance(mapping_spec, dict):
+            raise ValueError(
+                f"Case {case.get('id', '<unknown>')} modality_mapping must be a mapping."
+            )
+        mapping_name = str(mapping_spec.get("type", "")).strip().lower()
+        if mapping_name not in SUPPORTED_MULTIMODAL_MAPPING_TYPES:
+            supported = ", ".join(sorted(SUPPORTED_MULTIMODAL_MAPPING_TYPES))
+            raise ValueError(
+                f"Case {case.get('id', '<unknown>')} uses unsupported multimodal mapping "
+                f"type '{mapping_name}'. Supported types: {supported}."
+            )
 
 def _ground_truth(fixed: np.ndarray, case: dict[str, Any]) -> GroundTruthTransform:
     center = image_center(fixed.shape)
@@ -140,6 +162,8 @@ def main() -> None:
     args = _parse_args()
     config_path = _resolve(args.config)
     config = load_config(config_path)
+    cases = list(config["cases"])
+    _validate_case_definitions(cases)
     output_dir = _resolve(str(config["output"]["directory"]))
     if output_dir.exists():
         if not args.overwrite:
@@ -155,7 +179,6 @@ def main() -> None:
     }
 
     records: list[dict[str, Any]] = []
-    cases = list(config["cases"])
     print("Week 5 Day 1: rigid Mattes Mutual Information")
     print(f"Cases: {len(cases)}")
 

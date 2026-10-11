@@ -52,4 +52,10 @@ reports/   compact tracked quantitative snapshots
 docs/      narrative findings, interpretation, and limitations
 ```
 
-The compact findings registry for completed work is `reports/findings_days_01_15.json`.
+Consolidated machine-readable findings registries are stored by completed work block:
+
+- `reports/findings_days_01_15.json` for Days 1 to 15;
+- `reports/findings_week04.json` for Week 4 and the SIFT extension;
+- `reports/findings_week05.json` for Week 5.
+
+Daily reports and summaries remain the source records for the measured evidence referenced by these registries.

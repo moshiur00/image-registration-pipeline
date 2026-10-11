@@ -1,0 +1,59 @@
+experiment:
+  name: week05_day04_rire_physical_registration
+  purpose: real RIRE CT/MR-T1 rigid registration in physical coordinates with strict evidence limits
+
+# Prepared and validated in Week 2 Day 4. The large MHA files remain local and
+# are intentionally excluded from normal shared project ZIPs.
+dataset:
+  manifest: data/manifests/rire_training001.json
+  pair_id: training001_mr_t1_to_ct
+  expected_fixed_modality: CT
+  expected_moving_modality: MR-T1
+  verify_sha256: true
+
+# The Day 22 metric and optimizer choices remain frozen. Day 24 changes the
+# dimensionality and uses geometry initialization as the primary real-data path.
+frozen_mutual_information:
+  histogram_bins: 32
+  sampling_strategy: none
+  sampling_percentage: 0.20
+  sampling_seed: 42
+  learning_rate: 2.0
+  minimum_step: 0.001
+  number_of_iterations: 200
+  relaxation_factor: 0.5
+  gradient_magnitude_tolerance: 0.0001
+  shrink_factors: [4, 2, 1]
+  smoothing_sigmas: [2.0, 1.0, 0.0]
+  preprocessing_sigma_mm: 1.0
+
+# Geometry is the primary 3D initialization. Identity is retained only as a
+# diagnostic comparator. No winner is selected from visual appearance alone.
+variants:
+  geometry_multiresolution:
+    initialization: geometry
+    role: primary_physical_space_registration
+  identity_multiresolution:
+    initialization: identity
+    role: initialization_diagnostic_comparator
+
+plausibility:
+  max_rotation_degrees: 90.0
+  max_translation_fraction_of_fixed_diagonal: 1.0
+  determinant_tolerance: 0.02
+  orthogonality_tolerance: 0.00001
+
+visualization:
+  joint_histogram_bins: 64
+  joint_histogram_max_points: 250000
+
+# No landmark or mask ground truth is integrated for this RIRE pair. These
+# fields are intentionally disabled so Day 24 cannot silently claim TRE or Dice.
+evaluation:
+  landmark_tre_enabled: false
+  dice_enabled: false
+  anatomical_correctness_claim_allowed: false
+
+output:
+  directory: outputs/week05_day04_rire_physical_registration
+  report_snapshot: reports/week05_day04_rire_physical_registration.json

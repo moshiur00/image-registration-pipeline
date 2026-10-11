@@ -87,6 +87,25 @@ from .feature_matching import (
 
 from .io import LoadedImage, load_image, validate_image_pair
 from .medical import MedicalImageMetadata, read_medical_image_metadata
+from .medical_mutual_information import (
+    MedicalMutualInformationConfig,
+    MutualInformationRigidRegistration3D,
+    geometry_matches_3d,
+    homogeneous_3d_to_sitk_affine,
+    image_geometry_3d,
+    physical_domain_overlap_3d,
+    resample_to_reference_3d,
+    rigid_transform_diagnostics_3d,
+    sitk_transform_to_homogeneous_3d,
+)
+from .mi_study import (
+    MIPreprocessingResult,
+    SUPPORTED_MI_PREPROCESSING,
+    apply_mi_preprocessing,
+    candidate_rank_key,
+    select_best_candidate,
+    summarize_mi_records,
+)
 from .pipeline import ExperimentResult, run_experiment
 from .pyramids import (
     PyramidLevel,
@@ -200,6 +219,7 @@ from .visualization import (
     save_grayscale_image,
     save_intensity_histogram,
     save_joint_histogram,
+    save_metric_trace,
     save_rgb_image,
 )
 from .week3_baseline import BaselineThresholds, summarize_by_key, within_model_tolerance
@@ -257,6 +277,15 @@ __all__ = [
     "rigid_angle_degrees",
     "MultimodalResult",
     "MedicalImageMetadata",
+    "MedicalMutualInformationConfig",
+    "MutualInformationRigidRegistration3D",
+    "geometry_matches_3d",
+    "homogeneous_3d_to_sitk_affine",
+    "image_geometry_3d",
+    "physical_domain_overlap_3d",
+    "resample_to_reference_3d",
+    "rigid_transform_diagnostics_3d",
+    "sitk_transform_to_homogeneous_3d",
     "ORBConfig",
     "ORBFeatureResult",
     "ORBKeypoint",
@@ -273,6 +302,7 @@ __all__ = [
     "sample_similarity_difficulty",
     "save_intensity_histogram",
     "save_joint_histogram",
+    "save_metric_trace",
     "validate_difficulty_tiers",
     "ANGLE_UNIT",
     "DegradationResult",
@@ -292,6 +322,12 @@ __all__ = [
     "rotation_error_degrees",
     "transform_point_errors",
     "write_report_snapshot",
+    "MIPreprocessingResult",
+    "SUPPORTED_MI_PREPROCESSING",
+    "apply_mi_preprocessing",
+    "candidate_rank_key",
+    "select_best_candidate",
+    "summarize_mi_records",
     "PyramidLevel",
     "build_image_pyramid",
     "rescale_transform_between_shapes",

@@ -277,3 +277,43 @@ def save_joint_histogram(
     fig.savefig(path, dpi=140, bbox_inches="tight")
     fig.clear()
     return path
+
+
+def save_metric_trace(
+    trace: list[dict[str, object]],
+    output_path: str | Path,
+    *,
+    title: str = "Optimizer metric trace",
+) -> Path:
+    """Save metric value versus recorded optimizer step for one registration run."""
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    fig = Figure(figsize=(7.0, 4.5))
+    FigureCanvasAgg(fig)
+    axis = fig.subplots(1, 1)
+
+    if trace:
+        metric_values = [float(item["metric_value"]) for item in trace]
+        steps = list(range(len(metric_values)))
+        axis.plot(steps, metric_values, linewidth=1.4)
+
+        level_starts: list[tuple[int, int]] = []
+        previous_level: int | None = None
+        for step, item in enumerate(trace):
+            level = int(item.get("level", 0))
+            if previous_level is None or level != previous_level:
+                level_starts.append((step, level))
+                previous_level = level
+        for step, level in level_starts[1:]:
+            axis.axvline(step, linestyle=":", linewidth=1.0)
+            axis.text(step, metric_values[step], f"L{level}", fontsize=8)
+
+    axis.set_title(title)
+    axis.set_xlabel("Recorded optimizer step")
+    axis.set_ylabel("Mattes MI metric value")
+    axis.grid(True, alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=140, bbox_inches="tight")
+    fig.clear()
+    return path
