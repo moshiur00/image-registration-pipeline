@@ -1,0 +1,5 @@
+# UI-only dependencies.
+# Install the root research package separately, then install this file.
+# Streamlit is intentionally kept out of the root requirements.
+# The exact UI dependency set is frozen after compatibility validation in Stage 5.
+streamlit>=1.50,<2.0

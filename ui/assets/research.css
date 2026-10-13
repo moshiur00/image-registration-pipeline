@@ -1,0 +1,169 @@
+:root {
+  --research-text: #1f2933;
+  --research-muted: #5b6770;
+  --research-border: #d9e0e5;
+  --research-panel: #f7f9fa;
+  --research-accent: #2f5d7c;
+}
+
+[data-testid="stMainBlockContainer"],
+.block-container {
+  max-width: 1500px;
+  padding-top: 4.5rem !important;
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  [data-testid="stMainBlockContainer"],
+  .block-container {
+    padding-top: 4rem !important;
+  }
+}
+
+h1, h2, h3, h4 {
+  color: var(--research-text);
+  letter-spacing: -0.01em;
+}
+
+p, label, .stCaption {
+  color: var(--research-text);
+}
+
+[data-testid="stSidebar"] {
+  border-right: 1px solid var(--research-border);
+}
+
+[data-testid="stMetric"] {
+  background: var(--research-panel);
+  border: 1px solid var(--research-border);
+  padding: 0.75rem 0.9rem;
+  border-radius: 4px;
+}
+
+[data-testid="stMetricLabel"] {
+  color: var(--research-muted);
+}
+
+[data-testid="stDataFrame"] {
+  border: 1px solid var(--research-border);
+}
+
+.stButton > button[kind="primary"] {
+  border-radius: 4px;
+  font-weight: 600;
+  background: var(--research-accent);
+  color: #ffffff;
+  border-color: var(--research-accent);
+}
+
+hr {
+  border-color: var(--research-border);
+}
+
+.research-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: -0.15rem 0 0.75rem 0;
+}
+
+.research-tag {
+  display: inline-block;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid var(--research-border);
+  border-radius: 999px;
+  background: #f4f7f9;
+  color: #46545f;
+  font-size: 0.76rem;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+
+.research-app-name {
+  color: var(--research-muted);
+  font-size: 0.76rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-top: 0.1rem;
+  margin-bottom: 0.55rem;
+}
+
+.research-summary-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  color: var(--research-muted);
+  font-size: 0.92rem;
+  margin: 0.45rem 0 1.2rem 0;
+}
+
+.research-summary-line strong {
+  color: var(--research-text);
+  font-weight: 650;
+}
+
+.research-status {
+  display: inline-block;
+  float: right;
+  border: 1px solid var(--research-border);
+  border-radius: 999px;
+  background: #f4f7f9;
+  color: #46545f;
+  padding: 0.28rem 0.58rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.research-status-ok {
+  background: #eef7f1;
+  border-color: #cce4d3;
+  color: #2f6540;
+}
+
+.research-case-line {
+  color: var(--research-text);
+  font-size: 0.96rem;
+  font-weight: 600;
+  margin: 0.1rem 0 0.65rem 0;
+}
+
+/* Stage 5 polish: keep primary actions readable despite global paragraph styling. */
+.stButton > button[kind="primary"],
+.stButton > button[kind="primary"] p,
+.stButton > button[kind="primary"] span {
+  color: #ffffff !important;
+}
+
+.stButton > button[kind="primary"]:hover,
+.stButton > button[kind="primary"]:hover p,
+.stButton > button[kind="primary"]:hover span {
+  color: #ffffff !important;
+  background: #264f6b;
+  border-color: #264f6b;
+}
+
+/* Stage 5 exports: keep download actions compact and consistent with the research UI. */
+.stDownloadButton > button {
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.stDownloadButton > button[kind="primary"],
+.stDownloadButton > button[kind="primary"] p,
+.stDownloadButton > button[kind="primary"] span {
+  color: #ffffff !important;
+  background: var(--research-accent);
+  border-color: var(--research-accent);
+}
+
+.stDownloadButton > button[kind="primary"]:hover,
+.stDownloadButton > button[kind="primary"]:hover p,
+.stDownloadButton > button[kind="primary"]:hover span {
+  color: #ffffff !important;
+  background: #264f6b;
+  border-color: #264f6b;
+}

@@ -14,6 +14,7 @@ INCLUDE_FOLDERS = [
     "scripts",
     "src",
     "tests",
+    "ui",
 ]
 
 INCLUDE_ROOT_FILES = [
@@ -47,6 +48,8 @@ EXCLUDED_RELATIVE_PATHS = {Path("scripts/scripts.txt")}
 
 def should_exclude(relative_path: Path) -> bool:
     """Return True when a path should not be included in the project archive."""
+    if relative_path.parts[:2] == ("ui", "runtime"):
+        return relative_path.name != ".gitignore"
     if any(part in EXCLUDED_DIR_NAMES for part in relative_path.parts):
         return True
     if relative_path in EXCLUDED_RELATIVE_PATHS:
