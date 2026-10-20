@@ -42,7 +42,12 @@ EXCLUDED_DIR_NAMES = {
 }
 
 EXCLUDED_FILE_SUFFIXES = {".pyc", ".pyo", ".log", ".tmp"}
-EXCLUDED_FILE_NAMES = {".DS_Store", "Thumbs.db"}
+EXCLUDED_FILE_NAMES = {
+    ".DS_Store",
+    "Thumbs.db",
+    "secrets.toml",
+    ".env",
+}
 EXCLUDED_RELATIVE_PATHS = {Path("scripts/scripts.txt")}
 
 
@@ -55,6 +60,8 @@ def should_exclude(relative_path: Path) -> bool:
     if relative_path in EXCLUDED_RELATIVE_PATHS:
         return True
     if relative_path.name in EXCLUDED_FILE_NAMES:
+        return True
+    if relative_path.name.startswith(".env."):
         return True
     if relative_path.suffix.lower() in EXCLUDED_FILE_SUFFIXES:
         return True

@@ -109,6 +109,36 @@
       "status": "complete",
       "summary": "reports/week05_day05_integrated_benchmark.json",
       "validation_note": "Target Windows validation: 364 passed in 4.56s. The frozen 13-case, 26-registration benchmark completed without infrastructure errors. Mutual Information reached 11/13 within tolerance and ECC reached 7/13. Paired outcomes were 7 both-pass, 4 MI-only pass, 0 ECC-only pass, and 2 both-CHECK. All 8 failure/CHECK records are preserved."
+    },
+    "day_26": {
+      "documentation": "docs/daily/day_26_summary.md",
+      "status": "complete",
+      "summary": "reports/week06_day01_unified_evaluation.json",
+      "validation_note": "Target Windows validation: 376 passed in 6.28s; UI validation: 64 passed in 5.36s. The Day 26 contract script completed with 25 metric definitions and validated exact-transform, unknown-upload, mask-reference, and physical-space evidence policies."
+    },
+    "day_27": {
+      "documentation": "docs/daily/day_27_summary.md",
+      "status": "complete",
+      "summary": "reports/week06_day02_metric_validation.json",
+      "validation_note": "Target Windows validation: 390 passed in 5.42s; UI validation: 64 passed in 4.87s. The Day 27 metric-validation script completed with 18/18 hand-constructed checks passing, explicit no-overlap rejection, and validated pixel, physical, Dice, overlap-aware similarity, and evaluation-MI behavior."
+    },
+    "day_28": {
+      "documentation": "docs/daily/day_28_summary.md",
+      "status": "complete",
+      "summary": "reports/week06_day03_benchmark_runner.json",
+      "validation_note": "Target Windows validation: 403 / 403 backend tests passed in 4.72s; 64 / 64 UI tests passed in 5.11s. The Day 28 development matrix planned 12 attempts, executed all 12 on the first run with no failures or validation errors, then resumed with 0 new executions and 12 / 12 persisted experiment IDs skipped. The long-form result set contains 12 / 12 unique records."
+    },
+    "day_29": {
+      "documentation": "docs/daily/day_29_summary.md",
+      "status": "complete",
+      "summary": "reports/week06_day04_automatic_multi_method.json",
+      "validation_note": "Target Windows validation: 418 / 418 backend tests passed in 5.29s; 64 / 64 UI tests passed in 4.99s. The Day 29 automatic multi-method run evaluated a six-method catalog, selected four affine-compatible candidates, excluded two transform-incompatible candidates, and completed all 4 / 4 compatible candidates with 0 CHECK, 0 failed, and 0 validation errors. Ground truth was not exposed to the automatic service and the final recommendation remained intentionally deferred until robustness calibration."
+    },
+    "day_30": {
+      "documentation": "docs/daily/day_30_summary.md",
+      "status": "complete",
+      "summary": "reports/week06_day05_agreement_consensus.json",
+      "validation_note": "Target Windows validation: 432 / 432 backend tests passed in 5.05s; 64 / 64 UI tests passed in 4.68s. The Day 30 closure matrix evaluated 4 cases with 13 automatic candidate executions. All 13 / 13 candidates completed with 0 CHECK, 0 failed, and 0 validation errors. Ground truth was not exposed to the automatic service, the consensus anchor remained descriptive only, and final method recommendation remained deferred."
     }
   },
   "extensions": {
@@ -159,6 +189,13 @@
       "plan": "docs/weekly/week_05_plan.md",
       "status": "complete",
       "summary": "reports/week05_summary.json"
+    },
+    "week_06": {
+      "current_day": null,
+      "latest_completed_day": "day_30",
+      "latest_target_validation": "432 / 432 backend tests passed in 5.05s; UI 64 / 64 passed in 4.68s after validated Day 30",
+      "plan": "docs/weekly/week_06_plan.md",
+      "status": "complete"
     }
   }
 }

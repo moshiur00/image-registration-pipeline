@@ -1,0 +1,268 @@
+{
+  "artifacts": {
+    "automatic_run": "outputs/week06_day04_automatic_multi_method/automatic_run.json"
+  },
+  "candidate_summaries": [
+    {
+      "candidate_id": "auto-e814175ab24bd7684005",
+      "common_evidence": {
+        "anatomical": {},
+        "descriptive": {
+          "evaluation_mi": 1.696828526814807,
+          "mae": 3.8866461733081175,
+          "mse": 72.91113148711669,
+          "ncc": 0.9931232135249989,
+          "ssim": 0.9161846492078688
+        },
+        "geometric": {},
+        "overlap": {
+          "valid_overlap_fraction": 0.9493815104166666
+        },
+        "runtime": {
+          "total_runtime_ms": 22.365300013916567
+        }
+      },
+      "execution_status": "completed",
+      "failure_reason": null,
+      "method_diagnostics_retained": true,
+      "method_family": "intensity_based",
+      "method_id": "ecc_affine",
+      "transform_model": "affine",
+      "transform_plausible": true
+    },
+    {
+      "candidate_id": "auto-76a0cf07c11add20e595",
+      "common_evidence": {
+        "anatomical": {},
+        "descriptive": {
+          "evaluation_mi": 1.3851176845120448,
+          "mae": 10.44237212630452,
+          "mse": 854.415702782514,
+          "ncc": 0.9200842767724784,
+          "ssim": 0.7420859832555662
+        },
+        "geometric": {},
+        "overlap": {
+          "valid_overlap_fraction": 0.9249674479166666
+        },
+        "runtime": {
+          "total_runtime_ms": 482.91790002258494
+        }
+      },
+      "execution_status": "completed",
+      "failure_reason": null,
+      "method_diagnostics_retained": true,
+      "method_family": "mutual_information",
+      "method_id": "mi_affine_2d",
+      "transform_model": "affine",
+      "transform_plausible": true
+    },
+    {
+      "candidate_id": "auto-4789076a3820b7010995",
+      "common_evidence": {
+        "anatomical": {},
+        "descriptive": {
+          "evaluation_mi": 1.7399677017953645,
+          "mae": 3.799324751374398,
+          "mse": 91.23501692588664,
+          "ncc": 0.9914142525854784,
+          "ssim": 0.9071808567806066
+        },
+        "geometric": {},
+        "overlap": {
+          "valid_overlap_fraction": 0.9412163628472222
+        },
+        "runtime": {
+          "total_runtime_ms": 120.32829999225214
+        }
+      },
+      "execution_status": "completed",
+      "failure_reason": null,
+      "method_diagnostics_retained": true,
+      "method_family": "feature_based",
+      "method_id": "orb_affine",
+      "transform_model": "affine",
+      "transform_plausible": true
+    },
+    {
+      "candidate_id": "auto-5cf83d356ba9edbc2c57",
+      "common_evidence": {
+        "anatomical": {},
+        "descriptive": {
+          "evaluation_mi": 1.7935753595317467,
+          "mae": 3.293189700245943,
+          "mse": 62.20340313616283,
+          "ncc": 0.9941841980632176,
+          "ssim": 0.9214489553170615
+        },
+        "geometric": {},
+        "overlap": {
+          "valid_overlap_fraction": 0.9444173177083334
+        },
+        "runtime": {
+          "total_runtime_ms": 15.936500014504418
+        }
+      },
+      "execution_status": "completed",
+      "failure_reason": null,
+      "method_diagnostics_retained": true,
+      "method_family": "feature_based",
+      "method_id": "sift_affine",
+      "transform_model": "affine",
+      "transform_plausible": true
+    }
+  ],
+  "compatibility": [
+    {
+      "compatible": true,
+      "method_id": "ecc_affine",
+      "reasons": []
+    },
+    {
+      "compatible": true,
+      "method_id": "mi_affine_2d",
+      "reasons": []
+    },
+    {
+      "compatible": false,
+      "method_id": "mi_rigid_2d",
+      "reasons": [
+        "transform_model_not_requested"
+      ]
+    },
+    {
+      "compatible": true,
+      "method_id": "orb_affine",
+      "reasons": []
+    },
+    {
+      "compatible": false,
+      "method_id": "phase_translation",
+      "reasons": [
+        "transform_model_not_requested"
+      ]
+    },
+    {
+      "compatible": true,
+      "method_id": "sift_affine",
+      "reasons": []
+    }
+  ],
+  "compatible_candidate_count": 4,
+  "day": 29,
+  "development_only_ground_truth_validation": [
+    {
+      "affine_linear_error": 0.009643552115479393,
+      "candidate_id": "auto-e814175ab24bd7684005",
+      "execution_status": "completed",
+      "method_id": "ecc_affine",
+      "translation_error_px": 0.6002355393087501,
+      "tre_mean_px": 0.4782479222380512,
+      "tre_median_px": 0.5583913892635057,
+      "tre_p95_px": 0.7318485527965575,
+      "tre_std_px": 0.20930109303608296,
+      "used_by_auto_service": false
+    },
+    {
+      "affine_linear_error": 0.03704204179161811,
+      "candidate_id": "auto-76a0cf07c11add20e595",
+      "execution_status": "completed",
+      "method_id": "mi_affine_2d",
+      "translation_error_px": 3.699579418941853,
+      "tre_mean_px": 1.7507395467763025,
+      "tre_median_px": 2.1663317912840343,
+      "tre_p95_px": 2.1968097652156855,
+      "tre_std_px": 0.8123472990867671,
+      "used_by_auto_service": false
+    },
+    {
+      "affine_linear_error": 0.0049822189874287855,
+      "candidate_id": "auto-4789076a3820b7010995",
+      "execution_status": "completed",
+      "method_id": "orb_affine",
+      "translation_error_px": 0.5641055886023967,
+      "tre_mean_px": 0.23079023423209474,
+      "tre_median_px": 0.27492644144175793,
+      "tre_p95_px": 0.3408059291401965,
+      "tre_std_px": 0.10621785927644227,
+      "used_by_auto_service": false
+    },
+    {
+      "affine_linear_error": 0.001353091099565362,
+      "candidate_id": "auto-5cf83d356ba9edbc2c57",
+      "execution_status": "completed",
+      "method_id": "sift_affine",
+      "translation_error_px": 0.17298676734902027,
+      "tre_mean_px": 0.07218155123798353,
+      "tre_median_px": 0.05741886825965475,
+      "tre_p95_px": 0.11505570088887941,
+      "tre_std_px": 0.03124252708039929,
+      "used_by_auto_service": false
+    }
+  ],
+  "excluded_candidate_count": 2,
+  "interpretation": [
+    "Compatibility is explicit and auditable; methods are excluded for dimensions, transform model, modality class, shape, or optional-method policy.",
+    "All compatible candidates are executed rather than stopping after the first successful registration.",
+    "Only metrics from the Day 26 common contract are normalized for comparison; method-specific optimizer diagnostics remain opaque evidence.",
+    "The operational candidate records behave as if ground truth is unavailable, matching the intended real-world automatic workflow.",
+    "Synthetic ground truth is used only after execution as a development validation probe and is not available to the automatic service.",
+    "No best-method recommendation or confidence score is produced on Day 29."
+  ],
+  "limitations": [
+    "Day 29 uses a controlled 2D affine development pair and does not yet characterize arbitrary motion models automatically.",
+    "The candidate catalog is configuration driven; learned or heuristic pair characterization is deferred.",
+    "Transform-space agreement, consensus, robust summaries, and preliminary comparison are Day 30 work.",
+    "Evidence-backed ranking and confidence calibration require Week 7 robustness results.",
+    "The 3D RIRE technical path is not part of the Day 29 automatic development run."
+  ],
+  "method_catalog_count": 6,
+  "next_step": "Day 29 target validation completed successfully. Freeze the automatic multi-method execution contract and proceed to Day 30 transform-space disagreement, preliminary consensus, robust method summaries, and Week 6 closure.",
+  "pair": {
+    "candidate_transform_models": [
+      "affine"
+    ],
+    "development_ground_truth_available_for_validation_only": true,
+    "modality_class": "monomodal",
+    "operation_ground_truth": "unavailable",
+    "pair_id": "day29_unknown_affine_pair"
+  },
+  "purpose": "Select compatible registration candidates, execute all candidates through the existing RegistrationService boundary, normalize only common Week 6 evidence, and preserve method-specific diagnostics, CHECK states, and failures without selecting a final best method.",
+  "recommendation": {
+    "reason": "Day 29 executes and normalizes compatible candidates only. Evidence-backed ranking is deferred until robustness calibration.",
+    "selected_candidate_id": null,
+    "status": "deferred_until_robustness_calibration"
+  },
+  "schema_version": "week06_auto_run_v1",
+  "scientific_guards": {
+    "failed_and_check_candidates_preserved": true,
+    "final_method_recommendation_implemented": false,
+    "geometric_metrics_in_operation_evidence": false,
+    "ground_truth_exposed_to_auto_service": false,
+    "raw_optimizer_objectives_cross_compared": false
+  },
+  "status": "target_validated",
+  "status_counts": {
+    "check": 0,
+    "completed": 4,
+    "failed": 0,
+    "validation_error": 0
+  },
+  "title": "Automatic multi-method execution foundation",
+  "week": 6,
+  "target_validation": {
+    "backend_tests": "418/418 passed",
+    "backend_runtime_seconds": 5.29,
+    "ui_tests": "64/64 passed",
+    "ui_runtime_seconds": 4.99,
+    "method_catalog_count": 6,
+    "compatible_candidates": 4,
+    "excluded_candidates": 2,
+    "completed_candidates": 4,
+    "check_candidates": 0,
+    "failed_candidates": 0,
+    "validation_errors": 0,
+    "ground_truth_exposed_to_auto_service": false,
+    "recommendation_status": "deferred_until_robustness_calibration"
+  }
+}

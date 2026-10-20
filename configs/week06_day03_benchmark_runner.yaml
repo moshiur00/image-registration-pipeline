@@ -1,0 +1,71 @@
+experiment:
+  week: 6
+  day: 28
+  name: deterministic_resumable_benchmark_runner
+  title: Deterministic resumable benchmark runner and long-form result schema
+  seed_policy: runner_reproducibility_probe
+
+runner:
+  seeds: [7, 42]
+  resize_shape: [160, 160]
+  evaluation_mi_bins: 16
+  translation_error_threshold_px: 1.0
+  tre_threshold_px: 1.0
+  max_translation_fraction_of_diagonal: 0.50
+
+source:
+  image: data/samples/week02_real_general/camera.png
+
+pairs:
+  - id: translation_clean
+    modality_class: monomodal
+    transform_model: translation
+    degradation: none
+    tx: 8.0
+    ty: -6.0
+
+  - id: translation_blur
+    modality_class: monomodal
+    transform_model: translation
+    degradation: gaussian_blur
+    tx: -9.0
+    ty: 6.0
+    degradation_parameters:
+      sigma: 1.2
+
+  - id: translation_inversion
+    modality_class: simulated_multimodal
+    transform_model: translation
+    degradation: intensity_inversion
+    tx: 7.0
+    ty: 5.0
+
+methods:
+  - method_id: phase_translation
+    config_id: phase_translation_day28_v1
+    method_family: frequency_domain
+    supported_transform_models: [translation]
+    parameters:
+      use_hanning_window: true
+      subtract_mean: true
+      interpolation: linear
+      min_response: null
+
+  - method_id: ecc_translation
+    config_id: ecc_translation_day28_v1
+    method_family: intensity_based
+    supported_transform_models: [translation]
+    parameters:
+      motion_model: translation
+      initialization: phase_correlation
+      max_iterations: 120
+      epsilon: 1.0e-6
+      gauss_filt_size: 5
+      interpolation: linear
+      phase_use_hanning_window: true
+      phase_subtract_mean: true
+      min_ecc: null
+
+output:
+  directory: outputs/week06_day03_benchmark_runner
+  report_snapshot: reports/week06_day03_benchmark_runner.json

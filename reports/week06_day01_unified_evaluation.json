@@ -1,0 +1,218 @@
+{
+  "artifacts": {
+    "local_contract": "outputs/week06_day01_unified_evaluation/evaluation_contract.json",
+    "local_metric_catalog": "outputs/week06_day01_unified_evaluation/metric_catalog.csv"
+  },
+  "coordinate_order_by_dimension": {
+    "2": "xy",
+    "3": "xyz"
+  },
+  "day": 26,
+  "metric_count": 25,
+  "metric_groups": {
+    "anatomical": [
+      "dice"
+    ],
+    "descriptive": [
+      "mae",
+      "mse",
+      "ncc",
+      "ssim",
+      "evaluation_mi"
+    ],
+    "geometric": [
+      "translation_error_px",
+      "translation_error_mm",
+      "rotation_error_deg",
+      "scale_error_abs",
+      "affine_linear_error",
+      "tre_mean_px",
+      "tre_median_px",
+      "tre_std_px",
+      "tre_p95_px",
+      "tre_mean_mm",
+      "tre_median_mm",
+      "tre_std_mm",
+      "tre_p95_mm"
+    ],
+    "overlap": [
+      "valid_overlap_fraction"
+    ],
+    "runtime": [
+      "preprocessing_runtime_ms",
+      "registration_runtime_ms",
+      "warping_runtime_ms",
+      "evaluation_runtime_ms",
+      "total_runtime_ms"
+    ]
+  },
+  "next_step": "Day 26 target validation completed successfully. Day 27 metric implementation and independent validation has also completed.",
+  "principles": [
+    "optimizer_completion_is_not_geometric_correctness",
+    "descriptive_similarity_is_supporting_evidence_only",
+    "failed_runs_remain_in_reporting",
+    "unknown_ground_truth_disables_tre_and_geometric_pass",
+    "descriptive_metrics_use_valid_overlap"
+  ],
+  "purpose": "Freeze the method-independent evaluation vocabulary, reference-evidence policy, valid-overlap rule, metric units, and result contract before implementing the full Week 6 metrics and benchmark runner.",
+  "scenario_availability": {
+    "known_synthetic": {
+      "available_metrics": [
+        "affine_linear_error",
+        "evaluation_mi",
+        "evaluation_runtime_ms",
+        "mae",
+        "mse",
+        "ncc",
+        "preprocessing_runtime_ms",
+        "registration_runtime_ms",
+        "rotation_error_deg",
+        "scale_error_abs",
+        "ssim",
+        "total_runtime_ms",
+        "translation_error_px",
+        "tre_mean_px",
+        "tre_median_px",
+        "tre_p95_px",
+        "tre_std_px",
+        "valid_overlap_fraction",
+        "warping_runtime_ms"
+      ],
+      "geometric_pass_allowed": true,
+      "modality_class": "monomodal",
+      "reference_label": "exact_transform",
+      "unavailable_metrics": {
+        "dice": "reference_masks_unavailable",
+        "translation_error_mm": "physical_spacing_unavailable",
+        "tre_mean_mm": "physical_spacing_unavailable",
+        "tre_median_mm": "physical_spacing_unavailable",
+        "tre_p95_mm": "physical_spacing_unavailable",
+        "tre_std_mm": "physical_spacing_unavailable"
+      },
+      "valid_overlap_fraction": 0.82
+    },
+    "mask_reference": {
+      "available_metrics": [
+        "dice",
+        "evaluation_mi",
+        "evaluation_runtime_ms",
+        "mae",
+        "mse",
+        "ncc",
+        "preprocessing_runtime_ms",
+        "registration_runtime_ms",
+        "ssim",
+        "total_runtime_ms",
+        "valid_overlap_fraction",
+        "warping_runtime_ms"
+      ],
+      "geometric_pass_allowed": false,
+      "modality_class": "medical",
+      "reference_label": "masks",
+      "unavailable_metrics": {
+        "affine_linear_error": "exact_transform_unavailable",
+        "rotation_error_deg": "exact_transform_unavailable",
+        "scale_error_abs": "exact_transform_unavailable",
+        "translation_error_mm": "exact_transform_unavailable",
+        "translation_error_px": "exact_transform_unavailable",
+        "tre_mean_mm": "geometric_reference_unavailable",
+        "tre_mean_px": "geometric_reference_unavailable",
+        "tre_median_mm": "geometric_reference_unavailable",
+        "tre_median_px": "geometric_reference_unavailable",
+        "tre_p95_mm": "geometric_reference_unavailable",
+        "tre_p95_px": "geometric_reference_unavailable",
+        "tre_std_mm": "geometric_reference_unavailable",
+        "tre_std_px": "geometric_reference_unavailable"
+      },
+      "valid_overlap_fraction": 0.91
+    },
+    "physical_known_transform": {
+      "available_metrics": [
+        "affine_linear_error",
+        "evaluation_mi",
+        "evaluation_runtime_ms",
+        "mae",
+        "mse",
+        "ncc",
+        "preprocessing_runtime_ms",
+        "registration_runtime_ms",
+        "rotation_error_deg",
+        "scale_error_abs",
+        "ssim",
+        "total_runtime_ms",
+        "translation_error_mm",
+        "translation_error_px",
+        "tre_mean_mm",
+        "tre_mean_px",
+        "tre_median_mm",
+        "tre_median_px",
+        "tre_p95_mm",
+        "tre_p95_px",
+        "tre_std_mm",
+        "tre_std_px",
+        "valid_overlap_fraction",
+        "warping_runtime_ms"
+      ],
+      "geometric_pass_allowed": true,
+      "modality_class": "medical",
+      "reference_label": "exact_transform",
+      "unavailable_metrics": {
+        "dice": "reference_masks_unavailable"
+      },
+      "valid_overlap_fraction": 0.88
+    },
+    "unknown_upload": {
+      "available_metrics": [
+        "evaluation_mi",
+        "evaluation_runtime_ms",
+        "mae",
+        "mse",
+        "ncc",
+        "preprocessing_runtime_ms",
+        "registration_runtime_ms",
+        "ssim",
+        "total_runtime_ms",
+        "valid_overlap_fraction",
+        "warping_runtime_ms"
+      ],
+      "geometric_pass_allowed": false,
+      "modality_class": "unknown",
+      "reference_label": "unavailable",
+      "unavailable_metrics": {
+        "affine_linear_error": "exact_transform_unavailable",
+        "dice": "reference_masks_unavailable",
+        "rotation_error_deg": "exact_transform_unavailable",
+        "scale_error_abs": "exact_transform_unavailable",
+        "translation_error_mm": "exact_transform_unavailable",
+        "translation_error_px": "exact_transform_unavailable",
+        "tre_mean_mm": "geometric_reference_unavailable",
+        "tre_mean_px": "geometric_reference_unavailable",
+        "tre_median_mm": "geometric_reference_unavailable",
+        "tre_median_px": "geometric_reference_unavailable",
+        "tre_p95_mm": "geometric_reference_unavailable",
+        "tre_p95_px": "geometric_reference_unavailable",
+        "tre_std_mm": "geometric_reference_unavailable",
+        "tre_std_px": "geometric_reference_unavailable"
+      },
+      "valid_overlap_fraction": 0.78
+    }
+  },
+  "schema_version": "week06_evaluation_v1",
+  "scientific_guards": [
+    "Unknown image pairs cannot report TRE, transform parameter error, Dice without reference masks, or geometric PASS/CHECK.",
+    "NCC, SSIM, MAE, MSE, and evaluation MI are descriptive evidence computed within valid overlap and do not independently prove geometric correctness.",
+    "Optimization objectives remain method-specific diagnostics and are not directly compared across methods.",
+    "Every comparable transform uses the project Moving -> Fixed direction and x,y coordinate order.",
+    "Failed runs remain first-class records and require an explicit failure reason."
+  ],
+  "status": "target_validated",
+  "title": "Unified evaluation semantics and result contract",
+  "transform_convention": "Moving -> Fixed",
+  "week": 6,
+  "target_validation": {
+    "backend_tests": "376/376 passed",
+    "ui_tests": "64/64 passed",
+    "contract_script": "completed",
+    "metric_definitions": 25
+  }
+}

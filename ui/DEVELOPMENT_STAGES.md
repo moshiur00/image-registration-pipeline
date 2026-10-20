@@ -8,7 +8,7 @@ The UI is an isolated presentation and orchestration layer around the validated 
 
 **Planned repository location:** `ui/DEVELOPMENT_STAGES.md`
 
-**Current overall status:** UI v0.1 RELEASE CANDIDATE - Stage 5 implementation complete; target Windows final QA pending
+**Current overall status:** UI v0.1 FROZEN - Stage 5 COMPLETE
 
 **Target release:** UI v0.1 before Week 6
 
@@ -1215,7 +1215,7 @@ Target Windows regression is still required before UI v0.1 can be frozen.
 ## Stage 5 polish batch 2, exports, and release-candidate QA
 
 **Date:** 2026-10-11  
-**Status:** IMPLEMENTATION COMPLETE - TARGET WINDOWS FINAL QA PENDING
+**Status:** COMPLETE - UI v0.1 FROZEN
 
 ### Work completed
 
@@ -1248,12 +1248,18 @@ Target Windows regression is still required before UI v0.1 can be frozen.
 - The v0.1 feature set is frozen as a release candidate: Manual Workbench, Benchmark Examples, Method Reference, evidence-aware results, diagnostics, provenance, and session-local exports.
 - Automatic multi-method selection and ranking belongs to Weeks 6 to 8 and is explicitly outside the v0.1 pre-Week 6 scope.
 
-### Remaining formal freeze gate
+### Formal Stage 5 completion
 
-- Run `pytest -v` on the target Windows environment and confirm the full research suite passes.
-- Run `pytest -c ui/pytest.ini ui/tests -v` on the target Windows environment and confirm all 64 UI tests pass with Streamlit and SimpleITK installed.
-- Manually verify one curated known-ground-truth run, one unknown-upload run, and the five download actions.
-- If those checks pass, mark Stage 5 COMPLETE, check the two remaining test-suite items in the Pre-Week 6 Completion Gate, and start Week 6.
+Target Windows final QA completed successfully.
+
+- Pre-Week-6 root suite: 364 / 364 passed.
+- UI suite: 64 / 64 passed.
+- Curated known-ground-truth workflow: validated.
+- Unknown-upload workflow: validated without unsupported TRE or geometric PASS claims.
+- Export bundle and download controls: validated.
+- UI v0.1 is formally frozen.
+
+Later Week 6 regression continues to preserve compatibility: 390 / 390 backend tests and 64 / 64 UI tests passed after Day 27.
 
 ### Backend impact check
 

@@ -1,0 +1,71 @@
+{
+  "all_hand_constructed_checks_passed": true,
+  "artifacts": {
+    "local_cases": "outputs/week06_day02_metric_validation/metric_validation_cases.csv",
+    "local_details": "outputs/week06_day02_metric_validation/metric_validation_details.json"
+  },
+  "binary_mutual_information": {
+    "actual_nats": 0.6931471805599453,
+    "expected_nats": 0.6931471805599453
+  },
+  "day": 27,
+  "dice_policy": {
+    "both_empty": 1.0,
+    "disjoint": 0.0,
+    "one_empty": 0.0,
+    "perfect": 1.0
+  },
+  "implemented": [
+    "model-aware transform parameter error for translation, rigid, similarity, and affine models",
+    "TRE mean, median, standard deviation, and 95th percentile for transform and landmark references",
+    "pixel and physical-unit TRE when spacing is available",
+    "Dice score with explicit empty-mask behavior",
+    "overlap-aware MAE, MSE, NCC, SSIM, and evaluation Mutual Information",
+    "valid-overlap fraction and explicit no-overlap rejection"
+  ],
+  "known_translation": {
+    "translation_error_mm": 6.324555320336759,
+    "translation_error_px": 5.0,
+    "tre_mean_mm": 6.324555320336759,
+    "tre_mean_px": 5.0
+  },
+  "modality_caution_example": {
+    "description": "A perfectly corresponding intensity-inverted pair can have poor NCC while evaluation MI remains informative. Descriptive metrics must be interpreted by modality class.",
+    "metrics": {
+      "evaluation_mi": 2.772588722239781,
+      "mae": 0.5004887585532748,
+      "mse": 0.3339850114043662,
+      "ncc": -1.0,
+      "ssim": -0.4569354306957097,
+      "valid_overlap_fraction": 1.0
+    }
+  },
+  "next_step": "Day 27 target validation completed successfully. Proceed to Day 28 deterministic resumable benchmark-runner development.",
+  "no_overlap_rejected": true,
+  "purpose": "Implement the metric calculations defined by the Day 26 contract and validate them against hand-constructed cases with independently known answers.",
+  "scientific_guards": [
+    "Metrics are computed only when the corresponding Day 26 evidence requirements are satisfied by the caller.",
+    "Image similarity is descriptive evidence and does not independently establish geometric correctness.",
+    "Evaluation Mutual Information is a post-registration metric and is not compared directly with an optimizer objective.",
+    "Invalid warp borders must be excluded using an explicit valid-overlap mask.",
+    "Both-empty masks have Dice 1.0 by explicit policy; one-empty mask pairs have Dice 0.0."
+  ],
+  "status": "target_validated",
+  "title": "Metric implementation and independent validation",
+  "valid_overlap_case": {
+    "evaluation_mi": 2.670712886760467,
+    "mae": 0.0,
+    "mse": 0.0,
+    "ncc": 1.0,
+    "ssim": 1.0,
+    "valid_overlap_fraction": 0.75
+  },
+  "validation_case_count": 18,
+  "week": 6,
+  "target_validation": {
+    "backend_tests": "390/390 passed",
+    "ui_tests": "64/64 passed",
+    "hand_constructed_checks": "18/18 passed",
+    "no_overlap_rejection": "passed"
+  }
+}

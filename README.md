@@ -13,8 +13,8 @@ The central question is not which registration method is universally best. It is
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 5 complete, Week 6 next |
-| Target validation | 364 / 364 tests passed on Windows for the completed Week 5 repository |
+| Current status | Weeks 1 to 6 complete and validated; UI v0.1 frozen; Week 7 next |
+| Target validation | Latest: 432 / 432 backend tests and 64 / 64 UI tests passed on Windows after Week 6 closure |
 
 ## Research objectives
 
@@ -220,11 +220,11 @@ The most useful entry points are:
 | 3 | Phase Correlation and ECC baselines | Complete |
 | 4 | ORB + RANSAC and optional SIFT comparison | Complete |
 | 5 | Multimodal Mutual Information and RIRE validation | Complete |
-| 6 | Unified evaluation and reproducible benchmarking | Next |
+| 6 | Unified evaluation and reproducible benchmarking | Complete and target-validated |
 | 7 | Robustness, runtime analysis, and failure diagnosis | Planned |
 | 8 | Final benchmark, analysis, documentation, and demonstration | Planned |
 
-Week 6 will consolidate model-aware parameter errors, TRE, overlap-aware similarity metrics, runtime accounting, success policies, benchmark execution, and standardized aggregation across the completed registration methods.
+Week 6 is complete and target-validated. It established the unified evaluation contract, independently validated metric implementation, deterministic resumable benchmark execution, automatic compatible-candidate execution, common evidence normalization, transform-space disagreement, preliminary descriptive consensus, robust method summaries, and a preserved ground-truth firewall. Final best-method recommendation remains intentionally deferred until Week 7 robustness calibration.
 
 ## License
 

@@ -70,3 +70,33 @@ The extension is intentionally kept separate from the five completed Week 4 work
 `findings_week05.json` consolidates the validated Week 5 measured evidence, observations, interpretations, limitations, decisions, and source-record paths for later technical-report generation.
 
 Full figures, CSV tables, resolved configurations, and per-case diagnostics remain under local `outputs/` and are intentionally excluded from Git and lightweight shared ZIPs.
+
+## Week 6 snapshots
+
+`week06_day01_unified_evaluation.json` defines the Day 26 method-independent evaluation contract. It records the common metric catalog, reference-evidence policy, valid-overlap requirements, and scenario-specific metric availability. Target Windows validation completed with 376 / 376 backend tests and 64 / 64 UI tests passing.
+
+`week06_day02_metric_validation.json` stores the Day 27 metric implementation evidence. It records hand-constructed validation for model-aware parameter error, TRE in pixel and physical units, Dice including explicit empty-mask policy, overlap-aware MAE/MSE/NCC/SSIM, evaluation Mutual Information, valid-overlap handling, and no-overlap rejection. Target Windows validation completed with 390 / 390 backend tests, 64 / 64 UI tests, and 18 / 18 hand-constructed metric checks passing.
+
+### Week 6 current validation
+
+- Day 26: 376 / 376 backend tests passed; 64 / 64 UI tests passed; 25 unified metric definitions validated.
+- Day 27: 390 / 390 backend tests passed; 64 / 64 UI tests passed; 18 / 18 independent metric checks passed; no-overlap rejection passed.
+- Day 28: 403 / 403 backend tests passed; 64 / 64 UI tests passed; first run executed 12 / 12 attempts; resume probe executed 0 and skipped 12 / 12 persisted IDs.
+- Day 29: 418 / 418 backend tests passed; 64 / 64 UI tests passed; 4 / 4 compatible candidates completed; 0 failures; 0 validation errors; ground truth was not exposed to the automatic service; recommendation remained deferred.
+- Day 30: 432 / 432 backend tests passed; 64 / 64 UI tests passed; 13 / 13 automatic candidates completed; 0 CHECK; 0 failures; 0 validation errors; ground truth remained hidden from the automatic service; final recommendation remained deferred.
+- Week 6: COMPLETE and frozen.
+- Next work package: Week 7 controlled robustness sweeps and calibration.
+
+`week06_day03_benchmark_runner.json` stores the Day 28 deterministic resumable benchmark-runner evidence. The development matrix contains 3 controlled translation pairs, 2 registration configurations, and 2 seed identities for 12 planned attempts. The first development run executed all 12 attempts, and the immediate resume probe executed 0 and skipped all 12 persisted experiment IDs. The long-form table preserves modality class, degradation, configuration, seed, execution status, geometric threshold state, common metrics, timings, diagnostics, and failure fields. Target Windows validation completed with 403 / 403 backend tests and 64 / 64 UI tests passing. The first run executed 12 / 12 planned attempts with no failures or validation errors, and the resume probe executed 0 while skipping all 12 persisted experiment IDs.
+
+Day 28 intentionally validates runner behavior with Phase Correlation and ECC translation only. Full automatic multi-method candidate orchestration remains Day 29 work.
+
+`week06_day04_automatic_multi_method.json` stores the Day 29 automatic multi-method execution evidence. The development run uses an affine pair with hidden operation-time ground truth, audits compatible and excluded methods, executes every compatible candidate through the existing RegistrationService boundary, normalizes only Day 26 common evidence, preserves method-specific diagnostics and failures, and explicitly defers final recommendation until robustness calibration. Target Windows validation completed with 418 / 418 backend tests and 64 / 64 UI tests passing. All 4 / 4 compatible affine candidates completed with no failures or validation errors, while ground truth remained hidden from the automatic service and final recommendation remained deferred.
+
+
+
+### Day 30: transform agreement and preliminary consensus
+
+`week06_day05_agreement_consensus.json` stores the Day 30 closure evidence. It compares compatible candidate transforms on a common image-space control grid, reports pairwise RMS/median/p95/max disagreement, identifies a descriptive transform-medoid consensus anchor, aggregates only common Week 6 evidence by method and modality, and keeps hidden synthetic ground truth outside the automatic service.
+
+Target Windows validation is complete. Week 6 is formally closed and frozen. The Day 30 run completed all 13 / 13 automatic candidates with no CHECK, failures, or validation errors while preserving the ground-truth firewall and deferred recommendation policy.

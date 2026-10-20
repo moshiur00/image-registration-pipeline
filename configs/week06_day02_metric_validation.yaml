@@ -1,0 +1,16 @@
+experiment:
+  week: 6
+  day: 27
+  name: metric_implementation_validation
+  title: Metric implementation and independent validation
+
+validation:
+  mutual_information_bins: 16
+  numeric_tolerance: 1.0e-9
+  expected_translation_error_px: 5.0
+  anisotropic_spacing_xy: [2.0, 0.5]
+  expected_binary_mi_nats: 0.6931471805599453
+
+output:
+  directory: outputs/week06_day02_metric_validation
+  report_snapshot: reports/week06_day02_metric_validation.json

@@ -2,7 +2,7 @@
 
 Date: 2026-10-11
 
-Status: RELEASE CANDIDATE - STAGE 5 IMPLEMENTATION COMPLETE, TARGET WINDOWS FINAL QA PENDING
+Status: COMPLETE - UI v0.1 FROZEN
 
 ## Stage 4 handoff
 
@@ -47,7 +47,7 @@ The warp-border mask is not an evaluation mask. It only identifies zero-valued r
 - validated reports changed: NO
 - tracked data changed: NO
 
-## Pending target checks
+## Historical pending checks after polish batch 1
 
 - run the root project suite on Windows
 - run `pytest -c ui/pytest.ini ui/tests -v` on Windows
@@ -86,6 +86,15 @@ Target Windows revalidation remains required before the Stage 5 freeze.
 - UI em dash count: 0
 - non-UI tracked repository files changed by Stage 5: none
 
-## Formal freeze pending
+## Formal Stage 5 completion
 
-The v0.1 feature scope is frozen as a release candidate. Formal Stage 5 completion still requires the target Windows full root/UI regressions and a brief manual download check with Streamlit and SimpleITK available. Automatic multi-method recommendation remains deferred to Weeks 6 to 8.
+UI v0.1 passed the target Windows final QA and is frozen.
+
+- Pre-Week-6 root regression: 364 / 364 passed.
+- UI regression: 64 / 64 passed.
+- Curated known-ground-truth workflow: validated.
+- Unknown uploaded-image workflow: validated.
+- Registered PNG, transform JSON, summary JSON, comparison PNG, and run-bundle ZIP exports: validated.
+- Automatic multi-method recommendation remains deferred to Weeks 6 to 8.
+
+Subsequent Week 6 development has preserved the frozen UI contract. After Day 27, the repository still passes 390 / 390 backend tests and 64 / 64 UI tests.

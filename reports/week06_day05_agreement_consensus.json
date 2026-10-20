@@ -1,0 +1,954 @@
+{
+  "agreement_views": [
+    {
+      "candidate_summaries": [
+        {
+          "candidate_id": "auto-e37e51f08246ed61818d",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.99464882107835,
+          "median_normalized_rms": 0.002083321404563715,
+          "median_pairwise_rms_px": 0.5627359245571888,
+          "method_id": "sift_affine"
+        },
+        {
+          "candidate_id": "auto-54e89d712e16b8866735",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.9652468671981558,
+          "median_normalized_rms": 0.002929468612659282,
+          "median_pairwise_rms_px": 0.7912928003306889,
+          "method_id": "orb_affine"
+        },
+        {
+          "candidate_id": "auto-2482bc9cb9e29f229506",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 2.388305774155476,
+          "median_normalized_rms": 0.002929468612659282,
+          "median_pairwise_rms_px": 0.7912928003306889,
+          "method_id": "ecc_affine"
+        },
+        {
+          "candidate_id": "auto-a6553e29faa99be390b7",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 2.388305774155476,
+          "median_normalized_rms": 0.007384448730210752,
+          "median_pairwise_rms_px": 1.99464882107835,
+          "method_id": "mi_affine_2d"
+        }
+      ],
+      "consensus_anchor": {
+        "candidate_id": "auto-e37e51f08246ed61818d",
+        "interpretation": "Transform medoid for descriptive agreement only. This is not a best-method recommendation.",
+        "method_id": "sift_affine"
+      },
+      "eligible_candidate_ids": [
+        "auto-2482bc9cb9e29f229506",
+        "auto-54e89d712e16b8866735",
+        "auto-a6553e29faa99be390b7",
+        "auto-e37e51f08246ed61818d"
+      ],
+      "excluded_candidates": {},
+      "final_recommendation": null,
+      "overall": {
+        "max_pairwise_rms_px": 2.388305774155476,
+        "median_pairwise_normalized_rms": 0.005102533747432872,
+        "median_pairwise_rms_px": 1.3782698337644224
+      },
+      "pair_id": "day30_clean_affine",
+      "pairwise": [
+        {
+          "candidate_a": "auto-2482bc9cb9e29f229506",
+          "candidate_b": "auto-54e89d712e16b8866735",
+          "max_px": 1.3645876988469512,
+          "median_px": 0.7264289065993911,
+          "method_a": "ecc_affine",
+          "method_b": "orb_affine",
+          "normalized_rms": 0.002929468612659282,
+          "p95_px": 1.1691631094472923,
+          "rms_px": 0.7912928003306889
+        },
+        {
+          "candidate_a": "auto-2482bc9cb9e29f229506",
+          "candidate_b": "auto-a6553e29faa99be390b7",
+          "max_px": 3.822270166390811,
+          "median_px": 1.9393015013128474,
+          "method_a": "ecc_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.008841817845300127,
+          "p95_px": 3.6937918569636525,
+          "rms_px": 2.388305774155476
+        },
+        {
+          "candidate_a": "auto-2482bc9cb9e29f229506",
+          "candidate_b": "auto-e37e51f08246ed61818d",
+          "max_px": 0.9870680255511616,
+          "median_px": 0.518201955423542,
+          "method_a": "ecc_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.002083321404563715,
+          "p95_px": 0.8105750517179987,
+          "rms_px": 0.5627359245571888
+        },
+        {
+          "candidate_a": "auto-54e89d712e16b8866735",
+          "candidate_b": "auto-a6553e29faa99be390b7",
+          "max_px": 3.013808460785347,
+          "median_px": 1.5980025461113367,
+          "method_a": "orb_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.007275598882206462,
+          "p95_px": 2.931754228356077,
+          "rms_px": 1.9652468671981558
+        },
+        {
+          "candidate_a": "auto-54e89d712e16b8866735",
+          "candidate_b": "auto-e37e51f08246ed61818d",
+          "max_px": 0.43478445164835694,
+          "median_px": 0.2314172657832203,
+          "method_a": "orb_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.0010811606577513166,
+          "p95_px": 0.4311186966506837,
+          "rms_px": 0.29203748447156047
+        },
+        {
+          "candidate_a": "auto-a6553e29faa99be390b7",
+          "candidate_b": "auto-e37e51f08246ed61818d",
+          "max_px": 3.0983874217699423,
+          "median_px": 1.5786704814951995,
+          "method_a": "mi_affine_2d",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.007384448730210752,
+          "p95_px": 3.019315073228419,
+          "rms_px": 1.99464882107835
+        }
+      ],
+      "schema_version": "week06_transform_agreement_v1",
+      "status": "available"
+    },
+    {
+      "candidate_summaries": [
+        {
+          "candidate_id": "auto-af85aed0345ac1254c9b",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.4004014638037394,
+          "median_normalized_rms": 0.002151685001323654,
+          "median_pairwise_rms_px": 0.5812019431678963,
+          "method_id": "mi_affine_2d"
+        },
+        {
+          "candidate_id": "auto-98a1e6dac668b3a0ebb1",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.0881482357987073,
+          "median_normalized_rms": 0.0032902105030748765,
+          "median_pairwise_rms_px": 0.8887345204535809,
+          "method_id": "sift_affine"
+        },
+        {
+          "candidate_id": "auto-58cc91b58b3f9ac10749",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.5498616579114248,
+          "median_normalized_rms": 0.0032902105030748765,
+          "median_pairwise_rms_px": 0.8887345204535809,
+          "method_id": "ecc_affine"
+        },
+        {
+          "candidate_id": "auto-26a4318cc55bbc5bba35",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 1.5498616579114248,
+          "median_normalized_rms": 0.005184467913294196,
+          "median_pairwise_rms_px": 1.4004014638037394,
+          "method_id": "orb_affine"
+        }
+      ],
+      "consensus_anchor": {
+        "candidate_id": "auto-af85aed0345ac1254c9b",
+        "interpretation": "Transform medoid for descriptive agreement only. This is not a best-method recommendation.",
+        "method_id": "mi_affine_2d"
+      },
+      "eligible_candidate_ids": [
+        "auto-26a4318cc55bbc5bba35",
+        "auto-58cc91b58b3f9ac10749",
+        "auto-98a1e6dac668b3a0ebb1",
+        "auto-af85aed0345ac1254c9b"
+      ],
+      "excluded_candidates": {},
+      "final_recommendation": null,
+      "overall": {
+        "max_pairwise_rms_px": 1.5498616579114248,
+        "median_pairwise_normalized_rms": 0.003659338226588339,
+        "median_pairwise_rms_px": 0.9884413781261441
+      },
+      "pair_id": "day30_blur_affine",
+      "pairwise": [
+        {
+          "candidate_a": "auto-26a4318cc55bbc5bba35",
+          "candidate_b": "auto-58cc91b58b3f9ac10749",
+          "max_px": 2.805467316215961,
+          "median_px": 1.3874615543488107,
+          "method_a": "orb_affine",
+          "method_b": "ecc_affine",
+          "normalized_rms": 0.005737788943508867,
+          "p95_px": 2.5729395488398077,
+          "rms_px": 1.5498616579114248
+        },
+        {
+          "candidate_a": "auto-26a4318cc55bbc5bba35",
+          "candidate_b": "auto-98a1e6dac668b3a0ebb1",
+          "max_px": 1.6934227984060444,
+          "median_px": 0.8883295078582778,
+          "method_a": "orb_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.004028465950101802,
+          "p95_px": 1.6349691172617244,
+          "rms_px": 1.0881482357987073
+        },
+        {
+          "candidate_a": "auto-26a4318cc55bbc5bba35",
+          "candidate_b": "auto-af85aed0345ac1254c9b",
+          "max_px": 2.581267884991593,
+          "median_px": 1.2014501695510196,
+          "method_a": "orb_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.005184467913294196,
+          "p95_px": 2.4014103187671867,
+          "rms_px": 1.4004014638037394
+        },
+        {
+          "candidate_a": "auto-58cc91b58b3f9ac10749",
+          "candidate_b": "auto-98a1e6dac668b3a0ebb1",
+          "max_px": 1.3586932916385661,
+          "median_px": 0.8177749430790601,
+          "method_a": "ecc_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.0032902105030748765,
+          "p95_px": 1.298371531885174,
+          "rms_px": 0.8887345204535809
+        },
+        {
+          "candidate_a": "auto-58cc91b58b3f9ac10749",
+          "candidate_b": "auto-af85aed0345ac1254c9b",
+          "max_px": 0.9006368559791608,
+          "median_px": 0.45744045875084177,
+          "method_a": "ecc_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.0018322667153967188,
+          "p95_px": 0.8240044833281722,
+          "rms_px": 0.49492233981057915
+        },
+        {
+          "candidate_a": "auto-98a1e6dac668b3a0ebb1",
+          "candidate_b": "auto-af85aed0345ac1254c9b",
+          "max_px": 0.903527540303449,
+          "median_px": 0.5453735776621441,
+          "method_a": "sift_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.002151685001323654,
+          "p95_px": 0.8765659650541393,
+          "rms_px": 0.5812019431678963
+        }
+      ],
+      "schema_version": "week06_transform_agreement_v1",
+      "status": "available"
+    },
+    {
+      "candidate_summaries": [
+        {
+          "candidate_id": "auto-b94efa4900c64b59989c",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 0.6190723451829838,
+          "median_normalized_rms": 0.0009698709397475612,
+          "median_pairwise_rms_px": 0.26197648561782516,
+          "method_id": "sift_affine"
+        },
+        {
+          "candidate_id": "auto-4d613fd0ed028d418fad",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 0.6334988895516648,
+          "median_normalized_rms": 0.00152935698214696,
+          "median_pairwise_rms_px": 0.4131019406996837,
+          "method_id": "mi_affine_2d"
+        },
+        {
+          "candidate_id": "auto-1f8ddd53d9383d9a67a7",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 0.7598637872077845,
+          "median_normalized_rms": 0.00152935698214696,
+          "median_pairwise_rms_px": 0.4131019406996837,
+          "method_id": "orb_affine"
+        },
+        {
+          "candidate_id": "auto-4164db578e0a38a7ce19",
+          "comparisons": 3,
+          "max_pairwise_rms_px": 0.7598637872077845,
+          "median_normalized_rms": 0.002345295082073978,
+          "median_pairwise_rms_px": 0.6334988895516648,
+          "method_id": "ecc_affine"
+        }
+      ],
+      "consensus_anchor": {
+        "candidate_id": "auto-b94efa4900c64b59989c",
+        "interpretation": "Transform medoid for descriptive agreement only. This is not a best-method recommendation.",
+        "method_id": "sift_affine"
+      },
+      "eligible_candidate_ids": [
+        "auto-1f8ddd53d9383d9a67a7",
+        "auto-4164db578e0a38a7ce19",
+        "auto-4d613fd0ed028d418fad",
+        "auto-b94efa4900c64b59989c"
+      ],
+      "excluded_candidates": {},
+      "final_recommendation": null,
+      "overall": {
+        "max_pairwise_rms_px": 0.7598637872077845,
+        "median_pairwise_normalized_rms": 0.001910621562602137,
+        "median_pairwise_rms_px": 0.5160871429413337
+      },
+      "pair_id": "day30_noise_affine",
+      "pairwise": [
+        {
+          "candidate_a": "auto-1f8ddd53d9383d9a67a7",
+          "candidate_b": "auto-4164db578e0a38a7ce19",
+          "max_px": 1.449102870459684,
+          "median_px": 0.6345985018081847,
+          "method_a": "orb_affine",
+          "method_b": "ecc_affine",
+          "normalized_rms": 0.0028131143283388277,
+          "p95_px": 1.2034920469852621,
+          "rms_px": 0.7598637872077845
+        },
+        {
+          "candidate_a": "auto-1f8ddd53d9383d9a67a7",
+          "candidate_b": "auto-4d613fd0ed028d418fad",
+          "max_px": 0.6914909221913135,
+          "median_px": 0.35934988097075,
+          "method_a": "orb_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.00152935698214696,
+          "p95_px": 0.60703703465492,
+          "rms_px": 0.4131019406996837
+        },
+        {
+          "candidate_a": "auto-1f8ddd53d9383d9a67a7",
+          "candidate_b": "auto-b94efa4900c64b59989c",
+          "max_px": 0.41914431968050253,
+          "median_px": 0.21896535468699863,
+          "method_a": "orb_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.0009698709397475612,
+          "p95_px": 0.39962807179695914,
+          "rms_px": 0.26197648561782516
+        },
+        {
+          "candidate_a": "auto-4164db578e0a38a7ce19",
+          "candidate_b": "auto-4d613fd0ed028d418fad",
+          "max_px": 1.156405680686943,
+          "median_px": 0.5375238566336653,
+          "method_a": "ecc_affine",
+          "method_b": "mi_affine_2d",
+          "normalized_rms": 0.002345295082073978,
+          "p95_px": 1.008601160310171,
+          "rms_px": 0.6334988895516648
+        },
+        {
+          "candidate_a": "auto-4164db578e0a38a7ce19",
+          "candidate_b": "auto-b94efa4900c64b59989c",
+          "max_px": 1.130768152085434,
+          "median_px": 0.6171258655518219,
+          "method_a": "ecc_affine",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.0022918861430573137,
+          "p95_px": 0.9284193227269998,
+          "rms_px": 0.6190723451829838
+        },
+        {
+          "candidate_a": "auto-4d613fd0ed028d418fad",
+          "candidate_b": "auto-b94efa4900c64b59989c",
+          "max_px": 0.33992683409613356,
+          "median_px": 0.1575896844597097,
+          "method_a": "mi_affine_2d",
+          "method_b": "sift_affine",
+          "normalized_rms": 0.0006729819440458877,
+          "p95_px": 0.28375079973256345,
+          "rms_px": 0.18178237676786402
+        }
+      ],
+      "schema_version": "week06_transform_agreement_v1",
+      "status": "available"
+    },
+    {
+      "candidate_summaries": [],
+      "consensus_anchor": {
+        "candidate_id": null,
+        "interpretation": null,
+        "method_id": null
+      },
+      "eligible_candidate_ids": [
+        "auto-1d01e4eb5bbf069a9d56"
+      ],
+      "excluded_candidates": {},
+      "final_recommendation": null,
+      "overall": {
+        "max_pairwise_rms_px": null,
+        "median_pairwise_normalized_rms": null,
+        "median_pairwise_rms_px": null
+      },
+      "pair_id": "day30_intensity_inversion_affine",
+      "pairwise": [],
+      "schema_version": "week06_transform_agreement_v1",
+      "status": "insufficient_candidates"
+    }
+  ],
+  "artifacts": {
+    "agreement_views": "outputs/week06_day05_agreement_consensus/agreement_views.json",
+    "automatic_runs": "outputs/week06_day05_agreement_consensus/automatic_runs.json",
+    "development_only_ground_truth_validation": "outputs/week06_day05_agreement_consensus/development_only_ground_truth_validation.json",
+    "method_summaries": "outputs/week06_day05_agreement_consensus/method_summaries.json"
+  },
+  "day": 30,
+  "development_only_ground_truth_validation": {
+    "summaries": [
+      {
+        "attempts": 3,
+        "development_geometric_success_rate": 1.0,
+        "ground_truth_evaluated": 3,
+        "method_id": "ecc_affine",
+        "modality_class": "monomodal",
+        "tre_mean_px_summary": {
+          "count": 3,
+          "mad": 0.0010787650435283846,
+          "median": 0.47932668728157957,
+          "p95": 0.7186332848726021
+        },
+        "used_by_auto_service": false,
+        "within_development_tolerance": 3
+      },
+      {
+        "attempts": 3,
+        "development_geometric_success_rate": 1.0,
+        "ground_truth_evaluated": 3,
+        "method_id": "mi_affine_2d",
+        "modality_class": "monomodal",
+        "tre_mean_px_summary": {
+          "count": 3,
+          "mad": 0.25327515943509304,
+          "median": 0.4615208569557881,
+          "p95": 1.6217867230860392
+        },
+        "used_by_auto_service": false,
+        "within_development_tolerance": 3
+      },
+      {
+        "attempts": 3,
+        "development_geometric_success_rate": 1.0,
+        "ground_truth_evaluated": 3,
+        "method_id": "orb_affine",
+        "modality_class": "monomodal",
+        "tre_mean_px_summary": {
+          "count": 3,
+          "mad": 0.033973948894564066,
+          "median": 0.23079023423209474,
+          "p95": 0.6538139395074147
+        },
+        "used_by_auto_service": false,
+        "within_development_tolerance": 3
+      },
+      {
+        "attempts": 3,
+        "development_geometric_success_rate": 1.0,
+        "ground_truth_evaluated": 3,
+        "method_id": "sift_affine",
+        "modality_class": "monomodal",
+        "tre_mean_px_summary": {
+          "count": 3,
+          "mad": 0.001975288140324341,
+          "median": 0.07415683937830787,
+          "p95": 0.3065858176108222
+        },
+        "used_by_auto_service": false,
+        "within_development_tolerance": 3
+      },
+      {
+        "attempts": 1,
+        "development_geometric_success_rate": 1.0,
+        "ground_truth_evaluated": 1,
+        "method_id": "mi_affine_2d",
+        "modality_class": "simulated_multimodal",
+        "tre_mean_px_summary": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 0.19389331719285813,
+          "p95": 0.19389331719285813
+        },
+        "used_by_auto_service": false,
+        "within_development_tolerance": 1
+      }
+    ],
+    "tolerance_px": 2.0,
+    "used_by_auto_service": false
+  },
+  "interpretation": [
+    "Transform disagreement is measured by mapping a common image-space control grid through each Moving-to-Fixed candidate transform and comparing the resulting point locations.",
+    "The consensus anchor is the transform medoid with the smallest median pairwise RMS disagreement. It is a descriptive geometric reference, not a best-method recommendation.",
+    "Only normalized common evidence is aggregated across methods. Raw ECC, RANSAC, and MI optimizer objectives remain method-specific diagnostics.",
+    "Operation-time comparison does not use synthetic ground truth. Hidden ground truth is applied only after automatic execution for development validation.",
+    "Monomodal and simulated multimodal summaries remain separate because metric behavior and method compatibility differ by modality class.",
+    "Week 7 is required to calibrate robustness, ranking, confidence, and abstention policies."
+  ],
+  "limitations": [
+    "The Day 30 comparison matrix is intentionally small and is not a substitute for Week 7 condition sweeps.",
+    "The preliminary consensus view currently operates on 2D transforms in image coordinates.",
+    "A single compatible candidate cannot produce cross-method agreement and is reported as insufficient_candidates.",
+    "The transform medoid is not evidence that the anchor method is geometrically correct.",
+    "The 3D RIRE technical path remains outside the automatic consensus development matrix."
+  ],
+  "matrix": {
+    "case_count": 4,
+    "case_summaries": [
+      {
+        "agreement_status": "available",
+        "compatible_candidates": 4,
+        "condition": {
+          "type": "none"
+        },
+        "consensus_anchor_candidate_id": "auto-e37e51f08246ed61818d",
+        "consensus_anchor_method_id": "sift_affine",
+        "eligible_for_agreement": 4,
+        "final_recommendation": null,
+        "max_pairwise_rms_px": 2.388305774155476,
+        "median_pairwise_rms_px": 1.3782698337644224,
+        "modality_class": "monomodal",
+        "orchestration_runtime_ms": 656.6478000022471,
+        "pair_id": "day30_clean_affine",
+        "status_counts": {
+          "check": 0,
+          "completed": 4,
+          "failed": 0,
+          "validation_error": 0
+        }
+      },
+      {
+        "agreement_status": "available",
+        "compatible_candidates": 4,
+        "condition": {
+          "sigma": 1.4,
+          "type": "gaussian_blur"
+        },
+        "consensus_anchor_candidate_id": "auto-af85aed0345ac1254c9b",
+        "consensus_anchor_method_id": "mi_affine_2d",
+        "eligible_for_agreement": 4,
+        "final_recommendation": null,
+        "max_pairwise_rms_px": 1.5498616579114248,
+        "median_pairwise_rms_px": 0.9884413781261441,
+        "modality_class": "monomodal",
+        "orchestration_runtime_ms": 222.65760001027957,
+        "pair_id": "day30_blur_affine",
+        "status_counts": {
+          "check": 0,
+          "completed": 4,
+          "failed": 0,
+          "validation_error": 0
+        }
+      },
+      {
+        "agreement_status": "available",
+        "compatible_candidates": 4,
+        "condition": {
+          "seed": 2026,
+          "sigma_fraction": 0.025,
+          "type": "gaussian_noise"
+        },
+        "consensus_anchor_candidate_id": "auto-b94efa4900c64b59989c",
+        "consensus_anchor_method_id": "sift_affine",
+        "eligible_for_agreement": 4,
+        "final_recommendation": null,
+        "max_pairwise_rms_px": 0.7598637872077845,
+        "median_pairwise_rms_px": 0.5160871429413337,
+        "modality_class": "monomodal",
+        "orchestration_runtime_ms": 343.9049999869894,
+        "pair_id": "day30_noise_affine",
+        "status_counts": {
+          "check": 0,
+          "completed": 4,
+          "failed": 0,
+          "validation_error": 0
+        }
+      },
+      {
+        "agreement_status": "insufficient_candidates",
+        "compatible_candidates": 1,
+        "condition": {
+          "type": "intensity_inversion"
+        },
+        "consensus_anchor_candidate_id": null,
+        "consensus_anchor_method_id": null,
+        "eligible_for_agreement": 1,
+        "final_recommendation": null,
+        "max_pairwise_rms_px": null,
+        "median_pairwise_rms_px": null,
+        "modality_class": "simulated_multimodal",
+        "orchestration_runtime_ms": 225.04610000760294,
+        "pair_id": "day30_intensity_inversion_affine",
+        "status_counts": {
+          "check": 0,
+          "completed": 1,
+          "failed": 0,
+          "validation_error": 0
+        }
+      }
+    ],
+    "method_catalog_count": 6
+  },
+  "method_summaries": [
+    {
+      "attempts": 3,
+      "common_metric_summaries": {
+        "evaluation_mi": {
+          "count": 3,
+          "mad": 0.09098614799434479,
+          "median": 1.5520018340518802,
+          "p95": 1.6823458575385142
+        },
+        "mae": {
+          "count": 3,
+          "mad": 1.6676149585448794,
+          "median": 5.901517936541099,
+          "p95": 7.40237139923149
+        },
+        "mse": {
+          "count": 3,
+          "mad": 17.72612635254187,
+          "median": 90.63725783965856,
+          "p95": 215.93648156000282
+        },
+        "ncc": {
+          "count": 3,
+          "mad": 0.0017018012634750779,
+          "median": 0.9914214122615238,
+          "p95": 0.9929530333986514
+        },
+        "ssim": {
+          "count": 3,
+          "mad": 0.039160178742177254,
+          "median": 0.7984184814326202,
+          "p95": 0.904408032430344
+        },
+        "total_runtime_ms": {
+          "count": 3,
+          "mad": 2.278900006785989,
+          "median": 28.825200017308816,
+          "p95": 30.876210023416206
+        },
+        "valid_overlap_fraction": {
+          "count": 3,
+          "mad": 8.138020833337034e-05,
+          "median": 0.949462890625,
+          "p95": 0.9517822265625
+        }
+      },
+      "method_family": "intensity_based",
+      "method_id": "ecc_affine",
+      "modality_class": "monomodal",
+      "plausible_rate_among_terminal": 1.0,
+      "raw_optimizer_objectives_aggregated": false,
+      "status_counts": {
+        "check": 0,
+        "completed": 3,
+        "failed": 0,
+        "validation_error": 0
+      },
+      "terminal_success_rate": 1.0
+    },
+    {
+      "attempts": 3,
+      "common_metric_summaries": {
+        "evaluation_mi": {
+          "count": 3,
+          "mad": 0.09472965622263407,
+          "median": 1.4798473407346788,
+          "p95": 1.5999103944042936
+        },
+        "mae": {
+          "count": 3,
+          "mad": 1.8940865378998915,
+          "median": 7.4950625102907855,
+          "p95": 10.147500846424451
+        },
+        "mse": {
+          "count": 3,
+          "mad": 130.44026711453353,
+          "median": 226.91890517482705,
+          "p95": 791.6458448600097
+        },
+        "ncc": {
+          "count": 3,
+          "mad": 0.012224558730477009,
+          "median": 0.9786693123718863,
+          "p95": 0.9896714152293156
+        },
+        "ssim": {
+          "count": 3,
+          "mad": 0.024241422725044592,
+          "median": 0.7663306184853577,
+          "p95": 0.8052216889320072
+        },
+        "total_runtime_ms": {
+          "count": 3,
+          "mad": 74.05429999926127,
+          "median": 206.04809999349527,
+          "p95": 409.93887000659015
+        },
+        "valid_overlap_fraction": {
+          "count": 3,
+          "mad": 0.0039333767361111605,
+          "median": 0.9440104166666666,
+          "p95": 0.9475504557291666
+        }
+      },
+      "method_family": "mutual_information",
+      "method_id": "mi_affine_2d",
+      "modality_class": "monomodal",
+      "plausible_rate_among_terminal": 1.0,
+      "raw_optimizer_objectives_aggregated": false,
+      "status_counts": {
+        "check": 0,
+        "completed": 3,
+        "failed": 0,
+        "validation_error": 0
+      },
+      "terminal_success_rate": 1.0
+    },
+    {
+      "attempts": 3,
+      "common_metric_summaries": {
+        "evaluation_mi": {
+          "count": 3,
+          "mad": 0.1517521132125661,
+          "median": 1.5882155885827984,
+          "p95": 1.7247924904741079
+        },
+        "mae": {
+          "count": 3,
+          "mad": 1.9419256704668544,
+          "median": 5.741250421841253,
+          "p95": 8.689515760921475
+        },
+        "mse": {
+          "count": 3,
+          "mad": 10.593307535735164,
+          "median": 101.8283244616218,
+          "p95": 355.8205515856806
+        },
+        "ncc": {
+          "count": 3,
+          "mad": 0.0010348731872464878,
+          "median": 0.990379379398232,
+          "p95": 0.9913107652667538
+        },
+        "ssim": {
+          "count": 3,
+          "mad": 0.05950545407556396,
+          "median": 0.7998993159327374,
+          "p95": 0.8964527026958197
+        },
+        "total_runtime_ms": {
+          "count": 3,
+          "mad": 2.094499970553443,
+          "median": 9.874399984255433,
+          "p95": 101.55911000911145
+        },
+        "valid_overlap_fraction": {
+          "count": 3,
+          "mad": 0.0007595486111111605,
+          "median": 0.9412163628472222,
+          "p95": 0.9418999565972223
+        }
+      },
+      "method_family": "feature_based",
+      "method_id": "orb_affine",
+      "modality_class": "monomodal",
+      "plausible_rate_among_terminal": 1.0,
+      "raw_optimizer_objectives_aggregated": false,
+      "status_counts": {
+        "check": 0,
+        "completed": 3,
+        "failed": 0,
+        "validation_error": 0
+      },
+      "terminal_success_rate": 1.0
+    },
+    {
+      "attempts": 3,
+      "common_metric_summaries": {
+        "evaluation_mi": {
+          "count": 3,
+          "mad": 0.17330129327635135,
+          "median": 1.6032442575559658,
+          "p95": 1.7745422493341687
+        },
+        "mae": {
+          "count": 3,
+          "mad": 2.248784580520856,
+          "median": 5.541974280766799,
+          "p95": 7.784207929158752
+        },
+        "mse": {
+          "count": 3,
+          "mad": 24.687372633020395,
+          "median": 86.89077576918322,
+          "p95": 252.5824129961912
+        },
+        "ncc": {
+          "count": 3,
+          "mad": 0.0023697720826170166,
+          "median": 0.9918144259806005,
+          "p95": 0.9939472208549559
+        },
+        "ssim": {
+          "count": 3,
+          "mad": 0.05024192734690647,
+          "median": 0.8050710684161874,
+          "p95": 0.909811166626974
+        },
+        "total_runtime_ms": {
+          "count": 3,
+          "mad": 1.371799997286871,
+          "median": 14.751899987459183,
+          "p95": 23.36930999008473
+        },
+        "valid_overlap_fraction": {
+          "count": 3,
+          "mad": 0.0003797743055554692,
+          "median": 0.9444173177083334,
+          "p95": 0.9447591145833333
+        }
+      },
+      "method_family": "feature_based",
+      "method_id": "sift_affine",
+      "modality_class": "monomodal",
+      "plausible_rate_among_terminal": 1.0,
+      "raw_optimizer_objectives_aggregated": false,
+      "status_counts": {
+        "check": 0,
+        "completed": 3,
+        "failed": 0,
+        "validation_error": 0
+      },
+      "terminal_success_rate": 1.0
+    },
+    {
+      "attempts": 1,
+      "common_metric_summaries": {
+        "evaluation_mi": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 1.899394532951698,
+          "p95": 1.899394532951698
+        },
+        "mae": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 127.2160075339475,
+          "p95": 127.2160075339475
+        },
+        "mse": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 20804.823099071833,
+          "p95": 20804.823099071833
+        },
+        "ncc": {
+          "count": 1,
+          "mad": 0.0,
+          "median": -0.9926388818094282,
+          "p95": -0.9926388818094282
+        },
+        "ssim": {
+          "count": 1,
+          "mad": 0.0,
+          "median": -0.04165276943496835,
+          "p95": -0.04165276943496835
+        },
+        "total_runtime_ms": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 209.44970002165064,
+          "p95": 209.44970002165064
+        },
+        "valid_overlap_fraction": {
+          "count": 1,
+          "mad": 0.0,
+          "median": 0.94384765625,
+          "p95": 0.94384765625
+        }
+      },
+      "method_family": "mutual_information",
+      "method_id": "mi_affine_2d",
+      "modality_class": "simulated_multimodal",
+      "plausible_rate_among_terminal": 1.0,
+      "raw_optimizer_objectives_aggregated": false,
+      "status_counts": {
+        "check": 0,
+        "completed": 1,
+        "failed": 0,
+        "validation_error": 0
+      },
+      "terminal_success_rate": 1.0
+    }
+  ],
+  "next_step": "Week 6 target validation completed successfully. Freeze the Week 6 evaluation, benchmark-runner, automatic-execution, and transform-agreement contracts. Proceed to Week 7 controlled robustness sweeps for condition-aware calibration, confidence, ranking evidence, and abstention policy development.",
+  "orchestration_runtime_summary_ms": {
+    "count": 4,
+    "mad": 60.62369998835493,
+    "median": 284.4755499972962,
+    "p95": 609.7363799999583
+  },
+  "purpose": "Compare compatible candidate transforms in a common image-space representation, build a ground-truth-free preliminary consensus view, summarize common evidence robustly by method and modality, retain runtime evidence, and close Week 6 without freezing a final best-method recommendation.",
+  "schema_version": "week06_transform_agreement_v1",
+  "scientific_guards": {
+    "consensus_anchor_is_final_recommendation": false,
+    "final_method_recommendation_implemented": false,
+    "ground_truth_exposed_to_auto_service": false,
+    "ground_truth_used_for_consensus": false,
+    "method_and_modality_summaries_kept_separate": true,
+    "raw_optimizer_objectives_cross_compared": false
+  },
+  "stage_runtime_summary_ms": {
+    "total": {
+      "count": 13,
+      "mad": 18.950800033053383,
+      "median": 28.825200017308816,
+      "p95": 298.7071800162081
+    }
+  },
+  "status": "target_validated",
+  "title": "Transform agreement, preliminary consensus, and Week 6 closure",
+  "week": 6,
+  "week_6_completion_criteria": {
+    "automatic_multi_method_execution": true,
+    "common_result_schema": true,
+    "final_ranking_deferred": true,
+    "independently_tested_metrics": true,
+    "modality_summaries_separate": true,
+    "optimizer_objectives_separate_from_evaluation": true,
+    "resumable_benchmark_without_duplicates": true,
+    "transform_agreement_without_ground_truth": true,
+    "unknown_images_free_of_unsupported_geometric_claims": true
+  },
+  "target_validation": {
+    "backend_tests": "432/432 passed",
+    "backend_runtime_seconds": 5.05,
+    "ui_tests": "64/64 passed",
+    "ui_runtime_seconds": 4.68,
+    "closure_cases": 4,
+    "method_catalog_count": 6,
+    "automatic_candidate_executions": 13,
+    "completed_candidates": 13,
+    "check_candidates": 0,
+    "failed_candidates": 0,
+    "validation_errors": 0,
+    "ground_truth_exposed_to_auto_service": false,
+    "final_method_recommendation": "deferred",
+    "agreement_cases_available": 3,
+    "agreement_cases_insufficient_candidates": 1
+  }
+}

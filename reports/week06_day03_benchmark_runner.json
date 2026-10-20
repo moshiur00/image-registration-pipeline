@@ -1,0 +1,140 @@
+{
+  "artifacts": {
+    "journal": "outputs/week06_day03_benchmark_runner/benchmark_records.jsonl",
+    "long_form_csv": "outputs/week06_day03_benchmark_runner/benchmark_results.csv",
+    "plan": "outputs/week06_day03_benchmark_runner/benchmark_plan.json",
+    "runner_summary": "outputs/week06_day03_benchmark_runner/benchmark_summary.json"
+  },
+  "day": 28,
+  "degradation_summaries": [
+    {
+      "attempt_count": 4,
+      "completed_count": 4,
+      "degradation": "gaussian_blur",
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 4,
+      "median_tre_px": 0.22043142057780435
+    },
+    {
+      "attempt_count": 4,
+      "completed_count": 4,
+      "degradation": "intensity_inversion",
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 0,
+      "median_tre_px": 70.13809336851435
+    },
+    {
+      "attempt_count": 4,
+      "completed_count": 4,
+      "degradation": "none",
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 4,
+      "median_tre_px": 0.21812627135182877
+    }
+  ],
+  "first_run": {
+    "executed_count": 12,
+    "plan_fingerprint": "3e9825f3b2bfdc9a244155b0ce36eefe9899566471b95b1472a50ab0145342c4",
+    "planned_count": 12,
+    "preexisting_count": 0,
+    "runner_schema_version": "week06_benchmark_runner_v1",
+    "skipped_count": 0,
+    "status_counts": {
+      "check": 0,
+      "completed": 12,
+      "failed": 0,
+      "validation_error": 0
+    },
+    "terminal_count": 12
+  },
+  "interpretation": [
+    "The same frozen experiment matrix receives stable identifiers derived from scientific task identity.",
+    "A second invocation performs zero registrations and skips every existing terminal record.",
+    "Monomodal and simulated-multimodal labels remain explicit in the long-form result table.",
+    "Execution status and geometric correctness remain separate fields.",
+    "Algorithm and executor failures are retained as terminal evidence rather than removed from later summaries."
+  ],
+  "limitations": [
+    "Day 28 validates orchestration with translation Phase Correlation and ECC only; the complete multi-method matrix is deferred.",
+    "The two seeds are runner-level reproducibility probes for deterministic methods, not independent stochastic accuracy trials.",
+    "Final dataset-specific success thresholds and robust aggregate statistics remain later Week 6 work.",
+    "Automatic method recommendation is not implemented on Day 28."
+  ],
+  "method_configuration_count": 2,
+  "method_summaries": [
+    {
+      "attempt_count": 6,
+      "completed_count": 6,
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 4,
+      "median_tre_px": 0.4070774674962804,
+      "method_id": "ecc_translation"
+    },
+    {
+      "attempt_count": 6,
+      "completed_count": 6,
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 4,
+      "median_tre_px": 0.07791444549936036,
+      "method_id": "phase_translation"
+    }
+  ],
+  "modality_summaries": [
+    {
+      "attempt_count": 8,
+      "completed_count": 8,
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 8,
+      "median_tre_px": 0.22043142057780435,
+      "modality_class": "monomodal"
+    },
+    {
+      "attempt_count": 4,
+      "completed_count": 4,
+      "failed_count": 0,
+      "geometric_within_tolerance_count": 0,
+      "median_tre_px": 70.13809336851435,
+      "modality_class": "simulated_multimodal"
+    }
+  ],
+  "next_step": "Day 28 target validation completed successfully. Freeze the deterministic resumable benchmark-runner contract and proceed to Day 29 automatic multi-method execution foundation work.",
+  "pair_count": 3,
+  "plan_fingerprint": "3e9825f3b2bfdc9a244155b0ce36eefe9899566471b95b1472a50ab0145342c4",
+  "planned_attempts": 12,
+  "purpose": "Add deterministic experiment identities, durable resume/skip-completed behavior, explicit terminal failure records, and a standardized long-form result table around the frozen Day 26 evaluation contract and validated Day 27 metrics.",
+  "resume_probe": {
+    "executed_count": 0,
+    "plan_fingerprint": "3e9825f3b2bfdc9a244155b0ce36eefe9899566471b95b1472a50ab0145342c4",
+    "planned_count": 12,
+    "preexisting_count": 12,
+    "runner_schema_version": "week06_benchmark_runner_v1",
+    "skipped_count": 12,
+    "status_counts": {
+      "check": 0,
+      "completed": 12,
+      "failed": 0,
+      "validation_error": 0
+    },
+    "terminal_count": 12
+  },
+  "runner_schema_version": "week06_benchmark_runner_v1",
+  "seed_count": 2,
+  "status": "target_validated",
+  "title": "Deterministic resumable benchmark runner",
+  "unique_experiment_ids": 12,
+  "week": 6,
+  "target_validation": {
+    "backend_tests": "403/403 passed",
+    "backend_runtime_seconds": 4.72,
+    "ui_tests": "64/64 passed",
+    "ui_runtime_seconds": 5.11,
+    "planned_attempts": 12,
+    "first_run_executed": 12,
+    "first_run_skipped": 0,
+    "first_run_failed": 0,
+    "first_run_validation_error": 0,
+    "resume_executed": 0,
+    "resume_skipped": 12,
+    "unique_long_form_records": "12/12"
+  }
+}

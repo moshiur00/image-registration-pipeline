@@ -1,0 +1,84 @@
+experiment:
+  week: 6
+  day: 26
+  name: unified_evaluation_contract
+  title: Unified evaluation semantics and result contract
+
+contract:
+  schema_version: week06_evaluation_v1
+  transform_direction: moving_to_fixed
+  coordinate_order_by_dimension:
+    2: xy
+    3: xyz
+  principles:
+    - optimizer_completion_is_not_geometric_correctness
+    - descriptive_similarity_is_supporting_evidence_only
+    - failed_runs_remain_in_reporting
+    - unknown_ground_truth_disables_tre_and_geometric_pass
+    - descriptive_metrics_use_valid_overlap
+
+metric_groups:
+  geometric:
+    - translation_error_px
+    - translation_error_mm
+    - rotation_error_deg
+    - scale_error_abs
+    - affine_linear_error
+    - tre_mean_px
+    - tre_median_px
+    - tre_std_px
+    - tre_p95_px
+    - tre_mean_mm
+    - tre_median_mm
+    - tre_std_mm
+    - tre_p95_mm
+  anatomical:
+    - dice
+  descriptive:
+    - mae
+    - mse
+    - ncc
+    - ssim
+    - evaluation_mi
+  overlap:
+    - valid_overlap_fraction
+  runtime:
+    - preprocessing_runtime_ms
+    - registration_runtime_ms
+    - warping_runtime_ms
+    - evaluation_runtime_ms
+    - total_runtime_ms
+
+scenarios:
+  known_synthetic:
+    modality_class: monomodal
+    exact_transform: true
+    landmarks: false
+    masks: false
+    physical_spacing: false
+    valid_overlap_fraction: 0.82
+  unknown_upload:
+    modality_class: unknown
+    exact_transform: false
+    landmarks: false
+    masks: false
+    physical_spacing: false
+    valid_overlap_fraction: 0.78
+  mask_reference:
+    modality_class: medical
+    exact_transform: false
+    landmarks: false
+    masks: true
+    physical_spacing: true
+    valid_overlap_fraction: 0.91
+  physical_known_transform:
+    modality_class: medical
+    exact_transform: true
+    landmarks: false
+    masks: false
+    physical_spacing: true
+    valid_overlap_fraction: 0.88
+
+output:
+  directory: outputs/week06_day01_unified_evaluation
+  report_snapshot: reports/week06_day01_unified_evaluation.json

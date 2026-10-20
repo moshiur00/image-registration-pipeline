@@ -19,6 +19,29 @@ from .feature_metrics import (
     keypoint_density_per_megapixel,
     texture_diagnostics,
 )
+from .automatic_agreement import (
+    AGREEMENT_SCHEMA_VERSION,
+    CandidateAgreementSummary,
+    PairwiseTransformDisagreement,
+    PreliminaryConsensusView,
+    build_preliminary_consensus,
+    control_grid_2d,
+    robust_numeric_summary,
+    summarize_methods,
+    summarize_stage_runtimes,
+    transform_disagreement_2d,
+)
+from .automatic_registration import (
+    AUTO_RUN_SCHEMA_VERSION,
+    AutoCandidateTask,
+    AutoMethodSpec,
+    AutoPairProfile,
+    AutomaticMultiMethodService,
+    AutomaticRunResult,
+    CandidateCompatibility,
+    NormalizedCandidateEvidence,
+    normalize_candidate_record,
+)
 from .benchmark import (
     BenchmarkCasePlan,
     benchmark_manifest_fingerprint,
@@ -26,6 +49,16 @@ from .benchmark import (
     sample_benchmark_ground_truth,
     validate_benchmark_records,
     validate_integrated_benchmark_config,
+)
+from .benchmark_runner import (
+    BenchmarkMethodSpec,
+    BenchmarkPairSpec,
+    BenchmarkRunSummary,
+    BenchmarkTask,
+    ResumableBenchmarkRunner,
+    benchmark_plan_fingerprint as week6_benchmark_plan_fingerprint,
+    enumerate_benchmark_tasks,
+    write_long_form_csv,
 )
 from .config import build_transform, config_hash, load_config, with_defaults
 from .conventions import (
@@ -210,6 +243,15 @@ from .synthetic import (
     image_center,
     sample_ground_truth_transform,
 )
+from .unified_metrics import (
+    TRESummary,
+    dice_score,
+    evaluation_mutual_information,
+    landmark_tre,
+    model_aware_parameter_errors,
+    overlap_aware_descriptive_metrics,
+    transform_tre,
+)
 from .visualization import (
     absolute_difference,
     alpha_overlay,
@@ -232,6 +274,25 @@ from .week4_baseline import (
 from .warping import warp_image, warp_mask
 
 __all__ = [
+    "AGREEMENT_SCHEMA_VERSION",
+    "CandidateAgreementSummary",
+    "PairwiseTransformDisagreement",
+    "PreliminaryConsensusView",
+    "build_preliminary_consensus",
+    "control_grid_2d",
+    "robust_numeric_summary",
+    "summarize_methods",
+    "summarize_stage_runtimes",
+    "transform_disagreement_2d",
+    "AUTO_RUN_SCHEMA_VERSION",
+    "AutoCandidateTask",
+    "AutoMethodSpec",
+    "AutoPairProfile",
+    "AutomaticMultiMethodService",
+    "AutomaticRunResult",
+    "CandidateCompatibility",
+    "NormalizedCandidateEvidence",
+    "normalize_candidate_record",
     "BaselineThresholds",
     "Week4Thresholds",
     "AffineTransformDiagnostics",
@@ -253,6 +314,14 @@ __all__ = [
     "FeatureMatch",
     "FeatureMatchResult",
     "BenchmarkCasePlan",
+    "BenchmarkMethodSpec",
+    "BenchmarkPairSpec",
+    "BenchmarkRunSummary",
+    "BenchmarkTask",
+    "ResumableBenchmarkRunner",
+    "week6_benchmark_plan_fingerprint",
+    "enumerate_benchmark_tasks",
+    "write_long_form_csv",
     "benchmark_manifest_fingerprint",
     "build_case_plan",
     "sample_benchmark_ground_truth",
@@ -321,6 +390,13 @@ __all__ = [
     "rotation_angle_degrees",
     "rotation_error_degrees",
     "transform_point_errors",
+    "TRESummary",
+    "dice_score",
+    "evaluation_mutual_information",
+    "landmark_tre",
+    "model_aware_parameter_errors",
+    "overlap_aware_descriptive_metrics",
+    "transform_tre",
     "write_report_snapshot",
     "MIPreprocessingResult",
     "SUPPORTED_MI_PREPROCESSING",
