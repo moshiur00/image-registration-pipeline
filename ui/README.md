@@ -1,16 +1,21 @@
 # Image Registration Workbench
 
-This directory contains the isolated user-interface work package for the image-registration research pipeline. The current target is a compact Streamlit v0.1 workbench built before Week 6.
+This directory contains the isolated user-interface work package for the image-registration research pipeline. UI v0.1 is frozen, and the current development target is the UI v0.2 Automatic Comparison Preview before Week 7.
 
 ## Current status
 
-**Stages 1 to 4 are complete. Stage 5 implementation is complete as a UI v0.1 release candidate; final target-Windows regression and visual export checks remain before the formal freeze.**
+**UI v0.1 is complete and frozen. Stages 6.1 through 6.4 are complete and target Windows validated. Stage 6.5 is implemented, and its target Windows regression passed (432/432 backend and 134/134 UI). Main Automatic comparison and analysis-ZIP export workflows have been visually reviewed. Final edge-case manual QA and formal UI v0.2 freeze are pending.**
 
 - Stage 1 established isolation, directory boundaries, UI-only dependencies, runtime rules, and regression guardrails.
 - Stage 2 established framework-neutral contracts, method metadata, validation, evidence policy, provenance, input hashing, JSON-safe presentation, and `RegistrationService`.
 - Stage 3 connected the service to Phase Correlation, ECC, ORB/SIFT + RANSAC, and 2D Mutual Information, and added curated examples, deterministic presets, upload decoding, and RIRE availability discovery.
 - Stage 4 adds the professional Streamlit research workbench, curated benchmark-example browser, method reference, explicit preprocessing and method controls, image comparison views, evidence-aware results, diagnostics, and provenance display.
 - Stage 5 adds final evidence-label cleanup, human-readable diagnostics and provenance, session-local exports, final QA coverage, documentation, and the v0.1 scope-freeze gate.
+- Stage 6.1 adds the framework-neutral automatic comparison service and serializable view models.
+- Stage 6.2 adds the separate Automatic Comparison page shell, uploaded-pair preview, pair specification, and backend-driven compatibility presentation.
+- Stage 6.3 adds explicit automatic candidate execution, terminal-state preservation, normalized common-evidence comparison, candidate issue reporting, and stale-result invalidation without ranking or agreement presentation.
+- Stage 6.4 adds a read-only transform-disagreement matrix, descriptive anchor, candidate diagnostics, and inspection-only registered image visualization.
+- Stage 6.5 adds a session-local automatic-analysis export with source hashes and explicit image provenance, geometric display-support masks, concise warnings and diagnostics, and final UI refinement.
 
 No validated Weeks 1 to 5 backend source, configuration, report, finding, or tracked result is changed by the UI work package.
 
@@ -37,7 +42,7 @@ The validated research backend remains authoritative. Streamlit pages do not imp
 
 ## Stage 4 workbench
 
-The current workbench provides three views.
+The current Streamlit application provides four views.
 
 ### Registration workbench
 
@@ -54,6 +59,12 @@ The current workbench provides three views.
 - method diagnostics, including feature/RANSAC statistics and MI convergence traces when available
 - overlay, checkerboard, difference, and edge views
 - provenance with input hashes, normalized parameters, package version, and transform direction
+
+### Automatic comparison
+
+The Automatic comparison page accepts unknown uploaded image pairs and provides fixed/moving uploads, transform-model and modality selection, explicit common preprocessing, input preview, and backend-derived compatible/excluded method views.
+
+Compatibility is obtained through `AutomaticComparisonService.preview()` rather than through a hardcoded Streamlit method list. Stage 6.3 adds explicit `Run automatic comparison` execution through `AutomaticComparisonService.run()` and renders terminal states plus normalized common evidence. Stage 6.4 renders transform agreement, descriptive consensus, and candidate inspection from the existing service. Stage 6.5 adds an in-memory analysis ZIP and mask-aware display; final recommendation and confidence remain deferred until benchmark calibration.
 
 ### Benchmark examples
 
@@ -77,6 +88,15 @@ A completed registration can be downloaded without writing into tracked research
 - a run-bundle ZIP containing all of the above plus `registered_array.npy` for the full-precision registered array
 
 The export layer is framework-neutral and builds byte payloads in memory. A future FastAPI backend can return the same payloads without depending on Streamlit. Exports are convenience artifacts and are never written automatically to `reports/`, `configs/`, `data/manifests/`, or `docs/`.
+
+
+### Automatic analysis export, Stage 6.5
+
+After running Automatic comparison, choose **Prepare automatic analysis ZIP**, then **Download automatic analysis ZIP**. The archive contains `analysis.json`, `manifest.json`, `candidate_comparison.csv`, `candidate_execution_issues.csv`, `pairwise_agreement.csv`, and per-candidate evidence JSON. Candidates with usable transforms also include display-normalized `registered_INSPECTION_ONLY.png`, numeric `registered_INSPECTION_ONLY.npy`, input/preprocessed previews, diagnostic images, and a geometrically computed source-support mask.
+
+The original adapter registered arrays are not retained in the Stage 6 automatic view model; exported registered images are explicitly **inspection-only reconstructions** using the estimated Moving -> Fixed transform and linear resampling. Geometric source support is computed using the backend mask warp, independently of black source pixels. Images are not recalculated as registration evidence. Method defaults, preprocessing, runtime, raw diagnostics, package versions and SHA256 input hashes are recorded for auditability. Uploaded source bytes are not packaged. No export writes into tracked research directories.
+
+The comparison distinguishes **execution issues** from **missing-reference evaluation limitations**, includes interpretable diagnostic highlights with expandable raw method JSON, and leaves all best-method and confidence choices deferred until Week 7.
 
 ## Evidence policy
 
@@ -153,6 +173,15 @@ pytest -c ui/pytest.ini ui/tests
 
 Stage 4 adds a Streamlit AppTest smoke test. It is skipped automatically when Streamlit is not installed in the current environment.
 
+Latest Stage 6.5 target Windows validation (2026-10-20):
+
+```text
+pytest -v                           432 passed in 8.06 s
+pytest -c ui/pytest.ini ui/tests -v  134 passed in 6.80 s
+```
+
+Both suites completed with zero failures and zero skips. The local development environment previously reported dependency-related skips; those local results remain recorded separately in the Stage 6 evidence file.
+
 Recorded evidence:
 
 - `ui/evidence/stage_01_validation.md`
@@ -160,14 +189,15 @@ Recorded evidence:
 - `ui/evidence/stage_03_validation.md`
 - `ui/evidence/stage_04_validation.md`
 - `ui/evidence/stage_05_validation.md`
+- `ui/evidence/stage_06_validation.md`
 
 ## Development record
 
 `ui/DEVELOPMENT_STAGES.md` is the persistent UI development record. It must be updated whenever a stage starts, changes materially, or completes.
 
-## Release gate
+## Release state
 
-UI v0.1 is now a release candidate. Local QA passes with only the expected SimpleITK- and Streamlit-dependent skips in this environment. Before the formal freeze and Week 6 start, run the full root and UI suites on the target Windows environment and manually verify one curated run, one unknown-upload run, and the export downloads.
+UI v0.1 is frozen and target-validated. Stage 6.4 is complete and Windows validated (2026-10-20: 432/432 backend and 117/117 UI, with multi-candidate Streamlit screenshots). Stage 6.5 also passed authoritative Windows regression on 2026-10-20: 432/432 backend in 8.06 s and 134/134 UI in 6.80 s, zero failures and zero skips. User screenshots show an uploaded four-candidate affine comparison, agreement and visual inspection, mask-aware previews, execution limitations, and successful automatic-analysis ZIP download. Remaining manual acceptance: a multimodal case, a one-candidate case, failed/CHECK behavior, and changed-input/settings result/export invalidation. UI v0.2 has not been formally frozen; no final method recommendation or confidence is provided.
 
 
 ## Page header pattern
@@ -180,4 +210,13 @@ Page Title
 One concise page subtitle
 ```
 
-The application-level caption was removed so each page title carries the primary visual hierarchy. Workbench, Benchmark Examples, and Method Reference follow the same pattern.
+The application-level caption was removed so each page title carries the primary visual hierarchy. Workbench, Automatic Registration Comparison, Benchmark Examples, and Method Reference follow the same pattern.
+
+
+## UI v0.2 final QA patch (2026-10-20)
+
+Two compatible candidates are always tied under pairwise centrality, so the page now says there is no unique descriptive anchor. One eligible transform reports insufficient agreement. With three or more eligible transforms, only a unique minimum median RMS is displayed as the descriptive anchor; the backend medoid remains available in raw evidence. Automatic-analysis ZIP files record this distinction in `analysis.json` and `manifest.json`.
+
+Changing or removing input images, changing pair settings or preprocessing, or starting a new comparison clears the old result and prepared export. Exports also reject stale request identities. The original manual Workbench and validated backend were not changed.
+
+The final patch passed local backend tests (421 passed, 11 optional-dependency skips) and UI tests (147 passed, 2 optional-dependency skips). The previous release candidate passed 432 backend and 134 UI tests on Windows, but the new patch awaits fresh authoritative Windows checks. With all dependencies installed, expected counts are 432 backend and 149 UI tests. Do not freeze UI v0.2 or remove its `preview` sidebar label until manual edge-case acceptance and these tests are complete. Week 7 remains not started.

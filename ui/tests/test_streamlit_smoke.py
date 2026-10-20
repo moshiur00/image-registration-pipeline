@@ -20,7 +20,7 @@ def test_streamlit_app_loads_without_exception() -> None:
     navigation = next(
         radio for radio in app.radio if getattr(radio, "key", None) == "ui_page"
     )
-    assert navigation.options == ["Workbench", "Benchmark examples", "Method reference"]
+    assert navigation.options == ["Workbench", "Automatic comparison", "Benchmark examples", "Method reference"]
 
     source_selector = next(
         radio for radio in app.radio if getattr(radio, "key", None) == "ui_source_mode"

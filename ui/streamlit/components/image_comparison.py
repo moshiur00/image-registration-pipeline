@@ -34,27 +34,28 @@ def _render_centered_image(image: np.ndarray) -> None:
         st.image(image, width="stretch")
 
 
-def render_visual_diagnostics(*, fixed: np.ndarray, registered: np.ndarray) -> None:
+def render_visual_diagnostics(*, fixed: np.ndarray, registered: np.ndarray, valid_mask: np.ndarray | None = None) -> None:
     import streamlit as st
 
+    note = "Geometric source-support mask" if valid_mask is not None else "Estimated support"
     tabs = st.tabs(["Overlay", "Checkerboard", "Difference", "Edges"])
     with tabs[0]:
-        _render_centered_image(alpha_overlay(fixed, registered))
+        _render_centered_image(alpha_overlay(fixed, registered, valid_mask=valid_mask))
         st.caption(
-            "Equal-weight fixed/registered overlay. Neutral gray marks estimated regions outside valid overlap."
+            f"Equal-weight fixed/registered overlay. Neutral gray marks regions outside valid source support; {note.lower()} is used."
         )
     with tabs[1]:
-        _render_centered_image(checkerboard(fixed, registered))
+        _render_centered_image(checkerboard(fixed, registered, valid_mask=valid_mask))
         st.caption(
-            "Alternating fixed and registered tiles for local alignment inspection. Neutral gray marks estimated regions outside valid overlap."
+            f"Alternating fixed and registered tiles for local alignment inspection. Neutral gray marks regions outside valid source support; {note.lower()} is used."
         )
     with tabs[2]:
-        _render_centered_image(absolute_difference(fixed, registered))
+        _render_centered_image(absolute_difference(fixed, registered, valid_mask=valid_mask))
         st.caption(
-            "Display-normalized absolute intensity difference. Neutral gray marks estimated regions outside valid overlap; display scaling does not affect evaluation metrics."
+            f"Display-normalized absolute intensity difference. Neutral gray marks regions outside source support; {note.lower()} is used. Display scaling does not affect evaluation metrics."
         )
     with tabs[3]:
-        _render_centered_image(edge_overlay(fixed, registered))
+        _render_centered_image(edge_overlay(fixed, registered, valid_mask=valid_mask))
         st.caption(
-            "Fixed and registered edge locations shown together for structural inspection. Neutral gray marks estimated regions outside valid overlap."
+            f"Fixed and registered edge locations shown together for structural inspection. Neutral gray marks regions outside valid source support; {note.lower()} is used."
         )

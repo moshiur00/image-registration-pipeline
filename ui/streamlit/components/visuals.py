@@ -75,6 +75,16 @@ def estimated_valid_warp_mask(registered: Array) -> NDArray[np.bool_]:
     return ~invalid
 
 
+def _display_valid_mask(registered: Array, mask: Array | None) -> NDArray[np.bool_]:
+    """Prefer explicitly supplied geometric support; preserve legacy manual preview."""
+    if mask is None:
+        return estimated_valid_warp_mask(registered)
+    valid = np.asarray(mask)
+    if valid.ndim != 2 or valid.shape != np.asarray(registered).shape[:2]:
+        raise ValueError("Display validity mask must match registered image geometry.")
+    return valid.astype(bool)
+
+
 def _neutralize_invalid(image: NDArray[np.uint8], valid_mask: NDArray[np.bool_]) -> NDArray[np.uint8]:
     """Show estimated out-of-FOV regions in neutral gray for visual diagnostics."""
     output = image.copy()
@@ -85,7 +95,7 @@ def _neutralize_invalid(image: NDArray[np.uint8], valid_mask: NDArray[np.bool_])
     return output
 
 
-def alpha_overlay(fixed: Array, registered: Array, alpha: float = 0.5) -> NDArray[np.uint8]:
+def alpha_overlay(fixed: Array, registered: Array, alpha: float = 0.5, *, valid_mask: Array | None = None) -> NDArray[np.uint8]:
     fixed_u8 = ensure_gray_uint8(fixed)
     registered_u8 = ensure_gray_uint8(registered)
     if fixed_u8.shape != registered_u8.shape:
@@ -93,10 +103,10 @@ def alpha_overlay(fixed: Array, registered: Array, alpha: float = 0.5) -> NDArra
     fixed_rgb = cv2.cvtColor(fixed_u8, cv2.COLOR_GRAY2RGB)
     registered_rgb = cv2.cvtColor(registered_u8, cv2.COLOR_GRAY2RGB)
     output = cv2.addWeighted(fixed_rgb, float(alpha), registered_rgb, 1.0 - float(alpha), 0.0)
-    return _neutralize_invalid(output, estimated_valid_warp_mask(registered))
+    return _neutralize_invalid(output, _display_valid_mask(registered, valid_mask))
 
 
-def checkerboard(fixed: Array, registered: Array, tile_size: int = 32) -> NDArray[np.uint8]:
+def checkerboard(fixed: Array, registered: Array, tile_size: int = 32, *, valid_mask: Array | None = None) -> NDArray[np.uint8]:
     fixed_u8 = ensure_gray_uint8(fixed)
     registered_u8 = ensure_gray_uint8(registered)
     if fixed_u8.shape != registered_u8.shape:
@@ -105,17 +115,17 @@ def checkerboard(fixed: Array, registered: Array, tile_size: int = 32) -> NDArra
     mask = ((yy // int(tile_size)) + (xx // int(tile_size))) % 2 == 0
     output = registered_u8.copy()
     output[mask] = fixed_u8[mask]
-    return _neutralize_invalid(output, estimated_valid_warp_mask(registered))
+    return _neutralize_invalid(output, _display_valid_mask(registered, valid_mask))
 
 
-def absolute_difference(fixed: Array, registered: Array) -> NDArray[np.uint8]:
+def absolute_difference(fixed: Array, registered: Array, *, valid_mask: Array | None = None) -> NDArray[np.uint8]:
     """Return a contrast-normalized absolute difference for display only."""
     fixed_u8 = ensure_gray_uint8(fixed)
     registered_u8 = ensure_gray_uint8(registered)
     if fixed_u8.shape != registered_u8.shape:
         raise ValueError("Difference images must have matching shapes.")
     difference = cv2.absdiff(fixed_u8, registered_u8).astype(np.float32)
-    valid = estimated_valid_warp_mask(registered)
+    valid = _display_valid_mask(registered, valid_mask)
     valid_values = difference[valid]
     positive = valid_values[valid_values > 0.0]
     if positive.size:
@@ -129,7 +139,7 @@ def absolute_difference(fixed: Array, registered: Array) -> NDArray[np.uint8]:
     return output
 
 
-def edge_overlay(fixed: Array, registered: Array) -> NDArray[np.uint8]:
+def edge_overlay(fixed: Array, registered: Array, *, valid_mask: Array | None = None) -> NDArray[np.uint8]:
     fixed_u8 = ensure_gray_uint8(fixed)
     registered_u8 = ensure_gray_uint8(registered)
     if fixed_u8.shape != registered_u8.shape:
@@ -140,4 +150,4 @@ def edge_overlay(fixed: Array, registered: Array) -> NDArray[np.uint8]:
     canvas[..., 0] = fixed_edges
     canvas[..., 1] = registered_edges
     canvas[..., 2] = np.minimum(fixed_edges, registered_edges)
-    return _neutralize_invalid(canvas, estimated_valid_warp_mask(registered))
+    return _neutralize_invalid(canvas, _display_valid_mask(registered, valid_mask))

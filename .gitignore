@@ -40,3 +40,6 @@ outputs/*
 
 # Local archives
 *.zip
+
+# Generated real multimodal test handoff package
+deliverables/real_multimodal_rire_test/

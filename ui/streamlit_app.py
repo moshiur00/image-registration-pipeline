@@ -13,7 +13,9 @@ for import_root in (PROJECT_ROOT, SRC_ROOT):
         sys.path.insert(0, import_root_text)
 
 from ui.adapters import build_default_registration_service
+from ui.automatic import AutomaticComparisonService
 from ui.core import DatasetCatalog
+from ui.streamlit.pages.automatic_comparison import render_automatic_comparison
 from ui.streamlit.pages.benchmark_explorer import render_benchmark_explorer
 from ui.streamlit.pages.method_reference import render_method_reference
 from ui.streamlit.pages.workbench import render_workbench
@@ -46,9 +48,10 @@ def main() -> None:
     def application_objects():
         catalog = DatasetCatalog()
         service = build_default_registration_service(example_provider=catalog)
-        return catalog, service
+        automatic_service = AutomaticComparisonService(registration_service=service)
+        return catalog, service, automatic_service
 
-    catalog, service = application_objects()
+    catalog, service, automatic_service = application_objects()
 
     st.markdown('<div class="research-app-name">IMAGE REGISTRATION PIPELINE</div>', unsafe_allow_html=True)
 
@@ -58,15 +61,17 @@ def main() -> None:
             st.session_state["ui_page"] = "Workbench"
         page = st.radio(
             "View",
-            ["Workbench", "Benchmark examples", "Method reference"],
+            ["Workbench", "Automatic comparison", "Benchmark examples", "Method reference"],
             key="ui_page",
             label_visibility="collapsed",
         )
         st.divider()
-        st.caption("Image Registration Pipeline · v0.1")
+        st.caption("Image Registration Pipeline · UI v0.2 preview")
 
     if page == "Workbench":
         render_workbench(service, catalog)
+    elif page == "Automatic comparison":
+        render_automatic_comparison(automatic_service)
     elif page == "Benchmark examples":
         render_benchmark_explorer(catalog, service)
     else:

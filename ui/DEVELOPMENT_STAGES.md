@@ -8,9 +8,9 @@ The UI is an isolated presentation and orchestration layer around the validated 
 
 **Planned repository location:** `ui/DEVELOPMENT_STAGES.md`
 
-**Current overall status:** UI v0.1 FROZEN - Stage 5 COMPLETE
+**Current overall status:** UI v0.1 FROZEN - Stage 5 COMPLETE; Stages 6.1 through 6.4 COMPLETE and target Windows validated; Stage 6.5 regression previously Windows validated (432/432 backend and 134/134 UI). Stage 6.5 final edge-case QA patch IMPLEMENTED and LOCALLY VALIDATED (421 backend passed, 11 skipped; 147 UI passed, 2 skipped). Updated Windows validation and formal UI v0.2 freeze are pending.
 
-**Target release:** UI v0.1 before Week 6
+**Target release:** UI v0.1 frozen before Week 6; UI v0.2 Automatic Comparison Preview planned before Week 7
 
 ---
 
@@ -1267,3 +1267,836 @@ Later Week 6 regression continues to preserve compatibility: 390 / 390 backend t
 - frozen configs changed: NO
 - validated reports changed: NO
 - tracked data changed: NO
+
+---
+
+# Stage 6 - Automatic Comparison Preview
+
+**Plan date:** 2026-10-20  
+**Status:** STAGES 6.1-6.4 COMPLETE AND TARGET WINDOWS VALIDATED; STAGE 6.5 IMPLEMENTED AND TARGET WINDOWS REGRESSION VALIDATED; final manual edge-case QA and formal UI v0.2 freeze pending  
+**Target:** UI v0.2 preview before Week 7  
+**Detailed plan:** `ui/evidence/stage_06_plan.md`
+
+## Goal
+
+Expose the validated Week 6 automatic-registration infrastructure in the research UI without changing the frozen manual Workbench and without introducing an unsupported best-method recommendation.
+
+The new workflow should answer:
+
+> Given a fixed image and a moving image, which registration methods are compatible, what evidence does each method produce, how much do their estimated transforms agree, and what can be inspected when ground truth is unavailable?
+
+The current scientific boundary remains explicit:
+
+- compatible methods may be selected automatically;
+- multiple candidates may be executed automatically;
+- common evidence may be compared;
+- transform disagreement may be measured;
+- a descriptive transform-medoid anchor may be shown;
+- final ranking, confidence, and best-method recommendation remain deferred until robustness calibration.
+
+## Scope boundary
+
+The existing UI v0.1 remains frozen.
+
+Stage 6 adds a separate `Automatic comparison` page and supporting UI-specific service/presenter code. It must reuse the Week 6 backend contracts in `src/image_registration/` rather than duplicating registration logic.
+
+The existing `Workbench`, `Benchmark examples`, and `Method reference` pages must remain behaviorally compatible.
+
+## Planned navigation
+
+```text
+Navigation
+
+Workbench
+Automatic comparison
+Benchmark examples
+Method reference
+```
+
+## Planned automatic-comparison flow
+
+```text
+Fixed image + Moving image
+        |
+        v
+Pair specification
+        |
+        v
+Compatibility filtering
+        |
+        v
+Run all compatible methods
+        |
+        v
+Normalize common evidence
+        |
+        v
+Transform disagreement
+        |
+        v
+Preliminary descriptive consensus
+        |
+        v
+Candidate inspection + export
+
+Final recommendation:
+DEFERRED
+```
+
+## Main page sections
+
+### 1. Input pair
+
+Provide:
+
+- fixed-image upload;
+- moving-image upload;
+- requested transform model;
+- modality class;
+- optional-method toggle;
+- explicit preprocessing controls;
+- fixed/moving image preview.
+
+The user should not manually choose candidate methods in automatic mode.
+
+### 2. Candidate-method analysis
+
+Before execution, show:
+
+- compatible method count;
+- compatible method names;
+- excluded method count;
+- explicit exclusion reasons.
+
+Compatibility must be produced by the backend capability rules, not by Streamlit-specific hardcoding.
+
+### 3. Automatic execution
+
+Use one action:
+
+`Run automatic comparison`
+
+Do not use labels such as `Find best method`.
+
+Show candidate execution progress and preserve all terminal states:
+
+- completed;
+- CHECK;
+- failed;
+- validation error.
+
+A failed candidate must remain visible in the comparison record.
+
+### 4. Result summary
+
+Show a compact summary containing:
+
+- compatible methods;
+- completed candidates;
+- CHECK candidates;
+- failed candidates;
+- ground-truth availability;
+- transform-agreement state;
+- recommendation state.
+
+Unknown uploads must not display a geometric PASS label.
+
+### 5. Common comparison evidence
+
+Show one candidate comparison table with shared evidence only:
+
+- execution state;
+- transform plausibility;
+- MAE;
+- MSE;
+- NCC;
+- SSIM;
+- evaluation Mutual Information;
+- valid-overlap fraction;
+- runtime.
+
+State clearly that descriptive image metrics do not independently establish geometric correctness.
+
+Do not combine them into a single weighted score during Stage 6.
+
+### 6. Transform agreement
+
+Show:
+
+- eligible candidate count;
+- pairwise comparison count;
+- median pairwise disagreement;
+- agreement state;
+- descriptive consensus anchor when available.
+
+The anchor must always be labeled as descriptive only.
+
+Required explanatory text:
+
+> The consensus anchor is the candidate whose estimated transform is most central to the candidate set. It is not a validated best-method recommendation.
+
+### 7. Pairwise disagreement matrix
+
+Present the pairwise transform-space disagreement matrix in pixels.
+
+The displayed quantity should be described as RMS disagreement over the common deterministic image-space control grid.
+
+Do not interpret this matrix as ground-truth error.
+
+### 8. Candidate inspection
+
+Each candidate should be expandable and expose:
+
+- registered image;
+- estimated transform;
+- common evidence;
+- method-specific diagnostics;
+- visual diagnostics;
+- provenance.
+
+Reuse existing Workbench presentation helpers where practical.
+
+### 9. Common evidence versus method diagnostics
+
+Keep these visually separate.
+
+Common evidence may include:
+
+- MAE;
+- MSE;
+- NCC;
+- SSIM;
+- evaluation MI;
+- valid overlap;
+- runtime.
+
+Method-specific diagnostics remain separate, for example:
+
+- ECC objective and convergence;
+- ORB/SIFT keypoints, matches, inliers, residuals;
+- MI trace, valid points, and optimizer state.
+
+Raw optimizer objectives must never be compared as though they were a common cross-method score.
+
+### 10. Registered-candidate gallery
+
+Show compact registered-image thumbnails for completed candidates.
+
+Do not render all full-size diagnostics simultaneously on the main comparison page.
+
+### 11. Ground-truth policy
+
+For uploaded pairs without reference evidence, show one concise explanation:
+
+> Ground truth is unavailable for this image pair. TRE, parameter error, and geometric correctness are therefore not reported. Candidate comparison uses execution evidence, transform plausibility, descriptive image metrics, overlap, diagnostics, runtime, and transform agreement.
+
+Do not duplicate this warning in multiple locations.
+
+### 12. Why no final recommendation?
+
+Add an explanatory section stating that:
+
+- compatibility, execution, normalized evidence, and transform agreement are now available;
+- recommendation thresholds have not yet been calibrated across difficult conditions;
+- Week 7 robustness experiments will provide the evidence for confidence, ranking, consensus thresholds, and abstention.
+
+### 13. Failure handling
+
+The page must remain usable when one or more candidates fail.
+
+A failed candidate should show:
+
+- terminal state;
+- failure reason;
+- missing registered output where applicable;
+- preserved candidate record.
+
+The failure must not be silently removed from the comparison.
+
+### 14. Insufficient-consensus behavior
+
+Agreement requires at least two eligible candidate transforms.
+
+For one eligible candidate, display:
+
+`Insufficient candidates`
+
+Do not manufacture an agreement score or consensus anchor.
+
+### 15. Export support
+
+Add one session-local export:
+
+`Download automatic analysis`
+
+Planned bundle:
+
+```text
+automatic_analysis.zip
+
+summary.json
+pair_specification.json
+candidate_table.csv
+agreement_summary.json
+pairwise_disagreement.csv
+
+inputs/
+    fixed.png
+    moving.png
+
+candidates/
+    <method_id>/
+        registered.png
+        transform.json
+        evidence.json
+        diagnostics.json
+```
+
+Exports must remain in memory and must not automatically modify tracked research reports, configurations, manifests, or datasets.
+
+## Planned architecture
+
+Backend authority remains under:
+
+```text
+src/image_registration/
+    automatic_registration.py
+    automatic_agreement.py
+```
+
+Stage 6 UI code should be isolated under:
+
+```text
+ui/
+    automatic/
+        __init__.py
+        models.py
+        automatic_service.py
+        automatic_presenter.py
+        agreement_presenter.py
+        automatic_exports.py
+
+    tests/
+        test_automatic_service.py
+        test_automatic_presenter.py
+        test_agreement_presenter.py
+        test_automatic_exports.py
+```
+
+`ui/streamlit_app.py` should orchestrate presentation only.
+
+Streamlit must not directly call individual registration algorithms.
+
+## UI-specific service boundary
+
+Introduce a framework-neutral UI facade such as:
+
+```text
+AutomaticComparisonService
+```
+
+Conceptual flow:
+
+```text
+Streamlit
+   |
+   v
+AutomaticComparisonService
+   |
+   +--> pair validation
+   |
+   +--> AutomaticMultiMethodService
+   |
+   +--> transform agreement
+   |
+   +--> presenter-friendly result
+```
+
+The service should return plain serializable structures that can later be exposed through FastAPI with minimal redesign.
+
+## Planned development batches
+
+### Stage 6.1 - Automatic service and view models
+
+**Implementation status:** COMPLETE - TARGET WINDOWS VALIDATED (2026-10-20; Stage 6.1 target gate previously recorded)
+
+Build:
+
+- `ui/automatic/models.py`;
+- `ui/automatic/automatic_service.py`;
+- `ui/automatic/__init__.py`;
+- `ui/tests/test_automatic_service.py`.
+
+Responsibilities implemented:
+
+- validate and preprocess a fixed/moving pair without Streamlit;
+- derive a deterministic automatic pair identity;
+- build the 2D automatic method catalog from the existing UI method registry;
+- apply transform-model, modality, shape, and optional-method compatibility rules;
+- construct unknown-ground-truth automatic execution requests;
+- reuse the existing `RegistrationService` and validated adapters;
+- normalize overlap-aware common evidence through the Week 6 evaluation contract;
+- keep method-specific diagnostics separate from common evidence;
+- preserve completed, CHECK, failed, and validation-error candidates;
+- call the Week 6 transform-agreement layer;
+- convert candidate and agreement evidence into JSON-serializable UI view models;
+- keep the consensus anchor descriptive and final recommendation deferred.
+
+Stage 6.1 acceptance status:
+
+- unknown ground truth remains unavailable: PASS;
+- compatible candidates are preserved: PASS;
+- excluded-method reasons are preserved: PASS;
+- failed candidates remain visible: PASS;
+- CHECK candidates remain visible: PASS;
+- insufficient-candidate cases do not invent consensus: PASS;
+- transform agreement remains descriptive: PASS;
+- final recommendation remains deferred: PASS;
+- no Streamlit dependency in the service layer: PASS;
+- existing manual Workbench code changed: NO.
+
+Local validation:
+
+- new Stage 6.1 tests: 15 passed;
+- complete UI suite: 77 passed, 2 skipped locally because SimpleITK and Streamlit are unavailable;
+- complete root suite: 421 passed, 11 skipped locally because SimpleITK is unavailable;
+- authoritative pre-Stage-6.1 Windows baseline remains 432 / 432 backend and 64 / 64 UI tests.
+
+Target Windows validation expected before Stage 6.2:
+
+```powershell
+pytest -v
+pytest -c ui/pytest.ini ui/tests -v
+```
+
+Expected target counts after Stage 6.1:
+
+- backend: 432 / 432;
+- UI: 79 / 79.
+
+### Stage 6.1 - Automatic service and view models
+
+**Status:** COMPLETE and target-validated
+
+Implemented:
+
+- `ui/automatic/__init__.py`;
+- `ui/automatic/models.py`;
+- `ui/automatic/automatic_service.py`;
+- `ui/tests/test_automatic_service.py`.
+
+Responsibilities now covered:
+
+- validate the image pair;
+- construct the backend automatic-run request;
+- derive deterministic pair identity;
+- apply transform-model, modality, same-shape, and optional-method compatibility rules;
+- call the existing automatic multi-method backend;
+- normalize common evidence;
+- preserve method-specific diagnostics separately;
+- preserve completed, CHECK, failed, and validation-error terminal states;
+- call the frozen Week 6 transform-agreement layer;
+- convert backend results into stable JSON-safe UI view models.
+
+Scientific safeguards validated:
+
+- unknown ground truth remains unavailable;
+- compatible candidates are preserved;
+- excluded-method reasons are preserved;
+- failed candidates remain visible;
+- final recommendation remains deferred;
+- no Streamlit dependency is required by the service layer;
+- unexpected geometric ground-truth evidence is rejected by the UI service boundary.
+
+Target Windows validation:
+
+- backend regression: 432 / 432 passed in 5.93 s;
+- UI regression: 79 / 79 passed in 5.40 s;
+- Stage 6.1 focused tests: 15 passed;
+- existing manual Workbench regression: none observed.
+
+Decision:
+
+Freeze the Stage 6.1 service and view-model contract and proceed to Stage 6.2 page-shell development.
+
+### Stage 6.2 - Page shell and compatibility view
+
+**Status:** COMPLETE and target-validated
+
+Implemented:
+
+- new `Automatic comparison` navigation entry;
+- `ui/streamlit/pages/automatic_comparison.py`;
+- fixed and moving image upload controls;
+- requested transform-model selector;
+- user-facing modality selector;
+- optional-method toggle;
+- explicit common preprocessing controls;
+- fixed and moving image preview;
+- compatibility summary from `AutomaticComparisonService.preview()`;
+- compatible-method table generated from backend capability decisions;
+- excluded-method table with human-readable backend exclusion reasons;
+- explicit ground-truth-unavailable display;
+- no candidate-execution action in Stage 6.2;
+- focused Stage 6.2 regression tests.
+
+Architecture safeguards:
+
+- the Streamlit page calls the Stage 6.1 service instead of individual algorithms;
+- no registration method IDs are hardcoded in the page;
+- compatibility rules remain authoritative in the backend automatic catalog;
+- uploaded image bytes remain in memory and are not written into tracked research directories;
+- the manual Workbench code path remains unchanged;
+- candidate execution remains deferred to Stage 6.3.
+
+Local validation:
+
+- Stage 6.2 focused tests: 10 passed;
+- complete UI suite: 87 passed, 2 skipped locally because SimpleITK and Streamlit are unavailable;
+- complete root suite: 421 passed, 11 skipped locally because SimpleITK is unavailable.
+
+Target Windows validation completed:
+
+- backend: 432 / 432 passed in 4.33 s;
+- UI: 89 / 89 passed in 4.56 s.
+
+Acceptance criteria implemented locally:
+
+- candidate compatibility matches backend rules: PASS;
+- no method list is hardcoded in the Streamlit page: PASS;
+- existing Workbench behavior is unchanged: PASS;
+- registration candidates are not executed from the Stage 6.2 page: PASS.
+
+### Stage 6.2 completion record
+
+**Status:** COMPLETE and target-validated
+
+Target Windows validation:
+
+```text
+Backend regression
+432 / 432 passed in 4.33 s
+
+UI regression
+89 / 89 passed in 4.56 s
+
+Stage 6.2 focused tests
+10 passed
+```
+
+Validated Stage 6.2 behavior:
+
+- Automatic comparison appears as a separate navigation page;
+- fixed and moving uploads remain in memory;
+- transform-model and modality controls are available;
+- common preprocessing is explicit;
+- compatible methods come from `AutomaticComparisonService.preview()`;
+- excluded methods retain backend exclusion reasons;
+- no registration candidate is executed from the Stage 6.2 page;
+- no ranking, agreement, confidence, or recommendation is shown;
+- the existing manual Workbench remains compatible.
+
+Decision:
+
+Freeze the Stage 6.2 page-shell and compatibility-presentation contract and proceed to Stage 6.3 candidate execution and common-evidence presentation.
+
+### Stage 6.3 - Candidate execution and evidence table
+
+**Status:** COMPLETE - TARGET WINDOWS VALIDATED (2026-10-20)
+
+Implemented:
+
+- framework-neutral `ui/automatic/automatic_presenter.py`;
+- explicit `Run automatic comparison` action;
+- execution through the frozen `AutomaticComparisonService.run()` contract;
+- session-state result caching keyed by a deterministic compatibility signature;
+- stale-result invalidation when the pair specification or compatible method set changes;
+- completed/CHECK/failed/validation-error summary;
+- common cross-method evidence table;
+- transform-plausibility state;
+- candidate warning and failure detail table;
+- explicit not-calibrated recommendation state;
+- explicit statement that TRE, parameter error, and geometric correctness are unavailable;
+- Stage 6.4 boundary notice for agreement and detailed candidate inspection.
+
+Common evidence shown in Stage 6.3:
+
+- MAE;
+- MSE;
+- NCC;
+- SSIM;
+- evaluation Mutual Information;
+- valid-overlap fraction;
+- total runtime.
+
+Scientific safeguards:
+
+- no weighted score is calculated;
+- no method-specific optimizer objective is placed in the common evidence table;
+- failed and CHECK candidates remain visible;
+- unknown uploads expose no TRE or geometric PASS/CHECK;
+- no transform-agreement result is rendered yet;
+- no consensus anchor is rendered yet;
+- no best-method recommendation or confidence score is emitted.
+
+Local validation:
+
+```text
+Stage 6.3 focused tests
+11 passed
+
+Complete UI suite
+98 passed
+2 skipped
+
+Complete backend suite
+421 passed
+11 skipped
+```
+
+The local skips are dependency-related because SimpleITK and Streamlit are unavailable in the development environment.
+
+Target Windows validation completed on 2026-10-20:
+
+```powershell
+pytest -v
+pytest -c ui/pytest.ini ui/tests -v
+```
+
+Observed Windows results, supplied as terminal screenshots:
+
+```text
+Backend regression: 432 passed in 6.60 s; 0 failed; 0 skipped.
+UI regression:      100 passed in 5.27 s; 0 failed; 0 skipped.
+Combined:           532 passed; 0 failed; 0 skipped.
+```
+
+The UI run reported Windows (`win32`), Python 3.12.6, and pytest 9.1.1. These are separate root and isolated UI test-suite executions, not one combined pytest invocation.
+
+**Historical Stage 6.3 closure decision:** Stage 6.3 was target Windows validated at this point. Stage 6.4 had not started yet. Its current locally implemented status is recorded in the following Stage 6.4 section. Interactive Streamlit page inspection on Windows is still a recommended visual QA step and is not claimed as completed.
+
+Acceptance criteria implemented locally:
+
+- mixed candidate outcomes remain renderable: PASS;
+- unknown uploads expose no TRE or geometric PASS: PASS;
+- common evidence is presented consistently: PASS;
+- method-specific diagnostics remain outside the common table: PASS;
+- stale automatic results are invalidated when the pair specification changes: PASS;
+- candidate execution only occurs after an explicit user action: PASS.
+
+### Stage 6.4 - Agreement and candidate inspection
+
+**Status:** COMPLETE - TARGET WINDOWS VALIDATED (2026-10-20)
+
+Implemented:
+
+- agreement summary with eligible/excluded counts, backend-reported status and pairwise comparison count;
+- symmetric pairwise RMS-pixel disagreement matrix and detailed disagreement statistics;
+- explicitly excluded transforms, with reasons, and `insufficient_candidates` with no invented anchor;
+- a descriptive transform-medoid anchor, never labeled best or selected;
+- all-candidate detail expanders: execution, transform plausibility, Moving -> Fixed matrix, method diagnostics, runtime, failure reasons, warnings;
+- inspection-only reconstructed registration using existing `warp_image`, explicit preprocessing, and existing overlay/checkerboard/difference/edge visualizations;
+- isolated, framework-neutral presentation helpers without modifying frozen backend code.
+
+Files added:
+
+- `ui/automatic/agreement_presenter.py`
+- `ui/automatic/candidate_inspection.py`
+- `ui/tests/test_stage6_agreement_inspection.py`
+
+File extended:
+
+- `ui/streamlit/pages/automatic_comparison.py`
+
+Local validation:
+
+```text
+Stage 6.4 focused: 17 passed
+Root backend: 421 passed, 11 skipped, 0 failed
+Isolated UI: 115 passed, 2 skipped, 0 failed
+```
+
+The local skipped tests require optional packages not available here. Stage 6.4 subsequently passed full target Windows regression: 432 / 432 backend in 7.51 s and 117 / 117 UI in 5.13 s, with no failures or skips. Supplied Streamlit screenshots show four completed affine candidates, pairwise disagreement, medoid, diagnostics and candidate images. The independent result is not claimed to establish geometric correctness.
+
+Acceptance:
+
+- two eligible transforms show the symmetric disagreement matrix and descriptive medoid;
+- only one eligible transform yields no agreement matrix and no anchor;
+- missing pairwise values stay missing rather than becoming false zeros;
+- excluded candidates and CHECK/failed candidates remain visible;
+- visual preview is an explicitly labeled rewarp, not a replacement for stored metrics;
+- no method ranking, confidence, thresholds, or geometric correctness claim.
+
+**Stage 6.4 validation decision (2026-10-20):** COMPLETE and target Windows validated. Stage 6.5 may proceed.
+
+### Stage 6.5 - Export, QA, documentation, and v0.2 freeze
+
+**Status:** IMPLEMENTATION COMPLETE - TARGET WINDOWS REGRESSION VALIDATED; final edge-case QA and UI v0.2 freeze pending
+
+Locally implemented:
+
+- automatic-analysis ZIP;
+- export-content and regression tests;
+- existing navigation and smoke-test preservation;
+- method-diagostic and overlap-mask refinements;
+- documentation update.
+
+Target Windows regression has passed (432/432 backend; 134/134 UI). The main unknown-ground-truth affine upload, four-candidate comparison, agreement, visual inspection and export/download walkthroughs have been demonstrated. Remaining manual acceptance: a simulated multimodal example, a single-compatible-candidate case, a failed/CHECK case, and an explicit changed-input/settings stale-result/stale-export check. Final release freeze remains pending.
+
+Freeze target:
+
+`UI v0.2 Automatic Comparison Preview`
+
+## Stage 6 test plan
+
+Add focused tests for:
+
+- automatic service conversion;
+- compatibility presentation;
+- excluded-method reasons;
+- deterministic candidate ordering;
+- completed/CHECK/failed/validation-error states;
+- common evidence normalization;
+- method-diagnostic separation;
+- ground-truth firewall;
+- agreement available;
+- insufficient candidates;
+- descriptive consensus labeling;
+- failed-candidate presentation;
+- automatic-analysis export contents;
+- navigation;
+- Streamlit smoke behavior.
+
+The test goal is contract coverage, not an arbitrary test count.
+
+## Visual design rules
+
+Continue the existing research-tool visual language:
+
+- white background;
+- navy headings;
+- teal accent;
+- light neutral cards;
+- restrained status badges;
+- clear tables;
+- minimal icon use.
+
+Avoid:
+
+- gradients;
+- assistant-style graphics;
+- sparkle icons;
+- animated marketing cards;
+- confidence gauges before calibration;
+- gamified scores.
+
+## Features explicitly deferred until after Week 7 calibration
+
+Do not add during Stage 6:
+
+- best-method label;
+- recommended-method label;
+- confidence percentage;
+- weighted overall score;
+- traffic-light quality score;
+- automatic winner;
+- universal disagreement threshold;
+- learned ranking;
+- automatic fallback chain;
+- preprocessing search;
+- method-family ranking.
+
+## Stage 6 completion criteria
+
+Stage 6 is complete only when:
+
+- the existing Workbench remains unchanged;
+- all existing UI tests continue to pass;
+- Automatic comparison is a separate page;
+- uploaded pairs require no ground truth;
+- compatible methods are explicit;
+- excluded methods have explicit reasons;
+- compatible methods execute automatically;
+- candidate failures remain visible;
+- common evidence is normalized;
+- method-specific diagnostics remain separate;
+- transform disagreement is visible;
+- consensus anchor is clearly descriptive;
+- single-candidate cases do not invent consensus;
+- no best-method recommendation exists;
+- no confidence percentage exists;
+- automatic-analysis results can be exported;
+- backend logic remains outside Streamlit;
+- the service contract remains suitable for a future FastAPI layer.
+
+## Expected handoff to Week 7
+
+Stage 6 should expose the Week 6 infrastructure without inventing calibration.
+
+Week 7 will then supply the robustness evidence needed to evolve:
+
+```text
+UI v0.2
+Automatic evidence comparison
+        |
+        v
+Week 7 robustness calibration
+        |
+        v
+Later UI
+Recommendation + confidence + abstention
+```
+
+The purpose of Stage 6 is therefore to make the automatic evidence visible and auditable, not to finish automatic decision-making.
+
+
+
+## Stage 6.5 implementation record, 2026-10-20
+
+**Status:** IMPLEMENTATION COMPLETE; TARGET WINDOWS REGRESSION PASSED. Main interactive Streamlit workflow reviewed. Formal v0.2 freeze remains pending final edge-case QA.
+
+- Added `ui/automatic/automatic_export.py` for an in-memory automatic-analysis ZIP containing the JSON evidence, candidate comparisons, pairwise disagreement CSV, explicit failure records, method settings, input SHA256 hashes, software versions, and separately labeled inspection-only image artifacts. Original uploaded source bytes are excluded.
+- Added `ui/automatic/candidate_summary.py` to distinguish actionable candidate issues from repeated missing-reference notices and show method-specific recorded diagnostic highlights while retaining raw JSON.
+- Extended Stage 6.4 inspection with an exact geometric source-support mask through the existing `transformed_support_mask` backend utility. This prevents actual dark image pixels being mislabeled as invalid borders. Existing manual Workbench visualization call semantics remain compatible.
+- Fixed the after-execution compatibility caption, added evidence-column interpretations, and updated sidebar to `UI v0.2 preview`.
+- Prepared exports only on explicit user request, in memory. A new run or changed input invalidates the previous prepared ZIP.
+- Updated `ui/streamlit/pages/automatic_comparison.py`, `ui/streamlit/components/visuals.py`, and `ui/streamlit/components/image_comparison.py` without changing frozen registration algorithms, research reports or configurations.
+- Added `ui/tests/test_stage6_export_freeze.py` with 17 focused tests. Adjusted previous page-source tests to reflect the new mask-aware signature and execution-state caption.
+
+Local regression:
+
+```text
+Backend: 421 passed, 11 skipped, 0 failed
+UI:      132 passed, 2 skipped, 0 failed
+Focused Stage 6.5: 17 passed
+```
+
+The local skips reflect optional dependency availability. A real-image-pair execution using Week 1 tracked samples completed 2/2 compatible translation candidates. Agreement was present; export produced a valid 26-entry ZIP with candidate evidence, registered inspection images and support masks, and no rendering failures. This is a smoke check, not a correctness guarantee.
+
+**Target Windows regression (2026-10-20): PASS.** User-supplied terminal screenshots show `pytest -v`: 432 passed in 8.06 s, zero failed/skipped; and `pytest -c ui/pytest.ini ui/tests -v`: 134 passed in 6.80 s, zero failed/skipped. User-supplied Streamlit screenshots demonstrate the main uploaded affine pair with four compatible/completed candidates and six exclusions, agreement and descriptive ECC medoid, inspection-only registered views with geometric support masks, the cleaned execution-issues/evaluation-limitations presentation, and export preparation/download. Windows Explorer shows the downloaded ZIP with `analysis.json`, `manifest.json`, `candidate_comparison.csv`, `candidate_execution_issues.csv`, `pairwise_agreement.csv`, `README.txt`, and `candidates/`. The screenshots do not independently establish the contents or integrity of every archived artifact.
+
+**Remaining manual release acceptance:** Check a simulated multimodal case, one compatible candidate with no fabricated consensus, a failed or CHECK candidate with visible/exported reason, and state invalidation after changed inputs/preprocessing. Confirm ZIP provenance against the chosen run if possible. **Formal freeze: NOT YET.** Stage 6.5 is implemented and Windows regression validated; UI v0.2 remains a release candidate until these edge cases are checked. Week 7 has not started.
+
+
+## Stage 6.5 final QA patch, 2026-10-20
+
+**Status:** PATCH IMPLEMENTED AND LOCALLY VALIDATED; NEW TARGET WINDOWS VALIDATION PENDING; UI v0.2 NOT FROZEN.
+
+Based on review of real CT/MRI screenshots, two available transforms can have exactly equal median centrality while the frozen backend reports a deterministic medoid. The patch introduces a framework-neutral presentation explanation so the Streamlit page and exports report `No unique descriptive consensus anchor` for two candidates, tied primary centrality for larger sets, or insufficient candidates for zero/one eligible transform. The backend medoid remains untouched and visible in raw evidence for auditability. No method recommendation is made.
+
+The automatic-analysis ZIP now includes `agreement_presentation` in `analysis.json` and `consensus_presentation` in `manifest.json`, recording the descriptive interpretation separately from raw backend agreement. Export construction rejects an input/preprocessing/transform/modality pair-identity mismatch and a mismatched optional-method policy before generating an archive.
+
+Streamlit session cleanup is centralized: missing or invalid uploaded images, invalid compatibility previews, changed pair signatures, and a new execution clear the previous comparison, prepared export, and candidate-visual selection. The comparison signature explicitly includes the optional-method toggle, even when compatible candidate IDs do not change. The Workbench and frozen backend algorithms remain unchanged.
+
+Local validation after the patch:
+
+```text
+Backend: 421 passed, 11 skipped, 0 failed
+UI: 147 passed, 2 skipped, 0 failed (15 new final-QA tests)
+Week 1 real translation pair: two completed, descriptive two-candidate tie, 26-entry export ZIP passed integrity check
+Multimodal affine one-compatible-candidate smoke: one compatible MI method, no agreement, failed locally due missing SimpleITK, complete seven-entry export ZIP passed integrity check
+```
+
+Prior target Windows evidence remains valid **for the previous build**: 432/432 backend and 134/134 UI. Do not cite those counts as validation of this new patch. Expected next target regression is 432 backend tests and 149 UI tests when optional packages are installed. The new single-candidate MI execution should also be verified on Windows.
+
+**Remaining release acceptance:** Windows regression, interactive two-candidate/no-unique-anchor display, single-candidate multimodal path, changing and removing uploads, changing preprocessing/modality/optional-method settings, stale ZIP disappearance, regenerated ZIP provenance, and failure-record export. Record results before changing sidebar from `UI v0.2 preview` or freezing UI v0.2. Week 7 remains not started.
