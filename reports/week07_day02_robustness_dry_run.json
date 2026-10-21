@@ -1,0 +1,72 @@
+{
+  "config_sha256": "dba1942bde24fe1bc083c381f589cf92788dec8e6c2b99c131da0d3a4aa58ffc",
+  "day": 32,
+  "day31_compatible_pairs": 522,
+  "environment": {
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "first_local_run_executed_attempts": 49,
+  "first_local_run_status_counts": {
+    "check": 1,
+    "completed": 34,
+    "failed": 14,
+    "validation_error": 0
+  },
+  "generator_sha256": "76aac8bbaaee9587ad8f88a6cb33a1985b0c706d7f62c63a2731bf4c1e394fdc",
+  "geometry_excluded_pairs": 36,
+  "geometry_exclusion_reasons": [
+    "rotation_requires_rigid_or_more_complex_model",
+    "scale_requires_similarity_or_affine_model"
+  ],
+  "heldout_pixels_loaded": false,
+  "holdout_sha256_provenance_only": "2ab62fb95bfbccce9cf72fb3db26f5fe69b0f7fd1c5173940295439fe419492b",
+  "interpretation": "development-only synthetic evidence; no confidence or final method selection; success denominator includes failures",
+  "limitations": [
+    "Local SimpleITK unavailable: 14 mutual-information failures reflect dependency, not measured robustness",
+    "No full-grid results; confidence and recommendation remain deferred"
+  ],
+  "method_catalog_sha256": "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
+  "mode": "dry_run",
+  "preflight_max_round_trip_px": 0.0,
+  "preflight_overlaps": {
+    "w7_affine_monomodal_gaussian_blur_1750de2c40_s101": 0.969238,
+    "w7_affine_monomodal_gaussian_noise_b9c84259d3_s101": 0.969238,
+    "w7_affine_monomodal_illumination_5c1809f29d_s101": 0.969238,
+    "w7_affine_monomodal_low_texture_006a94ef20_s101": 0.969238,
+    "w7_affine_monomodal_none_44136fa355_s101": 0.969238,
+    "w7_affine_monomodal_occlusion_035567a016_s101": 0.570665,
+    "w7_affine_monomodal_partial_overlap_1a28597478_s101": 0.501221,
+    "w7_affine_monomodal_repeated_pattern_598468ba3c_s101": 0.969238,
+    "w7_affine_monomodal_rotation_4a34e7f770_s101": 0.905192,
+    "w7_affine_monomodal_scale_89330b5f75_s101": 0.975532,
+    "w7_affine_simulated_multimodal_gaussian_blur_1750de2c40_s101": 0.969238,
+    "w7_affine_simulated_multimodal_multimodal_mapping_4506860a92_s101": 0.969238,
+    "w7_rigid_monomodal_gaussian_blur_1750de2c40_s101": 0.953613,
+    "w7_rigid_simulated_multimodal_gaussian_blur_1750de2c40_s101": 0.953613,
+    "w7_similarity_monomodal_gaussian_blur_1750de2c40_s101": 0.970405,
+    "w7_translation_monomodal_gaussian_blur_1750de2c40_s101": 0.95874
+  },
+  "recorded_runner_summary_is_after_resume": true,
+  "runner": {
+    "executed_count": 0,
+    "plan_fingerprint": "b41a067adfd86a13daed52a48e04223f8b27c29dc1a2a52e243d6f1d51462f80",
+    "planned_count": 49,
+    "preexisting_count": 49,
+    "runner_schema_version": "week06_benchmark_runner_v1",
+    "skipped_count": 49,
+    "status_counts": {
+      "check": 1,
+      "completed": 34,
+      "failed": 14,
+      "validation_error": 0
+    },
+    "terminal_count": 49
+  },
+  "selected_pairs": 16,
+  "selected_tasks": 49,
+  "severity_version": "week07_day32_severity_v1",
+  "source_sha256": "b779d2c8e2a7098a0182c26227c3b516fb2d9d15f14ed99940c6196ba4a2c4e2",
+  "state": "local_stratified_dry_run_only_windows_pending",
+  "week": 7
+}

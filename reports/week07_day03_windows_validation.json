@@ -1,0 +1,49 @@
+{
+  "week": 7,
+  "day": 33,
+  "status": "complete_windows_validated_evidence_reviewed",
+  "evidence_basis": "User-provided Windows terminal screenshots and Day 33 analysis ZIP, plus original Day 32 full-evidence ZIP",
+  "backend": {
+    "passed": 504,
+    "skipped": 2,
+    "failed": 0,
+    "skip_reason": "Symlink creation unsupported by environment; tests/test_zip_project_benchmark.py"
+  },
+  "ui": {
+    "passed": 149,
+    "failed": 0
+  },
+  "day33_cli": {
+    "records": 963,
+    "geometric_successes": 840,
+    "charts": 13,
+    "gallery_panels": 12,
+    "cpu_profiles_without_flag": 0,
+    "cpu_profiles_with_flag": 6,
+    "cli_errors": 0,
+    "deprecation_warning_after_fix": false
+  },
+  "matplotlib_warning": {
+    "observed": "Matplotlib 3.11 deprecated boxplot vert argument",
+    "remediation": "Replace vert=False with orientation=\"horizontal\" in scripts/week07_day03_failure_analysis.py",
+    "regression_test": "tests/test_week7_day33_failure_analysis.py::test_runtime_boxplot_uses_supported_horizontal_orientation"
+  },
+  "limitations": [
+    "Gallery panels are deterministic reconstructions, not verbatim captured registration outputs.",
+    "Representative process RSS sampling is not exact per-algorithm peak memory.",
+    "Synthetic development results are not held-out evaluation and do not justify confidence calibration or final method ranking.",
+    "The Day 33 generated manifest retains its pre-review generation-time status; closure is recorded separately."
+  ],
+  "registration_algorithms_unchanged": true,
+  "ui_implementation_unchanged": true,
+  "day32_journal_unchanged": true,
+  "independent_artifact_review": {
+    "day33_archive_crc": "passed",
+    "unique_attempt_ids": 963,
+    "plots_png_verified": 13,
+    "gallery_png_verified": 12,
+    "cpu_profile_rows_verified": 6,
+    "day32_original_evidence_files_sha256_verified": 7,
+    "review_scope": "Decodable files, tabular consistency, selected gallery visual inspection; not independent clinical or held-out correctness verification"
+  }
+}

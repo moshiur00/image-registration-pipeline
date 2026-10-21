@@ -1,0 +1,95 @@
+{
+  "all_development": {
+    "abstained": 435,
+    "conditional_precision": 1.0,
+    "correct_selected": 51,
+    "coverage": 0.104938,
+    "incorrect_selected": 0,
+    "pairs": 486,
+    "precision_wilson_95_exploratory": [
+      0.929951,
+      1.0
+    ],
+    "reason_counts": {
+      "insufficient_distinct_method_families": 3,
+      "insufficient_eligible_candidates": 415,
+      "no_consistent_three_family_triangle": 17,
+      "three_family_agreement": 51
+    },
+    "tentatively_supported": 51
+  },
+  "attempts": 963,
+  "chosen_tentative_gate": {
+    "agreement_px": 2.0,
+    "min_candidates": 3,
+    "min_distinct_families": 3,
+    "min_feature_coverage": 0.125,
+    "min_feature_inlier": 0.25,
+    "overlap_floor": 0.65
+  },
+  "day": 34,
+  "internal_audit": {
+    "abstained": 144,
+    "conditional_precision": 1.0,
+    "correct_selected": 18,
+    "coverage": 0.111111,
+    "incorrect_selected": 0,
+    "pairs": 162,
+    "precision_wilson_95_exploratory": [
+      0.824115,
+      1.0
+    ],
+    "reason_counts": {
+      "insufficient_distinct_method_families": 1,
+      "insufficient_eligible_candidates": 138,
+      "no_consistent_three_family_triangle": 5,
+      "three_family_agreement": 18
+    },
+    "tentatively_supported": 18
+  },
+  "limits": [
+    "No production selector, confidence percentage, UI change, or method ranking.",
+    "Selection uses observable-only whitelist and never synthetic TRE or reference labels.",
+    "Pairing and tuning use repeated synthetic conditions; Wilson intervals assume independence and are descriptive, potentially optimistic.",
+    "Only affine monomodal pairs typically have three method families in this dataset; all other models largely abstain by design.",
+    "Perfect or near-perfect selected precision may reflect selective easy-case coverage, not broad robustness.",
+    "Matching transformations can be jointly wrong; agreement is not ground-truth geometric validity.",
+    "No Week 8 held-out images or outcomes used; final policy must face independent testing."
+  ],
+  "no_heldout_used": true,
+  "not_deployed": true,
+  "pairs": 486,
+  "report_source": "outputs/week07_day04_calibration/calibration_report.json",
+  "source_journal_sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+  "status": "implemented_local_validation_passed_windows_pending",
+  "train": {
+    "abstained": 291,
+    "conditional_precision": 1.0,
+    "correct_selected": 33,
+    "coverage": 0.101852,
+    "incorrect_selected": 0,
+    "pairs": 324,
+    "precision_wilson_95_exploratory": [
+      0.895727,
+      1.0
+    ],
+    "reason_counts": {
+      "insufficient_distinct_method_families": 2,
+      "insufficient_eligible_candidates": 277,
+      "no_consistent_three_family_triangle": 12,
+      "three_family_agreement": 33
+    },
+    "tentatively_supported": 33
+  },
+  "tuning_seed_partition": {
+    "audit_geometry_seeds": [
+      101
+    ],
+    "disclaimer": "internal development-seed audit, not a Week 8 independent holdout",
+    "training_geometry_seeds": [
+      7,
+      42
+    ]
+  },
+  "week": 7
+}

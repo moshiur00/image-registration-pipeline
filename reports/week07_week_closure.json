@@ -1,0 +1,67 @@
+{
+  "acceptance": {
+    "all_planned_tasks_recorded": true,
+    "assistant_visual_inspection_notes": "reports/week07_day05_gallery_visual_review.json",
+    "candidate_policy_changed": false,
+    "charts": 4,
+    "condition_specific_guidance_count": 6,
+    "gallery_panels": 10,
+    "input_sha256_reconciled": true,
+    "methods_changed": false,
+    "no_validation_errors": true,
+    "recurring_failure_categories": 4,
+    "ui_changed": false,
+    "unique_ids": true,
+    "week8_holdout_accessed": false
+  },
+  "closed_on": "2026-10-21",
+  "limitations": [
+    "All results are synthetic development evidence and do not establish calibrated confidence or reliable out-of-distribution correctness.",
+    "Frozen policy supported 2/40 combined-stress development pairs, both correct, for 5 percent coverage; this is insufficient for broad inference.",
+    "Day 32 and Day 35 case distributions differ and the headline geometric-success rates are not a paired causal comparison.",
+    "All 10 reconstructed gallery panels were visually inspected by an assistant, not signed off by an independent human reviewer.",
+    "Real medical-image geometric correctness still requires anatomical ground truth where unavailable."
+  ],
+  "next": "Week 8 independent evaluation on the previously reserved held-out cases. Apply the unchanged Day 34 gate before accessing held-out labels; preserve failures, abstentions, per-modality/model coverage and uncertainty. Do not retune on the held-out set.",
+  "provenance": {
+    "day32_journal_sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+    "day32_plan_sha256": "f9f74ccd89b09302a24b0b05b796be58d269cd231c2c98b10718123bd3673d63",
+    "day34_policy_sha256": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+    "day35_journal_sha256": "07383b924445f7cccb49681308fe0cc8fc7ebc5598a74f493d054593a56f6dad",
+    "day35_manifest_sha256": "26f54e6b215568e0d19fdaeb5c4291d854306e5c7b0a4089a40a7321bcf069e1",
+    "day35_plan_sha256": "2341cd07c5c56ed691e247dd7aa5ac850a4695d9f20a0055cfb456e61d1367ca",
+    "day35_report_sha256": "18c247a4bf32d05e7092e606134933afba60cc5d9c4069f102fde46d156c9a52",
+    "day35_results_sha256": "b2c77cda4da309cd22ab49d6e9c11f59908a7ffc159b62753b7f39c8ef160dfb"
+  },
+  "references": [
+    "reports/week07_day05_windows_validation.json",
+    "reports/week07_day05_gallery_visual_review.json",
+    "outputs/week07_day05_integration/day35_report.json",
+    "reports/week07_day05_week08_handoff.json"
+  ],
+  "status": "complete_development_stage",
+  "validation": {
+    "day32_attempts": 963,
+    "day32_geometric_successes": 840,
+    "day32_pairs": 486,
+    "day35_attempts": 88,
+    "day35_check": 0,
+    "day35_completed": 77,
+    "day35_execution_failure_reasons": {
+      "insufficient_filtered_matches": 9,
+      "insufficient_ransac_inliers": 2
+    },
+    "day35_failed": 11,
+    "day35_frozen_gate_abstained": 38,
+    "day35_frozen_gate_supported": 2,
+    "day35_frozen_gate_supported_correct": 2,
+    "day35_geometric_successes": 61,
+    "day35_pairs": 40,
+    "day35_resume_executed": 0,
+    "day35_resume_skipped": 88,
+    "day35_windows_backend_passed": 552,
+    "day35_windows_backend_skipped": 3,
+    "day35_windows_ui_passed": 149
+  },
+  "week": 7
+}

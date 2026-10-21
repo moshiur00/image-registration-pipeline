@@ -4,6 +4,17 @@ A research-focused Python framework for studying classical image registration un
 
 The central question is not which registration method is universally best. It is **which method is reliable under which geometric and appearance conditions, and why it fails when those conditions change**.
 
+## Week 7: robustness study and validation handoff
+
+The development-only calibration script `scripts/week07_day04_offline_calibration.py`
+examines observed transform agreement, diagnostics and abstention without loading
+synthetic ground truth into method selection. It generates an internal 2 px
+three-family agreement candidate, but abstains on 435/486 synthetic development
+pairs. This is **not** a deployed confidence score or production method selector.
+Windows validated and formally closed. See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`.
+
+The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 11 execution failures and all records preserved. The unchanged experimental Day 34 gate tentatively supported 2/40 development pairs (both synthetic ground-truth correct) and abstained on 38/40; it is **not** independent validation or a confidence percentage. Week 8 will evaluate it on reserved held-out data.
+
 ## Project at a glance
 
 | Area | Scope |
@@ -13,8 +24,8 @@ The central question is not which registration method is universally best. It is
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 6 complete and validated; UI v0.1 frozen; Week 7 next |
-| Target validation | Latest: 432 / 432 backend tests and 64 / 64 UI tests passed on Windows after Week 6 closure |
+| Current status | Weeks 1 to 7 complete; UI v0.2 frozen; Day 35 Windows integration passed; Week 8 independent holdout not started |
+| Target validation | Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
 
@@ -221,7 +232,7 @@ The most useful entry points are:
 | 4 | ORB + RANSAC and optional SIFT comparison | Complete |
 | 5 | Multimodal Mutual Information and RIRE validation | Complete |
 | 6 | Unified evaluation and reproducible benchmarking | Complete and target-validated |
-| 7 | Robustness, runtime analysis, and failure diagnosis | Planned |
+| 7 | Robustness, runtime analysis, and failure diagnosis | In progress: Days 31-34 closed; Day 35 integrated validation next |
 | 8 | Final benchmark, analysis, documentation, and demonstration | Planned |
 
 Week 6 is complete and target-validated. It established the unified evaluation contract, independently validated metric implementation, deterministic resumable benchmark execution, automatic compatible-candidate execution, common evidence normalization, transform-space disagreement, preliminary descriptive consensus, robust method summaries, and a preserved ground-truth firewall. Final best-method recommendation remains intentionally deferred until Week 7 robustness calibration.
@@ -229,3 +240,54 @@ Week 6 is complete and target-validated. It established the unified evaluation c
 ## License
 
 No open-source license has been selected yet. An appropriate license should be added before distributing the repository under open-source terms.
+
+## Week 7 Day 31: robustness design preflight
+
+Day 31 adds a versioned robustness severity grid and a small compatible-method cost pilot. It reuses the Week 6 resumable benchmark runner and does not change frozen registration algorithms or the Streamlit UI. For setup, commands, and limitations, see [Week 7 design notes](docs/WEEK07_ROBUSTNESS_DESIGN.md) and the [Week 7 plan](docs/weekly/week_07_plan.md).
+
+The Day 31 full-grid manifest is a **plan**, not executed benchmark results. The small `--pilot` run estimates feasibility only; its dependency failures must not be interpreted as registration accuracy failures. No confidence calibration or final automatic recommendation is enabled.
+
+## Week 7 Day 32 closure
+
+Day 32 is complete and Windows validated (468 backend / 149 UI tests). The
+controlled development-only sweep executed 963 compatible attempts across 486
+image pairs. Of those, 840 met the benchmark's experimental geometric criterion;
+all 4 CHECK and 25 Failed cases were retained. See
+[Day 32 summary](docs/daily/day_32_summary.md),
+[controlled sweeps](docs/WEEK07_DAY32_CONTROLLED_SWEEPS.md), and
+[the closure report](reports/week07_day02_full_closure.json).
+
+Full detailed benchmark evidence lives under `outputs/week07_day02_full/` and is
+included only in an explicitly requested benchmark-evidence ZIP. Day 33 failure and computational analysis is **closed and Windows validated**.
+The uploaded Windows charts, gallery and profiling CSV were independently reviewed. Week 8 holdout cases remain reserved for independent evaluation.
+
+
+## Week 7 Day 33: Failure and computational analysis
+
+The Day 32 963-attempt benchmark is closed. Day 33 uses the frozen result journal
+to generate severity-success plots, observed failure categories, a deterministic
+synthetic inspection gallery, and optional separate CPU/sampled process-RSS profiling.
+It does not rerun Day 32 registrations. See `docs/WEEK07_DAY33_FAILURE_ANALYSIS.md`.
+
+```powershell
+python scripts/week07_day03_failure_analysis.py
+python scripts/week07_day03_failure_analysis.py --profile  # optional; requires psutil
+```
+
+Day 33 is **closed**. Windows tests: 504 backend passed (2 environmental symlink skips)
+and 149 UI passed. Both analysis commands completed; the 13 charts, 12 reconstructed
+gallery images and six separate CPU/RSS profiles were independently verified.
+The Matplotlib 3.11 boxplot deprecation is fixed. Closure and provenance are recorded
+in `reports/week07_day03_closure.json`. Ground truth is used only for offline development scoring;
+no new UI recommendations or confidence scores are enabled.
+
+## Week 7 Day 34: Offline calibration closure
+
+Day 34 is **closed and Windows validated**: 530 backend passed with 2 expected symlink skips, and 149 UI passed. The offline calibration assessed 963 frozen Day 32 attempts, producing 486 unique pair decisions. A conservative exploratory three-family gate tentatively supports 51/486 development pairs and abstains on 435; **all 51 supported cases are monomodal affine**. Internal seed audit support was 18/162 with 18/18 correct among selected pairs, which does **not** establish calibrated confidence or independent reliability. No algorithm, UI, or held-out Week 8 data changed.
+
+See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`, `reports/week07_day04_closure.json` and `outputs/week07_day04_calibration/`. Day 35 integrated validation remains not started.
+
+
+### Week 7 Day 35 (implemented; Windows validation pending)
+
+The 40-pair controlled combined-stress study, frozen Day 34 offline policy evaluation, comparison tables, figures, and stratified review queue are documented in `docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md`. Run `python scripts/week07_day05_integrated_validation.py` on Windows after backend/UI regression tests. The ZIP intentionally omits the local Linux Day 35 journal to prevent accidentally resuming SimpleITK dependency failures. UI and registration algorithms are unchanged. Week 8 held-out evaluation is not started.

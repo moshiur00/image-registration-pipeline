@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-21",
+  "findings": [
+    {
+      "condition": "blur_occlusion",
+      "experiment_id": "w6-425380abfa4571007cac",
+      "image_path": "outputs/week07_day05_integration/gallery/01_w6-425380abfa4571007cac.png",
+      "image_sha256": "405f1629456828c69d09ad47bc1a32a7560f9f303a1921767f9af937ceec17b3",
+      "method": "sift_affine",
+      "panel": "01",
+      "review_note": "No estimated transform. Large black occlusion with blur obscures correspondence regions; correspondence failure recorded, not geometric TRE.",
+      "source_status": "failed",
+      "source_tre_px": null
+    },
+    {
+      "condition": "blur_occlusion",
+      "experiment_id": "w6-5610952066599248bbb2",
+      "image_path": "outputs/week07_day05_integration/gallery/02_w6-5610952066599248bbb2.png",
+      "image_sha256": "259a7c55c830b1eb667efb6517df82439c96ec2765dff0ae58347ab7a3791c9c",
+      "method": "sift_similarity",
+      "panel": "02",
+      "review_note": "No estimated transform. Blurred occluded similarity example shows insufficient RANSAC inliers; panel correctly labels unavailable registration.",
+      "source_status": "failed",
+      "source_tre_px": null
+    },
+    {
+      "condition": "blur_occlusion",
+      "experiment_id": "w6-0c4fefdc3a010abba0be",
+      "image_path": "outputs/week07_day05_integration/gallery/03_w6-0c4fefdc3a010abba0be.png",
+      "image_sha256": "13a1fc5605ba2b7674f02585ed92bbbde1db1b75a46830aec58c87f0b5a46bc1",
+      "method": "ecc_affine",
+      "panel": "03",
+      "review_note": "Estimated ECC affine transform is available but not geometrically correct. Occluded region remains visible; difference image should not be interpreted as geometry-only error.",
+      "source_status": "completed",
+      "source_tre_px": 6.959846598004636
+    },
+    {
+      "condition": "blur_occlusion",
+      "experiment_id": "w6-3fdec2c1cdf8999eef77",
+      "image_path": "outputs/week07_day05_integration/gallery/04_w6-3fdec2c1cdf8999eef77.png",
+      "image_sha256": "1c6fc2dba79be3dd72aecd02813704231a39c36f71eb361ed42813ef0390eca9",
+      "method": "sift_affine",
+      "panel": "04",
+      "review_note": "SIFT affine completed despite occlusion but exceeds 2 px TRE. Registration is not interchangeable with execution success.",
+      "source_status": "completed",
+      "source_tre_px": 4.512323032225177
+    },
+    {
+      "condition": "overlap_illumination",
+      "experiment_id": "w6-5d40893d242c676c8615",
+      "image_path": "outputs/week07_day05_integration/gallery/05_w6-5d40893d242c676c8615.png",
+      "image_sha256": "f03408dcb0ba909ae7628d0c6a9331fc65e4df74c6b9fad92e7377beb401b0cd",
+      "method": "ecc_translation",
+      "panel": "05",
+      "review_note": "ECC translation under partial overlap and illumination has visible shifted content; reconstruction and reference do not align adequately.",
+      "source_status": "completed",
+      "source_tre_px": 18.778658659777847
+    },
+    {
+      "condition": "overlap_illumination",
+      "experiment_id": "w6-710c8de8db6593252ded",
+      "image_path": "outputs/week07_day05_integration/gallery/06_w6-710c8de8db6593252ded.png",
+      "image_sha256": "7623f7f0701ab18b289317c7d2eefc70199c08ac98f9fba0de5e7e0ac1e3c2ed",
+      "method": "ecc_affine",
+      "panel": "06",
+      "review_note": "ECC affine overlap/illumination example visibly diverges from target. Bright residuals include image appearance differences as well as misalignment.",
+      "source_status": "completed",
+      "source_tre_px": 29.388878167867396
+    },
+    {
+      "condition": "texture_repetition",
+      "experiment_id": "w6-1e28751e963ac563b5e0",
+      "image_path": "outputs/week07_day05_integration/gallery/07_w6-1e28751e963ac563b5e0.png",
+      "image_sha256": "1b4856ce229d5f5732201fddac28231e0e789d475514cf929547069dbb88753d",
+      "method": "sift_affine",
+      "panel": "07",
+      "review_note": "SIFT affine feature failure on repetitive vertical stripes with reduced texture. Missing transform is explicitly shown, not fabricated.",
+      "source_status": "failed",
+      "source_tre_px": null
+    },
+    {
+      "condition": "texture_repetition",
+      "experiment_id": "w6-24c53fc6b23c7b849ebb",
+      "image_path": "outputs/week07_day05_integration/gallery/08_w6-24c53fc6b23c7b849ebb.png",
+      "image_sha256": "96cc7415f4374e10b40f844a421af1f0d9e9c386067f4954ed95939a264a63b8",
+      "method": "orb_similarity",
+      "panel": "08",
+      "review_note": "ORB similarity feature failure on repetitive vertical stripes with reduced texture. Missing transform is explicitly shown.",
+      "source_status": "failed",
+      "source_tre_px": null
+    },
+    {
+      "condition": "texture_repetition",
+      "experiment_id": "w6-3dff08855de5554b6c3e",
+      "image_path": "outputs/week07_day05_integration/gallery/09_w6-3dff08855de5554b6c3e.png",
+      "image_sha256": "b070291adad1f5beeb5948d5bf8ee427ac31189b3f3187b2172ad8a2a943b026",
+      "method": "ecc_translation",
+      "panel": "09",
+      "review_note": "ECC translation returned a transform but stripe ambiguity persists and ground-truth TRE exceeds 2 px.",
+      "source_status": "completed",
+      "source_tre_px": 3.121477335758734
+    },
+    {
+      "condition": "texture_repetition",
+      "experiment_id": "w6-697236d5aa985746ece1",
+      "image_path": "outputs/week07_day05_integration/gallery/10_w6-697236d5aa985746ece1.png",
+      "image_sha256": "45a23d5365e20ec24edd99530706b4e571d5413ca37a0281e516c7acc733c02e",
+      "method": "ecc_rigid",
+      "panel": "10",
+      "review_note": "ECC rigid returned a transform but visibly misaligns stripe-contaminated content and exceeds the 2 px criterion.",
+      "source_status": "completed",
+      "source_tre_px": 2.559213326611952
+    }
+  ],
+  "important_limitations": [
+    "The registered frames are reconstructed deterministically and are not stored output images from the original algorithm execution.",
+    "Pixel-difference panels can include intensity changes, blurring and occlusions; TRE is evaluated from offline geometry rather than visually estimated from difference images.",
+    "No independent human reviewer has provided signoff; additional human review is recommended before formal publication or safety-critical use."
+  ],
+  "inspected": 10,
+  "review_result": "No obvious rendering or status/provenance mismatch in the ten inspected panels; failure cases are retained.",
+  "review_type": "assistant_visual_inspection_of_user_exported_reconstructed_panels",
+  "scope": "Ten case panels as rendered; observational manual screen review, not independent human signoff or an original saved backend registered-image inspection"
+}

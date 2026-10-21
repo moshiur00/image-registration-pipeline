@@ -1,0 +1,44 @@
+{
+  "assistant_case_gallery_review": "reports/week07_day05_gallery_visual_review.json",
+  "combined_development_seeds": [
+    202,
+    303
+  ],
+  "day": 35,
+  "day35_windows_frozen_gate": {
+    "abstained": 38,
+    "correct_selected_offline": 2,
+    "coverage": 0.05,
+    "pairs": 40,
+    "tentatively_supported": 2
+  },
+  "gate": {
+    "agreement_px": 2.0,
+    "min_candidates": 3,
+    "min_distinct_families": 3,
+    "min_feature_coverage": 0.125,
+    "min_feature_inlier": 0.25,
+    "overlap_floor": 0.65
+  },
+  "gate_source": "Day 34 development-only calibration (seeds 7/42, internal seed 101)",
+  "independent_human_gallery_signoff": "not_claimed",
+  "independent_validation_completed": false,
+  "minimum_week8_requirements": [
+    "Load the previously reserved held-out image independently",
+    "Use original frozen gate before observing Week 8 labels",
+    "Preserve all failures, CHECK and abstentions in denominators",
+    "Report condition/model/modality coverage and accuracy with uncertainty",
+    "No retuning on Week 8 validation labels",
+    "Retain baseline algorithm and UI regressions"
+  ],
+  "no_confidence_percentage": true,
+  "policy_deployed_to_ui": false,
+  "policy_path": "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json",
+  "policy_sha256": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+  "reference_day32_journal_sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+  "require_manual_failure_review_before_closure": true,
+  "status": "week7_development_closed_independent_week08_validation_pending",
+  "week": 7,
+  "week7_closure": "reports/week07_week_closure.json",
+  "week8_holdout": "moon.png reserved, never loaded in Day 35"
+}

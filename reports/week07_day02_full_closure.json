@@ -1,0 +1,172 @@
+{
+  "status": "complete_windows_validated",
+  "scope": "Week 7 Day 32 development-only controlled robustness sweep",
+  "date_closed": "2026-10-21",
+  "full_run": {
+    "pairs": 486,
+    "attempts": 963,
+    "distinct_experiment_ids": 963,
+    "status_counts": {
+      "completed": 934,
+      "failed": 25,
+      "check": 4
+    },
+    "geometric_successes": 840,
+    "geometric_unsuccessful": 123,
+    "geometric_success_rate": 0.872274,
+    "geometric_error_despite_completed": 94,
+    "check_geometric_errors": 4,
+    "execution_failures_no_transform": 25,
+    "geometry_excluded_pair_scenarios": 36,
+    "ground_truth_criterion": "TRE <= 2.0 pixels and a plausible transform (development benchmark only)",
+    "condition_summary": [
+      {
+        "condition": "gaussian_blur",
+        "attempts": 108,
+        "geometric_successes": 107,
+        "geometric_success_rate": 0.990741
+      },
+      {
+        "condition": "gaussian_noise",
+        "attempts": 108,
+        "geometric_successes": 108,
+        "geometric_success_rate": 1.0
+      },
+      {
+        "condition": "illumination",
+        "attempts": 108,
+        "geometric_successes": 108,
+        "geometric_success_rate": 1.0
+      },
+      {
+        "condition": "low_texture",
+        "attempts": 108,
+        "geometric_successes": 108,
+        "geometric_success_rate": 1.0
+      },
+      {
+        "condition": "multimodal_mapping",
+        "attempts": 18,
+        "geometric_successes": 13,
+        "geometric_success_rate": 0.722222
+      },
+      {
+        "condition": "none",
+        "attempts": 36,
+        "geometric_successes": 36,
+        "geometric_success_rate": 1.0
+      },
+      {
+        "condition": "occlusion",
+        "attempts": 108,
+        "geometric_successes": 82,
+        "geometric_success_rate": 0.759259
+      },
+      {
+        "condition": "partial_overlap",
+        "attempts": 108,
+        "geometric_successes": 75,
+        "geometric_success_rate": 0.694444
+      },
+      {
+        "condition": "repeated_pattern",
+        "attempts": 108,
+        "geometric_successes": 69,
+        "geometric_success_rate": 0.638889
+      },
+      {
+        "condition": "rotation",
+        "attempts": 90,
+        "geometric_successes": 79,
+        "geometric_success_rate": 0.877778
+      },
+      {
+        "condition": "scale",
+        "attempts": 63,
+        "geometric_successes": 55,
+        "geometric_success_rate": 0.873016
+      }
+    ],
+    "execution_failure_reasons": {
+      "insufficient_filtered_matches": 21,
+      "insufficient_ransac_inliers": 3,
+      "ecc_pyramid_level_failed": 1
+    },
+    "check_cases": [
+      {
+        "experiment_id": "w6-4a23acdcf89bbb02f221",
+        "pair_id": "w7_affine_monomodal_occlusion_035567a016_s42",
+        "method_id": "ecc_affine",
+        "condition": "occlusion",
+        "tre_mean_px": 1418.515145
+      },
+      {
+        "experiment_id": "w6-4ee02a01c737359fbb17",
+        "pair_id": "w7_affine_monomodal_occlusion_035567a016_s101",
+        "method_id": "ecc_affine",
+        "condition": "occlusion",
+        "tre_mean_px": 263.400911
+      },
+      {
+        "experiment_id": "w6-d124deb12c162d9024c4",
+        "pair_id": "w7_affine_monomodal_occlusion_d2353bc013_s42",
+        "method_id": "ecc_affine",
+        "condition": "occlusion",
+        "tre_mean_px": 259.769147
+      },
+      {
+        "experiment_id": "w6-dbb0de79b0f0f38a4948",
+        "pair_id": "w7_affine_monomodal_occlusion_d2353bc013_s7",
+        "method_id": "ecc_affine",
+        "condition": "occlusion",
+        "tre_mean_px": 350.847951
+      }
+    ]
+  },
+  "windows_validation": {
+    "backend_passed": 468,
+    "ui_passed": 149,
+    "backend_seconds": 7.03,
+    "ui_seconds": 5.19
+  },
+  "dry_run": {
+    "pairs": 16,
+    "attempts": 49,
+    "completed": 48,
+    "check": 1,
+    "failed": 0,
+    "validation_error": 0,
+    "resume_executed": 0,
+    "resume_skipped": 49
+  },
+  "evidence_paths": {
+    "benchmark_plan.json": "outputs/week07_day02_full/benchmark_plan.json",
+    "benchmark_records.jsonl": "outputs/week07_day02_full/benchmark_records.jsonl",
+    "benchmark_results.csv": "outputs/week07_day02_full/benchmark_results.csv",
+    "benchmark_summary.json": "outputs/week07_day02_full/benchmark_summary.json",
+    "day32_manifest.json": "outputs/week07_day02_full/day32_manifest.json",
+    "severity_summary.csv": "outputs/week07_day02_full/severity_summary.csv",
+    "severity_summary.json": "outputs/week07_day02_full/severity_summary.json"
+  },
+  "evidence_sha256": {
+    "benchmark_plan.json": "f9f74ccd89b09302a24b0b05b796be58d269cd231c2c98b10718123bd3673d63",
+    "benchmark_records.jsonl": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+    "benchmark_results.csv": "05887bdd86fffe2cdf7053b1c806f5f7a784087aba828f8ac71557b0caad2dac",
+    "benchmark_summary.json": "673cd9b1782e8866ed108aa249d9870ae6b251945051eb3551bb63e3f31b4db4",
+    "day32_manifest.json": "4c472473cd0cf14a132917b025ba8814e281cd30cd2a5a61ab3dadfb7af9e20a",
+    "severity_summary.csv": "563846db22a7432717c575751891697673d0f6e2185a7287a15e9f13aec21ebd",
+    "severity_summary.json": "ad491822c87b61d5fc4a50277924ce3447845c32ae7d4d42862936fbf47093a8"
+  },
+  "validation_caveats": [
+    "Do not infer geometric accuracy from a Completed execution status.",
+    "Methods and condition strata can have different numbers of compatible trials; these are not universal rankings.",
+    "Development-only synthetic results; held-out data reserved for Week 8.",
+    "Full-run zero-reexecution resume was not separately demonstrated; dry-run resume was verified.",
+    "The original generated result records were preserved without modification."
+  ],
+  "next": {
+    "day": "Day 33",
+    "status": "not_started",
+    "scope": "Failure diagnosis, failure-case gallery and computational profiling"
+  }
+}

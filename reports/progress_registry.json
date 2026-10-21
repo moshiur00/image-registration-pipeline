@@ -139,6 +139,47 @@
       "status": "complete",
       "summary": "reports/week06_day05_agreement_consensus.json",
       "validation_note": "Target Windows validation: 432 / 432 backend tests passed in 5.05s; 64 / 64 UI tests passed in 4.68s. The Day 30 closure matrix evaluated 4 cases with 13 automatic candidate executions. All 13 / 13 candidates completed with 0 CHECK, 0 failed, and 0 validation errors. Ground truth was not exposed to the automatic service, the consensus anchor remained descriptive only, and final method recommendation remained deferred."
+    },
+    "day_31": {
+      "documentation": "docs/daily/day_31_summary.md",
+      "status": "complete",
+      "summary": "reports/week07_day01_robustness_design.json",
+      "validation_note": "Windows validated: 444 backend and 149 UI tests passed; all 11 method pilot attempts completed; resume skipped all 11."
+    },
+    "day_32": {
+      "documentation": "docs/daily/day_32_summary.md",
+      "status": "complete",
+      "summary": "reports/week07_day02_full_closure.json",
+      "validation_note": "Windows validated: 468 backend and 149 UI tests passed. Full development sweep of 963 attempts across 486 pairs: 934 Completed, 4 CHECK, 25 Failed, 0 validation errors. 840 met experimental geometric success (87.23%). Full detailed evidence in outputs/week07_day02_full/."
+    },
+    "day_33": {
+      "analysis": "outputs/week07_day03_analysis/day33_manifest.json",
+      "closure_report": "reports/week07_day03_closure.json",
+      "documentation": "docs/daily/day_33_summary.md",
+      "status": "complete",
+      "validation_note": "Day 33 formally closed: Windows 504 backend passed, 2 environmental symlink skips; 149 UI passed. Both analysis CLIs passed; frozen 963 records reconciled to 840 geometric successes, 13 valid PNG plots, 12 reconstructed gallery panels, and 6 Windows CPU/RSS profile rows. Day 32 original evidence SHA-256 checksums verified; no algorithm or UI changes.",
+      "validation_report": "reports/week07_day03_windows_validation.json"
+    },
+    "day_34": {
+      "closure_report": "reports/week07_day04_closure.json",
+      "code": "scripts/week07_day04_offline_calibration.py",
+      "report": "reports/week07_day04_closure.json",
+      "status": "complete",
+      "summary": "docs/daily/day_34_summary.md",
+      "validation_note": "Windows: 530 backend passed (2 expected symlink skips), 149 UI passed. Offline calibration read 963 frozen attempts; 51/486 development pairs tentatively supported (33/324 tuning, 18/162 internal seed audit), 435 abstained. All support limited to monomodal affine cases; no policy deployed or Week 8 held-out access.",
+      "validation_report": "reports/week07_day04_windows_validation.json"
+    },
+    "day_35": {
+      "closure_report": "reports/week07_day05_closure.json",
+      "code": "scripts/week07_day05_integrated_validation.py",
+      "documentation": "docs/daily/day_35_summary.md",
+      "gallery_review": "reports/week07_day05_gallery_visual_review.json",
+      "local_preview": "reports/week07_day05_local_preview.json",
+      "plan": "docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md",
+      "status": "complete",
+      "validation_note": "Windows 552 backend passed, 3 expected skips and 149 UI passed; 88/88 combined attempts recorded (77 completed, 11 failed, 0 CHECK), 61 geometric successes, 0 validation errors; all 88 resumed with zero reruns. Frozen exploratory policy tentatively selected 2 of 40 development pairs correctly while abstaining on 38. Week 8 holdout untouched.",
+      "validation_report": "reports/week07_day05_windows_validation.json",
+      "week8_handoff": "reports/week07_day05_week08_handoff.json"
     }
   },
   "extensions": {
@@ -196,6 +237,17 @@
       "latest_target_validation": "432 / 432 backend tests passed in 5.05s; UI 64 / 64 passed in 4.68s after validated Day 30",
       "plan": "docs/weekly/week_06_plan.md",
       "status": "complete"
+    },
+    "week_07": {
+      "current_day": "day_35",
+      "latest_benchmark_closure": "reports/week07_day05_closure.json",
+      "latest_completed_day": "day_35",
+      "latest_implementation": "Day 35 development integration complete and Windows validated; Week 7 development study closed. Week 8 independent policy evaluation not started.",
+      "latest_target_validation": "Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed; 88 attempts with 61 geometric successes, 11 failures; 0 executed/88 resumed.",
+      "next_day": "week08_independent_holdout_validation",
+      "plan": "docs/weekly/week_07_plan.md",
+      "status": "complete",
+      "week_closure": "reports/week07_week_closure.json"
     }
   }
 }

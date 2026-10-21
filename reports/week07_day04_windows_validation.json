@@ -1,0 +1,54 @@
+{
+  "artifact_review": {
+    "pair_decisions_unique": 486,
+    "source_hashes_match": true,
+    "source_hashes_verified": [
+      "benchmark_plan.json",
+      "benchmark_records.jsonl",
+      "benchmark_results.csv",
+      "day32_manifest.json"
+    ],
+    "verified_figures": [
+      "plots/abstention_reasons.png",
+      "plots/train_coverage_sensitivity.png",
+      "plots/train_selective_precision.png"
+    ]
+  },
+  "backend": {
+    "failed": 0,
+    "note": "two Windows symbolic-link tests skipped as designed",
+    "passed": 530,
+    "skipped": 2
+  },
+  "calibration_cli": {
+    "command": "python scripts/week07_day04_offline_calibration.py",
+    "full_dev_abstained": 435,
+    "full_dev_supported": 51,
+    "internal_audit_pairs": 162,
+    "internal_audit_supported": 18,
+    "no_registration_reruns": true,
+    "no_ui_changes": true,
+    "no_week8_heldout_used": true,
+    "pairs": 486,
+    "records": 963,
+    "report_path": "outputs/week07_day04_calibration/calibration_report.json",
+    "train_pairs": 324,
+    "train_supported": 33
+  },
+  "caveat": "Only synthetic-development, monomodal affine pairs gained tentative support; no calibrated confidence or production readiness inferred.",
+  "date": "2026-10-21",
+  "day": 34,
+  "environment": {
+    "platform": "win32",
+    "pytest": "9.1.1",
+    "python": "3.12.6"
+  },
+  "evidence_type": "user_provided_windows_terminal_screenshots_and_exported_calibration_archive",
+  "status": "windows_validation_passed",
+  "ui": {
+    "failed": 0,
+    "passed": 149,
+    "skipped": 0
+  },
+  "week": 7
+}

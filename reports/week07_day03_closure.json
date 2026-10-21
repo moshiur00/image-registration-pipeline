@@ -1,0 +1,111 @@
+{
+  "week": 7,
+  "day": 33,
+  "status": "closed_windows_validated",
+  "date_closed": "2026-10-21",
+  "scope": "Failure diagnosis, descriptive robustness/cost analysis and separate exploratory profiling using frozen Day 32 development records",
+  "day32_source": {
+    "pairs": 486,
+    "attempts": 963,
+    "geometric_successes": 840,
+    "geometric_unsuccessful": 123,
+    "status_counts": {
+      "completed": 934,
+      "check": 4,
+      "failed": 25
+    },
+    "original_day32_evidence_hashes_verified": {
+      "benchmark_plan.json": "f9f74ccd89b09302a24b0b05b796be58d269cd231c2c98b10718123bd3673d63",
+      "benchmark_records.jsonl": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+      "benchmark_results.csv": "05887bdd86fffe2cdf7053b1c806f5f7a784087aba828f8ac71557b0caad2dac",
+      "benchmark_summary.json": "673cd9b1782e8866ed108aa249d9870ae6b251945051eb3551bb63e3f31b4db4",
+      "day32_manifest.json": "4c472473cd0cf14a132917b025ba8814e281cd30cd2a5a61ab3dadfb7af9e20a",
+      "severity_summary.csv": "563846db22a7432717c575751891697673d0f6e2185a7287a15e9f13aec21ebd",
+      "severity_summary.json": "ad491822c87b61d5fc4a50277924ce3447845c32ae7d4d42862936fbf47093a8"
+    },
+    "original_journal_unchanged": true
+  },
+  "windows_validation": {
+    "backend_passed": 504,
+    "backend_skipped": 2,
+    "backend_failed": 0,
+    "ui_passed": 149,
+    "ui_failed": 0,
+    "analysis_execution_errors": 0,
+    "matplotlib_warning_after_fix": false
+  },
+  "day33_evidence": {
+    "classified_attempts": 963,
+    "unique_experiment_ids": 963,
+    "category_counts": {
+      "geometrically_successful": 840,
+      "geometric_threshold_failure": 53,
+      "feature_correspondence_failure": 24,
+      "large_geometric_error": 41,
+      "implausible_transform": 4,
+      "optimizer_execution_failure": 1
+    },
+    "condition_rows": 11,
+    "severity_rows": 321,
+    "plots": 13,
+    "gallery_images": 12,
+    "cpu_rss_profiles": 6,
+    "png_sha256": {
+      "gallery/01_w6-089d4fdb129ed1c92b6c.png": "275b333e8d485d5e99f7cacf5367cb5cb0c048b24958cdf2fd9d51845aecfcfa",
+      "gallery/02_w6-02aac339ace9356253b9.png": "30830d875cd250c38d58877b041936e7dd044838d73e0302f35635dcbe899bc6",
+      "gallery/03_w6-68cc05aad46e5fd82a2e.png": "57c23a09dc77f5ed29b41ddb1bc67f7eb734b14eaf5ce3204d18a9ae1b753170",
+      "gallery/04_w6-e4a7009f61d449912188.png": "c5d08d77a9d1fcf5656c0a710c84dfa1d3103e86aec3c621233bd89576acfe28",
+      "gallery/05_w6-3b41dde3d03101282e3a.png": "0fb59a9da2997b1db2a40497743ac1d8d0c5c804cc54f8d5ed2f856495c85c86",
+      "gallery/06_w6-7b19ad5b3ccf7ee929a5.png": "74eee0e15e862d5751bc8f77fb4d33fcf75590ee6f291cc67404f1f186da2a7e",
+      "gallery/07_w6-746413fbac7c1d7bd958.png": "9af1f4e200e6b77711379d55af870c936996614e14cfd3e3e81003a9c53f11ca",
+      "gallery/08_w6-474e30de4aca4b5663b2.png": "87c7cd3b75da93c011a8614e03ec0a9c95ec21dd1647638dc8eb31e9da02e6ea",
+      "gallery/09_w6-4a23acdcf89bbb02f221.png": "2b31fdf5957e5d6de4e744de7ef28b926555d667899facac232745a0ec94bc5d",
+      "gallery/10_w6-824c3f52a97e869c5140.png": "f7fdac9332941c080f41ce84cfa91bc266de62c7b8a7d6e90ef0ed95de5713ce",
+      "gallery/11_w6-0fbd9105254df42dde13.png": "62bec630730665eb66d848ab51b62bc9b1119e8a52f0d7bc73d87411b3763470",
+      "gallery/12_w6-c257acad06f72fffa04b.png": "7bf90c06b76f489ba580bfe213fe1218ac552f496175e8f58683c1cf70c86d68",
+      "plots/condition_success_rate.png": "35265eb0dc88534a8a96e5c77a87440cbbb4efaa0e3753420c81f11517b64bdc",
+      "plots/outcome_taxonomy.png": "5e1ec8ffa58d027e6d16ce4d27b0defbdc1ddf4fe397b3edefc1a6efbfceb40c",
+      "plots/runtime_by_method.png": "a026ecfdf2610120b96f18fe30fc632e180b6270a27cfb0bd02b4c72022efc64",
+      "plots/runtime_vs_tre.png": "01953a9055d7aa4d00f8493878e793ed2c65e34c867dc5160c149f3ff628b23b",
+      "plots/severity_gaussian_blur.png": "fa86fc62de225b22b3a8900e4ae95dca905f4085f62bc6f8940a8fea7eed1e64",
+      "plots/severity_gaussian_noise.png": "5cee5a792694bdbba3f8a32661eeb56648587e6d9fd910574ec165ebabcdeb32",
+      "plots/severity_illumination.png": "0bf936e0ddf525cffb0a4a075a1fcd4b23e1d896f938ec9fe1ad007c310d1b87",
+      "plots/severity_low_texture.png": "7a8d35dc2fb79bf91c58b5878d6eccf9469ebbf2ce4a6a5ba9e4ae74be9b9f3b",
+      "plots/severity_occlusion.png": "99ef4e4e85f58637a892b35085941b4b79824d08045c313aefe8c297e6c2c912",
+      "plots/severity_partial_overlap.png": "74415ac3a08dfd57cdf56ff644611edc501e90cfac0c8984d17e08ca882d44d5",
+      "plots/severity_repeated_pattern.png": "39f73938489a24b476cd6fe7474a9b13ae9551502bbc8ac4f08262d67b608795",
+      "plots/severity_rotation.png": "40719503a3646afed948660c58a954bf5aa712740effeb39e0a8f51591199982",
+      "plots/severity_scale.png": "180463b792f2ff788fcb4064e2d7cd8c7432a2d78a880241419d9e8cfe5e6f26",
+      "representative_cpu_memory.png": "f960e78abe9c2084efbdb817660453fc30c51e5cb09d995c7e2156665132e9a5"
+    },
+    "day33_manifest_sha256": "0b37d95ad906593dbee4bafe39d5568bf487e13f71f0b270b610d41fe9e3436c",
+    "profile_csv_sha256": "edca35e041d55f078b300161acccd4b7c5c530121a192fe146b2755c29c7d423"
+  },
+  "independent_evidence_review": {
+    "day33_archive_crc": "passed",
+    "all_png_files_decodable": true,
+    "selected_gallery_images_visually_inspected": 2,
+    "original_day32_seven_files_sha256_matched": true,
+    "day33_record_sha256_matches_original_day32_journal": true,
+    "analysis_manifest_generated_before_review": true
+  },
+  "failure_behaviors_to_study": [
+    "repeated-pattern feature correspondence failures",
+    "partial overlap and occlusion associated with geometric errors",
+    "ECC Affine severe occlusion-related CHECK transforms"
+  ],
+  "limitations": [
+    "All geometric success estimates use only synthetic development images. Week 8 holdout remains untouched.",
+    "Observed failure categories are descriptive, not proven causes.",
+    "Gallery panels are reconstructed and are not the original algorithm-output screenshots.",
+    "Separate CPU-time and sampled-process-RSS profiles are exploratory, not exact isolated peak-memory estimates.",
+    "No confidence calibration, final recommendation or method ranking is authorized."
+  ],
+  "frozen_registration_algorithms_unchanged": true,
+  "ui_v0_2_unchanged": true,
+  "next": {
+    "day": 34,
+    "status": "not_started",
+    "scope": "Offline evidence calibration on development-only data"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "acceptance": {
+    "figures_verified": 3,
+    "frozen_evidence_hashes_verified": true,
+    "full_day32_attempts_analyzed": 963,
+    "pair_decisions_reconciled": true,
+    "unique_pairs": 486,
+    "windows_backend_passed": 530,
+    "windows_backend_skipped": 2,
+    "windows_ui_passed": 149
+  },
+  "calibration": {
+    "calibrated_confidence": false,
+    "deployed": false,
+    "gate_tentative": {
+      "agreement_px": 2.0,
+      "min_candidates": 3,
+      "min_distinct_families": 3,
+      "min_feature_coverage": 0.125,
+      "min_feature_inlier": 0.25,
+      "overlap_floor": 0.65
+    },
+    "independent_validation": false,
+    "internal_audit_correct_selected": 18,
+    "internal_audit_pairs": 162,
+    "internal_audit_support": 18,
+    "overall_abstain": 435,
+    "overall_pairs": 486,
+    "overall_support": 51,
+    "supported_model_modality": "monomodal_affine_only",
+    "tuning_correct_selected": 33,
+    "tuning_pairs": 324,
+    "tuning_support": 33
+  },
+  "closed_on": "2026-10-21",
+  "day": 34,
+  "documentation": "docs/daily/day_34_summary.md",
+  "next": "Day 35 integrated validation, stress combinations, reproducible handoff and Week 8 independent evaluation preparation (not started)",
+  "provenance": {
+    "calibration_manifest_status": "local_calibration_generated_review_pending (kept immutable as run output)",
+    "original_calibration_report_sha256": "64b300ab614be5a2a278e36f91114cd771f157c095e6a043846788972b788d64",
+    "original_day34_manifest_sha256": "1d48e2e94bd98455c4812847201c89276de33915c0800725ba157f6effa5e578",
+    "original_offline_decisions_sha256": "a816ecb1533995f085946230773a54c59011f43b7d9ed2b1787f4da9d7b02f05",
+    "source_evidence_sha256": {
+      "benchmark_plan.json": "f9f74ccd89b09302a24b0b05b796be58d269cd231c2c98b10718123bd3673d63",
+      "benchmark_records.jsonl": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+      "benchmark_results.csv": "05887bdd86fffe2cdf7053b1c806f5f7a784087aba828f8ac71557b0caad2dac",
+      "day32_manifest.json": "4c472473cd0cf14a132917b025ba8814e281cd30cd2a5a61ab3dadfb7af9e20a"
+    },
+    "source_journal_sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594"
+  },
+  "scientific_limits": [
+    "All tentative support occurs on monomodal affine development cases",
+    "Internal seed audit shares image and degradation templates; not independent Week 8 holdout",
+    "Agreement is not geometric correctness; no production automatic selection or confidence percent",
+    "Do not modify frozen backend methods, UI v0.2, or underlying Day 32 records"
+  ],
+  "status": "complete",
+  "validation_report": "reports/week07_day04_windows_validation.json",
+  "week": 7
+}

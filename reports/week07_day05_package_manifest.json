@@ -1,0 +1,39 @@
+{
+  "algorithms_ui_and_frozen_configs_unchanged": true,
+  "baseline_evidence_sha256_unchanged": true,
+  "complete_closure": "reports/week07_week_closure.json",
+  "day": 35,
+  "day35_execution_journal_included": true,
+  "day35_new_files": [
+    "src/image_registration/week7_integration.py",
+    "scripts/week07_day05_integrated_validation.py",
+    "tests/test_week7_day35_integrated_validation.py",
+    "docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md",
+    "docs/daily/day_35_summary.md",
+    "reports/week07_day05_week08_handoff.json",
+    "reports/week07_day05_local_preview.json"
+  ],
+  "development_evidence_folders": [
+    "outputs/week07_day02_full",
+    "outputs/week07_day03_analysis",
+    "outputs/week07_day04_calibration",
+    "outputs/week07_day05_integration"
+  ],
+  "intended_windows_first_run": {
+    "day35_compatible_attempts": 88,
+    "day35_expected_initial_executed": 88,
+    "day35_pairs": 40
+  },
+  "local_validation": {
+    "backend_passed": 544,
+    "backend_skipped_optional_dependencies": 11,
+    "ui_passed": 147,
+    "ui_skipped_optional_dependencies": 2
+  },
+  "original_implementation_archive_status": "Previous implementation ZIP excluded local journal intentionally; this is the post-Windows closure ZIP and includes original Windows-generated Day35 evidence.",
+  "reason": "Local Linux SimpleITK unavailable; Windows must execute Day 35 independently instead of resuming local dependency failures",
+  "source_archive": "image-registration-pipeline_share_week07_day05_integration_20261021_1435.zip",
+  "status": "closed_with_windows_day35_evidence_and_preserved_day32_day34_baselines",
+  "week": 7,
+  "week8_holdout_touched": false
+}

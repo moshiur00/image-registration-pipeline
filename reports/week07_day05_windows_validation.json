@@ -1,0 +1,40 @@
+{
+  "backend": {
+    "failed": 0,
+    "passed": 552,
+    "reason_for_skips": "Two environmental symlink tests and one optional Day 35 generated-evidence test skipped in user project archive. The complete closure ZIP includes the missing Day 32 to 34 evidence.",
+    "skipped": 3
+  },
+  "date": "2026-10-21",
+  "day32_input_sha256_verified_from_prior_immutable_archive": true,
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.6"
+  },
+  "frozen_day34_policy_sha256_verified_from_prior_immutable_archive": true,
+  "gallery_panels_inspected_assistant": 10,
+  "heldout_access": false,
+  "initial_run": {
+    "check": 0,
+    "completed": 77,
+    "executed": 88,
+    "failed": 11,
+    "geometric_successes": 61,
+    "resumed": 0,
+    "validation_error": 0
+  },
+  "plots_inspected": 4,
+  "policy_deployed": false,
+  "repeat_run": {
+    "executed": 0,
+    "no_duplicate_execution": true,
+    "resumed": 88,
+    "terminal_records": 88
+  },
+  "source": "User-provided Windows terminal screenshots and exported Day 35 benchmark archive",
+  "ui": {
+    "failed": 0,
+    "passed": 149,
+    "skipped": 0
+  }
+}

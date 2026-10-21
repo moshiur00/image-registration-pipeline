@@ -1,0 +1,91 @@
+schema_version: week07_robustness_grid_v1
+experiment:
+  week: 7
+  day: 31
+  name: robustness_grid_preflight_and_pilot
+  state: day31_design_candidate_validation_pending
+sources:
+  development: data/samples/week02_real_general/camera.png
+  final_holdout: data/samples/week02_real_general/moon.png
+  note: Holdout image reserved for Week 8, not loaded or evaluated in Day 31.
+frozen_method_catalog: configs/week07_day01_frozen_methods.yaml
+runner:
+  resize_shape: [192, 192]
+  pilot_tre_threshold_px: 2.0
+  pilot_mi_bins: 24
+  pilot_output: outputs/week07_day01_pilot
+  design_output: outputs/week07_day01_design
+  report_snapshot: reports/week07_day01_robustness_design.json
+grid:
+  seeds: [7, 42, 101]
+  modality_classes: [monomodal, simulated_multimodal]
+  transform_models: [translation, rigid, similarity, affine]
+  # These are candidate levels for Day 32+; Day 31 enumerates, does not execute them.
+  conditions:
+    gaussian_noise:
+      - {sigma_fraction: 0.008}
+      - {sigma_fraction: 0.025}
+      - {sigma_fraction: 0.055}
+    gaussian_blur:
+      - {sigma: 0.8}
+      - {sigma: 1.5}
+      - {sigma: 2.5}
+    rotation:
+      - {angle_degrees: 3.0}
+      - {angle_degrees: 8.0}
+      - {angle_degrees: 16.0}
+    scale:
+      - {deviation_fraction: 0.03}
+      - {deviation_fraction: 0.08}
+      - {deviation_fraction: 0.16}
+    illumination:
+      - {gamma: 0.70}
+      - {gamma: 1.30}
+      - {gamma: 1.80}
+    occlusion:
+      - {area_fraction: 0.10}
+      - {area_fraction: 0.25}
+      - {area_fraction: 0.40}
+    partial_overlap:
+      - {target_overlap: 0.80}
+      - {target_overlap: 0.65}
+      - {target_overlap: 0.50}
+    low_texture:
+      - {texture_strength: 0.75}
+      - {texture_strength: 0.45}
+      - {texture_strength: 0.20}
+    repeated_pattern:
+      - {repeat_fraction: 0.15}
+      - {repeat_fraction: 0.35}
+      - {repeat_fraction: 0.55}
+    multimodal_mapping:
+      - {mapping: inversion}
+      - {mapping: histogram_remap}
+      - {mapping: edge_emphasis}
+implemented_pilot_conditions: [none, gaussian_noise, gaussian_blur, intensity_inversion]
+pilot:
+  - id: mono_translation_clean
+    modality_class: monomodal
+    transform_model: translation
+    condition: none
+    geometry: {tx: 6.0, ty: -4.0}
+  - id: mono_rigid_clean
+    modality_class: monomodal
+    transform_model: rigid
+    condition: none
+    geometry: {tx: 4.0, ty: -3.0, angle_degrees: 3.0}
+  - id: mono_similarity_clean
+    modality_class: monomodal
+    transform_model: similarity
+    condition: none
+    geometry: {tx: 4.0, ty: -3.0, angle_degrees: 3.0, scale: 1.02}
+  - id: mono_affine_clean
+    modality_class: monomodal
+    transform_model: affine
+    condition: none
+    geometry: {tx: 4.0, ty: -3.0, angle_degrees: 3.0, scale_x: 1.02, scale_y: 0.99, shear_x: 0.015}
+  - id: multimodal_affine_inversion
+    modality_class: simulated_multimodal
+    transform_model: affine
+    condition: intensity_inversion
+    geometry: {tx: 4.0, ty: -3.0, angle_degrees: 3.0, scale_x: 1.02, scale_y: 0.99, shear_x: 0.015}

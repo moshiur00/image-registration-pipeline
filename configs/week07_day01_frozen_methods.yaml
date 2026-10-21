@@ -1,0 +1,202 @@
+experiment:
+  week: 7
+  day: 31
+  description: Frozen Week 7 2D candidate config snapshot based on tracked Week 6
+    methods, with model variants for rigid/translation/similarity.
+methods:
+- method_id: phase_translation
+  display_name: Phase Correlation
+  method_family: frequency_domain
+  transform_model: translation
+  dimensions:
+  - 2
+  supported_modality_classes:
+  - monomodal
+  requires_same_shape: true
+  optional: false
+  parameters:
+    use_hanning_window: true
+    subtract_mean: true
+    interpolation: linear
+- method_id: ecc_translation
+  display_name: ECC Translation
+  method_family: intensity_based
+  transform_model: translation
+  dimensions: &id001
+  - 2
+  supported_modality_classes: &id002
+  - monomodal
+  requires_same_shape: true
+  optional: false
+  parameters:
+    initialization: identity
+    max_iterations: 150
+    epsilon: 1.0e-06
+    gauss_filt_size: 5
+    multiresolution: true
+    pyramid_scales: &id003
+    - 0.25
+    - 0.5
+    - 1.0
+    pre_smoothing_sigma: 0.8
+    interpolation: linear
+    motion_model: translation
+- method_id: ecc_rigid
+  display_name: ECC Rigid
+  method_family: intensity_based
+  transform_model: rigid
+  dimensions: *id001
+  supported_modality_classes: *id002
+  requires_same_shape: true
+  optional: false
+  parameters:
+    initialization: identity
+    max_iterations: 150
+    epsilon: 1.0e-06
+    gauss_filt_size: 5
+    multiresolution: true
+    pyramid_scales: *id003
+    pre_smoothing_sigma: 0.8
+    interpolation: linear
+    motion_model: rigid
+- method_id: ecc_affine
+  display_name: ECC Affine
+  method_family: intensity_based
+  transform_model: affine
+  dimensions: *id001
+  supported_modality_classes: *id002
+  requires_same_shape: true
+  optional: false
+  parameters:
+    initialization: identity
+    max_iterations: 150
+    epsilon: 1.0e-06
+    gauss_filt_size: 5
+    multiresolution: true
+    pyramid_scales: *id003
+    pre_smoothing_sigma: 0.8
+    interpolation: linear
+- method_id: orb_similarity
+  display_name: ORB + RANSAC Similarity
+  method_family: feature_based
+  transform_model: similarity
+  dimensions: &id004
+  - 2
+  supported_modality_classes: &id005
+  - monomodal
+  requires_same_shape: false
+  optional: false
+  parameters:
+    n_features: 800
+    ratio_threshold: 0.75
+    minimum_matches: 6
+    reprojection_threshold: 3.0
+    confidence: 0.99
+    max_trials: 3000
+    minimum_inliers: 6
+    minimum_spatial_coverage: 0.125
+    random_seed: 42
+    interpolation: linear
+- method_id: orb_affine
+  display_name: ORB + RANSAC Affine
+  method_family: feature_based
+  transform_model: affine
+  dimensions: *id004
+  supported_modality_classes: *id005
+  requires_same_shape: false
+  optional: false
+  parameters:
+    n_features: 800
+    ratio_threshold: 0.75
+    minimum_matches: 6
+    reprojection_threshold: 3.0
+    confidence: 0.99
+    max_trials: 3000
+    minimum_inliers: 6
+    minimum_spatial_coverage: 0.125
+    random_seed: 42
+    interpolation: linear
+- method_id: sift_similarity
+  display_name: SIFT + RANSAC Similarity
+  method_family: feature_based
+  transform_model: similarity
+  dimensions: &id006
+  - 2
+  supported_modality_classes: &id007
+  - monomodal
+  requires_same_shape: false
+  optional: true
+  parameters:
+    n_features: 800
+    ratio_threshold: 0.75
+    minimum_matches: 6
+    reprojection_threshold: 3.0
+    confidence: 0.99
+    max_trials: 3000
+    minimum_inliers: 6
+    minimum_spatial_coverage: 0.125
+    random_seed: 42
+    interpolation: linear
+- method_id: sift_affine
+  display_name: SIFT + RANSAC Affine
+  method_family: feature_based
+  transform_model: affine
+  dimensions: *id006
+  supported_modality_classes: *id007
+  requires_same_shape: false
+  optional: true
+  parameters:
+    n_features: 800
+    ratio_threshold: 0.75
+    minimum_matches: 6
+    reprojection_threshold: 3.0
+    confidence: 0.99
+    max_trials: 3000
+    minimum_inliers: 6
+    minimum_spatial_coverage: 0.125
+    random_seed: 42
+    interpolation: linear
+- method_id: mi_rigid_2d
+  display_name: Mattes MI Rigid 2D
+  method_family: mutual_information
+  transform_model: rigid
+  dimensions:
+  - 2
+  supported_modality_classes:
+  - monomodal
+  - simulated_multimodal
+  - multimodal
+  requires_same_shape: true
+  optional: false
+  parameters: {}
+- method_id: mi_affine_2d
+  display_name: Mattes MI Affine 2D
+  method_family: mutual_information
+  transform_model: affine
+  dimensions:
+  - 2
+  supported_modality_classes:
+  - monomodal
+  - simulated_multimodal
+  - multimodal
+  requires_same_shape: true
+  optional: false
+  parameters:
+    initialization: geometry
+    histogram_bins: 32
+    sampling_strategy: none
+    sampling_percentage: 1.0
+    sampling_seed: 42
+    learning_rate: 2.0
+    minimum_step: 0.001
+    number_of_iterations: 150
+    relaxation_factor: 0.5
+    gradient_magnitude_tolerance: 0.0001
+    shrink_factors:
+    - 4
+    - 2
+    - 1
+    smoothing_sigmas:
+    - 2.0
+    - 1.0
+    - 0.0

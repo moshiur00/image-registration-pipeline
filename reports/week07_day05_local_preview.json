@@ -1,0 +1,48 @@
+{
+  "combined_attempts": 88,
+  "combined_pairs": 40,
+  "combined_task_set": "40 pairs, 88 attempts, seeds 202 and 303",
+  "dependency_caveat": "SimpleITK unavailable on local host; all 24 MI attempts failed for dependency reasons.",
+  "evidence_scope": "local_linux_diagnostic_only_not_exported_as_windows_journal",
+  "execution_status_counts": {
+    "completed": 53,
+    "failed": 35
+  },
+  "frozen_gate_outcome": {
+    "abstained": 40,
+    "conditional_precision": null,
+    "correct_selected": 0,
+    "coverage": 0.0,
+    "incorrect_selected": 0,
+    "pairs": 40,
+    "precision_wilson_95_exploratory": [
+      null,
+      null
+    ],
+    "reason_counts": {
+      "insufficient_distinct_method_families": 3,
+      "insufficient_eligible_candidates": 37
+    },
+    "tentatively_supported": 0
+  },
+  "geometric_failures_including_execution_failures": 50,
+  "runner": {
+    "executed_count": 0,
+    "plan_fingerprint": "2f1cbf1d135b8b0c7165a2f4ad9e87e4900fd3096ed314a468edc70db2d5d7dc",
+    "planned_count": 88,
+    "preexisting_count": 88,
+    "runner_schema_version": "week06_benchmark_runner_v1",
+    "skipped_count": 88,
+    "status_counts": {
+      "check": 0,
+      "completed": 53,
+      "failed": 35,
+      "validation_error": 0
+    },
+    "terminal_count": 88
+  },
+  "successes": 38,
+  "use_for_production_recommendation": false,
+  "version": "week07_day35_combined_stress_v1",
+  "windows_validation": "pending"
+}

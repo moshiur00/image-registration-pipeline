@@ -1,0 +1,38 @@
+{
+  "attempts": 963,
+  "day": 33,
+  "expected_windows_backend_total": 505,
+  "expected_windows_ui_total": 149,
+  "gallery": 12,
+  "geometric_successes": 840,
+  "geometric_unsuccessful": 123,
+  "limitations": [
+    "development-only synthetic evidence; the Week 8 held-out data were not used",
+    "descriptive failure categories do not prove physical or algorithmic causes",
+    "runtime numbers are from recorded end-to-end calls on one Windows machine; they are not isolated CPU or peak-memory profiles",
+    "TRE summaries are conditional on estimated transforms; success rates include failed attempts",
+    "synthetic multimodal mapping and periodic pattern stress are not validated real-world domain shifts"
+  ],
+  "local_backend_regression": "494 passed, 11 skipped (SimpleITK optional locally)",
+  "local_profiler_samples": 6,
+  "local_ui_regression": "147 passed, 2 skipped (Streamlit optional locally)",
+  "pairs": 486,
+  "plots": 13,
+  "source_day32_manifest_sha256": "4c472473cd0cf14a132917b025ba8814e281cd30cd2a5a61ab3dadfb7af9e20a",
+  "source_day32_records_sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+  "status": "locally_analyzed_windows_validation_pending",
+  "statuses": {
+    "check": 4,
+    "completed": 934,
+    "failed": 25
+  },
+  "taxonomy": {
+    "feature_correspondence_failure": 24,
+    "geometric_threshold_failure": 53,
+    "geometrically_successful": 840,
+    "implausible_transform": 4,
+    "large_geometric_error": 41,
+    "optimizer_execution_failure": 1
+  },
+  "week": 7
+}
