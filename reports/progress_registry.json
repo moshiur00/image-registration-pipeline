@@ -239,15 +239,48 @@
       "status": "complete"
     },
     "week_07": {
-      "current_day": "day_35",
+      "current_day": null,
       "latest_benchmark_closure": "reports/week07_day05_closure.json",
       "latest_completed_day": "day_35",
       "latest_implementation": "Day 35 development integration complete and Windows validated; Week 7 development study closed. Week 8 independent policy evaluation not started.",
       "latest_target_validation": "Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed; 88 attempts with 61 geometric successes, 11 failures; 0 executed/88 resumed.",
-      "next_day": "week08_independent_holdout_validation",
+      "next_day": "pre_week08_integrity_evaluator_and_freeze",
       "plan": "docs/weekly/week_07_plan.md",
       "status": "complete",
       "week_closure": "reports/week07_week_closure.json"
+    }
+  },
+  "pre_week08_integration": {
+    "phase_1_checkpoint": {
+      "status": "passed",
+      "date": "2026-11-03",
+      "evidence": "reports/pre_week08_phase1_checkpoint.json",
+      "week08_evaluation_started": false
+    },
+    "stage_a": {
+      "status": "implemented_current_regression_green_not_accepted",
+      "summary": "docs/daily/pre_week08_stage_a_summary.md",
+      "current_validation": "575 backend passed, 2 expected skips; 166 UI passed; preflight dry-run 13 PASS, 1 BLOCK, 1 WARN",
+      "hard_block": "no genuinely independent Week 8 source registered",
+      "critical_warning": "final evaluator identity and decision-before-label contract not implemented",
+      "hardening_incomplete": true,
+      "policy_unchanged": true,
+      "week08_evaluation_started": false
+    },
+    "stage_b": {
+      "status": "qa_support_implemented_manual_acceptance_pending",
+      "documentation": "ui/evidence/pre_week08_stage_b_acceptance.md",
+      "summary": "docs/daily/pre_week08_stage_b_summary.md",
+      "scenario_count": 5,
+      "manual_cases_accepted": 0,
+      "current_validation": "575 backend passed, 2 expected skips; 166 UI passed",
+      "formal_ui_v02_frozen": false
+    },
+    "stage_c": {
+      "status": "not_started"
+    },
+    "stage_d": {
+      "status": "not_started"
     }
   }
 }

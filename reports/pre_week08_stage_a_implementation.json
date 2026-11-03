@@ -1,0 +1,93 @@
+{
+  "stage": "pre_week08_stage_a",
+  "status": "implemented_current_windows_regression_green_not_accepted",
+  "frozen_baseline": {
+    "source_and_configuration_files": 101,
+    "complete_week7_evidence_files": 81
+  },
+  "preflight": {
+    "readiness": "BLOCK",
+    "counts": {
+      "PASS": 13,
+      "BLOCK": 1,
+      "WARN": 1
+    },
+    "blockers": [
+      {
+        "check": "heldout_source_independence",
+        "details": "Metadata and byte-level source audit (no image decoding)",
+        "errors": [
+          "No genuinely new full-project independent source declared. moon is a transfer check only"
+        ],
+        "sources": 0,
+        "status": "BLOCK",
+        "warnings": []
+      }
+    ],
+    "warnings": [
+      {
+        "check": "week08_runner_identity_contract",
+        "details": "Stage A reserves a distinct Week 8 namespace; final evaluation runner must enforce unique IDs and label-after-decision ordering when implemented",
+        "status": "WARN"
+      }
+    ]
+  },
+  "historical_validation_at_implementation": {
+    "python_syntax": "passed",
+    "preflight_readonly_frozen_integrity": "passed",
+    "positive_and_tampered_source_metadata_canary": "passed",
+    "focused_pytest": "18 passed, 0 failed (local; pytest plugins disabled for reliable process exit)",
+    "full_backend_local": "562 passed, 11 skipped, process exit 0 (plugin autoload disabled)",
+    "ui_local": "147 passed, 2 skipped, process exit 0 (plugin autoload disabled)",
+    "windows_regression": "Eight prior Stage A failures addressed by path-validator fix; Windows rerun pending"
+  },
+  "science_policy": {
+    "week07_calibration_policy_modified": false,
+    "production_ui_modified": false,
+    "ui_qa_support_added_in_stage_b": true,
+    "algorithms_modified": false,
+    "week08_heldout_pixels_or_labels_accessed": false
+  },
+  "current_validation_2026_11_03": {
+    "backend": {
+      "passed": 575,
+      "skipped": 2,
+      "failed": 0
+    },
+    "ui": {
+      "passed": 166,
+      "skipped": 0,
+      "failed": 0
+    },
+    "preflight_dry_run": {
+      "PASS": 13,
+      "BLOCK": 1,
+      "WARN": 1
+    },
+    "windows_path_regression": "closed; no Stage A path failure reproduced",
+    "acceptance": "NOT_ACCEPTED"
+  },
+  "remaining_gates": {
+    "hard_block": "No genuinely independent Week 8 source is registered",
+    "critical_warning": "No final evaluator yet enforces unique Week 8 IDs and decision-before-label ordering",
+    "hardening_incomplete": [
+      "prior-source ledger and canonical lineage",
+      "strict final-readiness mode",
+      "tracked evidence packaging"
+    ]
+  },
+  "next": "Proceed to Phase 2: harden the ledger and preflight; implement and freeze the evaluator/label firewall with development fixtures; enroll an independent source only after release-candidate freeze.",
+  "fix_2026_10_23": {
+    "symptom": "Stage A fixture baseline files falsely rejected in Windows pytest temporary root; 8 preflight failures",
+    "change": "Restrict symlink and junction inspection to components inside resolved repository root",
+    "security": "absolute/traversal/out-of-root and internal symlink/junction paths remain rejected",
+    "new_regressions": 2,
+    "scope": [
+      "scripts/week08_preflight.py",
+      "tests/test_week08_preflight.py",
+      "docs/daily/pre_week08_stage_a_summary.md"
+    ],
+    "week7_frozen_hashes_modified": false,
+    "heldout_source_registered": false
+  }
+}

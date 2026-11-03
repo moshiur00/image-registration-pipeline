@@ -1,0 +1,38 @@
+{
+  "known_prior_sources": [
+    {
+      "path": "data/samples/week02_real_general/camera.png",
+      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
+      "sha256": "b779d2c8e2a7098a0182c26227c3b516fb2d9d15f14ed99940c6196ba4a2c4e2",
+      "source_id": "camera"
+    },
+    {
+      "path": "data/samples/week02_real_general/coins.png",
+      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
+      "sha256": "ce486a40c54dfbf237aea10a2fe5b5e9f789a57dcbbb24054ffd84b478432826",
+      "source_id": "coins"
+    },
+    {
+      "path": "data/samples/week02_real_general/moon.png",
+      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
+      "sha256": "2ab62fb95bfbccce9cf72fb3db26f5fe69b0f7fd1c5173940295439fe419492b",
+      "source_id": "moon"
+    },
+    {
+      "path": "data/samples/week01/fixed.png",
+      "prior_usage": "Week 1 example",
+      "sha256": "6ef03c6191df81913ebaef660ff9299b72c6e05b4a87a131d767f4d53151e6e0",
+      "source_id": "week01_fixed"
+    },
+    {
+      "path": "data/samples/week01/moving.png",
+      "prior_usage": "Week 1 example",
+      "sha256": "21e76978ff7929ac85285df9995f02bd19835a84ba3d9f5edd2504316f6fbc31",
+      "source_id": "week01_moving"
+    }
+  ],
+  "purpose": "Pre-Week 8 source use and independence ledger; no labels or heldout pixels here",
+  "registration_instructions": "Add genuinely new full_project_independent source with provenance, role, verified hash, ground_truth_status, and relative path before final evaluation; moon may be registered only as policy_transfer_check.",
+  "schema_version": 1,
+  "week08_sources": []
+}

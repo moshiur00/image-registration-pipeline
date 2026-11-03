@@ -8,9 +8,9 @@ The UI is an isolated presentation and orchestration layer around the validated 
 
 **Planned repository location:** `ui/DEVELOPMENT_STAGES.md`
 
-**Current overall status:** UI v0.1 FROZEN - Stage 5 COMPLETE; Stages 6.1 through 6.4 COMPLETE and target Windows validated; Stage 6.5 regression previously Windows validated (432/432 backend and 134/134 UI). Stage 6.5 final edge-case QA patch IMPLEMENTED and LOCALLY VALIDATED (421 backend passed, 11 skipped; 147 UI passed, 2 skipped). Updated Windows validation and formal UI v0.2 freeze are pending.
+**Current overall status (2026-11-03):** UI v0.1 FROZEN; Week 7 complete; UI v0.2 Automatic Comparison remains a release candidate. Current Windows regression: 575 backend passed with 2 expected skips and 166 UI passed. Pre-Week 8 Stage B QA support is implemented, but manual interaction status is 0/5. Formal UI v0.2 freeze has NOT occurred.
 
-**Target release:** UI v0.1 frozen before Week 6; UI v0.2 Automatic Comparison Preview planned before Week 7
+**Target release:** UI v0.1 frozen; UI v0.2 Automatic Comparison remains a release candidate pending the 5/5 Stage B manual gate
 
 ---
 
@@ -2029,7 +2029,7 @@ Stage 6 is complete only when:
 - backend logic remains outside Streamlit;
 - the service contract remains suitable for a future FastAPI layer.
 
-## Expected handoff to Week 7
+## Historical expected handoff to Week 7
 
 Stage 6 should expose the Week 6 infrastructure without inventing calibration.
 
@@ -2047,11 +2047,11 @@ Later UI
 Recommendation + confidence + abstention
 ```
 
-The purpose of Stage 6 is therefore to make the automatic evidence visible and auditable, not to finish automatic decision-making.
+The purpose of Stage 6 is therefore to make the automatic evidence visible and auditable, not to finish automatic decision-making. Week 7 is now complete, but its development-only evidence did not authorize a recommendation or calibrated confidence; those claims remain deferred pending independent validation.
 
 
 
-## Stage 6.5 implementation record, 2026-10-20
+## Historical Stage 6.5 implementation record, 2026-10-20
 
 **Status:** IMPLEMENTATION COMPLETE; TARGET WINDOWS REGRESSION PASSED. Main interactive Streamlit workflow reviewed. Formal v0.2 freeze remains pending final edge-case QA.
 
@@ -2078,7 +2078,7 @@ The local skips reflect optional dependency availability. A real-image-pair exec
 **Remaining manual release acceptance:** Check a simulated multimodal case, one compatible candidate with no fabricated consensus, a failed or CHECK candidate with visible/exported reason, and state invalidation after changed inputs/preprocessing. Confirm ZIP provenance against the chosen run if possible. **Formal freeze: NOT YET.** Stage 6.5 is implemented and Windows regression validated; UI v0.2 remains a release candidate until these edge cases are checked. Week 7 has not started.
 
 
-## Stage 6.5 final QA patch, 2026-10-20
+## Historical Stage 6.5 final QA patch, 2026-10-20
 
 **Status:** PATCH IMPLEMENTED AND LOCALLY VALIDATED; NEW TARGET WINDOWS VALIDATION PENDING; UI v0.2 NOT FROZEN.
 
@@ -2100,3 +2100,22 @@ Multimodal affine one-compatible-candidate smoke: one compatible MI method, no a
 Prior target Windows evidence remains valid **for the previous build**: 432/432 backend and 134/134 UI. Do not cite those counts as validation of this new patch. Expected next target regression is 432 backend tests and 149 UI tests when optional packages are installed. The new single-candidate MI execution should also be verified on Windows.
 
 **Remaining release acceptance:** Windows regression, interactive two-candidate/no-unique-anchor display, single-candidate multimodal path, changing and removing uploads, changing preprocessing/modality/optional-method settings, stale ZIP disappearance, regenerated ZIP provenance, and failure-record export. Record results before changing sidebar from `UI v0.2 preview` or freezing UI v0.2. Week 7 remains not started.
+
+
+---
+
+# Pre-Week 8 Stage B: UI Acceptance and Freeze
+
+**Status:** QA SUPPORT IMPLEMENTED; LOCAL AUTOMATED VALIDATION PASSED; WINDOWS MANUAL ACCEPTANCE PENDING.
+
+Stage B is a pre-release acceptance gate for the existing UI v0.2, not a new automatic recommendation feature. Deterministic QA fixtures and an operator-attested checklist were added under `ui/qa/`, `scripts/pre_week08_stage_b_ui_qa.py` and `ui/evidence/pre_week08_stage_b_acceptance.md`. The fixtures use the known development `camera.png` image and are stored exclusively under ignored `ui/runtime/`. Five manual scenarios remain pending until Windows UI interactions are observed.
+
+The earlier Week 7 Windows suites completed with 575 backend passed, 2 skipped, and 149 UI passed after Stage A, as shown in user-provided terminal screenshots. Those counts are the baseline before Stage B, not acceptance of Stage B interactions. This stage does not alter frozen backend/UI production code or the Day 34 policy.
+
+**Exit criteria:** Stage B automated tests and full regression pass on Windows; all five manual cases receive operator-attested PASS with evidence and no unaddressed blocking defect; the Stage A frozen-source and evidence checks stay valid; only then record UI v0.2 FROZEN.
+
+**Current checkpoint validation (2026-11-03):** 575 backend tests passed with
+2 expected skips, and 166 UI tests passed. This is the current automated record
+and supersedes the earlier 149-test pre-Stage B UI baseline. It does not satisfy
+the manual gate: 0/5 scenarios are operator-accepted, so UI v0.2 remains
+**NOT FROZEN**.

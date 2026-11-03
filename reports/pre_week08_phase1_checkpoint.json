@@ -1,0 +1,76 @@
+{
+  "checkpoint": "pre_week08_phase_1_stage_a_b_reconciliation",
+  "date": "2026-11-03",
+  "status": "passed",
+  "commit_record": "the Git commit containing this report is the recoverable Phase 1 checkpoint",
+  "scope": {
+    "week07_status": "complete",
+    "stage_a": "implemented_current_regression_green_not_accepted",
+    "stage_b": "qa_harness_implemented_manual_acceptance_0_of_5",
+    "ui_v02": "NOT_FROZEN",
+    "week08_evaluation": "not_run",
+    "holdout_pixels_or_labels_accessed": false
+  },
+  "validation": {
+    "focused_stage_a_b": {
+      "passed": 39,
+      "failed": 0
+    },
+    "backend_full": {
+      "environment": "isolated Windows Python 3.12 with pinned requirements",
+      "passed": 575,
+      "skipped": 2,
+      "failed": 0,
+      "skip_reasons": [
+        "tests/test_zip_project_benchmark.py:124 - symlinks not supported in this environment",
+        "tests/test_zip_project_benchmark.py:136 - symlinks not supported in this environment"
+      ]
+    },
+    "ui_full": {
+      "environment": "isolated Windows Python 3.12 with pinned root and UI requirements",
+      "passed": 166,
+      "skipped": 0,
+      "failed": 0
+    },
+    "preflight_dry_run": {
+      "PASS": 13,
+      "BLOCK": 1,
+      "WARN": 1,
+      "readiness": "BLOCK",
+      "expected_block": "no genuinely independent Week 8 source registered",
+      "expected_warning": "final evaluator identity and decision-before-label contract not implemented"
+    },
+    "stage_b_status": {
+      "status": "PENDING_MANUAL_QA",
+      "passed": 0,
+      "total": 5,
+      "process_exit": "nonzero by design while manual gate is incomplete"
+    },
+    "frozen_inventory": {
+      "source_and_configuration_files_verified": 101,
+      "week07_evidence_files_verified": 81,
+      "day32_attempts": 963,
+      "day35_attempts": 88
+    },
+    "git_diff_check": "passed; line-ending conversion warnings only",
+    "json_parse": "passed"
+  },
+  "review": {
+    "production_registration_code_changed": false,
+    "production_streamlit_ui_changed": false,
+    "week07_evidence_bytes_changed": false,
+    "ignored_outputs_force_added": false,
+    "checkpoint_classification": "safe as an explicitly incomplete Stage A/B scaffold"
+  },
+  "required_before_source_enrollment_or_final_readiness": [
+    "complete the prior-source ledger with RIRE identities and canonical lineage",
+    "validate modality, Boolean prior-use fields, SHA-256 syntax and ground-truth evidence",
+    "anchor and enforce the exact frozen inventory and complete release manifest",
+    "add strict final-readiness behavior that blocks when the evaluator/firewall is absent",
+    "bind evidence immutability to the complete 81-file verification",
+    "harden Stage B attestations with operator, environment, commit, timestamp, evidence hashes and fixture-manifest binding",
+    "invalidate manual acceptance when fixtures or their manifest change",
+    "define an explicit private holdout ignore and attachment policy"
+  ],
+  "next_phase": "Phase 2 integrity, ledger, preflight and evidence hardening using development data only"
+}

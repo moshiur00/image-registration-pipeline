@@ -1,10 +1,10 @@
 # Image Registration Workbench
 
-This directory contains the isolated user-interface work package for the image-registration research pipeline. UI v0.1 is frozen, and the current development target is the UI v0.2 Automatic Comparison Preview before Week 7.
+This directory contains the isolated user-interface work package for the image-registration research pipeline. UI v0.1 is frozen. UI v0.2 Automatic Comparison is implemented and remains a release candidate pending its final manual QA.
 
 ## Current status
 
-**UI v0.1 is complete and frozen. Stages 6.1 through 6.4 are complete and target Windows validated. Stage 6.5 is implemented, and its target Windows regression passed (432/432 backend and 134/134 UI). Main Automatic comparison and analysis-ZIP export workflows have been visually reviewed. Final edge-case manual QA and formal UI v0.2 freeze are pending.**
+**UI v0.1 is complete and frozen. Week 7 is complete. UI v0.2 remains a release candidate: the current Windows regression is 575 backend tests passed with 2 expected skips and 166 UI tests passed, but Stage B manual acceptance is 0/5. The five scenarios are tracked in `ui/evidence/pre_week08_stage_b_acceptance.md`; formal UI v0.2 freeze is pending their actual interactive verification.**
 
 - Stage 1 established isolation, directory boundaries, UI-only dependencies, runtime rules, and regression guardrails.
 - Stage 2 established framework-neutral contracts, method metadata, validation, evidence policy, provenance, input hashing, JSON-safe presentation, and `RegistrationService`.
@@ -64,7 +64,7 @@ The current Streamlit application provides four views.
 
 The Automatic comparison page accepts unknown uploaded image pairs and provides fixed/moving uploads, transform-model and modality selection, explicit common preprocessing, input preview, and backend-derived compatible/excluded method views.
 
-Compatibility is obtained through `AutomaticComparisonService.preview()` rather than through a hardcoded Streamlit method list. Stage 6.3 adds explicit `Run automatic comparison` execution through `AutomaticComparisonService.run()` and renders terminal states plus normalized common evidence. Stage 6.4 renders transform agreement, descriptive consensus, and candidate inspection from the existing service. Stage 6.5 adds an in-memory analysis ZIP and mask-aware display; final recommendation and confidence remain deferred until benchmark calibration.
+Compatibility is obtained through `AutomaticComparisonService.preview()` rather than through a hardcoded Streamlit method list. Stage 6.3 adds explicit `Run automatic comparison` execution through `AutomaticComparisonService.run()` and renders terminal states plus normalized common evidence. Stage 6.4 renders transform agreement, descriptive consensus, and candidate inspection from the existing service. Stage 6.5 adds an in-memory analysis ZIP and mask-aware display; final recommendation and confidence remain deferred pending independent validation and explicit claim approval.
 
 ### Benchmark examples
 
@@ -96,7 +96,7 @@ After running Automatic comparison, choose **Prepare automatic analysis ZIP**, t
 
 The original adapter registered arrays are not retained in the Stage 6 automatic view model; exported registered images are explicitly **inspection-only reconstructions** using the estimated Moving -> Fixed transform and linear resampling. Geometric source support is computed using the backend mask warp, independently of black source pixels. Images are not recalculated as registration evidence. Method defaults, preprocessing, runtime, raw diagnostics, package versions and SHA256 input hashes are recorded for auditability. Uploaded source bytes are not packaged. No export writes into tracked research directories.
 
-The comparison distinguishes **execution issues** from **missing-reference evaluation limitations**, includes interpretable diagnostic highlights with expandable raw method JSON, and leaves all best-method and confidence choices deferred until Week 7.
+The comparison distinguishes **execution issues** from **missing-reference evaluation limitations**, includes interpretable diagnostic highlights with expandable raw method JSON, and leaves all best-method and confidence choices deferred pending independent validation and explicit claim approval.
 
 ## Evidence policy
 
@@ -197,7 +197,9 @@ Recorded evidence:
 
 ## Release state
 
-UI v0.1 is frozen and target-validated. Stage 6.4 is complete and Windows validated (2026-10-20: 432/432 backend and 117/117 UI, with multi-candidate Streamlit screenshots). Stage 6.5 also passed authoritative Windows regression on 2026-10-20: 432/432 backend in 8.06 s and 134/134 UI in 6.80 s, zero failures and zero skips. User screenshots show an uploaded four-candidate affine comparison, agreement and visual inspection, mask-aware previews, execution limitations, and successful automatic-analysis ZIP download. Remaining manual acceptance: a multimodal case, a one-candidate case, failed/CHECK behavior, and changed-input/settings result/export invalidation. UI v0.2 has not been formally frozen; no final method recommendation or confidence is provided.
+UI v0.1 is frozen and target-validated. Stage 6.4 is complete and Windows validated (2026-10-20: 432/432 backend and 117/117 UI, with multi-candidate Streamlit screenshots). Stage 6.5 also passed authoritative Windows regression on 2026-10-20: 432/432 backend in 8.06 s and 134/134 UI in 6.80 s, zero failures and zero skips. User screenshots show an uploaded four-candidate affine comparison, agreement and visual inspection, mask-aware previews, execution limitations, and successful automatic-analysis ZIP download. That dated record is preserved below; the superseding Stage B gate now covers five scenarios: simulated multimodal compatibility, a one-candidate agreement limit, failed/CHECK preservation, stale state/export invalidation, and archive provenance. UI v0.2 has not been formally frozen; no final method recommendation or confidence is provided.
+
+**Superseding current record (2026-11-03):** the current Windows suites report 575 backend passed with 2 expected skips and 166 UI passed. Automated validation is green, but manual Stage B status remains 0/5 and therefore UI v0.2 is **NOT FROZEN**. Historical statements below describe their dated checkpoints and are not current project status.
 
 
 ## Page header pattern
@@ -213,10 +215,23 @@ One concise page subtitle
 The application-level caption was removed so each page title carries the primary visual hierarchy. Workbench, Automatic Registration Comparison, Benchmark Examples, and Method Reference follow the same pattern.
 
 
-## UI v0.2 final QA patch (2026-10-20)
+## Historical UI v0.2 final QA patch (2026-10-20)
 
 Two compatible candidates are always tied under pairwise centrality, so the page now says there is no unique descriptive anchor. One eligible transform reports insufficient agreement. With three or more eligible transforms, only a unique minimum median RMS is displayed as the descriptive anchor; the backend medoid remains available in raw evidence. Automatic-analysis ZIP files record this distinction in `analysis.json` and `manifest.json`.
 
 Changing or removing input images, changing pair settings or preprocessing, or starting a new comparison clears the old result and prepared export. Exports also reject stale request identities. The original manual Workbench and validated backend were not changed.
 
 The final patch passed local backend tests (421 passed, 11 optional-dependency skips) and UI tests (147 passed, 2 optional-dependency skips). The previous release candidate passed 432 backend and 134 UI tests on Windows, but the new patch awaits fresh authoritative Windows checks. With all dependencies installed, expected counts are 432 backend and 149 UI tests. Do not freeze UI v0.2 or remove its `preview` sidebar label until manual edge-case acceptance and these tests are complete. Week 7 remains not started.
+
+
+## Pre-Week 8 Stage B: Final UI acceptance (pending)
+
+The QA harness generates deterministic, development-only PNGs from a previously used example and records five **manual** Streamlit walkthroughs. Tests passing does not mark manual scenarios complete or provide confidence calibration.
+
+```powershell
+python scripts/pre_week08_stage_b_ui_qa.py prepare
+streamlit run ui/streamlit_app.py
+python scripts/pre_week08_stage_b_ui_qa.py status
+```
+
+See `ui/evidence/pre_week08_stage_b_acceptance.md` for the exact scenarios and operator recording commands. Manual observations are local under ignored `ui/runtime/`. They are not Week 8 held-out evidence.

@@ -1,0 +1,32 @@
+{
+  "stage": "pre_week08_stage_a",
+  "record_scope": "historical intermediate correction; superseded by docs/STAGE_A_WINDOWS_ROOT_CAUSE_REVIEW.md and current_validation_2026_11_03",
+  "issue": "Windows temporary directory ancestor symlink/junction false rejection",
+  "fix": "Only examine links within canonical repository root, reject in-repository symlinks and junctions",
+  "observed_windows_before_fix": {
+    "passed": 561,
+    "failed": 8,
+    "skipped": 2
+  },
+  "local_after_fix": {
+    "stage_a_tests_passed": 18,
+    "backend_passed": 562,
+    "backend_skipped": 11,
+    "ui_passed": 147,
+    "ui_skipped": 2
+  },
+  "windows_after_fix_at_time_of_record": "pending user rerun",
+  "current_validation_2026_11_03": {
+    "backend_passed": 575,
+    "backend_skipped": 2,
+    "backend_failed": 0,
+    "ui_passed": 166,
+    "ui_skipped": 0,
+    "ui_failed": 0,
+    "stage_a_path_failure_reproduced": false,
+    "compatibility_regression": "closed"
+  },
+  "frozen_files_unchanged": true,
+  "original_week7_evidence_unchanged": true,
+  "independent_holdout_source": "not registered; expected BLOCK"
+}

@@ -1,5 +1,13 @@
 # Stage 6 UI Validation Record
 
+> **Superseding current status - 3 November 2026:** Week 7 is complete. The
+> current Windows regression is 575 backend tests passed with 2 expected skips
+> and 166 UI tests passed. Pre-Week 8 Stage B automated support is green, but
+> manual acceptance remains 0/5; UI v0.2 is therefore **NOT FROZEN**. No final
+> method recommendation or calibrated confidence is deployed. Statements below
+> that Week 7 had not started or that a then-new Windows rerun was pending are
+> preserved as dated Stage 6 history, not current status.
+
 ## Stage 6.1 - Automatic Service and View Models
 
 **Date:** 2026-10-20  

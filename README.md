@@ -13,7 +13,7 @@ three-family agreement candidate, but abstains on 435/486 synthetic development
 pairs. This is **not** a deployed confidence score or production method selector.
 Windows validated and formally closed. See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`.
 
-The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 11 execution failures and all records preserved. The unchanged experimental Day 34 gate tentatively supported 2/40 development pairs (both synthetic ground-truth correct) and abstained on 38/40; it is **not** independent validation or a confidence percentage. Week 8 will evaluate it on reserved held-out data.
+The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 11 execution failures and all records preserved. The unchanged experimental Day 34 gate tentatively supported 2/40 development pairs (both synthetic ground-truth correct) and abstained on 38/40; it is **not** independent validation or a confidence percentage. Independent Week 8 evaluation remains blocked pending source enrollment and a frozen evaluator/label firewall.
 
 ## Project at a glance
 
@@ -24,8 +24,8 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 7 complete; UI v0.2 frozen; Day 35 Windows integration passed; Week 8 independent holdout not started |
-| Target validation | Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
+| Current status | Weeks 1 to 7 complete; UI v0.2 release candidate with Stage B manual acceptance 0/5 (not frozen); Week 8 not run |
+| Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
 
@@ -232,10 +232,10 @@ The most useful entry points are:
 | 4 | ORB + RANSAC and optional SIFT comparison | Complete |
 | 5 | Multimodal Mutual Information and RIRE validation | Complete |
 | 6 | Unified evaluation and reproducible benchmarking | Complete and target-validated |
-| 7 | Robustness, runtime analysis, and failure diagnosis | In progress: Days 31-34 closed; Day 35 integrated validation next |
-| 8 | Final benchmark, analysis, documentation, and demonstration | Planned |
+| 7 | Robustness, runtime analysis, and failure diagnosis | Complete and Windows validated through Day 35 |
+| 8 | Final benchmark, analysis, documentation, and demonstration | Planned; blocked pending pre-Week 8 gates |
 
-Week 6 is complete and target-validated. It established the unified evaluation contract, independently validated metric implementation, deterministic resumable benchmark execution, automatic compatible-candidate execution, common evidence normalization, transform-space disagreement, preliminary descriptive consensus, robust method summaries, and a preserved ground-truth firewall. Final best-method recommendation remains intentionally deferred until Week 7 robustness calibration.
+Week 6 is complete and target-validated. It established the unified evaluation contract, independently validated metric implementation, deterministic resumable benchmark execution, automatic compatible-candidate execution, common evidence normalization, transform-space disagreement, preliminary descriptive consensus, robust method summaries, and a preserved ground-truth firewall. A final best-method recommendation remains intentionally deferred because the current evidence is development-only and narrow; independent Week 8 validation has not run.
 
 ## License
 
@@ -285,9 +285,24 @@ no new UI recommendations or confidence scores are enabled.
 
 Day 34 is **closed and Windows validated**: 530 backend passed with 2 expected symlink skips, and 149 UI passed. The offline calibration assessed 963 frozen Day 32 attempts, producing 486 unique pair decisions. A conservative exploratory three-family gate tentatively supports 51/486 development pairs and abstains on 435; **all 51 supported cases are monomodal affine**. Internal seed audit support was 18/162 with 18/18 correct among selected pairs, which does **not** establish calibrated confidence or independent reliability. No algorithm, UI, or held-out Week 8 data changed.
 
-See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`, `reports/week07_day04_closure.json` and `outputs/week07_day04_calibration/`. Day 35 integrated validation remains not started.
+See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`, `reports/week07_day04_closure.json` and `outputs/week07_day04_calibration/`. At this dated Day 34 checkpoint, Day 35 integrated validation had not started; the closure below supersedes that historical state.
 
 
-### Week 7 Day 35 (implemented; Windows validation pending)
+### Week 7 Day 35 closure
 
-The 40-pair controlled combined-stress study, frozen Day 34 offline policy evaluation, comparison tables, figures, and stratified review queue are documented in `docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md`. Run `python scripts/week07_day05_integrated_validation.py` on Windows after backend/UI regression tests. The ZIP intentionally omits the local Linux Day 35 journal to prevent accidentally resuming SimpleITK dependency failures. UI and registration algorithms are unchanged. Week 8 held-out evaluation is not started.
+Day 35 is complete and Windows validated. The 40-pair controlled combined-stress study retained all 88 attempts: 61 geometric successes and 11 failed registrations. The unchanged Day 34 policy supported 2/40 pairs and abstained on 38/40. Closure evidence records 552 backend tests passed with 3 expected skips, 149 UI tests passed, and 88 attempts resumed with 0 rerun. See `docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md` and `reports/week07_day05_closure.json`. UI and registration algorithms are unchanged. Week 8 has not run.
+
+### Pre-Week 8 Stage A safety preflight
+
+The project now includes a metadata-only holdout integrity and dataset-independence check. The complete Stage A archive bundles the original Week 7 evidence. Run:
+
+```bash
+python scripts/week08_preflight.py --dry-run
+python scripts/week08_preflight.py
+```
+
+A current `BLOCK` for `heldout_source_independence` is expected: the source-use ledger has no newly obtained independent image, and the previously used `moon` source cannot serve as a fully unseen image. Do not run the Week 8 final benchmark until this is resolved. See `docs/WEEK08_HOLDOUT_PROTOCOL.md` and `docs/daily/pre_week08_stage_a_summary.md`. The frozen algorithms, UI, and Day 34 policy have not changed.
+
+### Pre-Week 8 Stage B UI acceptance
+
+The deterministic Stage B QA harness and automated coverage are implemented. The current Windows regression record is 575 backend tests passed with 2 expected skips and 166 UI tests passed. All five interactive operator scenarios remain pending (0/5), so automated success does not freeze UI v0.2. See `ui/evidence/pre_week08_stage_b_acceptance.md` and `reports/pre_week08_stage_b_implementation.json`.

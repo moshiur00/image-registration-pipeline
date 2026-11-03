@@ -1,0 +1,39 @@
+{
+  "stage": "pre_week08_stage_b_ui_acceptance",
+  "state": "qa_harness_implemented_manual_validation_pending",
+  "automatic_validation": {
+    "local_backend": "full suite passed, optional dependency skips apply",
+    "local_ui": "full suite passed, optional dependency skips apply",
+    "focused_stage_b_tests": 17
+  },
+  "manual_status": {
+    "passed": 0,
+    "pending": 5,
+    "release_decision": "NOT_FROZEN"
+  },
+  "frozen_scientific_artifacts": {
+    "immutable_sources": 101,
+    "week7_evidence": 81,
+    "preflight_result": "PASS for frozen sources and evidence; BLOCK independent Week 8 source",
+    "baseline_scope": "Current Stage A manifest is not the complete release manifest; final code, Streamlit, data, scripts and dependency freeze remain Phase 5 work"
+  },
+  "known_target_windows_baseline": {
+    "backend": "575 passed, 2 skipped before Stage B",
+    "ui": "149 passed before Stage B"
+  },
+  "current_validation_2026_11_03": {
+    "backend_passed": 575,
+    "backend_skipped": 2,
+    "backend_failed": 0,
+    "ui_passed": 166,
+    "ui_skipped": 0,
+    "ui_failed": 0,
+    "manual_cases_accepted": 0,
+    "release_decision": "NOT_FROZEN"
+  },
+  "production_ui_code_changed": false,
+  "ui_qa_support_added": true,
+  "original_benchmark_changed": false,
+  "week8_heldout_used": false,
+  "docs": "ui/evidence/pre_week08_stage_b_acceptance.md"
+}
