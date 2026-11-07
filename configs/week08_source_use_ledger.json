@@ -1,38 +1,221 @@
 {
+  "schema_version": 2,
+  "purpose": "Pre-Week 8 canonical source-use and lineage ledger; metadata only, with no labels or held-out pixels",
+  "required_entry_fields": [
+    "source_id",
+    "path",
+    "sha256",
+    "format",
+    "modality",
+    "role",
+    "previously_used",
+    "prior_usage",
+    "reference_or_license",
+    "canonical_dataset_id",
+    "canonical_subject_id",
+    "canonical_case_id",
+    "canonical_acquisition_id",
+    "canonical_source_id",
+    "lineage_ancestors",
+    "lineage_evidence",
+    "lineage_status"
+  ],
   "known_prior_sources": [
     {
+      "source_id": "camera",
       "path": "data/samples/week02_real_general/camera.png",
-      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
       "sha256": "b779d2c8e2a7098a0182c26227c3b516fb2d9d15f14ed99940c6196ba4a2c4e2",
-      "source_id": "camera"
+      "format": "png",
+      "modality": "visible",
+      "role": "development",
+      "previously_used": true,
+      "prior_usage": [
+        "Weeks 2-6 controlled registration development and benchmarking",
+        "Week 7 robustness calibration and combined-stress development",
+        "UI examples and Pre-Week 8 Stage B QA fixtures"
+      ],
+      "reference_or_license": "scikit-image data module; source_name is recorded in data/manifests/general_real_sources.json and asset-specific upstream terms must be verified before redistribution",
+      "canonical_dataset_id": "scikit-image:data",
+      "canonical_subject_id": "not_applicable",
+      "canonical_case_id": "camera",
+      "canonical_acquisition_id": "original_asset",
+      "canonical_source_id": "scikit-image:data.camera",
+      "lineage_ancestors": [
+        "scikit-image:data.camera"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/manifests/general_real_sources.json",
+        "manifest_sha256": "83012b2d94399686c2f5bf17f0656dc17f7a247efc961f4e708f399cca2e423a"
+      },
+      "lineage_status": "documented_canonical_asset"
     },
     {
+      "source_id": "coins",
       "path": "data/samples/week02_real_general/coins.png",
-      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
       "sha256": "ce486a40c54dfbf237aea10a2fe5b5e9f789a57dcbbb24054ffd84b478432826",
-      "source_id": "coins"
+      "format": "png",
+      "modality": "visible",
+      "role": "development",
+      "previously_used": true,
+      "prior_usage": [
+        "Weeks 2-5 controlled real-image and feature/MI development benchmarks"
+      ],
+      "reference_or_license": "scikit-image data module; source_name is recorded in data/manifests/general_real_sources.json and asset-specific upstream terms must be verified before redistribution",
+      "canonical_dataset_id": "scikit-image:data",
+      "canonical_subject_id": "not_applicable",
+      "canonical_case_id": "coins",
+      "canonical_acquisition_id": "original_asset",
+      "canonical_source_id": "scikit-image:data.coins",
+      "lineage_ancestors": [
+        "scikit-image:data.coins"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/manifests/general_real_sources.json",
+        "manifest_sha256": "83012b2d94399686c2f5bf17f0656dc17f7a247efc961f4e708f399cca2e423a"
+      },
+      "lineage_status": "documented_canonical_asset"
     },
     {
+      "source_id": "moon",
       "path": "data/samples/week02_real_general/moon.png",
-      "prior_usage": "Weeks 1-7 existing source; moon used before Week 7",
       "sha256": "2ab62fb95bfbccce9cf72fb3db26f5fe69b0f7fd1c5173940295439fe419492b",
-      "source_id": "moon"
+      "format": "png",
+      "modality": "visible",
+      "role": "policy_transfer_check",
+      "previously_used": true,
+      "prior_usage": [
+        "Weeks 2-5 controlled real-image and feature/MI development benchmarks",
+        "Reserved from Week 7 calibration but already used earlier in the project"
+      ],
+      "reference_or_license": "scikit-image data module; source_name is recorded in data/manifests/general_real_sources.json and asset-specific upstream terms must be verified before redistribution",
+      "canonical_dataset_id": "scikit-image:data",
+      "canonical_subject_id": "not_applicable",
+      "canonical_case_id": "moon",
+      "canonical_acquisition_id": "original_asset",
+      "canonical_source_id": "scikit-image:data.moon",
+      "lineage_ancestors": [
+        "scikit-image:data.moon"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/manifests/general_real_sources.json",
+        "manifest_sha256": "83012b2d94399686c2f5bf17f0656dc17f7a247efc961f4e708f399cca2e423a"
+      },
+      "lineage_status": "documented_canonical_asset"
     },
     {
+      "source_id": "week01_fixed",
       "path": "data/samples/week01/fixed.png",
-      "prior_usage": "Week 1 example",
       "sha256": "6ef03c6191df81913ebaef660ff9299b72c6e05b4a87a131d767f4d53151e6e0",
-      "source_id": "week01_fixed"
+      "format": "png",
+      "modality": "visible",
+      "role": "development",
+      "previously_used": true,
+      "prior_usage": [
+        "Week 1 pipeline smoke-test fixed image",
+        "Week 2 synthetic ground-truth, degradation, overlap and simulated-multimodal development source",
+        "UI curated development example"
+      ],
+      "reference_or_license": "Project-tracked Week 1 fixture introduced in commit 146fdca; upstream source and license are not documented",
+      "canonical_dataset_id": "project:week01_smoke_fixture",
+      "canonical_subject_id": "not_applicable",
+      "canonical_case_id": "week01_smoke_pair",
+      "canonical_acquisition_id": "fixed",
+      "canonical_source_id": "project:week01_smoke_pair:fixed",
+      "lineage_ancestors": [
+        "project:week01_smoke_pair"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "configs/day05_week01_smoke_test.yaml",
+        "manifest_sha256": "ef9546bf3efa58965a5419ac9294c19a91e9be3948581b3ca24f7e8bcceee5a3"
+      },
+      "lineage_status": "upstream_provenance_unresolved_conservatively_grouped"
     },
     {
+      "source_id": "week01_moving",
       "path": "data/samples/week01/moving.png",
-      "prior_usage": "Week 1 example",
       "sha256": "21e76978ff7929ac85285df9995f02bd19835a84ba3d9f5edd2504316f6fbc31",
-      "source_id": "week01_moving"
+      "format": "png",
+      "modality": "visible",
+      "role": "development",
+      "previously_used": true,
+      "prior_usage": [
+        "Week 1 pipeline smoke-test moving image",
+        "UI curated development example"
+      ],
+      "reference_or_license": "Project-tracked Week 1 fixture introduced in commit 146fdca; upstream source and license are not documented",
+      "canonical_dataset_id": "project:week01_smoke_fixture",
+      "canonical_subject_id": "not_applicable",
+      "canonical_case_id": "week01_smoke_pair",
+      "canonical_acquisition_id": "moving",
+      "canonical_source_id": "project:week01_smoke_pair:moving",
+      "lineage_ancestors": [
+        "project:week01_smoke_pair"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "configs/day05_week01_smoke_test.yaml",
+        "manifest_sha256": "ef9546bf3efa58965a5419ac9294c19a91e9be3948581b3ca24f7e8bcceee5a3"
+      },
+      "lineage_status": "upstream_provenance_unresolved_conservatively_grouped"
+    },
+    {
+      "source_id": "rire_training001_ct",
+      "path": "data/raw/rire/training_001/mha/training_001_ct.mha",
+      "sha256": "a1526b57976dbe71db7b2ea3607abd147dab5b7622951ebc7c06a311c6a43a8f",
+      "format": "mha",
+      "modality": "CT",
+      "role": "real_technical_only",
+      "previously_used": true,
+      "prior_usage": [
+        "Week 2 RIRE real-multimodal data preparation",
+        "Week 5 Day 24 physical-space CT/MR-T1 registration",
+        "UI RIRE technical-availability path"
+      ],
+      "reference_or_license": "RIRE training data; provenance record https://zenodo.org/records/14592145 (DOI 10.5281/zenodo.14592145); follow RIRE and source-dataset terms",
+      "canonical_dataset_id": "rire",
+      "canonical_subject_id": "training_001",
+      "canonical_case_id": "training_001",
+      "canonical_acquisition_id": "ct",
+      "canonical_source_id": "rire:training_001:ct",
+      "lineage_ancestors": [
+        "rire:training_001",
+        "rire:training_001:ct"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/manifests/rire_training001.json",
+        "manifest_sha256": "b03b167ee4a1d2e9ba7db6a752e8c456a554240c096c57d48dc56de437423bc1"
+      },
+      "lineage_status": "documented_dataset_subject_case_and_acquisition"
+    },
+    {
+      "source_id": "rire_training001_mr_t1",
+      "path": "data/raw/rire/training_001/mha/training_001_mr_T1.mha",
+      "sha256": "b5de326cde5cf66c76a519e492b1d06596a7d3c853478397d491aa4c7210a591",
+      "format": "mha",
+      "modality": "MR-T1",
+      "role": "real_technical_only",
+      "previously_used": true,
+      "prior_usage": [
+        "Week 2 RIRE real-multimodal data preparation",
+        "Week 5 Day 24 physical-space CT/MR-T1 registration",
+        "UI RIRE technical-availability path"
+      ],
+      "reference_or_license": "RIRE training data; provenance record https://zenodo.org/records/14592145 (DOI 10.5281/zenodo.14592145); follow RIRE and source-dataset terms",
+      "canonical_dataset_id": "rire",
+      "canonical_subject_id": "training_001",
+      "canonical_case_id": "training_001",
+      "canonical_acquisition_id": "mr_t1",
+      "canonical_source_id": "rire:training_001:mr_t1",
+      "lineage_ancestors": [
+        "rire:training_001",
+        "rire:training_001:mr_t1"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/manifests/rire_training001.json",
+        "manifest_sha256": "b03b167ee4a1d2e9ba7db6a752e8c456a554240c096c57d48dc56de437423bc1"
+      },
+      "lineage_status": "documented_dataset_subject_case_and_acquisition"
     }
   ],
-  "purpose": "Pre-Week 8 source use and independence ledger; no labels or heldout pixels here",
-  "registration_instructions": "Add genuinely new full_project_independent source with provenance, role, verified hash, ground_truth_status, and relative path before final evaluation; moon may be registered only as policy_transfer_check.",
-  "schema_version": 1,
-  "week08_sources": []
+  "week08_sources": [],
+  "registration_instructions": "Do not enroll real Week 8 sources before release-candidate freeze. Every reserved source must satisfy the v2 common fields and a typed ground_truth evidence contract; canonical lineage is reviewed before bytes become development-accessible. moon may only be a policy_transfer_check, and RIRE training_001 remains real_technical_only without verified labels."
 }

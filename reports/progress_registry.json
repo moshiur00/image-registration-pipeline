@@ -244,26 +244,39 @@
       "latest_completed_day": "day_35",
       "latest_implementation": "Day 35 development integration complete and Windows validated; Week 7 development study closed. Week 8 independent policy evaluation not started.",
       "latest_target_validation": "Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed; 88 attempts with 61 geometric successes, 11 failures; 0 executed/88 resumed.",
-      "next_day": "pre_week08_integrity_evaluator_and_freeze",
+      "next_day": "pre_week08_phase3_evaluator_firewall",
       "plan": "docs/weekly/week_07_plan.md",
       "status": "complete",
       "week_closure": "reports/week07_week_closure.json"
     }
   },
   "pre_week08_integration": {
+    "next_phase": "phase_3_evaluator_firewall_using_development_fixtures_only",
     "phase_1_checkpoint": {
       "status": "passed",
       "date": "2026-11-03",
       "evidence": "reports/pre_week08_phase1_checkpoint.json",
       "week08_evaluation_started": false
     },
+    "phase_2_integrity_hardening": {
+      "status": "passed",
+      "date": "2026-11-07",
+      "evidence": "reports/pre_week08_phase2_integrity.json",
+      "archive_manifest": "reports/week07_evidence_archive_manifest.json",
+      "frozen_files_verified": 101,
+      "week07_evidence_files_verified": 81,
+      "clean_staging_restoration": "passed",
+      "week08_evaluation_started": false
+    },
     "stage_a": {
-      "status": "implemented_current_regression_green_not_accepted",
+      "status": "integrity_hardened_not_final_ready",
       "summary": "docs/daily/pre_week08_stage_a_summary.md",
-      "current_validation": "575 backend passed, 2 expected skips; 166 UI passed; preflight dry-run 13 PASS, 1 BLOCK, 1 WARN",
+      "phase_2_summary": "docs/daily/pre_week08_phase2_summary.md",
+      "current_validation": "616 backend passed, 3 expected skips; 166 UI passed; development preflight 17 PASS, 1 BLOCK, 1 WARN; strict preflight 17 PASS, 12 BLOCK",
       "hard_block": "no genuinely independent Week 8 source registered",
-      "critical_warning": "final evaluator identity and decision-before-label contract not implemented",
-      "hardening_incomplete": true,
+      "development_warning": "Phase 3 evaluator identity and decision-before-label contract not implemented",
+      "strict_block": "missing Phase 3 runner and later release, Stage B, source, signoff and environment prerequisites",
+      "hardening_incomplete": false,
       "policy_unchanged": true,
       "week08_evaluation_started": false
     },
@@ -273,7 +286,7 @@
       "summary": "docs/daily/pre_week08_stage_b_summary.md",
       "scenario_count": 5,
       "manual_cases_accepted": 0,
-      "current_validation": "575 backend passed, 2 expected skips; 166 UI passed",
+      "current_validation": "616 backend passed, 3 expected skips; 166 UI passed",
       "formal_ui_v02_frozen": false
     },
     "stage_c": {

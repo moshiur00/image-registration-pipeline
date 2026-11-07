@@ -1,8 +1,8 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 1 COMPLETE; PHASE 2 NEXT
-**Revision date:** 2026-11-03
+**Status:** ACTIVE PLAN - PHASE 2 COMPLETE; PHASE 3 NEXT
+**Revision date:** 2026-11-07
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
 ### 1. Purpose and final objective
@@ -64,6 +64,19 @@ checkpoint containing this record. Current validation is tracked in
 preflight 13 PASS / 1 BLOCK / 1 WARN, and Stage B 0/5. Week 8 has not run and
 no holdout pixels or labels were accessed. Phase 2 is now the next critical
 path; G2-G8 have not been advanced by this checkpoint.
+
+#### 3.2 Phase 2 integrity checkpoint (7 November 2026)
+
+Phase 2 completed the RIRE-inclusive prior-source ledger, fail-closed source
+and ground-truth schemas, strict final-readiness behavior, integrity anchoring,
+and deterministic preservation of all 81 ignored Week 7 evidence files. The
+tracked result is `reports/pre_week08_phase2_integrity.json`: 63 focused tests
+passed with one expected unsupported-symlink skip, 616 backend tests
+passed with three expected unsupported-symlink skips, and all 166 UI tests
+passed. Development preflight reports 17 PASS / 1 BLOCK / 1 WARN; strict mode
+reports 17 PASS / 12 BLOCK and exits nonzero. The current blockers are
+intentional later-phase conditions, not Phase 2 failures. Week 8 has not run,
+and no holdout pixels or labels were accessed.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -192,7 +205,7 @@ explicitly superseded by the current checkpoint record.
 
 ### 9. Phase 2 - integrity, ledger, preflight, and evidence hardening
 
-**Status:** IN PROGRESS through the existing Stage A implementation; final hardening NOT STARTED
+**Status:** PASSED on 7 November 2026
 **Priority:** P0
 **Owner:** developer; provenance reviewer validates source inventory.
 
@@ -258,6 +271,12 @@ A tracked manifest must record relative path, size, SHA-256, archive SHA-256, an
 - all 101 existing frozen source/config files and 81 Week 7 evidence files still verify;
 - clean-staging evidence restoration passes;
 - missing runner or source remains an explicit blocker, not a releasable warning.
+
+**Gate evidence:** `reports/pre_week08_phase2_integrity.json`,
+`reports/week07_evidence_archive_manifest.json`, and the Phase 2 checkpoint
+commit. The ignored local archive is reproducible from the exact frozen trees;
+its tracked manifest records SHA-256
+`0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26`.
 
 ### 10. Phase 3 - preregister and implement the Week 8 evaluator
 
@@ -490,6 +509,12 @@ Only after G5:
 7. Make no code, method, config, threshold, seed, task-matrix, or endpoint changes.
 
 The G5 code/config tag remains immutable. The G6 enrollment commit layers only the source ledger, attestation, and source-manifest hashes on that tag; together they identify the final runnable release candidate.
+
+The strict post-tag allowlist is exact: `configs/week08_source_use_ledger.json`,
+`data/manifests/week08_holdout_sources.json`,
+`reports/pre_week08_source_registration.json`, and
+`reports/pre_week08_release_manifest.json`. Any other path changed between the
+G5 tag and the current clean enrollment commit blocks final readiness.
 
 #### Exit gate G6
 
@@ -725,12 +750,12 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 |---|---|---|
 | G0 Holdout boundary | PASSED | No Week 8 pixels/labels accessed |
 | G1 Reconcile/checkpoint | PASSED | `reports/pre_week08_phase1_checkpoint.json`; recoverable checkpoint commit contains the reconciled Stage A/B package |
-| G2 Integrity/preflight hardening | IN PROGRESS | Existing preflight works; ledger, lineage, strict mode, packaging incomplete |
+| G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
 | G3 Evaluator/firewall | NOT STARTED | No Week 8 evaluator exists |
 | G4 UI acceptance/scope | BLOCKED | 0/5 manual scenarios; UI v0.2 not frozen |
 | G5 Release-candidate freeze | NOT STARTED | Checklist, manifest, lock, clean tag absent |
 | G6 Source enrollment | BLOCKED | week08_sources is empty |
-| G7 Final readiness/execution | BLOCKED | Depends on G2-G6 |
+| G7 Final readiness/execution | BLOCKED | Depends on G3-G6 |
 | G8 Analysis/release closure | NOT STARTED | Week 8 has not run |
 
 Update this table and link the tracked evidence whenever a gate changes.
@@ -744,8 +769,13 @@ git status --short
 git diff --check
 python -m pytest -v
 python -m pytest -c ui/pytest.ini ui/tests -v
-python -m pytest tests/test_week08_preflight.py -v
+python -m pytest tests/test_week08_preflight.py tests/test_week07_evidence_archive.py -v
+python scripts/week07_evidence_archive.py build
+python scripts/week07_evidence_archive.py verify
+python scripts/week07_evidence_archive.py restore --destination <new-empty-staging-directory>
+python scripts/week07_evidence_archive.py verify-restored --destination <staging-directory>
 python scripts/week08_preflight.py --dry-run
+python scripts/week08_preflight.py --dry-run --final-readiness
 python scripts/pre_week08_stage_b_ui_qa.py prepare
 python scripts/pre_week08_stage_b_ui_qa.py status
 ~~~
@@ -754,7 +784,6 @@ Commands to add before G5:
 
 ~~~powershell
 python -m pytest tests/test_week08_preflight.py tests/test_week08_final_evaluation.py -v
-python scripts/week08_preflight.py --final-readiness
 python scripts/week08_final_evaluation.py plan --config configs/week08_final_evaluation.yaml
 ~~~
 
@@ -762,11 +791,11 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. Complete the prior-source ledger, including RIRE identities and lineage.
-2. Harden preflight schema, GT evidence, strict readiness, evidence anchoring, and packaging.
-3. Preregister and implement both Week 8 evaluation tracks using development fixtures only.
-4. Upgrade and execute Stage B acceptance in parallel.
-5. Record Stage C, RIRE UI, and recommendation UI as deferred unless explicitly approved before G5.
-7. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
+1. Preregister and implement both Week 8 evaluation tracks using development fixtures only.
+2. Upgrade and execute Stage B acceptance in parallel.
+3. Record Stage C, RIRE UI, and recommendation UI as deferred unless explicitly approved before G5.
+4. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
 
-**Planning-only change:** Revising this document does not implement any phase, procure data, open heldout pixels or labels, modify frozen algorithms/policy, complete manual UI acceptance, or run Week 8.
+**Current boundary:** This revision records completed Phase 2 controls. It does
+not start Phase 3, procure data, open heldout pixels or labels, modify frozen
+algorithms/policy, complete manual UI acceptance, or run Week 8.

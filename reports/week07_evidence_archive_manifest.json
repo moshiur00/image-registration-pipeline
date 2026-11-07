@@ -1,0 +1,534 @@
+{
+  "archive": {
+    "filename": "week07_frozen_evidence.zip",
+    "sha256": "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
+    "size_bytes": 25764279
+  },
+  "baseline": {
+    "path": "configs/week08_frozen_baseline.json",
+    "sha256": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01"
+  },
+  "closure": {
+    "path": "reports/week07_week_closure.json",
+    "sha256": "f42b3c2228939c5e27e4e4f1bb63257e6ce18b67fe9529036d02ab1157ebee43"
+  },
+  "closures": {
+    "week07_day02_full": {
+      "path": "reports/week07_day02_full_closure.json",
+      "sha256": "4fce71bd1522b85a036dff8d6c1d6085f4ee63cef12330e45f6f1f5bdfd78829"
+    },
+    "week07_day03_analysis": {
+      "path": "reports/week07_day03_closure.json",
+      "sha256": "f1978713371398fb9d1d8d68fb3643ff2366cf413845ad0dff6c4a0e6fa60e30"
+    },
+    "week07_day04_calibration": {
+      "path": "reports/week07_day04_closure.json",
+      "sha256": "4ac27736eb2cff60fde2c54354bf304af8409b0feb9ec05e8a1d0905554effc2"
+    },
+    "week07_day05_integration": {
+      "path": "reports/week07_day05_closure.json",
+      "sha256": "0a891963220d180651f613c49cb7c898b94b53aba2e793d9a3a16e36a88632e9"
+    }
+  },
+  "file_count": 81,
+  "files": [
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/benchmark_plan.json",
+      "sha256": "f9f74ccd89b09302a24b0b05b796be58d269cd231c2c98b10718123bd3673d63",
+      "size_bytes": 1717086
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/benchmark_records.jsonl",
+      "sha256": "6cd08599119f9aab264e904ea8a058e018e917d4419472c70fe4f0173b144594",
+      "size_bytes": 7437622
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/benchmark_results.csv",
+      "sha256": "05887bdd86fffe2cdf7053b1c806f5f7a784087aba828f8ac71557b0caad2dac",
+      "size_bytes": 6769676
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/benchmark_summary.json",
+      "sha256": "673cd9b1782e8866ed108aa249d9870ae6b251945051eb3551bb63e3f31b4db4",
+      "size_bytes": 395
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/day32_manifest.json",
+      "sha256": "4c472473cd0cf14a132917b025ba8814e281cd30cd2a5a61ab3dadfb7af9e20a",
+      "size_bytes": 36022
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/severity_summary.csv",
+      "sha256": "563846db22a7432717c575751891697673d0f6e2185a7287a15e9f13aec21ebd",
+      "size_bytes": 34749
+    },
+    {
+      "closure_reference": "reports/week07_day02_full_closure.json",
+      "path": "outputs/week07_day02_full/severity_summary.json",
+      "sha256": "ad491822c87b61d5fc4a50277924ce3447845c32ae7d4d42862936fbf47093a8",
+      "size_bytes": 161984
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/classified_attempts.csv",
+      "sha256": "4e25b612b083a58213506f30c0e502a9e7efbf3bb95715a0ac6c2d987fdf8df7",
+      "size_bytes": 250135
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/condition_comparison.csv",
+      "sha256": "9056f4b4fa8a1d452ea0fc9b0897c26ef0f3aafa0fa0e70896c4720e93b8a9e9",
+      "size_bytes": 1086
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/condition_method_comparison.csv",
+      "sha256": "c49f6bfa51853964eb05dcd89e81a811833fdc9c16951f98a7a27a2384f9720b",
+      "size_bytes": 11915
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/day33_manifest.json",
+      "sha256": "0b37d95ad906593dbee4bafe39d5568bf487e13f71f0b270b610d41fe9e3436c",
+      "size_bytes": 1705
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/failure_summary.json",
+      "sha256": "fbd8be16f0907f131e9c8d1bdb2dadac9d15969d4c6cca042af9ee50912335cd",
+      "size_bytes": 272157
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/01_w6-089d4fdb129ed1c92b6c.png",
+      "sha256": "275b333e8d485d5e99f7cacf5367cb5cb0c048b24958cdf2fd9d51845aecfcfa",
+      "size_bytes": 134083
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/02_w6-02aac339ace9356253b9.png",
+      "sha256": "30830d875cd250c38d58877b041936e7dd044838d73e0302f35635dcbe899bc6",
+      "size_bytes": 156691
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/03_w6-68cc05aad46e5fd82a2e.png",
+      "sha256": "57c23a09dc77f5ed29b41ddb1bc67f7eb734b14eaf5ce3204d18a9ae1b753170",
+      "size_bytes": 134899
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/04_w6-e4a7009f61d449912188.png",
+      "sha256": "c5d08d77a9d1fcf5656c0a710c84dfa1d3103e86aec3c621233bd89576acfe28",
+      "size_bytes": 391385
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/05_w6-3b41dde3d03101282e3a.png",
+      "sha256": "0fb59a9da2997b1db2a40497743ac1d8d0c5c804cc54f8d5ed2f856495c85c86",
+      "size_bytes": 306629
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/06_w6-7b19ad5b3ccf7ee929a5.png",
+      "sha256": "74eee0e15e862d5751bc8f77fb4d33fcf75590ee6f291cc67404f1f186da2a7e",
+      "size_bytes": 274068
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/07_w6-746413fbac7c1d7bd958.png",
+      "sha256": "9af1f4e200e6b77711379d55af870c936996614e14cfd3e3e81003a9c53f11ca",
+      "size_bytes": 256675
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/08_w6-474e30de4aca4b5663b2.png",
+      "sha256": "87c7cd3b75da93c011a8614e03ec0a9c95ec21dd1647638dc8eb31e9da02e6ea",
+      "size_bytes": 361186
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/09_w6-4a23acdcf89bbb02f221.png",
+      "sha256": "2b31fdf5957e5d6de4e744de7ef28b926555d667899facac232745a0ec94bc5d",
+      "size_bytes": 291501
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/10_w6-824c3f52a97e869c5140.png",
+      "sha256": "f7fdac9332941c080f41ce84cfa91bc266de62c7b8a7d6e90ef0ed95de5713ce",
+      "size_bytes": 367306
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/11_w6-0fbd9105254df42dde13.png",
+      "sha256": "62bec630730665eb66d848ab51b62bc9b1119e8a52f0d7bc73d87411b3763470",
+      "size_bytes": 435541
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/12_w6-c257acad06f72fffa04b.png",
+      "sha256": "7bf90c06b76f489ba580bfe213fe1218ac552f496175e8f58683c1cf70c86d68",
+      "size_bytes": 270603
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/gallery/gallery_manifest.json",
+      "sha256": "5d5a5f238af3726b5c17aafa23ff615c7843b4c1ddf84368fb352ad9eba36fb9",
+      "size_bytes": 11517
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/method_comparison.csv",
+      "sha256": "ff1297c26f9861064838d3e8d4d14b2d12d66adbd0e5be06736042bfdc3bec69",
+      "size_bytes": 1443
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/condition_success_rate.png",
+      "sha256": "35265eb0dc88534a8a96e5c77a87440cbbb4efaa0e3753420c81f11517b64bdc",
+      "size_bytes": 43336
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/outcome_taxonomy.png",
+      "sha256": "5e1ec8ffa58d027e6d16ce4d27b0defbdc1ddf4fe397b3edefc1a6efbfceb40c",
+      "size_bytes": 44842
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/runtime_by_method.png",
+      "sha256": "a026ecfdf2610120b96f18fe30fc632e180b6270a27cfb0bd02b4c72022efc64",
+      "size_bytes": 51564
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/runtime_vs_tre.png",
+      "sha256": "01953a9055d7aa4d00f8493878e793ed2c65e34c867dc5160c149f3ff628b23b",
+      "size_bytes": 111860
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_gaussian_blur.png",
+      "sha256": "fa86fc62de225b22b3a8900e4ae95dca905f4085f62bc6f8940a8fea7eed1e64",
+      "size_bytes": 69421
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_gaussian_noise.png",
+      "sha256": "5cee5a792694bdbba3f8a32661eeb56648587e6d9fd910574ec165ebabcdeb32",
+      "size_bytes": 58138
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_illumination.png",
+      "sha256": "0bf936e0ddf525cffb0a4a075a1fcd4b23e1d896f938ec9fe1ad007c310d1b87",
+      "size_bytes": 57577
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_low_texture.png",
+      "sha256": "7a8d35dc2fb79bf91c58b5878d6eccf9469ebbf2ce4a6a5ba9e4ae74be9b9f3b",
+      "size_bytes": 59329
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_occlusion.png",
+      "sha256": "99ef4e4e85f58637a892b35085941b4b79824d08045c313aefe8c297e6c2c912",
+      "size_bytes": 119107
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_partial_overlap.png",
+      "sha256": "74415ac3a08dfd57cdf56ff644611edc501e90cfac0c8984d17e08ca882d44d5",
+      "size_bytes": 119097
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_repeated_pattern.png",
+      "sha256": "39f73938489a24b476cd6fe7474a9b13ae9551502bbc8ac4f08262d67b608795",
+      "size_bytes": 134023
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_rotation.png",
+      "sha256": "40719503a3646afed948660c58a954bf5aa712740effeb39e0a8f51591199982",
+      "size_bytes": 72027
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/plots/severity_scale.png",
+      "sha256": "180463b792f2ff788fcb4064e2d7cd8c7432a2d78a880241419d9e8cfe5e6f26",
+      "size_bytes": 75607
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/representative_cpu_memory.csv",
+      "sha256": "edca35e041d55f078b300161acccd4b7c5c530121a192fe146b2755c29c7d423",
+      "size_bytes": 677
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/representative_cpu_memory.json",
+      "sha256": "18037282497c7ab9f98d04f52525e204676f322871190924763d53d092116690",
+      "size_bytes": 2081
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/representative_cpu_memory.png",
+      "sha256": "f960e78abe9c2084efbdb817660453fc30c51e5cb09d995c7e2156665132e9a5",
+      "size_bytes": 92141
+    },
+    {
+      "closure_reference": "reports/week07_day03_closure.json",
+      "path": "outputs/week07_day03_analysis/severity_curves.csv",
+      "sha256": "ead354cdbe973f03c0b6d17c70c4f0eea4ac488c60b8670e96822a9cc1e1b9d7",
+      "size_bytes": 40942
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/calibration_report.json",
+      "sha256": "64b300ab614be5a2a278e36f91114cd771f157c095e6a043846788972b788d64",
+      "size_bytes": 11756
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/condition_summary.csv",
+      "sha256": "1131118c64000eba1725289ceadaa39491a47c82464e5883f727d4ccfd0b7fae",
+      "size_bytes": 1839
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/day34_manifest.json",
+      "sha256": "1d48e2e94bd98455c4812847201c89276de33915c0800725ba157f6effa5e578",
+      "size_bytes": 1165
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/model_summary.csv",
+      "sha256": "17859db1ee6c2d7e22966cd29d8e6eb763c74ce76a594eecffd6d12890a67627",
+      "size_bytes": 648
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/observable_signal_bins.csv",
+      "sha256": "fbeae93fc3742410a0c57d7d4396fd6d467622c8438cdbaa188906fbd22d6667",
+      "size_bytes": 1734
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/pair_decisions_offline.csv",
+      "sha256": "a816ecb1533995f085946230773a54c59011f43b7d9ed2b1787f4da9d7b02f05",
+      "size_bytes": 85748
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/plots/abstention_reasons.png",
+      "sha256": "b339cb8198becd4731f5907d8fbb1cf81a1323e68255c9b4e05758ffc927d20d",
+      "size_bytes": 32933
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/plots/train_coverage_sensitivity.png",
+      "sha256": "03f9132886993ec2caa078f60c22fac8711170652f7c7822c65aa18a3018e076",
+      "size_bytes": 66828
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/plots/train_selective_precision.png",
+      "sha256": "0f67bc2bdcd789b431cac0249d79a205ed18af72489f29cba927137496279946",
+      "size_bytes": 49517
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json",
+      "sha256": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+      "size_bytes": 845
+    },
+    {
+      "closure_reference": "reports/week07_day04_closure.json",
+      "path": "outputs/week07_day04_calibration/threshold_sensitivity.csv",
+      "sha256": "db7a2d805d88d9313c2200a1c47eaf92edb1b474f05b84213f3da8d6e62f0c09",
+      "size_bytes": 1106
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/benchmark_plan.json",
+      "sha256": "2341cd07c5c56ed691e247dd7aa5ac850a4695d9f20a0055cfb456e61d1367ca",
+      "size_bytes": 152766
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/benchmark_records.jsonl",
+      "sha256": "07383b924445f7cccb49681308fe0cc8fc7ebc5598a74f493d054593a56f6dad",
+      "size_bytes": 625709
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/benchmark_results.csv",
+      "sha256": "b2c77cda4da309cd22ab49d6e9c11f59908a7ffc159b62753b7f39c8ef160dfb",
+      "size_bytes": 561172
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/benchmark_summary.json",
+      "sha256": "2b68f6b8612212a76498ada91316b34f9102d102cf65bd82717cf6dfe8cbf56f",
+      "size_bytes": 392
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/combined_stress_summary.csv",
+      "sha256": "665fa1a9e46027b372e601716a1a80e9d78fb5b3876a7f2512ef9e6bfc5c4d69",
+      "size_bytes": 3391
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/condition_specific_guidance.csv",
+      "sha256": "820de48aef8fdad34443cff1d20dc7db353b54386ec8b2d135227d57522dd757",
+      "size_bytes": 1568
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/day35_manifest.json",
+      "sha256": "26f54e6b215568e0d19fdaeb5c4291d854306e5c7b0a4089a40a7321bcf069e1",
+      "size_bytes": 981
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/day35_report.json",
+      "sha256": "18c247a4bf32d05e7092e606134933afba60cc5d9c4069f102fde46d156c9a52",
+      "size_bytes": 2896
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/01_w6-425380abfa4571007cac.png",
+      "sha256": "405f1629456828c69d09ad47bc1a32a7560f9f303a1921767f9af937ceec17b3",
+      "size_bytes": 131470
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/02_w6-5610952066599248bbb2.png",
+      "sha256": "259a7c55c830b1eb667efb6517df82439c96ec2765dff0ae58347ab7a3791c9c",
+      "size_bytes": 131380
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/03_w6-0c4fefdc3a010abba0be.png",
+      "sha256": "13a1fc5605ba2b7674f02585ed92bbbde1db1b75a46830aec58c87f0b5a46bc1",
+      "size_bytes": 296314
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/04_w6-3fdec2c1cdf8999eef77.png",
+      "sha256": "1c6fc2dba79be3dd72aecd02813704231a39c36f71eb361ed42813ef0390eca9",
+      "size_bytes": 294114
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/05_w6-5d40893d242c676c8615.png",
+      "sha256": "f03408dcb0ba909ae7628d0c6a9331fc65e4df74c6b9fad92e7377beb401b0cd",
+      "size_bytes": 339142
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/06_w6-710c8de8db6593252ded.png",
+      "sha256": "7623f7f0701ab18b289317c7d2eefc70199c08ac98f9fba0de5e7e0ac1e3c2ed",
+      "size_bytes": 414027
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/07_w6-1e28751e963ac563b5e0.png",
+      "sha256": "1b4856ce229d5f5732201fddac28231e0e789d475514cf929547069dbb88753d",
+      "size_bytes": 152789
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/08_w6-24c53fc6b23c7b849ebb.png",
+      "sha256": "96cc7415f4374e10b40f844a421af1f0d9e9c386067f4954ed95939a264a63b8",
+      "size_bytes": 153192
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/09_w6-3dff08855de5554b6c3e.png",
+      "sha256": "b070291adad1f5beeb5948d5bf8ee427ac31189b3f3187b2172ad8a2a943b026",
+      "size_bytes": 400826
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/10_w6-697236d5aa985746ece1.png",
+      "sha256": "45a23d5365e20ec24edd99530706b4e571d5413ca37a0281e516c7acc733c02e",
+      "size_bytes": 424271
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/gallery/gallery_manifest.json",
+      "sha256": "8b207f56210f70767c55698e64e9fdec7a1c4c66759e7dede28394f9e664ff0a",
+      "size_bytes": 5945
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/offline_policy_decisions.csv",
+      "sha256": "c865169b908ce1fd8d18bdb7bd7bafc808250819bfbee13c548133f4894bf2c6",
+      "size_bytes": 7470
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/plots/combined_condition_success.png",
+      "sha256": "ed4749d4248273f458820b3837b0aac2af8f6f4d20966f765c324ff23abe2d69",
+      "size_bytes": 45788
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/plots/combined_runtime_by_method.png",
+      "sha256": "36d81bb52fa6f14e4a6adfe0e1186413db66dc0c32ae2d542d707d39896fd89f",
+      "size_bytes": 44430
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/plots/development_study_comparison_not_matched.png",
+      "sha256": "dc24aaf1099ac51bbc9f419d4507e029a3d452fb0bb79c9cd55da10c77764d0f",
+      "size_bytes": 29431
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/plots/frozen_policy_abstention.png",
+      "sha256": "0cb5b395a96388fcdde88b8948d3664f6ac4a2214f714ce5ad7d774668a54a9b",
+      "size_bytes": 29687
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/recurring_failure_types.csv",
+      "sha256": "f6daf68f7c68928c34dbfc73f1559c58fda9b3802cd0b3b2106f099886db49df",
+      "size_bytes": 1295
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/stratified_failure_review.csv",
+      "sha256": "a9b731c1f7a47b25eaba3be0fda5227442f4cea6e7946622d7fbea0879d3f309",
+      "size_bytes": 1789
+    },
+    {
+      "closure_reference": "reports/week07_day05_closure.json",
+      "path": "outputs/week07_day05_integration/week07_comparison_matrix.csv",
+      "sha256": "e8bca8988fc5f469cf85dba90d407a7330a09525671f1cb8a35ba60b31d40bd5",
+      "size_bytes": 2083
+    }
+  ],
+  "handoff": {
+    "path": "reports/week07_day05_week08_handoff.json",
+    "sha256": "f5d0298b57d1e59b8b3dc8f52cf058b5a61ac0450b58af2524523e55fbd479f5"
+  },
+  "phase1_commit": "0ff4371419f5f6dd436e6b0ff33134e3e7946ebc",
+  "schema_version": "week07_evidence_archive_v1",
+  "tree_counts": {
+    "week07_day02_full": 7,
+    "week07_day03_analysis": 36,
+    "week07_day04_calibration": 11,
+    "week07_day05_integration": 27
+  }
+}

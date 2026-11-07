@@ -24,7 +24,7 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 7 complete; UI v0.2 release candidate with Stage B manual acceptance 0/5 (not frozen); Week 8 not run |
+| Current status | Weeks 1 to 7 and pre-Week 8 G2 integrity hardening complete; Stage B manual acceptance 0/5 (UI not frozen); Week 8 not run |
 | Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
@@ -294,15 +294,30 @@ Day 35 is complete and Windows validated. The 40-pair controlled combined-stress
 
 ### Pre-Week 8 Stage A safety preflight
 
-The project now includes a metadata-only holdout integrity and dataset-independence check. The complete Stage A archive bundles the original Week 7 evidence. Run:
+G2 integrity hardening is complete. The source ledger now covers the Week 1,
+general-image, and prior RIRE CT/MR-T1 assets with canonical lineage. Strict
+preflight fails closed on later-phase requirements, and a deterministic archive
+preserves all 81 ignored Week 7 evidence files with a tracked manifest and
+clean-restore verification. Run:
 
 ```bash
+python scripts/week07_evidence_archive.py build
+python scripts/week07_evidence_archive.py verify
 python scripts/week08_preflight.py --dry-run
 python scripts/week08_preflight.py
+python scripts/week08_preflight.py --dry-run --final-readiness
 ```
 
-A current `BLOCK` for `heldout_source_independence` is expected: the source-use ledger has no newly obtained independent image, and the previously used `moon` source cannot serve as a fully unseen image. Do not run the Week 8 final benchmark until this is resolved. See `docs/WEEK08_HOLDOUT_PROTOCOL.md` and `docs/daily/pre_week08_stage_a_summary.md`. The frozen algorithms, UI, and Day 34 policy have not changed.
+A current development `BLOCK` for `heldout_source_independence` is expected:
+the ledger has no newly obtained independent image, and the previously used
+`moon` source cannot serve as fully unseen data. The absent Phase 3 evaluator
+is a development warning and a strict-readiness blocker. Current validation is
+616 backend tests passed with three expected unsupported-symlink skips and 166
+UI tests passed. Do not run the Week 8 benchmark. The next engineering step is
+the Phase 3 evaluator and label firewall using development fixtures only. See
+`docs/WEEK08_HOLDOUT_PROTOCOL.md` and
+`reports/pre_week08_phase2_integrity.json`.
 
 ### Pre-Week 8 Stage B UI acceptance
 
-The deterministic Stage B QA harness and automated coverage are implemented. The current Windows regression record is 575 backend tests passed with 2 expected skips and 166 UI tests passed. All five interactive operator scenarios remain pending (0/5), so automated success does not freeze UI v0.2. See `ui/evidence/pre_week08_stage_b_acceptance.md` and `reports/pre_week08_stage_b_implementation.json`.
+The deterministic Stage B QA harness and automated coverage are implemented. The current Windows regression record is 616 backend tests passed with 3 expected skips and 166 UI tests passed. All five interactive operator scenarios remain pending (0/5), so automated success does not freeze UI v0.2. See `ui/evidence/pre_week08_stage_b_acceptance.md` and `reports/pre_week08_stage_b_implementation.json`.

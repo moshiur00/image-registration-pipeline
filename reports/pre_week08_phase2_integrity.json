@@ -1,0 +1,131 @@
+{
+  "schema_version": "pre_week08_phase2_integrity_v1",
+  "checkpoint": "pre_week08_phase_2_integrity_hardening",
+  "date": "2026-11-07",
+  "status": "passed",
+  "phase1_binding": {
+    "commit": "0ff4371419f5f6dd436e6b0ff33134e3e7946ebc",
+    "integrity_anchor": "configs/week08_integrity_anchor.json",
+    "integrity_anchor_sha256": "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3"
+  },
+  "scope": {
+    "prior_source_inventory": "complete_for_all_known_project_assets",
+    "known_prior_source_count": 7,
+    "week08_source_count": 0,
+    "week08_evaluation_started": false,
+    "holdout_pixels_or_labels_accessed": false,
+    "production_registration_code_changed": false,
+    "production_streamlit_ui_changed": false,
+    "week07_evidence_bytes_changed": false
+  },
+  "implementation": {
+    "source_ledger_schema": 2,
+    "known_prior_inventory_sha256": "7bb4acbaa42c0c57e3f61dbe684ad275d313b3a3426ef7725082abbe8b214359",
+    "source_inventory": [
+      "Week 1 fixed and moving images",
+      "camera, coins and moon visible-image assets",
+      "RIRE training_001 CT and MR-T1 acquisitions"
+    ],
+    "fail_closed_controls": [
+      "duplicate JSON key rejection",
+      "strict Boolean prior-use validation",
+      "lowercase 64-hex SHA-256 and source-byte verification without pixel decoding",
+      "safe paths and exact visible/medical formats",
+      "nonempty canonical lineage and duplicate identity checks",
+      "full canonical metadata anchor for all seven known prior sources",
+      "structured synthetic, landmark, mask and unavailable ground-truth evidence",
+      "actual Git tag ancestry and clean-worktree verification in strict mode",
+      "exact Phase 6 metadata-only post-tag change allowlist",
+      "release-bound archive and clean-staging restoration checks in strict mode"
+    ]
+  },
+  "evidence_archive": {
+    "path": "deliverables/week07_frozen_evidence.zip",
+    "tracked_manifest": "reports/week07_evidence_archive_manifest.json",
+    "tracked_manifest_sha256": "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
+    "archive_sha256": "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
+    "archive_size_bytes": 25764279,
+    "file_count": 81,
+    "tree_counts": {
+      "week07_day02_full": 7,
+      "week07_day03_analysis": 36,
+      "week07_day04_calibration": 11,
+      "week07_day05_integration": 27
+    },
+    "deterministic_rebuild": "passed",
+    "archive_verification": "passed",
+    "clean_restore_verification": "passed",
+    "clean_staging_preflight": "passed_for_all_phase2_integrity_checks"
+  },
+  "validation": {
+    "focused_phase2": {
+      "collected": 64,
+      "passed": 63,
+      "skipped": 1,
+      "failed": 0,
+      "skip_reason": "tests/test_week07_evidence_archive.py: symlinks are unsupported in this Windows environment"
+    },
+    "backend_full": {
+      "environment": "project Windows Python 3.12 virtual environment with cache plugin disabled",
+      "collected": 619,
+      "passed": 616,
+      "skipped": 3,
+      "failed": 0,
+      "skip_reasons": [
+        "tests/test_week07_evidence_archive.py: symlinks are unsupported in this Windows environment",
+        "tests/test_zip_project_benchmark.py:124: symlinks are unsupported in this Windows environment",
+        "tests/test_zip_project_benchmark.py:136: symlinks are unsupported in this Windows environment"
+      ]
+    },
+    "ui_full": {
+      "collected": 166,
+      "passed": 166,
+      "skipped": 0,
+      "failed": 0
+    },
+    "development_preflight": {
+      "PASS": 17,
+      "BLOCK": 1,
+      "WARN": 1,
+      "readiness": "BLOCK",
+      "process_exit": 1,
+      "expected_block": "week08_sources is empty; no full-project independent source is enrolled",
+      "expected_warning": "the Phase 3 Week 8 runner and decision-before-label contract do not exist yet"
+    },
+    "strict_preflight": {
+      "PASS": 17,
+      "BLOCK": 12,
+      "WARN": 0,
+      "readiness": "BLOCK",
+      "process_exit": 1,
+      "expected_block_classes": [
+        "independent-source enrollment",
+        "Week 8 runner and focused contract tests",
+        "release manifest, real tag ancestry and clean checkpoint",
+        "release-bound policy/config/analysis artifacts",
+        "runner validation and clean-staging attestation",
+        "Stage B 5/5 acceptance and UI freeze",
+        "release signoffs and dependency/environment records"
+      ]
+    },
+    "frozen_inventory": {
+      "source_and_configuration_files_verified": 101,
+      "week07_evidence_files_verified": 81,
+      "day32_attempts": 963,
+      "day35_attempts": 88
+    },
+    "optimized_python_security_run": "strict preflight remained BLOCK under python -O",
+    "git_diff_check": "passed",
+    "json_parse": "passed"
+  },
+  "provenance_limitations": [
+    "Week 1 upstream source/license remains explicitly unresolved; those assets are development-only.",
+    "Asset-specific redistribution terms for the scikit-image samples must be verified before public redistribution."
+  ],
+  "gate": {
+    "G2": "PASSED",
+    "final_readiness": "BLOCKED_BY_G3_THROUGH_G6"
+  },
+  "commit_record": "the Git commit containing this report is the recoverable Phase 2 checkpoint",
+  "next_phase": "Phase 3 evaluator preregistration and label-firewall implementation using development fixtures only"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "week08_integrity_anchor_v1",
+  "phase1_commit": "0ff4371419f5f6dd436e6b0ff33134e3e7946ebc",
+  "expected_frozen_file_count": 101,
+  "expected_week7_evidence_file_count": 81,
+  "frozen_baseline": {
+    "path": "configs/week08_frozen_baseline.json",
+    "sha256": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01"
+  },
+  "week07_closure": {
+    "path": "reports/week07_week_closure.json",
+    "sha256": "f42b3c2228939c5e27e4e4f1bb63257e6ce18b67fe9529036d02ab1157ebee43"
+  },
+  "week07_handoff": {
+    "path": "reports/week07_day05_week08_handoff.json",
+    "sha256": "f5d0298b57d1e59b8b3dc8f52cf058b5a61ac0450b58af2524523e55fbd479f5"
+  },
+  "evidence_archive_manifest": {
+    "path": "reports/week07_evidence_archive_manifest.json",
+    "sha256": "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284"
+  },
+  "note": "Phase 2 content anchor. The Phase 1 Git commit and later release-candidate commit/tag provide the repository trust boundary; this file makes exact content drift fail closed in preflight."
+}
