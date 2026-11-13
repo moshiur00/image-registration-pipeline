@@ -1,0 +1,92 @@
+{
+  "schema_version": "pre_week08_phase3_evaluator_v1",
+  "gate": "G3",
+  "status": "PASS",
+  "scope": "development_rehearsal_only",
+  "development_only": true,
+  "final_evidence": false,
+  "real_week08_source_pixels_accessed": false,
+  "real_week08_labels_accessed": false,
+  "week08_benchmark_executed": false,
+  "final_claims_allowed": false,
+  "artifact_hashes": {
+    "configs/week08_final_evaluation.yaml": "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
+    "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "e34160a0c602a583e95e66819a35365b28e5562ccb5db6fbaab2846817a43912",
+    "scripts/week08_final_evaluation.py": "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b",
+    "scripts/week08_preflight.py": "d494b9e1bceab66b1d22d3e61e5327ab17860d3271d881281c83bd186e0e42cb",
+    "scripts/week08_prepare_holdout.py": "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be",
+    "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
+    "tests/test_week08_final_evaluation.py": "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
+    "tests/test_week08_phase3_cli.py": "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c",
+    "tests/test_week08_preflight.py": "201fe4737f7880282cd6c84e9135678600c741796ea85bf2909d367ab6fde768"
+  },
+  "focused_tests": {
+    "week08_final_evaluation": {
+      "path": "tests/test_week08_final_evaluation.py",
+      "passed": 57,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "week08_phase3_cli": {
+      "path": "tests/test_week08_phase3_cli.py",
+      "passed": 9,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "week08_preflight": {
+      "path": "tests/test_week08_preflight.py",
+      "passed": 54,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "development_rehearsal": {
+    "mode": "development_rehearsal",
+    "source_id": "phase3_camera_fixture",
+    "output_root": "outputs/week08_phase3_rehearsal_20261113_v2",
+    "pair_count": 4,
+    "planned_attempt_count": 12,
+    "terminal_record_count": 12,
+    "geometric_success_count": 12,
+    "policy_eligible_pair_count": 2,
+    "policy_selected_pair_count": 0,
+    "policy_abstained_pair_count": 2,
+    "infrastructure_error_count": 0,
+    "decision_sealed": true,
+    "label_access_after_verified_decision_seal": true,
+    "track_a_table_written": true,
+    "track_b_table_written": true,
+    "plan_sha256": "563c373357316d24c532c7e7f4278489ab0c236b8283356de54baedd10b150a8",
+    "evaluation_summary_sha256": "30cd05b08fd987eca570b6fb455a3f4372aaa6b7dd80673f82ce2bfed51673be",
+    "decision_seal_sha256": "25704fd9ca0901f97a292505b2edf178f3534eb612a731fa9870225d494bfe99",
+    "final_evidence": false,
+    "real_week08_source_or_label_accessed": false
+  },
+  "full_regression": {
+    "backend_collected": 693,
+    "backend_passed": 690,
+    "backend_skipped": 3,
+    "backend_failed": 0,
+    "ui_collected": 166,
+    "ui_passed": 166,
+    "ui_failed": 0
+  },
+  "preflight": {
+    "report_version": "pre_week08_preflight_v3",
+    "mode": "development",
+    "runner_contract_status": "PASS",
+    "pass_count": 18,
+    "warn_count": 0,
+    "block_count": 1,
+    "remaining_block": "heldout_source_independence",
+    "real_week08_source_or_label_accessed": false
+  },
+  "limitations": [
+    "The rehearsal uses only the tracked camera development fixture.",
+    "G3 does not satisfy source enrollment, UI acceptance, release freeze, strict final readiness, or final evaluation.",
+    "No Week 8 benchmark result or independent-validation claim is made."
+  ]
+}

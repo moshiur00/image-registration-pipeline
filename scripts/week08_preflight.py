@@ -10,14 +10,18 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import os
 import re
 import stat
 import subprocess
+import sys
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import platform
 from typing import Any
 
-VERSION = "pre_week08_preflight_v2"
+import yaml
+
+VERSION = "pre_week08_preflight_v3"
 BASELINE_VERSION = "pre_week08_stage_a_v1"
 EXPECTED_FROZEN_FILES = 101
 EXPECTED_EVIDENCE_FILES = 81
@@ -49,10 +53,22 @@ HEX64 = re.compile(r"^[0-9a-f]{64}$")
 
 FINAL_RUNNER_PATHS = (
     "configs/week08_final_evaluation.yaml",
+    "docs/WEEK08_EVALUATION_PREREGISTRATION.md",
     "scripts/week08_prepare_holdout.py",
     "scripts/week08_final_evaluation.py",
+    "src/image_registration/week8_evaluation.py",
     "tests/test_week08_final_evaluation.py",
+    "tests/test_week08_phase3_cli.py",
 )
+PHASE3_EVALUATOR_REPORT_REL = Path("reports/pre_week08_phase3_evaluator.json")
+PHASE3_EVALUATOR_REPORT_VERSION = "pre_week08_phase3_evaluator_v1"
+PHASE3_EVALUATOR_HASH_PATHS = (
+    *FINAL_RUNNER_PATHS,
+    "scripts/week08_preflight.py",
+    "tests/test_week08_preflight.py",
+)
+WEEK08_EVALUATION_CONFIG_VERSION = "week08_final_evaluation_v1"
+WEEK08_RUNNER_PROBE_VERSION = "week08_runner_contract_probe_v1"
 RELEASE_MANIFEST_REL = Path("reports/pre_week08_release_manifest.json")
 VALIDATION_REL = Path("reports/pre_week08_validation.json")
 RELEASE_CHECKLIST_REL = Path("docs/PRE_WEEK08_RELEASE_CHECKLIST.md")
@@ -185,6 +201,268 @@ def safe_file(root: Path, rel: str | None) -> Path | None:
         return current
     except (OSError, RuntimeError, ValueError):
         return None
+
+
+class _UniqueYamlLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects ambiguous duplicate keys."""
+
+
+def _unique_yaml_mapping(loader: _UniqueYamlLoader, node: yaml.nodes.MappingNode, deep: bool = False) -> dict:
+    result: dict[Any, Any] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        if key in result:
+            raise ValueError(f"Duplicate YAML key: {key}")
+        result[key] = loader.construct_object(value_node, deep=deep)
+    return result
+
+
+_UniqueYamlLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    _unique_yaml_mapping,
+)
+
+
+def verify_phase3_evaluator_evidence(root: Path) -> tuple[list[str], dict[str, Any]]:
+    """Verify tracked G3 evidence and its exact runner/test byte bindings."""
+    errors: list[str] = []
+    observed: dict[str, Any] = {
+        "state": "missing",
+        "report_path": PHASE3_EVALUATOR_REPORT_REL.as_posix(),
+    }
+    report_path = safe_file(root, PHASE3_EVALUATOR_REPORT_REL.as_posix())
+    if report_path is None or not report_path.is_file():
+        return [f"missing {PHASE3_EVALUATOR_REPORT_REL.as_posix()}"], observed
+    try:
+        report = read_json(report_path)
+        if not isinstance(report, dict):
+            raise TypeError("Phase 3 evaluator report must be a JSON object")
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        observed["state"] = "invalid"
+        return [f"invalid Phase 3 evaluator report: {exc}"], observed
+
+    observed.update({
+        "state": "invalid",
+        "schema_version": report.get("schema_version"),
+        "status": report.get("status"),
+        "gate": report.get("gate"),
+    })
+    if report.get("schema_version") != PHASE3_EVALUATOR_REPORT_VERSION:
+        errors.append("unsupported Phase 3 evaluator report schema_version")
+    if report.get("gate") != "G3" or report.get("status") != "PASS":
+        errors.append("Phase 3 evaluator report does not attest G3 PASS")
+    if report.get("scope") != "development_rehearsal_only":
+        errors.append("Phase 3 evaluator evidence scope is not development-rehearsal-only")
+    for field, expected in {
+        "development_only": True,
+        "final_evidence": False,
+        "real_week08_source_pixels_accessed": False,
+        "real_week08_labels_accessed": False,
+        "week08_benchmark_executed": False,
+        "final_claims_allowed": False,
+    }.items():
+        if report.get(field) is not expected:
+            errors.append(f"Phase 3 evaluator report has invalid {field}")
+
+    artifact_hashes = report.get("artifact_hashes")
+    if not isinstance(artifact_hashes, dict):
+        errors.append("Phase 3 evaluator artifact_hashes must be an object")
+        artifact_hashes = {}
+    expected_hash_paths = set(PHASE3_EVALUATOR_HASH_PATHS)
+    if set(artifact_hashes) != expected_hash_paths:
+        missing = sorted(expected_hash_paths - set(artifact_hashes))
+        unexpected = sorted(set(artifact_hashes) - expected_hash_paths)
+        if missing:
+            errors.append("Phase 3 evaluator hashes are missing: " + ", ".join(missing))
+        if unexpected:
+            errors.append("Phase 3 evaluator hashes have unexpected paths: " + ", ".join(unexpected))
+    for rel in sorted(expected_hash_paths):
+        issue = check_path_hash(root, rel, artifact_hashes.get(rel))
+        if issue:
+            errors.append(f"Phase 3 evaluator binding: {issue}")
+
+    focused = report.get("focused_tests")
+    if not isinstance(focused, dict):
+        errors.append("Phase 3 evaluator focused_tests must be an object")
+        focused = {}
+    required_test_runs = {
+        "week08_final_evaluation": "tests/test_week08_final_evaluation.py",
+        "week08_phase3_cli": "tests/test_week08_phase3_cli.py",
+        "week08_preflight": "tests/test_week08_preflight.py",
+    }
+    for name, expected_path in required_test_runs.items():
+        run = focused.get(name)
+        if not isinstance(run, dict):
+            errors.append(f"missing Phase 3 focused test record: {name}")
+            continue
+        if run.get("path") != expected_path:
+            errors.append(f"Phase 3 focused test path mismatch: {name}")
+        for count_name in ("passed", "failed", "errors", "skipped"):
+            value = run.get(count_name)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                errors.append(f"invalid {name} {count_name} count")
+        if not isinstance(run.get("passed"), int) or run.get("passed", 0) < 1:
+            errors.append(f"Phase 3 focused test run has no passes: {name}")
+        if run.get("failed") != 0 or run.get("errors") != 0:
+            errors.append(f"Phase 3 focused test run is not zero-failure: {name}")
+
+    rehearsal = report.get("development_rehearsal")
+    if not isinstance(rehearsal, dict):
+        errors.append("Phase 3 development_rehearsal evidence is missing")
+        rehearsal = {}
+    expected_rehearsal = {
+        "mode": "development_rehearsal",
+        "source_id": "phase3_camera_fixture",
+        "pair_count": 4,
+        "planned_attempt_count": 12,
+        "terminal_record_count": 12,
+        "decision_sealed": True,
+        "label_access_after_verified_decision_seal": True,
+        "final_evidence": False,
+        "real_week08_source_or_label_accessed": False,
+    }
+    for field, expected in expected_rehearsal.items():
+        if rehearsal.get(field) != expected:
+            errors.append(f"Phase 3 rehearsal evidence mismatch: {field}")
+    for field in ("evaluation_summary_sha256", "decision_seal_sha256"):
+        if not is_sha256(rehearsal.get(field)):
+            errors.append(f"Phase 3 rehearsal evidence has invalid {field}")
+
+    preflight = report.get("preflight")
+    if not isinstance(preflight, dict):
+        errors.append("Phase 3 preflight evidence is missing")
+        preflight = {}
+    if preflight.get("report_version") != VERSION:
+        errors.append("Phase 3 preflight evidence report_version mismatch")
+    if preflight.get("mode") != "development" or preflight.get("runner_contract_status") != "PASS":
+        errors.append("Phase 3 preflight did not record a passing runner contract")
+    for field in ("pass_count", "warn_count", "block_count"):
+        value = preflight.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            errors.append(f"Phase 3 preflight has invalid {field}")
+    if preflight.get("real_week08_source_or_label_accessed") is not False:
+        errors.append("Phase 3 preflight does not attest zero real Week 8 access")
+
+    observed["artifact_count"] = len(artifact_hashes)
+    observed["focused_tests"] = focused
+    observed["development_rehearsal"] = rehearsal
+    observed["preflight"] = preflight
+    observed["state"] = "pass" if not errors else "invalid"
+    return errors, observed
+
+
+def verify_week08_runner_contract(root: Path) -> tuple[list[str], dict[str, Any]]:
+    """Verify tracked G3 evidence, then run the metadata-only import smoke probe."""
+    errors: list[str] = []
+    observed: dict[str, Any] = {
+        "probe": None,
+        "config_schema_version": None,
+        "phase3_evidence": None,
+    }
+    missing: list[str] = []
+    for rel in FINAL_RUNNER_PATHS:
+        path = safe_file(root, rel)
+        if path is None or not path.is_file():
+            missing.append(rel)
+    if missing:
+        return ["missing runner artifacts: " + ", ".join(missing)], observed
+
+    config_path = safe_file(root, "configs/week08_final_evaluation.yaml")
+    if config_path is None:
+        return ["unsafe Week 8 evaluation config path"], observed
+    try:
+        config = yaml.load(config_path.read_text(encoding="utf-8"), Loader=_UniqueYamlLoader)
+        if not isinstance(config, dict):
+            raise TypeError("configuration is not a mapping")
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        return [f"invalid Week 8 evaluation config: {exc}"], observed
+    observed["config_schema_version"] = config.get("schema_version")
+    if config.get("schema_version") != WEEK08_EVALUATION_CONFIG_VERSION:
+        errors.append("unsupported Week 8 evaluation config schema_version")
+    if config.get("state") != "phase3_preregistered_development_rehearsal_only":
+        errors.append("Phase 3 config is not development-rehearsal-only")
+    safety = config.get("safety") if isinstance(config.get("safety"), dict) else {}
+    if safety.get("phase3_allows_real_week08_pixel_access") is not False:
+        errors.append("Phase 3 config does not forbid real Week 8 pixel access")
+    if safety.get("phase3_allows_real_week08_label_access") is not False:
+        errors.append("Phase 3 config does not forbid real Week 8 label access")
+    if safety.get("plan_and_dry_run_forbid_image_or_label_decoding") is not True:
+        errors.append("plan/dry-run decoding prohibition is missing")
+    execution = config.get("execution_contract") if isinstance(config.get("execution_contract"), dict) else {}
+    if execution.get("phases") != ["prepare", "decide", "evaluate"]:
+        errors.append("execution contract does not declare prepare/decide/evaluate isolation")
+    if execution.get("id_namespace") != "w8":
+        errors.append("execution contract does not reserve the w8 ID namespace")
+    reruns = config.get("reruns") if isinstance(config.get("reruns"), dict) else {}
+    if reruns.get("permitted_reason") != "infrastructure_error_only":
+        errors.append("rerun contract is not infrastructure-error-only")
+    denominators = config.get("denominators") if isinstance(config.get("denominators"), dict) else {}
+    if not isinstance(denominators.get("track_a"), dict) or not isinstance(denominators.get("track_b"), dict):
+        errors.append("separate Track A and Track B denominator contracts are missing")
+
+    frozen_assets = config.get("frozen_assets") if isinstance(config.get("frozen_assets"), dict) else {}
+    for key in ("method_catalog", "policy", "observable_projection", "frozen_baseline"):
+        asset = frozen_assets.get(key) if isinstance(frozen_assets.get(key), dict) else {}
+        asset_path = asset.get("path") or asset.get("implementation_file")
+        issue = check_path_hash(root, asset_path, asset.get("sha256"))
+        if issue:
+            errors.append(f"{key}: {issue}")
+
+    evidence_errors, evidence_observed = verify_phase3_evaluator_evidence(root)
+    observed["phase3_evidence"] = evidence_observed
+    errors.extend(evidence_errors)
+
+    probe_source = (
+        "import json\n"
+        "from image_registration.week8_evaluation import runner_contract_probe\n"
+        "print(json.dumps(runner_contract_probe(), sort_keys=True))\n"
+    )
+    probe_environment = dict(os.environ)
+    python_paths = [str((root / "src").resolve()), str(root.resolve())]
+    inherited = probe_environment.get("PYTHONPATH")
+    if inherited:
+        python_paths.append(inherited)
+    probe_environment["PYTHONPATH"] = os.pathsep.join(python_paths)
+    try:
+        result = subprocess.run(
+            [sys.executable, "-c", probe_source],
+            cwd=root,
+            env=probe_environment,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        errors.append(f"cannot execute Week 8 runner contract probe: {exc}")
+        return errors, observed
+    if result.returncode != 0:
+        errors.append("Week 8 runner contract probe failed: " + result.stderr.strip()[:500])
+        return errors, observed
+    try:
+        lines = [line for line in result.stdout.splitlines() if line.strip()]
+        probe = json.loads(lines[-1])
+    except (IndexError, json.JSONDecodeError) as exc:
+        errors.append(f"Week 8 runner contract probe returned invalid JSON: {exc}")
+        return errors, observed
+    observed["probe"] = probe
+    if not isinstance(probe, dict) or probe.get("schema_version") != WEEK08_RUNNER_PROBE_VERSION:
+        errors.append("unsupported Week 8 runner probe schema")
+    elif probe.get("status") != "pass" or probe.get("reads_pixels_or_labels") is not False:
+        errors.append("Week 8 runner probe did not pass metadata-only contract checks")
+    else:
+        checks = probe.get("checks") if isinstance(probe.get("checks"), dict) else {}
+        required = {
+            "deterministic_w8_id",
+            "prior_id_collision_rejected",
+            "plan_and_count_hashes_verified",
+            "isolated_phases_declared",
+            "infrastructure_not_terminal_scientific_status",
+        }
+        failed = sorted(name for name in required if checks.get(name) is not True)
+        if failed:
+            errors.append("runner probe checks failed: " + ", ".join(failed))
+    return errors, observed
 
 
 def verify_release_git(root: Path, commit: Any, tag: Any) -> tuple[list[str], dict[str, Any]]:
@@ -589,7 +867,8 @@ class Audit:
         """Static, immutable contract check without importing registration or held-out data.
 
         The existing Day 34 regression tests additionally exercise label-mutation
-        invariance. The not-yet-written Week 8 runner needs its own runtime guard.
+        invariance. The Week 8 runner's separate metadata-only runtime probe is
+        checked by ``final_workspace``.
         """
         import ast
         source = self.root / "src/image_registration/week7_calibration.py"
@@ -624,7 +903,7 @@ class Audit:
             test_file = self.root / "tests/test_week7_day34_offline_calibration.py"
             if not test_file.is_file() or "test_changing_ground_truth_and_synthetic_severity_cannot_change_gate" not in test_file.read_text(encoding="utf-8"):
                 raise ValueError("label-invariance regression is missing")
-            self.add("day34_gt_firewall_contract", "PASS", "Immutable observable-only projection and Day 34 label-invariance regression verified; future Week 8 runner requires separate checks")
+            self.add("day34_gt_firewall_contract", "PASS", "Immutable observable-only projection and Day 34 label-invariance regression verified; Week 8 runtime firewall is checked separately")
         except (SyntaxError, OSError, ValueError, KeyError, TypeError) as exc:
             self.add("day34_gt_firewall_contract", "BLOCK", f"Ground-truth firewall contract failed: {type(exc).__name__}: {exc}")
 
@@ -944,18 +1223,49 @@ class Audit:
                 self.add("clean_" + rel.split("/")[-1], "BLOCK", f"Final-test output must be absent or empty: {rel}")
             else:
                 self.add("clean_" + rel.split("/")[-1], "PASS", f"Clean final-test output location: {rel}")
-        runner_missing = [rel for rel in FINAL_RUNNER_PATHS if not (safe_file(self.root, rel) or Path()).is_file()]
-        runner_status = (
-            ("BLOCK" if runner_missing else "PASS")
-            if self.final_readiness else
-            ("WARN" if runner_missing else "PASS")
+        runner_missing = [
+            rel for rel in FINAL_RUNNER_PATHS
+            if not (safe_file(self.root, rel) or Path()).is_file()
+        ]
+        runner_errors: list[str] = []
+        runner_observed: dict[str, Any] = {}
+        if not runner_missing:
+            runner_errors, runner_observed = verify_week08_runner_contract(self.root)
+        if runner_missing:
+            runner_status = "BLOCK" if self.final_readiness else "WARN"
+            details = (
+                "Week 8 runner/config/tests are missing; deterministic IDs and "
+                "decision-before-label ordering are not enforced"
+            )
+        elif runner_errors:
+            evidence_state = (
+                runner_observed.get("phase3_evidence", {}).get("state")
+                if isinstance(runner_observed.get("phase3_evidence"), dict)
+                else None
+            )
+            only_missing_evidence = (
+                evidence_state == "missing"
+                and runner_errors == [f"missing {PHASE3_EVALUATOR_REPORT_REL.as_posix()}"]
+            )
+            runner_status = (
+                "BLOCK" if self.final_readiness or not only_missing_evidence else "WARN"
+            )
+            details = (
+                "Week 8 evaluator evidence or executable metadata-only smoke probe did not verify"
+            )
+        else:
+            runner_status = "PASS"
+            details = (
+                "Tracked G3 evaluator evidence hashes and the metadata-only runner smoke probe passed"
+            )
+        self.add(
+            "week08_runner_identity_contract",
+            runner_status,
+            details,
+            missing=runner_missing,
+            errors=runner_errors,
+            observed=runner_observed,
         )
-        details = (
-            "Week 8 runner/config/tests are missing; unique IDs and decision-before-label ordering are not enforced"
-            if runner_missing else
-            "Runner files exist; strict validation report must still prove unique IDs and decision-before-label ordering"
-        )
-        self.add("week08_runner_identity_contract", runner_status, details, missing=runner_missing)
 
     def strict_release_gates(self) -> None:
         release: dict[str, Any] = {}
@@ -987,6 +1297,7 @@ class Audit:
         artifacts = release.get("artifacts") if isinstance(release.get("artifacts"), dict) else {}
         required_artifacts = {
             *FINAL_RUNNER_PATHS,
+            PHASE3_EVALUATOR_REPORT_REL.as_posix(),
             FROZEN_REL.as_posix(),
             LEDGER_REL.as_posix(),
             INTEGRITY_ANCHOR_REL.as_posix(),
@@ -1122,7 +1433,7 @@ class Audit:
                   "week08_evaluation_executed": False,
                   "baseline_sha256": digest(self.root / FROZEN_REL) if (self.root / FROZEN_REL).is_file() else None,
                   "development_evidence_immutable": evidence_immutable,
-                  "limitations": ["Stage A cannot validate a Week 8 runner that does not exist yet. Final-run code must enforce decision-before-label access and denominators.",
+                  "limitations": ["The Phase 3 runner contract is validated only on development fixtures; it does not authorize or constitute a Week 8 benchmark run.",
                                   "An unknown-ground-truth image cannot support numeric geometric correctness claims."]}
         return report
 

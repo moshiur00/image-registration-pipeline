@@ -67,6 +67,76 @@ def stage(tmp_path: Path, *, evidence=True) -> Path:
     return tmp_path
 
 
+def phase3_evidence_fixture(root: Path) -> dict:
+    """Build staged G3 evidence without opening any source pixels or labels."""
+    return {
+        'schema_version': pre.PHASE3_EVALUATOR_REPORT_VERSION,
+        'gate': 'G3',
+        'status': 'PASS',
+        'scope': 'development_rehearsal_only',
+        'development_only': True,
+        'final_evidence': False,
+        'real_week08_source_pixels_accessed': False,
+        'real_week08_labels_accessed': False,
+        'week08_benchmark_executed': False,
+        'final_claims_allowed': False,
+        'artifact_hashes': {
+            rel: hashlib.sha256((root / rel).read_bytes()).hexdigest()
+            for rel in pre.PHASE3_EVALUATOR_HASH_PATHS
+        },
+        'focused_tests': {
+            'week08_final_evaluation': {
+                'path': 'tests/test_week08_final_evaluation.py',
+                'passed': 42, 'failed': 0, 'errors': 0, 'skipped': 0,
+            },
+            'week08_phase3_cli': {
+                'path': 'tests/test_week08_phase3_cli.py',
+                'passed': 1, 'failed': 0, 'errors': 0, 'skipped': 0,
+            },
+            'week08_preflight': {
+                'path': 'tests/test_week08_preflight.py',
+                'passed': 47, 'failed': 0, 'errors': 0, 'skipped': 0,
+            },
+        },
+        'development_rehearsal': {
+            'mode': 'development_rehearsal',
+            'source_id': 'phase3_camera_fixture',
+            'pair_count': 4,
+            'planned_attempt_count': 12,
+            'terminal_record_count': 12,
+            'decision_sealed': True,
+            'label_access_after_verified_decision_seal': True,
+            'final_evidence': False,
+            'real_week08_source_or_label_accessed': False,
+            'evaluation_summary_sha256': 'a' * 64,
+            'decision_seal_sha256': 'b' * 64,
+        },
+        'preflight': {
+            'report_version': pre.VERSION,
+            'mode': 'development',
+            'runner_contract_status': 'PASS',
+            'pass_count': 18,
+            'warn_count': 0,
+            'block_count': 1,
+            'real_week08_source_or_label_accessed': False,
+        },
+    }
+
+
+def add_phase3_runner(root: Path, *, evidence: bool = True) -> Path:
+    """Add the tracked Phase 3 contract without opening any source pixels/labels."""
+    for rel in pre.PHASE3_EVALUATOR_HASH_PATHS:
+        source = ROOT / rel
+        destination = root / rel
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    if evidence:
+        report_path = root / pre.PHASE3_EVALUATOR_REPORT_REL
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(phase3_evidence_fixture(root)), encoding='utf-8')
+    return root
+
+
 def stage_from_evidence_archive(tmp_path: Path) -> Path:
     """Create a preflight root whose Week 7 outputs come only from the archive."""
     root = tmp_path / 'clean_staging'
@@ -185,12 +255,82 @@ def test_missing_independent_source_blocks(tmp_path, source_bundle_available):
     assert status(r,'day34_gt_firewall_contract')=='PASS'
 
 
-def test_genuinely_new_source_allows_preflight_with_runner_warning(tmp_path):
-    root=stage(tmp_path);register_independent(root)
+def test_genuinely_new_source_and_phase3_runner_allow_development_preflight(tmp_path):
+    root=add_phase3_runner(stage(tmp_path));register_independent(root)
     r=inspect(root)
-    assert r['readiness']=='WARN', [(c['check'],c['status'],c.get('details')) for c in r['checks']]
+    assert r['readiness']=='PASS', [(c['check'],c['status'],c.get('details')) for c in r['checks']]
     assert status(r,'heldout_source_independence')=='PASS'
-    assert status(r,'week08_runner_identity_contract')=='WARN'
+    assert status(r,'week08_runner_identity_contract')=='PASS'
+    observed = next(
+        check['observed'] for check in r['checks']
+        if check['check'] == 'week08_runner_identity_contract'
+    )
+    assert observed['probe']['status'] == 'pass'
+    assert observed['probe']['reads_pixels_or_labels'] is False
+    assert observed['phase3_evidence']['state'] == 'pass'
+
+
+def test_missing_phase3_evidence_warns_development_and_blocks_strict(tmp_path):
+    root = add_phase3_runner(stage(tmp_path), evidence=False); register_independent(root)
+    development = inspect(root)
+    strict = inspect(root, final_readiness=True)
+    assert status(development, 'week08_runner_identity_contract') == 'WARN'
+    assert status(strict, 'week08_runner_identity_contract') == 'BLOCK'
+    check = next(
+        item for item in development['checks']
+        if item['check'] == 'week08_runner_identity_contract'
+    )
+    assert check['observed']['phase3_evidence']['state'] == 'missing'
+
+
+@pytest.mark.parametrize(
+    ('field', 'value'),
+    [
+        ('status', 'FAIL'),
+        ('final_evidence', True),
+        ('real_week08_source_pixels_accessed', True),
+        ('real_week08_labels_accessed', True),
+        ('week08_benchmark_executed', True),
+    ],
+)
+def test_invalid_phase3_evidence_blocks(tmp_path, field, value):
+    root = add_phase3_runner(stage(tmp_path)); register_independent(root)
+    path = root / pre.PHASE3_EVALUATOR_REPORT_REL
+    report = json.loads(path.read_text(encoding='utf-8'))
+    report[field] = value
+    path.write_text(json.dumps(report), encoding='utf-8')
+    result = inspect(root)
+    assert status(result, 'week08_runner_identity_contract') == 'BLOCK'
+
+
+def test_runner_stub_cannot_self_attest_around_evidence_hash(tmp_path):
+    root = add_phase3_runner(stage(tmp_path)); register_independent(root)
+    module = root / 'src/image_registration/week8_evaluation.py'
+    module.write_text(
+        'def runner_contract_probe():\n'
+        '    return {"schema_version": "week08_runner_contract_probe_v1", '
+        '"status": "pass", "reads_pixels_or_labels": False, "checks": {'
+        '"deterministic_w8_id": True, "prior_id_collision_rejected": True, '
+        '"plan_and_count_hashes_verified": True, "isolated_phases_declared": True, '
+        '"infrastructure_not_terminal_scientific_status": True}}\n',
+        encoding='utf-8',
+    )
+    result = inspect(root)
+    check = next(
+        item for item in result['checks']
+        if item['check'] == 'week08_runner_identity_contract'
+    )
+    assert check['status'] == 'BLOCK'
+    assert any('SHA-256 mismatch' in error for error in check['errors'])
+
+
+def test_phase3_runner_probe_tamper_blocks(tmp_path):
+    root = add_phase3_runner(stage(tmp_path)); register_independent(root)
+    module = root / 'src/image_registration/week8_evaluation.py'
+    module.write_text(module.read_text(encoding='utf-8') + '\nraise RuntimeError("tampered")\n', encoding='utf-8')
+    report = inspect(root)
+    assert report['readiness'] == 'BLOCK'
+    assert status(report, 'week08_runner_identity_contract') == 'BLOCK'
 
 
 def test_policy_tamper_blocks(tmp_path):

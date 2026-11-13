@@ -1,6 +1,6 @@
 # Week 8 Holdout and Evidence Firewall Protocol
 
-**Status:** Phase 2 integrity hardening complete; preparation only. No Week 8 benchmark has been run.
+**Status:** Phase 3 evaluator/firewall complete; preparation only. No Week 8 benchmark has been run.
 
 ## 1. Evaluation roles
 
@@ -16,7 +16,8 @@ This classification is about **source provenance**, not about generated-pair see
 `configs/week08_source_use_ledger.json` uses schema version 2. Its prior-source
 inventory contains the five tracked visible-image assets and both previously
 used RIRE `training_001` acquisitions. `week08_sources` remains empty
-intentionally: Phase 2 does not enroll, download, inspect or decode final data.
+intentionally: Phases 2 and 3 do not enroll, download, inspect or decode final
+data.
 
 The ledger records the Week 1 pair conservatively under one canonical case
 because its upstream source and license are not documented. This unresolved
@@ -210,12 +211,12 @@ The archive commands deterministically build, verify, and cleanly restore all 81
 frozen Week 7 evidence files. The preflight commands are metadata/byte-hash
 only. The non-dry development command writes
 `outputs/week08_preflight/preflight_report.json`; any `BLOCK` returns exit code
-1. Development mode currently blocks because `week08_sources` is intentionally
-empty and warns that the Phase 3 runner is absent. Strict mode converts that
-runner limitation to `BLOCK` and also blocks missing release identity,
-validation, Stage B acceptance, dependency/environment records, signoffs, and
-clean-restoration attestation. A `WARN` can never qualify as strict final
-readiness.
+1. Development mode currently reports 18 PASS / 1 BLOCK; the sole block is the
+intentionally empty `week08_sources` enrollment. The tracked G3 evidence and
+metadata-only runner probe pass. Strict mode reports 18 PASS / 11 BLOCK on the
+expected later release identity, validation, Stage B acceptance,
+dependency/environment, source, signoff, and clean-restoration prerequisites.
+A `WARN` can never qualify as strict final readiness.
 
 Strict mode recognizes the release contracts
 `pre_week08_release_manifest_v1`, `pre_week08_validation_v1`, and

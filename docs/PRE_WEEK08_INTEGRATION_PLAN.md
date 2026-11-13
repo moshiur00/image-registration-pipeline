@@ -1,8 +1,8 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 2 COMPLETE; PHASE 3 NEXT
-**Revision date:** 2026-11-07
+**Status:** ACTIVE PLAN - PHASE 3 COMPLETE; PHASE 4 NEXT
+**Revision date:** 2026-11-13
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
 ### 1. Purpose and final objective
@@ -77,6 +77,28 @@ passed. Development preflight reports 17 PASS / 1 BLOCK / 1 WARN; strict mode
 reports 17 PASS / 12 BLOCK and exits nonzero. The current blockers are
 intentional later-phase conditions, not Phase 2 failures. Week 8 has not run,
 and no holdout pixels or labels were accessed.
+
+#### 3.3 Phase 3 evaluator/firewall checkpoint (13 November 2026)
+
+Phase 3 implemented the preregistered prepare -> decide/seal -> evaluate
+workflow, deterministic `w8-*` identities, complete attempt accounting,
+infrastructure-only resume rules, exact Track A/Track B denominators, verified
+landmark/mask endpoints, and a recursive decision-phase label firewall.  Final
+plans bind the source ledger, enrollment manifest, readiness receipt, frozen
+gate, tolerances, code, and expected counts while exposing no source or label
+locators to the executor.
+
+The tracked G3 evidence is `reports/pre_week08_phase3_evaluator.json`: 57/57
+core evaluator tests, 9/9 direct CLI/preparation tests, and 54/54 preflight
+tests passed.  Full regression passed 690 backend tests with three expected
+skips and all 166 UI tests.  The actual development rehearsal used only the
+tracked camera fixture: 4 pairs, 12/12 sealed terminal records, zero
+infrastructure errors, 12 geometric successes, and two policy abstentions.
+Development preflight is 18 PASS / 1 BLOCK; the sole block is the intentionally
+empty Week 8 source enrollment.  Strict preflight is 18 PASS / 11 BLOCK on
+later-phase release, UI, source, signoff, environment, and restoration gates.
+No real Week 8 source pixels or labels were accessed and no Week 8 benchmark
+was run.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -280,7 +302,7 @@ its tracked manifest records SHA-256
 
 ### 10. Phase 3 - preregister and implement the Week 8 evaluator
 
-**Status:** NOT STARTED
+**Status:** PASSED (2026-11-13)
 **Priority:** P0
 **Owner:** developer; release/scientific reviewer approves preregistration.
 
@@ -319,7 +341,7 @@ If independent real GT cannot be secured, the core benchmark may proceed only wi
 
 #### 10.3 Runner architecture
 
-Proposed artifacts:
+Implemented artifacts:
 
 - scripts/week08_prepare_holdout.py;
 - scripts/week08_final_evaluation.py;
@@ -379,6 +401,10 @@ Report:
 - preflight verifies the actual runner contract;
 - all code/config/analysis artifacts are ready to freeze;
 - no Week 8 benchmark has run.
+
+**Result:** PASSED. Evidence:
+`reports/pre_week08_phase3_evaluator.json` and
+`docs/daily/pre_week08_phase3_summary.md`.
 
 ### 11. Phase 4 - Stage B UI acceptance and final UI scope
 
@@ -751,11 +777,11 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G0 Holdout boundary | PASSED | No Week 8 pixels/labels accessed |
 | G1 Reconcile/checkpoint | PASSED | `reports/pre_week08_phase1_checkpoint.json`; recoverable checkpoint commit contains the reconciled Stage A/B package |
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
-| G3 Evaluator/firewall | NOT STARTED | No Week 8 evaluator exists |
+| G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 120 focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
 | G4 UI acceptance/scope | BLOCKED | 0/5 manual scenarios; UI v0.2 not frozen |
 | G5 Release-candidate freeze | NOT STARTED | Checklist, manifest, lock, clean tag absent |
 | G6 Source enrollment | BLOCKED | week08_sources is empty |
-| G7 Final readiness/execution | BLOCKED | Depends on G3-G6 |
+| G7 Final readiness/execution | BLOCKED | Depends on G4-G6 and the remaining strict release/readiness prerequisites |
 | G8 Analysis/release closure | NOT STARTED | Week 8 has not run |
 
 Update this table and link the tracked evidence whenever a gate changes.
@@ -780,10 +806,10 @@ python scripts/pre_week08_stage_b_ui_qa.py prepare
 python scripts/pre_week08_stage_b_ui_qa.py status
 ~~~
 
-Commands to add before G5:
+Phase 3 commands now available:
 
 ~~~powershell
-python -m pytest tests/test_week08_preflight.py tests/test_week08_final_evaluation.py -v
+python -m pytest tests/test_week08_preflight.py tests/test_week08_final_evaluation.py tests/test_week08_phase3_cli.py -v
 python scripts/week08_final_evaluation.py plan --config configs/week08_final_evaluation.yaml
 ~~~
 
@@ -791,11 +817,12 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. Preregister and implement both Week 8 evaluation tracks using development fixtures only.
-2. Upgrade and execute Stage B acceptance in parallel.
-3. Record Stage C, RIRE UI, and recommendation UI as deferred unless explicitly approved before G5.
+1. Execute and sign off the five Stage B manual UI acceptance scenarios; freeze the final UI scope.
+2. Record Stage C, RIRE UI, and recommendation UI as deferred unless explicitly approved before G5.
+3. Prepare the Phase 5 release checklist, dependency/environment record, validation report, clean-restoration evidence, and immutable release-candidate tag.
 4. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
 
-**Current boundary:** This revision records completed Phase 2 controls. It does
-not start Phase 3, procure data, open heldout pixels or labels, modify frozen
-algorithms/policy, complete manual UI acceptance, or run Week 8.
+**Current boundary:** This revision records completed Phase 3 evaluator and
+firewall controls. It does not procure or enroll data, open real heldout pixels
+or labels, modify frozen algorithms/policy, complete manual UI acceptance,
+freeze a release candidate, or run Week 8.
