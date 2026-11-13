@@ -32,14 +32,18 @@ used only as a non-evidentiary development fixture.
 
 - Core evaluator: 57 passed, 0 failed.
 - Final CLI/preparation contract: 9 passed, 0 failed.
-- Preflight: 54 passed, 0 failed.
-- Full backend regression: 690 passed, 3 expected skips.
-- Full UI regression: 166 passed.
+- Current preflight after Phase 4 Stage B validator hardening: 66 passed, 0 failed.
+- Current full backend regression: 702 passed, 3 expected skips.
+- Current full UI regression: 179 passed.
 - Development rehearsal: 4 pairs, 12 planned attempts, 12 terminal records,
   12 geometric successes, 0 infrastructure errors, 2/2 policy abstentions,
   and one label-access event after the verified decision seal.
 - Development preflight: 18 PASS / 1 BLOCK; only source enrollment remains.
 - Strict preflight: 18 PASS / 11 BLOCK on expected later-phase prerequisites.
+
+The original G3 runner/evaluator did not change during Phase 4. Its tracked
+evidence hashes and regression counts were refreshed solely to bind the added
+Stage B report validator and tamper tests to the authoritative preflight.
 
 The first integration rehearsal safely stopped before label access when an
 adapter diagnostic used the ambiguous name `moving_to_fixed` for an estimated

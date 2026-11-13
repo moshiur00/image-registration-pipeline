@@ -1,11 +1,12 @@
 # Stage A Windows root-cause review
 
-> **Superseding status - 3 November 2026:** The current Windows regression is
-> green (575 backend passed, 2 expected skips; 166 UI passed), and the path
+> **Superseding status - 13 November 2026:** The current Windows regression is
+> green (702 backend passed, 3 expected skips; 179 UI passed), and the path
 > compatibility failures described here no longer reproduce. Stage A remains
-> **not accepted** because the independent-source gate is BLOCKED and the final
-> evaluator/decision-before-label contract is still unimplemented. Stage B QA
-> support now exists, but manual acceptance is 0/5 and UI v0.2 is not frozen.
+> **not accepted** because the independent-source gate is BLOCKED. The final
+> evaluator/decision-before-label contract is now implemented and verified.
+> Stage B attestation v2 exists, but human acceptance is 0/5 plus 0/5
+> supplemental checks and UI v0.2 is not frozen.
 
 ## Exact error
 

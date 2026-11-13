@@ -8,7 +8,7 @@ The UI is an isolated presentation and orchestration layer around the validated 
 
 **Planned repository location:** `ui/DEVELOPMENT_STAGES.md`
 
-**Current overall status (2026-11-03):** UI v0.1 FROZEN; Week 7 complete; UI v0.2 Automatic Comparison remains a release candidate. Current Windows regression: 575 backend passed with 2 expected skips and 166 UI passed. Pre-Week 8 Stage B QA support is implemented, but manual interaction status is 0/5. Formal UI v0.2 freeze has NOT occurred.
+**Current overall status (2026-11-13):** UI v0.1 FROZEN; Week 7 and pre-Week 8 Phase 3 are complete; UI v0.2 Automatic Comparison remains a release candidate. Post-hardening regression: 702 backend passed with 3 expected skips and 179 UI passed. The hardened Stage B attestation suite passes 30/30, but human status is 0/5 scenarios and 0/5 supplemental checks. Formal UI v0.2 freeze has NOT occurred.
 
 **Target release:** UI v0.1 frozen; UI v0.2 Automatic Comparison remains a release candidate pending the 5/5 Stage B manual gate
 
@@ -2106,16 +2106,18 @@ Prior target Windows evidence remains valid **for the previous build**: 432/432 
 
 # Pre-Week 8 Stage B: UI Acceptance and Freeze
 
-**Status:** QA SUPPORT IMPLEMENTED; LOCAL AUTOMATED VALIDATION PASSED; WINDOWS MANUAL ACCEPTANCE PENDING.
+**Status:** ATTESTATION V2 IMPLEMENTED; AUTOMATED VALIDATION PASSED; HUMAN WINDOWS ACCEPTANCE PENDING AT 0/5.
 
-Stage B is a pre-release acceptance gate for the existing UI v0.2, not a new automatic recommendation feature. Deterministic QA fixtures and an operator-attested checklist were added under `ui/qa/`, `scripts/pre_week08_stage_b_ui_qa.py` and `ui/evidence/pre_week08_stage_b_acceptance.md`. The fixtures use the known development `camera.png` image and are stored exclusively under ignored `ui/runtime/`. Five manual scenarios remain pending until Windows UI interactions are observed.
+Stage B is a pre-release acceptance gate for the existing UI v0.2, not a new automatic recommendation feature. Deterministic QA fixtures and an operator-attested checklist were added under `ui/qa/`, `scripts/pre_week08_stage_b_ui_qa.py` and `ui/evidence/pre_week08_stage_b_acceptance.md`. The fixtures use the known development `camera.png` image and are stored exclusively under ignored `ui/runtime/`. The v2 recorder requires a named human Windows reviewer, target environment, exact tested commit, concrete note, and hashed screenshot/ZIP evidence. Five manual scenarios plus five supplemental observations remain pending until Windows UI interactions are observed and attested.
 
 The earlier Week 7 Windows suites completed with 575 backend passed, 2 skipped, and 149 UI passed after Stage A, as shown in user-provided terminal screenshots. Those counts are the baseline before Stage B, not acceptance of Stage B interactions. This stage does not alter frozen backend/UI production code or the Day 34 policy.
 
 **Exit criteria:** Stage B automated tests and full regression pass on Windows; all five manual cases receive operator-attested PASS with evidence and no unaddressed blocking defect; the Stage A frozen-source and evidence checks stay valid; only then record UI v0.2 FROZEN.
 
-**Current checkpoint validation (2026-11-03):** 575 backend tests passed with
-2 expected skips, and 166 UI tests passed. This is the current automated record
-and supersedes the earlier 149-test pre-Stage B UI baseline. It does not satisfy
-the manual gate: 0/5 scenarios are operator-accepted, so UI v0.2 remains
-**NOT FROZEN**.
+**Current checkpoint validation (2026-11-13):** The post-hardening regression
+is green: 702 backend tests passed with 3 expected skips and 179 UI tests
+passed. The hardened Stage B focused suite passes 30/30, and all 66 preflight
+tests pass. None of this satisfies the human gate: 0/5 scenarios and 0/5
+supplemental checks are operator-accepted,
+so UI v0.2 remains **NOT FROZEN**. Stage C Research Evidence, interactive RIRE expansion, and the
+dormant recommendation display path are explicitly **DEFERRED**.

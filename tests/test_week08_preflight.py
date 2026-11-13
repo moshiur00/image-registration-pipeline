@@ -194,6 +194,65 @@ def write_fixture(root: Path, rel: str, content: bytes) -> str:
     return hashlib.sha256(content).hexdigest()
 
 
+def valid_stage_b_validation(commit: str = "a" * 40) -> dict:
+    def evidence(reference: str) -> dict:
+        return {"reference": reference, "sha256": "b" * 64, "size_bytes": 123}
+
+    scenarios = {}
+    for name in pre.STAGE_B_SCENARIOS:
+        scenarios[name] = {
+            "verdict": "pass",
+            "reviewer": "Windows QA Reviewer",
+            "attested_utc": "2026-11-13T12:00:00+00:00",
+            "observation": f"Observed {name} in Streamlit",
+            "screenshots": [evidence(f"{name}.png")],
+            "zips": [evidence(f"{name}.zip")]
+            if name in pre.STAGE_B_ZIP_REQUIRED_SCENARIOS else [],
+        }
+    supplemental = {
+        name: {
+            "verdict": "pass",
+            "reviewer": "Windows QA Reviewer",
+            "attested_utc": "2026-11-13T12:05:00Z",
+            "observation": f"Observed supplemental check {name}",
+            "screenshots": [evidence(f"supplemental/{name}.png")],
+        }
+        for name in pre.STAGE_B_SUPPLEMENTAL_CHECKS
+    }
+    return {
+        "schema_version": pre.STAGE_B_VALIDATION_VERSION,
+        "stage": "pre_week08_stage_b_ui_acceptance",
+        "acceptance_record_schema": pre.STAGE_B_ACCEPTANCE_RECORD_VERSION,
+        "tested_release_commit": commit,
+        "target": {
+            "platform": "Windows 11 x64 build 26100",
+            "environment": "project .venv; Python 3.13; Streamlit 1.66.1",
+        },
+        "manual_status": "MANUALLY_ACCEPTED",
+        "manual_cases_accepted": 5,
+        "manual_cases_total": 5,
+        "scenarios": scenarios,
+        "supplemental_checks_accepted": 5,
+        "supplemental_checks_total": 5,
+        "supplemental_observations": supplemental,
+        "fixture_manifest_sha256": "c" * 64,
+        "automated_validation": {
+            "backend": {"passed": 690, "skipped": 3, "failed": 0},
+            "ui": {"passed": 175, "skipped": 0, "failed": 0},
+        },
+        "full_regression_zero_failures": True,
+        "scope_decisions": {
+            "stage_c_research_evidence": "DEFERRED",
+            "interactive_rire_expansion": "DEFERRED",
+            "recommendation_display_path": "DEFERRED",
+        },
+        "formal_ui_v02_frozen": True,
+        "frozen_ui_version": "v0.2",
+        "week8_heldout_used": False,
+        "limitations": "Manual acceptance is not scientific calibration.",
+    }
+
+
 def synthetic_ground_truth(root: Path) -> dict:
     records = {}
     for name, rel in {
@@ -767,6 +826,175 @@ def test_integrity_anchor_and_archive_manifest_tampering_block(tmp_path):
     report = inspect(root)
     assert status(report, 'integrity_anchor') == 'BLOCK'
     assert status(report, 'week07_evidence_packaging') == 'BLOCK'
+
+
+def test_stage_b_validation_report_accepts_only_complete_hardened_contract():
+    commit = 'a' * 40
+    report = valid_stage_b_validation(commit)
+    assert pre.validate_stage_b_validation_report(report) == []
+
+
+def test_stage_b_validation_report_rejects_false_freeze_paths():
+    report = valid_stage_b_validation()
+    cases = []
+
+    def add(name, mutate, expected):
+        cases.append((name, mutate, expected))
+
+    add('schema', lambda r: r.__setitem__('schema_version', 'unexpected'), 'schema_version')
+    add('commit', lambda r: r.__setitem__('tested_release_commit', 'A' * 40), 'object ID')
+    add('platform', lambda r: r['target'].__setitem__('platform', 'Linux'), 'Windows')
+    add('manual count', lambda r: r.__setitem__('manual_cases_accepted', 4), 'five accepted')
+    add('manifest hash', lambda r: r.__setitem__('fixture_manifest_sha256', 'bad'), 'manifest SHA-256')
+    add('backend failure', lambda r: r['automated_validation']['backend'].__setitem__('failed', 1), 'suite has failures')
+    add('boolean count', lambda r: r['automated_validation']['ui'].__setitem__('passed', True), 'passed count is invalid')
+    add('scope included', lambda r: r['scope_decisions'].__setitem__('stage_c_research_evidence', 'INCLUDED'), 'scope')
+    add('scenario missing', lambda r: r['scenarios'].pop('multimodal'), 'scenario set')
+    add('reviewer missing', lambda r: r['scenarios']['multimodal'].__setitem__('reviewer', ' '), 'reviewer')
+    add('non-UTC', lambda r: r['scenarios']['multimodal'].__setitem__('attested_utc', '2026-11-13T12:00:00+01:00'), 'valid UTC')
+    add('traversal', lambda r: r['scenarios']['multimodal']['screenshots'][0].__setitem__('reference', '../private.png'), 'unsafe')
+    add('absolute', lambda r: r['scenarios']['multimodal']['screenshots'][0].__setitem__('reference', 'C:/private.png'), 'unsafe')
+    add('evidence hash', lambda r: r['scenarios']['multimodal']['screenshots'][0].__setitem__('sha256', 'bad'), 'SHA-256')
+    add('evidence size', lambda r: r['scenarios']['multimodal']['screenshots'][0].__setitem__('size_bytes', 0), 'positive integer')
+    add('required ZIP', lambda r: r['scenarios']['failed_check'].__setitem__('zips', []), 'requires ZIP')
+    add('supplement missing', lambda r: r['supplemental_observations'].pop('normal_monomodal'), 'supplemental observation set')
+    add('supplement count', lambda r: r.__setitem__('supplemental_checks_accepted', 4), 'five accepted supplemental')
+    add('supplement screenshot', lambda r: r['supplemental_observations']['rire_technical_only_caveat'].__setitem__('screenshots', []), 'requires screenshot')
+    add('not frozen', lambda r: r.__setitem__('formal_ui_v02_frozen', False), 'formal UI v0.2 freeze')
+    add('holdout used', lambda r: r.__setitem__('week8_heldout_used', True), 'zero Week 8 held-out use')
+
+    for name, mutate, expected in cases:
+        tampered = json.loads(json.dumps(report))
+        mutate(tampered)
+        found = pre.validate_stage_b_validation_report(tampered)
+        assert any(expected in error for error in found), (name, found)
+
+
+def test_stage_b_release_binding_accepts_equal_and_documentation_only_descendant(tmp_path):
+    repository = tmp_path / 'stage_b_release_docs'
+    repository.mkdir()
+
+    def git(*args):
+        return subprocess.run(
+            ['git', '-C', str(repository), *args], check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+
+    git('init')
+    git('config', 'user.email', 'stage-b-test@example.invalid')
+    git('config', 'user.name', 'Stage B Test')
+    (repository / 'ui').mkdir()
+    (repository / 'ui/app.py').write_text('print("tested UI")\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'tested UI checkpoint')
+    tested = git('rev-parse', 'HEAD')
+
+    errors, observed = pre.verify_stage_b_release_binding(repository, tested, tested)
+    assert errors == []
+    assert observed['changed_paths'] == []
+
+    for relative, content in {
+        'docs/release.md': 'release notes\n',
+        'reports/stage_b.json': '{}\n',
+        'ui/evidence/review.md': 'review evidence\n',
+    }.items():
+        path = repository / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'documentation and report evidence')
+    release = git('rev-parse', 'HEAD')
+    errors, observed = pre.verify_stage_b_release_binding(repository, tested, release)
+    assert errors == []
+    assert observed['protected_changed_paths'] == []
+    assert observed['changed_paths'] == [
+        'docs/release.md', 'reports/stage_b.json', 'ui/evidence/review.md',
+    ]
+
+    errors, _ = pre.verify_stage_b_release_binding(repository, 'f' * 40, release)
+    assert any('cannot resolve Stage B tested commit' in error for error in errors)
+
+    git('checkout', '--detach', tested)
+    divergent_path = repository / 'docs/divergent.md'
+    divergent_path.parent.mkdir(parents=True, exist_ok=True)
+    divergent_path.write_text('divergent release\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'divergent documentation')
+    divergent = git('rev-parse', 'HEAD')
+    errors, _ = pre.verify_stage_b_release_binding(repository, release, divergent)
+    assert any('not an ancestor' in error for error in errors)
+
+
+@pytest.mark.parametrize('relative', [
+    'src/changed.py',
+    'scripts/changed.py',
+    'configs/changed.yaml',
+    'tests/test_changed.py',
+    'pyproject.toml',
+    'requirements.txt',
+    'ui/streamlit_app.py',
+    'ui/settings.toml',
+])
+def test_stage_b_release_binding_rejects_protected_changes(tmp_path, relative):
+    repository = tmp_path / ('stage_b_protected_' + relative.replace('/', '_').replace('.', '_'))
+    repository.mkdir()
+
+    def git(*args):
+        return subprocess.run(
+            ['git', '-C', str(repository), *args], check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+
+    git('init')
+    git('config', 'user.email', 'stage-b-test@example.invalid')
+    git('config', 'user.name', 'Stage B Test')
+    (repository / 'base.txt').write_text('base\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'tested checkpoint')
+    tested = git('rev-parse', 'HEAD')
+    changed = repository / relative
+    changed.parent.mkdir(parents=True, exist_ok=True)
+    changed.write_text('protected change\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'protected change')
+    release = git('rev-parse', 'HEAD')
+
+    errors, observed = pre.verify_stage_b_release_binding(repository, tested, release)
+    assert any('protected implementation/test/config paths changed' in error for error in errors)
+    assert observed['protected_changed_paths'] == [relative]
+
+
+def test_stage_b_release_binding_rejects_protected_change_even_if_reverted(tmp_path):
+    repository = tmp_path / 'stage_b_reverted_change'
+    repository.mkdir()
+
+    def git(*args):
+        return subprocess.run(
+            ['git', '-C', str(repository), *args], check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+
+    git('init')
+    git('config', 'user.email', 'stage-b-test@example.invalid')
+    git('config', 'user.name', 'Stage B Test')
+    ui_path = repository / 'ui/streamlit_app.py'
+    ui_path.parent.mkdir(parents=True)
+    ui_path.write_text('tested = True\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'tested checkpoint')
+    tested = git('rev-parse', 'HEAD')
+
+    ui_path.write_text('tested = False\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'temporary protected change')
+    ui_path.write_text('tested = True\n', encoding='utf-8')
+    git('add', '.')
+    git('commit', '-m', 'revert protected content')
+    release = git('rev-parse', 'HEAD')
+
+    errors, observed = pre.verify_stage_b_release_binding(repository, tested, release)
+    assert any('protected implementation/test/config paths changed' in error for error in errors)
+    assert observed['protected_changed_paths'] == ['ui/streamlit_app.py']
 
 
 def test_final_readiness_explicitly_blocks_later_phase_artifacts(tmp_path):

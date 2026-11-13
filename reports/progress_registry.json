@@ -280,9 +280,9 @@
       "infrastructure_errors": 0,
       "policy_eligible_pairs": 2,
       "policy_abstentions": 2,
-      "focused_tests_passed": 120,
-      "full_backend_validation": "690 passed, 3 expected skips",
-      "full_ui_validation": "166 passed",
+      "focused_tests_passed": 132,
+      "full_backend_validation": "702 passed, 3 expected skips after Phase 4 preflight hardening",
+      "full_ui_validation": "179 passed",
       "development_preflight": "18 PASS, 1 BLOCK",
       "strict_preflight": "18 PASS, 11 BLOCK",
       "final_evidence": false,
@@ -295,7 +295,7 @@
       "phase_2_summary": "docs/daily/pre_week08_phase2_summary.md",
       "phase_3_summary": "docs/daily/pre_week08_phase3_summary.md",
       "phase_3_evidence": "reports/pre_week08_phase3_evaluator.json",
-      "current_validation": "690 backend passed, 3 expected skips; 166 UI passed; development preflight 18 PASS, 1 BLOCK; strict preflight 18 PASS, 11 BLOCK",
+      "current_validation": "702 backend passed, 3 expected skips; 179 UI passed; development preflight 18 PASS, 1 BLOCK; strict preflight 18 PASS, 11 BLOCK",
       "hard_block": "no genuinely independent Week 8 source registered",
       "development_warning": null,
       "strict_block": "missing later release, Stage B, source, signoff, environment and restoration prerequisites",
@@ -304,12 +304,24 @@
       "week08_evaluation_started": false
     },
     "stage_b": {
-      "status": "qa_support_implemented_manual_acceptance_pending",
+      "status": "attestation_v2_hardened_human_acceptance_pending",
       "documentation": "ui/evidence/pre_week08_stage_b_acceptance.md",
       "summary": "docs/daily/pre_week08_stage_b_summary.md",
+      "acceptance_schema": "ui-stage-b-acceptance-v2",
+      "tracked_validation_schema": "pre_week08_stage_b_validation_v1",
       "scenario_count": 5,
       "manual_cases_accepted": 0,
-      "current_validation": "690 backend passed, 3 expected skips; 166 UI passed",
+      "supplemental_check_count": 5,
+      "supplemental_checks_accepted": 0,
+      "focused_tests": "30 Stage B and 66 preflight tests passed",
+      "current_validation": "702 backend passed, 3 expected skips; 179 UI passed; development preflight 18 PASS, 1 BLOCK; strict preflight 18 PASS, 11 BLOCK",
+      "scope_decisions": {
+        "stage_c_research_evidence": "DEFERRED",
+        "interactive_rire_expansion": "DEFERRED",
+        "recommendation_display_path": "DEFERRED"
+      },
+      "human_windows_attestation_pending": true,
+      "tracked_validation_report_generated": false,
       "formal_ui_v02_frozen": false
     },
     "stage_c": {

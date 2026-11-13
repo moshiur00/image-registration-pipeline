@@ -13,12 +13,12 @@
     "configs/week08_final_evaluation.yaml": "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
     "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "e34160a0c602a583e95e66819a35365b28e5562ccb5db6fbaab2846817a43912",
     "scripts/week08_final_evaluation.py": "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b",
-    "scripts/week08_preflight.py": "d494b9e1bceab66b1d22d3e61e5327ab17860d3271d881281c83bd186e0e42cb",
+    "scripts/week08_preflight.py": "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1",
     "scripts/week08_prepare_holdout.py": "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be",
     "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
     "tests/test_week08_final_evaluation.py": "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
     "tests/test_week08_phase3_cli.py": "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c",
-    "tests/test_week08_preflight.py": "201fe4737f7880282cd6c84e9135678600c741796ea85bf2909d367ab6fde768"
+    "tests/test_week08_preflight.py": "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762"
   },
   "focused_tests": {
     "week08_final_evaluation": {
@@ -37,7 +37,7 @@
     },
     "week08_preflight": {
       "path": "tests/test_week08_preflight.py",
-      "passed": 54,
+      "passed": 66,
       "failed": 0,
       "errors": 0,
       "skipped": 0
@@ -66,12 +66,13 @@
     "real_week08_source_or_label_accessed": false
   },
   "full_regression": {
-    "backend_collected": 693,
-    "backend_passed": 690,
+    "backend_collected": 705,
+    "backend_passed": 702,
     "backend_skipped": 3,
     "backend_failed": 0,
-    "ui_collected": 166,
-    "ui_passed": 166,
+    "ui_collected": 179,
+    "ui_passed": 179,
+    "ui_skipped": 0,
     "ui_failed": 0
   },
   "preflight": {
@@ -82,6 +83,12 @@
     "warn_count": 0,
     "block_count": 1,
     "remaining_block": "heldout_source_independence",
+    "real_week08_source_or_label_accessed": false
+  },
+  "phase4_refresh": {
+    "date": "2026-11-13",
+    "reason": "Bind the unchanged G3 runner contract to the Phase 4 hardened Stage B preflight validator and its tamper tests.",
+    "runner_or_evaluator_changed": false,
     "real_week08_source_or_label_accessed": false
   },
   "limitations": [

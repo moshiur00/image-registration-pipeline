@@ -1,6 +1,6 @@
 # Pre-Week 8 Stage B: UI Acceptance and Freeze Checklist
 
-**Status: IMPLEMENTED, AUTOMATED QA LOCALLY PASSED, MANUAL QA PENDING.**
+**Status: ATTESTATION V2 IMPLEMENTED, AUTOMATED QA PASSED, HUMAN WINDOWS QA PENDING (0/5 SCENARIOS + 0/5 SUPPLEMENTAL).**
 
 This stage validates the existing UI v0.2 Automatic Comparison Preview. It does not introduce method ranking, deploy the Day 34 policy, or approve the Week 8 evaluation. UI v0.2 is a **release candidate**, not formally frozen, until every manual interaction below has been observed and documented on the target Windows environment.
 
@@ -17,10 +17,10 @@ This stage validates the existing UI v0.2 Automatic Comparison Preview. It does 
 From the project root with the project environment active:
 
 ```powershell
-pytest -v
-pytest -c ui/pytest.ini ui/tests -v
-python scripts/pre_week08_stage_b_ui_qa.py prepare
-streamlit run ui/streamlit_app.py
+.\.venv\Scripts\python.exe -m pytest -v
+.\.venv\Scripts\python.exe -m pytest -c ui/pytest.ini ui/tests -v
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py prepare
+.\.venv\Scripts\python.exe -m streamlit run ui/streamlit_app.py
 ```
 
 Select **Automatic comparison** from the sidebar. Fixture images are generated into `ui/runtime/pre_week08_stage_b/`. The fixture manifest lists SHA-256 checksums of the PNG upload bytes.
@@ -75,23 +75,77 @@ The upload and configuration controls should remain usable after state invalidat
 
 ## Recording manual observations
 
-After actually observing each scenario, record an explicit note. Example:
+After a named human reviewer actually observes each scenario, retain the
+screenshots and downloaded analysis ZIPs under
+`ui/runtime/pre_week08_stage_b/`. The recorder rejects evidence outside that
+directory and rechecks its SHA-256 and byte size whenever status or a report is
+read. Record against the exact checked-out `HEAD` in a clean Git worktree;
+ignored runtime evidence is allowed, while tracked or ordinary untracked
+changes block attestation.
+
+Every record requires one or more screenshots. Passed `single_candidate`,
+`failed_check`, and `export_provenance` records also require a readable ZIP.
+A named human reviewer must separately attest the five supplemental checks listed
+under the freeze criteria; `status` stays pending until all ten required
+observations pass.
+For example:
 
 ```powershell
-python scripts/pre_week08_stage_b_ui_qa.py record multimodal pass --note "Windows: MI Affine sole compatible method; no TRE or confidence shown; status rendered correctly"
-python scripts/pre_week08_stage_b_ui_qa.py record single_candidate pass --note "Agreement reports insufficient eligible transforms; no anchor"
-python scripts/pre_week08_stage_b_ui_qa.py record failed_check blocked --note "No Failed or CHECK candidate observed; cannot validate UI display yet"
-python scripts/pre_week08_stage_b_ui_qa.py status
+$reviewer = "<human reviewer name>"
+$platform = "Windows 11 x64 <build>"
+$environment = ".venv; Python <version>; Streamlit <version>; SimpleITK <version>"
+$releaseCommit = (git rev-parse HEAD).Trim()
+
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py record multimodal pass `
+  --reviewer $reviewer --platform $platform --environment $environment `
+  --release-commit $releaseCommit `
+  --screenshot ui/runtime/pre_week08_stage_b/b1_multimodal.png `
+  --note "MI Affine was the sole compatible method; status was accurate; no TRE, winner, or confidence was shown"
+
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py status
 ```
 
-Use `pass`, `fail` or `blocked` truthfully. The `status` command exits with nonzero status until **all five** are manually attested PASS. No command automatically marks a scenario passed. Screenshot or ZIP proof can be retained separately, but never include private image bytes in a public report.
+Record each supplemental observation with `record-supplemental`. The available
+check IDs are `normal_monomodal`, `unknown_upload_claim_suppression`,
+`rire_technical_only_caveat`, `candidate_inspection_labels`, and
+`no_frozen_location_writes`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py record-supplemental normal_monomodal pass `
+  --reviewer $reviewer --platform $platform --environment $environment `
+  --release-commit $releaseCommit `
+  --screenshot ui/runtime/pre_week08_stage_b/supplemental_normal_monomodal.png `
+  --note "Normal monomodal Affine comparison completed and retained truthful unknown-ground-truth limits"
+```
+
+Use `pass`, `fail` or `blocked` truthfully. The `status` command exits with
+nonzero status until **all five scenarios and all five supplemental checks**
+are manually attested PASS. No command automatically marks an observation
+passed. Screenshot or ZIP proof can be retained separately, but never include
+private image bytes in a public report.
+
+After 5/5 scenario acceptance, 5/5 supplemental acceptance, and the full
+suites, generate the sanitized tracked report with the exact observed counts
+and the three recorded DEFERRED scope decisions:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py report `
+  --backend-passed <count> --backend-skipped <count> --backend-failed 0 `
+  --ui-passed <count> --ui-skipped <count> --ui-failed 0 `
+  --stage-c DEFERRED --rire-expansion DEFERRED --recommendation-path DEFERRED
+```
 
 ## Automated checks and freeze criteria
 
-- Run `pytest -c ui/pytest.ini ui/tests/test_pre_week08_stage_b_acceptance.py -v`.
+- Run `.\.venv\Scripts\python.exe -m pytest -c ui/pytest.ini ui/tests/test_pre_week08_stage_b_acceptance.py -v`.
 - Run the full backend and UI suites on Windows. Record exact pass, skip, and failure counts.
 - Review the manual screenshots, results, and ZIP artifacts. Mark any unsupported or unobserved scenario blocked.
 - Confirm the Stage A frozen-source and Week 7 evidence preflight still passes its corresponding checks. A BLOCK for an unregistered independent Week 8 source remains legitimate.
-- Only after all manual cases pass, update `ui/DEVELOPMENT_STAGES.md`, `ui/README.md`, and the progress registry to **UI v0.2 FROZEN**. Do not freeze the UI based on the test suite alone.
+- Only after every scenario and supplemental check passes, update `ui/DEVELOPMENT_STAGES.md`, `ui/README.md`, and the progress registry to **UI v0.2 FROZEN**. Do not freeze the UI based on the test suite alone.
 
-**Current decision:** Stage B automated implementation ready. Manual acceptance and formal freeze remain pending. Stage C evidence UI is optional. Week 8 held-out data has not been opened for these QA fixtures.
+**Current decision (2026-11-13):** The hardened evidence contract is ready and
+its 28 focused tests pass. Human acceptance and formal freeze remain pending at
+0/5 scenarios and 0/5 supplemental checks. Stage C Research Evidence,
+interactive RIRE expansion, and the dormant
+recommendation display path are DEFERRED. Week 8 held-out data has not been
+opened for these QA fixtures.

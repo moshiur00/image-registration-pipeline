@@ -4,7 +4,13 @@ This directory contains the isolated user-interface work package for the image-r
 
 ## Current status
 
-**UI v0.1 is complete and frozen. Week 7 is complete. UI v0.2 remains a release candidate: the current Windows regression is 575 backend tests passed with 2 expected skips and 166 UI tests passed, but Stage B manual acceptance is 0/5. The five scenarios are tracked in `ui/evidence/pre_week08_stage_b_acceptance.md`; formal UI v0.2 freeze is pending their actual interactive verification.**
+**UI v0.1 is complete and frozen. Week 7 and pre-Week 8 Phase 3 are complete.
+UI v0.2 remains a release candidate: the post-hardening Windows regression is
+702 backend tests passed with 3 expected skips and 179 UI tests passed, but
+human Stage B acceptance is 0/5 scenarios plus 0/5 supplemental checks. The
+required observations are tracked in
+`ui/evidence/pre_week08_stage_b_acceptance.md`; formal UI v0.2 freeze is pending
+their actual interactive verification.**
 
 - Stage 1 established isolation, directory boundaries, UI-only dependencies, runtime rules, and regression guardrails.
 - Stage 2 established framework-neutral contracts, method metadata, validation, evidence policy, provenance, input hashing, JSON-safe presentation, and `RegistrationService`.
@@ -199,7 +205,12 @@ Recorded evidence:
 
 UI v0.1 is frozen and target-validated. Stage 6.4 is complete and Windows validated (2026-10-20: 432/432 backend and 117/117 UI, with multi-candidate Streamlit screenshots). Stage 6.5 also passed authoritative Windows regression on 2026-10-20: 432/432 backend in 8.06 s and 134/134 UI in 6.80 s, zero failures and zero skips. User screenshots show an uploaded four-candidate affine comparison, agreement and visual inspection, mask-aware previews, execution limitations, and successful automatic-analysis ZIP download. That dated record is preserved below; the superseding Stage B gate now covers five scenarios: simulated multimodal compatibility, a one-candidate agreement limit, failed/CHECK preservation, stale state/export invalidation, and archive provenance. UI v0.2 has not been formally frozen; no final method recommendation or confidence is provided.
 
-**Superseding current record (2026-11-03):** the current Windows suites report 575 backend passed with 2 expected skips and 166 UI passed. Automated validation is green, but manual Stage B status remains 0/5 and therefore UI v0.2 is **NOT FROZEN**. Historical statements below describe their dated checkpoints and are not current project status.
+**Superseding current record (2026-11-13):** the current Windows suites report
+702 backend passed with 3 expected skips and 179 UI passed. The hardened
+attestation and preflight validators are green, but human Stage B status remains
+0/5 scenarios plus 0/5 supplemental checks and therefore UI v0.2 is **NOT
+FROZEN**. Historical statements below describe their dated checkpoints and are
+not current project status.
 
 
 ## Page header pattern
@@ -224,14 +235,20 @@ Changing or removing input images, changing pair settings or preprocessing, or s
 The final patch passed local backend tests (421 passed, 11 optional-dependency skips) and UI tests (147 passed, 2 optional-dependency skips). The previous release candidate passed 432 backend and 134 UI tests on Windows, but the new patch awaits fresh authoritative Windows checks. With all dependencies installed, expected counts are 432 backend and 149 UI tests. Do not freeze UI v0.2 or remove its `preview` sidebar label until manual edge-case acceptance and these tests are complete. Week 7 remains not started.
 
 
-## Pre-Week 8 Stage B: Final UI acceptance (pending)
+## Pre-Week 8 Stage B: Final UI acceptance (human review pending)
 
 The QA harness generates deterministic, development-only PNGs from a previously used example and records five **manual** Streamlit walkthroughs. Tests passing does not mark manual scenarios complete or provide confidence calibration.
 
 ```powershell
-python scripts/pre_week08_stage_b_ui_qa.py prepare
-streamlit run ui/streamlit_app.py
-python scripts/pre_week08_stage_b_ui_qa.py status
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py prepare
+.\.venv\Scripts\python.exe -m streamlit run ui/streamlit_app.py
+.\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py status
 ```
 
-See `ui/evidence/pre_week08_stage_b_acceptance.md` for the exact scenarios and operator recording commands. Manual observations are local under ignored `ui/runtime/`. They are not Week 8 held-out evidence.
+The v2 recorder requires human reviewer identity, target Windows environment,
+the exact tested commit, an observation, and hashed screenshot/ZIP evidence
+under ignored `ui/runtime/`. Five scenario records and five supplemental
+observations are required. See
+`ui/evidence/pre_week08_stage_b_acceptance.md` for the exact scenarios and
+recording commands. These fixtures and observations are not Week 8 held-out
+evidence. Human status remains 0/5 plus 0/5 supplemental; UI v0.2 is not frozen.

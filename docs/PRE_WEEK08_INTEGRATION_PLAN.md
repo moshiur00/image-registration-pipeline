@@ -1,7 +1,7 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 3 COMPLETE; PHASE 4 NEXT
+**Status:** ACTIVE PLAN - PHASE 4 IN PROGRESS; HUMAN WINDOWS ACCEPTANCE PENDING
 **Revision date:** 2026-11-13
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
@@ -89,9 +89,10 @@ gate, tolerances, code, and expected counts while exposing no source or label
 locators to the executor.
 
 The tracked G3 evidence is `reports/pre_week08_phase3_evaluator.json`: 57/57
-core evaluator tests, 9/9 direct CLI/preparation tests, and 54/54 preflight
-tests passed.  Full regression passed 690 backend tests with three expected
-skips and all 166 UI tests.  The actual development rehearsal used only the
+core evaluator tests, 9/9 direct CLI/preparation tests, and 66/66 current
+preflight tests passed. Full regression passed 702 backend tests with three
+expected skips and all 179 UI tests after the Phase 4 preflight hardening. The
+actual development rehearsal used only the
 tracked camera fixture: 4 pairs, 12/12 sealed terminal records, zero
 infrastructure errors, 12 geometric successes, and two policy abstentions.
 Development preflight is 18 PASS / 1 BLOCK; the sole block is the intentionally
@@ -99,6 +100,20 @@ empty Week 8 source enrollment.  Strict preflight is 18 PASS / 11 BLOCK on
 later-phase release, UI, source, signoff, environment, and restoration gates.
 No real Week 8 source pixels or labels were accessed and no Week 8 benchmark
 was run.
+
+#### 3.4 Phase 4 implementation checkpoint (13 November 2026)
+
+The Stage B record/CLI is hardened to `ui-stage-b-acceptance-v2`. It requires
+a named human Windows reviewer, exact platform/environment and ancestor Git
+commit, exact fixture-manifest binding, a concrete observation, and hashed
+runtime-local screenshot/ZIP evidence. Five supplemental observations are
+first-class gate records. Strict preflight now validates the entire sanitized
+`pre_week08_stage_b_validation_v1` contract instead of trusting two summary
+flags. The focused suites pass 30/30 Stage B and 66/66 preflight tests; full
+regression is 702 backend passed / 3 expected skips and 179 UI passed.
+Development preflight remains 18 PASS / 1 BLOCK and strict preflight 18 PASS /
+11 BLOCK. Scope decisions are all DEFERRED. Human status remains 0/5 scenarios
+and 0/5 supplemental checks, so G4 and UI v0.2 remain blocked/not frozen.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -408,13 +423,27 @@ Report:
 
 ### 11. Phase 4 - Stage B UI acceptance and final UI scope
 
-**Status:** BLOCKED at 0/5 manual acceptance
+**Status:** IN PROGRESS; attestation hardening complete, blocked at 0/5 scenarios + 0/5 supplemental human checks
 **Priority:** P0
 **Owner:** developer for harness; human Windows operator/reviewer for attestation.
 
 This phase may proceed in parallel with Phases 2 and 3 using development-only fixtures.
 
 #### 11.1 Harden the attestation
+
+**Result (2026-11-13): COMPLETE.** The Stage B record now uses
+`ui-stage-b-acceptance-v2`. The CLI and fail-closed tests require a named human
+Windows reviewer, target platform/environment, UTC timestamp, exact tested
+commit, concrete observation, runtime-local screenshot/ZIP references, and
+reverified SHA-256/size evidence. Each record is also bound to the exact
+fixture manifest and to the exact checked-out `HEAD` in a clean worktree. The
+five supplemental observations in section 11.2 are separately recorded and
+required. Later release binding permits documentation/report commits only and
+rejects any intervening protected implementation change, including a reverted
+change. The sanitized report builder emits only
+`pre_week08_stage_b_validation_v1` and cannot derive a formal freeze without
+five valid scenario PASS records, five valid supplemental PASS records, and
+zero-failure full suites.
 
 Update the Stage B record schema, CLI, and tests to require:
 
@@ -429,6 +458,10 @@ Update the Stage B record schema, CLI, and tests to require:
 Keep private screenshots, uploads, and ZIPs under ignored ui/runtime/; publish a sanitized tracked validation report proposed as reports/pre_week08_stage_b_validation.json.
 
 #### 11.2 Execute and attest
+
+**Status:** PENDING. No human scenario has been recorded. Computer-use
+automation was unavailable in the current session before any app interaction;
+this is not being substituted for the required human Windows attestation.
 
 Pass all five current scenarios:
 
@@ -456,7 +489,10 @@ Before release-candidate freeze, record each item as INCLUDED or DEFERRED:
 - interactive RIRE expansion;
 - any dormant/narrow recommendation display path.
 
-**Default:** defer all three. The final UI remains Automatic Comparison with descriptive agreement and no deployed recommendation/confidence.
+**Decision (2026-11-13):** DEFER all three. The final UI remains Automatic
+Comparison with descriptive agreement and no deployed
+recommendation/confidence. These decisions must also be carried into the
+tracked validation report after human acceptance.
 
 #### Exit gate G4
 
@@ -777,8 +813,8 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G0 Holdout boundary | PASSED | No Week 8 pixels/labels accessed |
 | G1 Reconcile/checkpoint | PASSED | `reports/pre_week08_phase1_checkpoint.json`; recoverable checkpoint commit contains the reconciled Stage A/B package |
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
-| G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 120 focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
-| G4 UI acceptance/scope | BLOCKED | 0/5 manual scenarios; UI v0.2 not frozen |
+| G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 132 current focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
+| G4 UI acceptance/scope | BLOCKED | Attestation v2 and strict validator implemented; 0/5 scenarios plus 0/5 supplemental checks; UI v0.2 not frozen |
 | G5 Release-candidate freeze | NOT STARTED | Checklist, manifest, lock, clean tag absent |
 | G6 Source enrollment | BLOCKED | week08_sources is empty |
 | G7 Final readiness/execution | BLOCKED | Depends on G4-G6 and the remaining strict release/readiness prerequisites |
@@ -817,12 +853,18 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. Execute and sign off the five Stage B manual UI acceptance scenarios; freeze the final UI scope.
-2. Record Stage C, RIRE UI, and recommendation UI as deferred unless explicitly approved before G5.
-3. Prepare the Phase 5 release checklist, dependency/environment record, validation report, clean-restoration evidence, and immutable release-candidate tag.
+1. A named human Windows reviewer executes and signs the five Stage B scenarios
+   and five supplemental observations against the checkpoint commit.
+2. Generate the sanitized tracked Stage B validation report only after all ten
+   observations pass; then freeze UI v0.2. The optional UI scope is already
+   recorded as DEFERRED.
+3. Prepare the Phase 5 release checklist, dependency/environment record,
+   validation report, clean-restoration evidence, and immutable
+   release-candidate tag.
 4. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
 
 **Current boundary:** This revision records completed Phase 3 evaluator and
-firewall controls. It does not procure or enroll data, open real heldout pixels
+firewall controls plus Phase 4 attestation/preflight hardening. It does not
+impersonate a human reviewer, procure or enroll data, open real heldout pixels
 or labels, modify frozen algorithms/policy, complete manual UI acceptance,
 freeze a release candidate, or run Week 8.

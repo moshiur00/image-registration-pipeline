@@ -24,7 +24,7 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 7 and pre-Week 8 G2 integrity hardening complete; Stage B manual acceptance 0/5 (UI not frozen); Week 8 not run |
+| Current status | Weeks 1 to 7 and pre-Week 8 G1-G3 complete; Phase 4 attestation v2 ready, human acceptance 0/5 plus 0/5 supplemental (UI not frozen); Week 8 not run |
 | Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
@@ -310,14 +310,22 @@ python scripts/week08_preflight.py --dry-run --final-readiness
 
 A current development `BLOCK` for `heldout_source_independence` is expected:
 the ledger has no newly obtained independent image, and the previously used
-`moon` source cannot serve as fully unseen data. The absent Phase 3 evaluator
-is a development warning and a strict-readiness blocker. Current validation is
-616 backend tests passed with three expected unsupported-symlink skips and 166
-UI tests passed. Do not run the Week 8 benchmark. The next engineering step is
-the Phase 3 evaluator and label firewall using development fixtures only. See
-`docs/WEEK08_HOLDOUT_PROTOCOL.md` and
-`reports/pre_week08_phase2_integrity.json`.
+`moon` source cannot serve as fully unseen data. Phase 3's evaluator and label
+firewall are complete and hash-bound to the current preflight. Current
+validation is 702 backend tests passed with three expected unsupported-symlink
+skips and 179 UI tests passed. Development preflight is 18 PASS / 1 BLOCK; the
+sole block is the still-empty independent Week 8 source enrollment. Do not run
+the Week 8 benchmark. The next step is the human Windows Phase 4 walkthrough
+and evidence attestation. See `docs/PRE_WEEK08_INTEGRATION_PLAN.md`,
+`reports/pre_week08_phase3_evaluator.json`, and
+`ui/evidence/pre_week08_stage_b_acceptance.md`.
 
 ### Pre-Week 8 Stage B UI acceptance
 
-The deterministic Stage B QA harness and automated coverage are implemented. The current Windows regression record is 616 backend tests passed with 3 expected skips and 166 UI tests passed. All five interactive operator scenarios remain pending (0/5), so automated success does not freeze UI v0.2. See `ui/evidence/pre_week08_stage_b_acceptance.md` and `reports/pre_week08_stage_b_implementation.json`.
+The deterministic Stage B QA harness and hardened human-attestation contract
+are implemented. The current Windows regression is 702 backend tests passed
+with 3 expected skips and 179 UI tests passed. All five interactive scenarios
+and all five supplemental observations remain pending (0/5 plus 0/5), so
+automated success does not freeze UI v0.2. See
+`ui/evidence/pre_week08_stage_b_acceptance.md` and
+`reports/pre_week08_stage_b_implementation.json`.

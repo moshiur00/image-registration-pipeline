@@ -1,14 +1,21 @@
 {
   "stage": "pre_week08_stage_b_ui_acceptance",
-  "state": "qa_harness_implemented_manual_validation_pending",
+  "state": "attestation_v2_hardened_human_validation_pending",
   "automatic_validation": {
-    "local_backend": "full suite passed, optional dependency skips apply",
-    "local_ui": "full suite passed, optional dependency skips apply",
-    "focused_stage_b_tests": 17
+    "backend_passed": 702,
+    "backend_skipped": 3,
+    "backend_failed": 0,
+    "ui_passed": 179,
+    "ui_skipped": 0,
+    "ui_failed": 0,
+    "focused_stage_b_tests": 30,
+    "focused_preflight_tests": 66
   },
   "manual_status": {
     "passed": 0,
     "pending": 5,
+    "supplemental_passed": 0,
+    "supplemental_pending": 5,
     "release_decision": "NOT_FROZEN"
   },
   "frozen_scientific_artifacts": {
@@ -30,6 +37,18 @@
     "ui_failed": 0,
     "manual_cases_accepted": 0,
     "release_decision": "NOT_FROZEN"
+  },
+  "phase4_attestation_hardening_2026_11_13": {
+    "acceptance_schema": "ui-stage-b-acceptance-v2",
+    "tracked_validation_schema": "pre_week08_stage_b_validation_v1",
+    "evidence_contract": "human reviewer, Windows environment, exact checked-out HEAD plus clean worktree, fixture-manifest binding, observation, runtime-local screenshot/ZIP references, SHA-256 and size revalidation",
+    "release_binding": "tested commit must be an ancestor of the release commit; intervening implementation/test/config/dependency/non-Markdown UI changes are blocked, including reverted changes",
+    "supplemental_checks_required": 5,
+    "strict_preflight_validation": "implemented and tamper-tested",
+    "development_preflight": "18 PASS, 1 BLOCK (heldout source independence only)",
+    "strict_preflight": "18 PASS, 11 BLOCK",
+    "formal_ui_v02_frozen": false,
+    "tracked_validation_report_generated": false
   },
   "production_ui_code_changed": false,
   "ui_qa_support_added": true,

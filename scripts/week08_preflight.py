@@ -7,6 +7,7 @@ them. BLOCK means the final run must not start.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
 import json
@@ -78,6 +79,30 @@ HOLDOUT_SOURCE_MANIFEST_REL = Path("data/manifests/week08_holdout_sources.json")
 RELEASE_MANIFEST_VERSION = "pre_week08_release_manifest_v1"
 VALIDATION_VERSION = "pre_week08_validation_v1"
 STAGE_B_VALIDATION_VERSION = "pre_week08_stage_b_validation_v1"
+STAGE_B_ACCEPTANCE_RECORD_VERSION = "ui-stage-b-acceptance-v2"
+STAGE_B_SCENARIOS = (
+    "multimodal",
+    "single_candidate",
+    "failed_check",
+    "stale_state",
+    "export_provenance",
+)
+STAGE_B_ZIP_REQUIRED_SCENARIOS = frozenset(
+    {"single_candidate", "failed_check", "export_provenance"}
+)
+STAGE_B_SCOPE_DECISIONS = (
+    "stage_c_research_evidence",
+    "interactive_rire_expansion",
+    "recommendation_display_path",
+)
+STAGE_B_SUPPLEMENTAL_CHECKS = (
+    "normal_monomodal",
+    "unknown_upload_claim_suppression",
+    "rire_technical_only_caveat",
+    "candidate_inspection_labels",
+    "no_frozen_location_writes",
+)
+STAGE_B_SCREENSHOT_SUFFIXES = frozenset({".png", ".jpg", ".jpeg", ".webp"})
 POST_RELEASE_METADATA_PATHS = {
     LEDGER_REL.as_posix(),
     RELEASE_MANIFEST_REL.as_posix(),
@@ -159,6 +184,196 @@ def check_path_hash(root: Path, rel: Any, expected: Any) -> str | None:
     except OSError as exc:
         return f"Cannot hash {rel}: {exc}"
     return None
+
+
+def _safe_private_evidence_reference(value: Any, *, suffixes: frozenset[str]) -> bool:
+    """Validate a sanitized path relative to the ignored Stage B runtime root."""
+    if not isinstance(value, str) or not value or "\\" in value or "\0" in value or ":" in value:
+        return False
+    windows = PureWindowsPath(value)
+    if windows.drive or windows.root or value.startswith("/"):
+        return False
+    parts = value.split("/")
+    if any(part in ("", ".", "..") for part in parts):
+        return False
+    return PurePosixPath(value).suffix.lower() in suffixes
+
+
+def _valid_stage_b_utc(value: Any) -> bool:
+    if not isinstance(value, str) or not value.strip():
+        return False
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timezone.utc.utcoffset(parsed)
+
+
+def _validate_stage_b_evidence(
+    value: Any,
+    *,
+    scenario: str,
+    kind: str,
+    required: bool,
+) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(value, list):
+        return [f"Stage B {scenario} {kind} evidence is not a list"]
+    if required and not value:
+        errors.append(f"Stage B {scenario} requires {kind} evidence")
+    suffixes = STAGE_B_SCREENSHOT_SUFFIXES if kind == "screenshot" else frozenset({".zip"})
+    seen: set[str] = set()
+    for index, record in enumerate(value):
+        label = f"Stage B {scenario} {kind} evidence {index}"
+        if not isinstance(record, dict):
+            errors.append(f"{label} is not an object")
+            continue
+        if set(record) != {"reference", "sha256", "size_bytes"}:
+            errors.append(f"{label} metadata fields are not exact")
+        reference = record.get("reference")
+        if not _safe_private_evidence_reference(reference, suffixes=suffixes):
+            errors.append(f"{label} reference is unsafe or has the wrong suffix")
+        elif reference in seen:
+            errors.append(f"{label} reference is duplicated")
+        else:
+            seen.add(reference)
+        if not is_sha256(record.get("sha256")):
+            errors.append(f"{label} SHA-256 is invalid")
+        size = record.get("size_bytes")
+        if not isinstance(size, int) or isinstance(size, bool) or size <= 0:
+            errors.append(f"{label} size_bytes is not a positive integer")
+    return errors
+
+
+def validate_stage_b_validation_report(
+    report: Any,
+) -> list[str]:
+    """Validate the sanitized G4 report without requiring its private evidence files."""
+    errors: list[str] = []
+    if not isinstance(report, dict):
+        return ["Stage B validation must be a JSON object"]
+    if report.get("schema_version") != STAGE_B_VALIDATION_VERSION:
+        errors.append("unsupported Stage B validation schema_version")
+    if report.get("stage") != "pre_week08_stage_b_ui_acceptance":
+        errors.append("Stage B validation has the wrong stage identifier")
+    if report.get("acceptance_record_schema") != STAGE_B_ACCEPTANCE_RECORD_VERSION:
+        errors.append("Stage B validation has an unsupported acceptance record schema")
+
+    commit = report.get("tested_release_commit")
+    if not isinstance(commit, str) or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+        errors.append("Stage B tested_release_commit is not a full lowercase SHA-1 object ID")
+    target = report.get("target")
+    if not isinstance(target, dict):
+        errors.append("Stage B target is not an object")
+    else:
+        platform_name = target.get("platform")
+        if not nonempty_text(platform_name) or "windows" not in platform_name.lower():
+            errors.append("Stage B target does not identify Windows")
+        if not nonempty_text(target.get("environment")):
+            errors.append("Stage B target environment is missing")
+
+    if report.get("manual_status") != "MANUALLY_ACCEPTED":
+        errors.append("Stage B manual status is not MANUALLY_ACCEPTED")
+    if report.get("manual_cases_accepted") != len(STAGE_B_SCENARIOS):
+        errors.append("Stage B does not contain five accepted manual cases")
+    if report.get("manual_cases_total") != len(STAGE_B_SCENARIOS):
+        errors.append("Stage B manual case total is not five")
+    if not is_sha256(report.get("fixture_manifest_sha256")):
+        errors.append("Stage B fixture manifest SHA-256 is invalid")
+
+    counts = report.get("automated_validation")
+    if not isinstance(counts, dict) or set(counts) != {"backend", "ui"}:
+        errors.append("Stage B automated validation must contain exact backend and UI counts")
+    else:
+        for suite_name in ("backend", "ui"):
+            suite = counts.get(suite_name)
+            if not isinstance(suite, dict) or set(suite) != {"passed", "skipped", "failed"}:
+                errors.append(f"Stage B {suite_name} counts are malformed")
+                continue
+            for outcome in ("passed", "skipped", "failed"):
+                count = suite.get(outcome)
+                if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+                    errors.append(f"Stage B {suite_name} {outcome} count is invalid")
+            passed = suite.get("passed")
+            if isinstance(passed, int) and not isinstance(passed, bool) and passed <= 0:
+                errors.append(f"Stage B {suite_name} passed count must be positive")
+            if suite.get("failed") != 0:
+                errors.append(f"Stage B {suite_name} suite has failures")
+    if report.get("full_regression_zero_failures") is not True:
+        errors.append("Stage B full regression zero-failure record is absent")
+
+    scope = report.get("scope_decisions")
+    if not isinstance(scope, dict) or set(scope) != set(STAGE_B_SCOPE_DECISIONS):
+        errors.append("Stage B scope decisions are incomplete")
+    elif any(scope.get(name) != "DEFERRED" for name in STAGE_B_SCOPE_DECISIONS):
+        errors.append("Stage B v0.2 freeze requires all optional scope to be DEFERRED")
+
+    scenarios = report.get("scenarios")
+    if not isinstance(scenarios, dict) or set(scenarios) != set(STAGE_B_SCENARIOS):
+        errors.append("Stage B scenario set is not exact")
+    else:
+        expected_fields = {
+            "verdict", "reviewer", "attested_utc", "observation", "screenshots", "zips"
+        }
+        for name in STAGE_B_SCENARIOS:
+            scenario = scenarios.get(name)
+            if not isinstance(scenario, dict):
+                errors.append(f"Stage B {name} record is not an object")
+                continue
+            if set(scenario) != expected_fields:
+                errors.append(f"Stage B {name} fields are not exact")
+            if scenario.get("verdict") != "pass":
+                errors.append(f"Stage B {name} is not PASS")
+            if not nonempty_text(scenario.get("reviewer")):
+                errors.append(f"Stage B {name} reviewer is missing")
+            if not _valid_stage_b_utc(scenario.get("attested_utc")):
+                errors.append(f"Stage B {name} timestamp is not valid UTC")
+            if not nonempty_text(scenario.get("observation")):
+                errors.append(f"Stage B {name} observation is missing")
+            errors.extend(_validate_stage_b_evidence(
+                scenario.get("screenshots"), scenario=name, kind="screenshot", required=True,
+            ))
+            errors.extend(_validate_stage_b_evidence(
+                scenario.get("zips"), scenario=name, kind="ZIP",
+                required=name in STAGE_B_ZIP_REQUIRED_SCENARIOS,
+            ))
+
+    if report.get("supplemental_checks_accepted") != len(STAGE_B_SUPPLEMENTAL_CHECKS):
+        errors.append("Stage B does not contain five accepted supplemental checks")
+    if report.get("supplemental_checks_total") != len(STAGE_B_SUPPLEMENTAL_CHECKS):
+        errors.append("Stage B supplemental check total is not five")
+    supplemental = report.get("supplemental_observations")
+    if not isinstance(supplemental, dict) or set(supplemental) != set(STAGE_B_SUPPLEMENTAL_CHECKS):
+        errors.append("Stage B supplemental observation set is not exact")
+    else:
+        expected_supplemental_fields = {
+            "verdict", "reviewer", "attested_utc", "observation", "screenshots"
+        }
+        for name in STAGE_B_SUPPLEMENTAL_CHECKS:
+            observation = supplemental.get(name)
+            if not isinstance(observation, dict):
+                errors.append(f"Stage B supplemental {name} record is not an object")
+                continue
+            if set(observation) != expected_supplemental_fields:
+                errors.append(f"Stage B supplemental {name} fields are not exact")
+            if observation.get("verdict") != "pass":
+                errors.append(f"Stage B supplemental {name} is not PASS")
+            if not nonempty_text(observation.get("reviewer")):
+                errors.append(f"Stage B supplemental {name} reviewer is missing")
+            if not _valid_stage_b_utc(observation.get("attested_utc")):
+                errors.append(f"Stage B supplemental {name} timestamp is not valid UTC")
+            if not nonempty_text(observation.get("observation")):
+                errors.append(f"Stage B supplemental {name} observation is missing")
+            errors.extend(_validate_stage_b_evidence(
+                observation.get("screenshots"), scenario=f"supplemental {name}",
+                kind="screenshot", required=True,
+            ))
+
+    if report.get("formal_ui_v02_frozen") is not True or report.get("frozen_ui_version") != "v0.2":
+        errors.append("Stage B does not attest a formal UI v0.2 freeze")
+    if report.get("week8_heldout_used") is not False:
+        errors.append("Stage B does not attest zero Week 8 held-out use")
+    return errors
 
 
 def safe_file(root: Path, rel: str | None) -> Path | None:
@@ -542,6 +757,93 @@ def verify_release_git(root: Path, commit: Any, tag: Any) -> tuple[list[str], di
         errors.append("cannot inspect Git worktree status")
     elif status.stdout.strip():
         errors.append("Git worktree is not clean")
+    return errors, observed
+
+
+def verify_stage_b_release_binding(
+    root: Path,
+    tested_commit: Any,
+    release_commit: Any,
+) -> tuple[list[str], dict[str, Any]]:
+    """Bind the tested UI checkpoint to a descendant documentation-only release."""
+    errors: list[str] = []
+    observed: dict[str, Any] = {
+        "tested_commit": tested_commit,
+        "release_commit": release_commit,
+        "changed_paths": [],
+        "protected_changed_paths": [],
+    }
+    if not isinstance(tested_commit, str) or re.fullmatch(r"[0-9a-f]{40}", tested_commit) is None:
+        errors.append("Stage B tested commit must be a full lowercase SHA-1 object ID")
+    if not isinstance(release_commit, str) or re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", release_commit) is None:
+        errors.append("release manifest commit must be a full lowercase Git object ID")
+    if errors:
+        return errors, observed
+
+    command = ["git", "-c", f"safe.directory={root.resolve().as_posix()}", "-C", str(root.resolve())]
+
+    def git(*args: str) -> subprocess.CompletedProcess[str] | None:
+        try:
+            return subprocess.run(
+                [*command, *args], capture_output=True, text=True, check=False, timeout=20
+            )
+        except (OSError, subprocess.SubprocessError) as exc:
+            errors.append(f"cannot execute Stage B Git binding verification: {exc}")
+            return None
+
+    def resolve(commit: str, label: str) -> str | None:
+        result = git("rev-parse", "--verify", f"{commit}^{{commit}}")
+        if result is None:
+            return None
+        if result.returncode != 0:
+            errors.append(f"cannot resolve {label}")
+            return None
+        resolved = result.stdout.strip().lower()
+        if re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", resolved) is None:
+            errors.append(f"invalid resolved object ID for {label}")
+            return None
+        return resolved
+
+    tested = resolve(tested_commit, "Stage B tested commit")
+    release = resolve(release_commit, "release manifest commit")
+    observed.update({"resolved_tested_commit": tested, "resolved_release_commit": release})
+    if tested is not None and tested != tested_commit:
+        errors.append("Stage B tested commit does not resolve to itself")
+    if release is not None and release != release_commit:
+        errors.append("release manifest commit does not resolve to itself")
+    if tested is None or release is None:
+        return errors, observed
+
+    ancestor = git("merge-base", "--is-ancestor", tested, release)
+    if ancestor is None:
+        return errors, observed
+    if ancestor.returncode != 0:
+        errors.append("Stage B tested commit is not an ancestor of the release manifest commit")
+        return errors, observed
+
+    changed = git("log", "--format=", "--name-only", "-z", f"{tested}..{release}", "--")
+    if changed is None:
+        return errors, observed
+    if changed.returncode != 0:
+        errors.append("cannot inspect changes after the Stage B tested commit")
+        return errors, observed
+    changed_paths = sorted({path.strip() for path in changed.stdout.split("\0") if path.strip()})
+    observed["changed_paths"] = changed_paths
+
+    def protected(path: str) -> bool:
+        if path in {"pyproject.toml", "requirements.txt"}:
+            return True
+        if any(path.startswith(prefix) for prefix in ("src/", "scripts/", "configs/", "tests/")):
+            return True
+        return path.startswith("ui/") and PurePosixPath(path).suffix.lower() != ".md"
+
+    protected_paths = [path for path in changed_paths if protected(path)]
+    observed["protected_changed_paths"] = protected_paths
+    if protected_paths:
+        errors.append(
+            "protected implementation/test/config paths changed after Stage B testing: "
+            + ", ".join(protected_paths)
+        )
     return errors, observed
 
 
@@ -1354,6 +1656,8 @@ class Audit:
 
         stage_b_path = safe_file(self.root, STAGE_B_VALIDATION_REL.as_posix())
         stage_b_errors: list[str] = []
+        stage_b: dict[str, Any] = {}
+        stage_b_binding: dict[str, Any] = {}
         if stage_b_path is None or not stage_b_path.is_file():
             stage_b_errors.append(f"missing {STAGE_B_VALIDATION_REL.as_posix()}")
         else:
@@ -1361,14 +1665,18 @@ class Audit:
                 stage_b = read_json(stage_b_path)
                 if not isinstance(stage_b, dict):
                     raise TypeError("Stage B validation must be a JSON object")
-                if stage_b.get("schema_version") != STAGE_B_VALIDATION_VERSION:
-                    stage_b_errors.append("unsupported Stage B validation schema_version")
-                if stage_b.get("manual_cases_accepted") != 5 or stage_b.get("formal_ui_v02_frozen") is not True:
-                    stage_b_errors.append("Stage B is not 5/5 accepted and frozen")
+                stage_b_errors.extend(validate_stage_b_validation_report(stage_b))
+                binding_errors, stage_b_binding = verify_stage_b_release_binding(
+                    self.root,
+                    stage_b.get("tested_release_commit"),
+                    release.get("release_commit"),
+                )
+                stage_b_errors.extend(binding_errors)
             except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
                 stage_b_errors.append(f"invalid Stage B validation: {exc}")
         self.add("strict_stage_b_acceptance", "BLOCK" if stage_b_errors else "PASS",
-                 "Tracked Stage B acceptance is 5/5 and UI v0.2 is frozen", errors=stage_b_errors)
+                 "Tracked Stage B acceptance is 5/5 and UI v0.2 is frozen",
+                 errors=stage_b_errors, observed=stage_b_binding)
 
         checklist_path = safe_file(self.root, RELEASE_CHECKLIST_REL.as_posix())
         signoff_ok = checklist_path is not None and checklist_path.is_file() and release.get("required_signoffs_complete") is True
