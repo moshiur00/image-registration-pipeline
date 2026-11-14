@@ -3,7 +3,7 @@
     "release_id":  "pre-week08-g5-20261114",
     "gate":  "G5",
     "status":  "frozen_phase6_source_enrollment_pending",
-    "generated_utc":  "2026-11-14T18:41:16Z",
+    "generated_utc":  "2026-11-14T18:53:33Z",
     "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
     "release_tag":  "pre-week08-g5-20261114",
     "clean_worktree":  true,
@@ -113,6 +113,22 @@
                             "real_week08_pixels_accessed":  false,
                             "real_week08_labels_accessed":  false
                         },
+    "strict_verification":  {
+                                "verified_utc":  "2026-11-14T18:53:33Z",
+                                "pass":  26,
+                                "warn":  0,
+                                "block":  3,
+                                "release_git_errors":  0,
+                                "stage_b_binding_errors":  0,
+                                "post_release_changed_paths":  [
+                                                                   "reports/pre_week08_release_manifest.json"
+                                                               ],
+                                "remaining_blocks":  [
+                                                         "heldout_source_independence",
+                                                         "strict_policy_config_analysis_hashes: missing Phase 6 holdout-source manifest and source-registration attestation",
+                                                         "strict_source_enrollment"
+                                                     ]
+                            },
     "limitations":  [
                         "G5 freezes the runnable release candidate but does not enroll or validate an independent source.",
                         "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
