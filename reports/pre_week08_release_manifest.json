@@ -1,0 +1,121 @@
+{
+    "schema_version":  "pre_week08_release_manifest_v1",
+    "release_id":  "pre-week08-g5-20261114",
+    "gate":  "G5",
+    "status":  "frozen_phase6_source_enrollment_pending",
+    "generated_utc":  "2026-11-14T18:41:16Z",
+    "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
+    "release_tag":  "pre-week08-g5-20261114",
+    "clean_worktree":  true,
+    "required_signoffs_complete":  true,
+    "reviewer":  {
+                     "name":  "Md Moshiur Rahman",
+                     "role":  "release reviewer",
+                     "decision":  "APPROVED",
+                     "attested_utc":  "2026-11-14T18:41:16Z"
+                 },
+    "stage_b_binding":  {
+                            "tested_release_commit":  "2cb75adef4e616b34f70d7697c781b23ab861174",
+                            "frozen_ui_version":  "v0.2",
+                            "formal_acceptance":  "5/5 scenarios and 5/5 supplemental checks",
+                            "protected_changes_after_tested_commit":  false
+                        },
+    "dependency_lock":  {
+                            "path":  "reports/pre_week08_dependency_lock.txt",
+                            "sha256":  "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
+                            "external_distribution_count":  55
+                        },
+    "environment_record":  {
+                               "path":  "reports/pre_week08_environment.json",
+                               "sha256":  "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239"
+                           },
+    "executable_inventory":  {
+                                 "path":  "reports/pre_week08_executable_inventory.json",
+                                 "sha256":  "b3ff6d78b5ad6cf418d85e69df08ae7fffae52bb0d588ecf03b9346cb682545a",
+                                 "tracked_python_files":  219,
+                                 "unexpected_additions_rejected":  true
+                             },
+    "evidence_archive":  {
+                             "path":  "deliverables/week07_frozen_evidence.zip",
+                             "sha256":  "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
+                             "manifest_path":  "reports/week07_evidence_archive_manifest.json",
+                             "manifest_sha256":  "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
+                             "file_count":  81
+                         },
+    "coverage_chains":  {
+                            "frozen_algorithms_and_configs":  "configs/week08_frozen_baseline.json binds 101 immutable files",
+                            "week7_evidence":  "reports/week07_evidence_archive_manifest.json binds 81 restored files",
+                            "runner_and_firewall":  "reports/pre_week08_phase3_evaluator.json plus explicit runner paths",
+                            "ui_release":  "reports/pre_week08_stage_b_validation.json plus executable inventory",
+                            "dependencies":  "exact lock, source requirement inputs, and environment record",
+                            "private_data_policy":  ".gitignore plus data/holdout/week08/README.md"
+                        },
+    "artifacts":  {
+                      ".gitignore":  "b08b992747d2f9106528c581b3778b62cc98b0f23f6f7231b778e7e63a9704bd",
+                      "README.md":  "51bdf1653521390771161fea0a72ba6bb323366baa15baaf84cdb2b3bee05a96",
+                      "configs/week07_day01_frozen_methods.yaml":  "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
+                      "configs/week08_final_evaluation.yaml":  "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
+                      "configs/week08_frozen_baseline.json":  "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
+                      "configs/week08_integrity_anchor.json":  "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3",
+                      "configs/week08_source_use_ledger.json":  "5af3b51dde06876af65e4892c3b6e344f5f1b5d308d341b90c7f330c00788ee3",
+                      "data/holdout/week08/README.md":  "032e6bae040491ab96af8b48d312496ff755c6a3900e13c42afd24fb343237b9",
+                      "deliverables/week07_frozen_evidence.zip":  "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
+                      "docs/PRE_WEEK08_INTEGRATION_PLAN.md":  "9f596e3ae81a7375cef91fb0c71f187a9a1de18ebf47908ff55a5cf880786060",
+                      "docs/PRE_WEEK08_RELEASE_CHECKLIST.md":  "a7a815acec4770a7f68a6aade3a9795076711fe2aa6a5983b81c33c3cd0cb496",
+                      "docs/WEEK08_EVALUATION_PREREGISTRATION.md":  "e34160a0c602a583e95e66819a35365b28e5562ccb5db6fbaab2846817a43912",
+                      "docs/WEEK08_HOLDOUT_PROTOCOL.md":  "2c3b01d87330c1e2963c76e57c8bf5deb0b37fa277f07ca277aefa766f930be7",
+                      "pyproject.toml":  "6489be331034a07a713c537e1bd7d8d8b83711da46ad1a3b8ac30065f2795d0b",
+                      "reports/pre_week08_dependency_lock.txt":  "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
+                      "reports/pre_week08_environment.json":  "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239",
+                      "reports/pre_week08_executable_inventory.json":  "b3ff6d78b5ad6cf418d85e69df08ae7fffae52bb0d588ecf03b9346cb682545a",
+                      "reports/pre_week08_phase2_integrity.json":  "8212f9cb0215970dd747e189384a3ec498dfaa6327b37e965e7654ff4588420a",
+                      "reports/pre_week08_phase3_evaluator.json":  "a8415e45d5ed631782b8606a1af34c6502aa688d1068dfaa595ac5e177a44000",
+                      "reports/pre_week08_stage_b_validation.json":  "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+                      "reports/pre_week08_validation.json":  "9552af8a98c18ba2f77f4e8f44e22c38971753d8bcfb7c083f097036e5d55cd3",
+                      "reports/progress_registry.json":  "20f166c8fa50a407608aae7396caafb9c2ba04aa84e18bfc84a9054f3e412ace",
+                      "reports/week07_evidence_archive_manifest.json":  "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
+                      "requirements.txt":  "8c92163ca11180f6b981273a77e7acdb119ce8724528ba27d2b2cd53c7d2672e",
+                      "scripts/week08_final_evaluation.py":  "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b",
+                      "scripts/week08_preflight.py":  "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1",
+                      "scripts/week08_prepare_holdout.py":  "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be",
+                      "src/image_registration/week7_calibration.py":  "44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c",
+                      "src/image_registration/week8_evaluation.py":  "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
+                      "tests/test_week7_day34_offline_calibration.py":  "1c8760aac6c0418358ab34515363f9c25a6234892f9db80c4eb12ec384c692ad",
+                      "tests/test_week08_final_evaluation.py":  "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
+                      "tests/test_week08_phase3_cli.py":  "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c",
+                      "tests/test_week08_preflight.py":  "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762",
+                      "ui/DEVELOPMENT_STAGES.md":  "49152deb1e0e2cd7c3d31168725788783b3f1740095f08d16987e77255f199d8",
+                      "ui/README.md":  "562cfb2ad4872e2b452c9a6427455f3e712e550d607fd1d6f8d0cc9b267f75dd",
+                      "ui/evidence/pre_week08_stage_b_acceptance.md":  "30b4db58fa1e883c38802178eb75d13fbff78c3601104e4e72766ba15b2a6202",
+                      "ui/qa/stage_b_acceptance.py":  "3dd50fd1af7f37d6dd5e9590579e1949c76471a891b623c61b1340cdd6fe625f",
+                      "ui/requirements.txt":  "b94947742a224e2b8b0501f9a6fd86384c5183b9b7e125617cfe20143ab8ad60",
+                      "ui/streamlit_app.py":  "61d4df5b6b6edf9a0b10467c231e181454f664ca9b8460a877c47191aa0697b1",
+                      "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json":  "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93"
+                  },
+    "phase6_pending_artifacts":  [
+                                     "data/manifests/week08_holdout_sources.json",
+                                     "reports/pre_week08_source_registration.json"
+                                 ],
+    "post_release_metadata_allowlist":  [
+                                            "configs/week08_source_use_ledger.json",
+                                            "data/manifests/week08_holdout_sources.json",
+                                            "reports/pre_week08_source_registration.json",
+                                            "reports/pre_week08_release_manifest.json"
+                                        ],
+    "final_readiness":  {
+                            "authorized":  false,
+                            "expected_remaining_blocks":  [
+                                                              "heldout_source_independence",
+                                                              "strict_policy_config_analysis_hashes for the two Phase 6 artifacts",
+                                                              "strict_source_enrollment"
+                                                          ],
+                            "week08_benchmark_executed":  false,
+                            "real_week08_pixels_accessed":  false,
+                            "real_week08_labels_accessed":  false
+                        },
+    "limitations":  [
+                        "G5 freezes the runnable release candidate but does not enroll or validate an independent source.",
+                        "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
+                        "Phase 6 must update only allowed metadata and must not decode held-out pixels or labels before G7 passes."
+                    ]
+}
