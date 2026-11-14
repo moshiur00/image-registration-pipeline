@@ -2,8 +2,8 @@
     "schema_version":  "pre_week08_release_manifest_v1",
     "release_id":  "pre-week08-g5-20261114",
     "gate":  "G5",
-    "status":  "frozen_phase6_source_enrollment_pending",
-    "generated_utc":  "2026-11-14T18:53:33Z",
+    "status":  "source_enrolled_phase7_review_pending",
+    "generated_utc":  "2026-11-14T19:23:43Z",
     "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
     "release_tag":  "pre-week08-g5-20261114",
     "clean_worktree":  true,
@@ -57,8 +57,9 @@
                       "configs/week08_final_evaluation.yaml":  "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
                       "configs/week08_frozen_baseline.json":  "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
                       "configs/week08_integrity_anchor.json":  "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3",
-                      "configs/week08_source_use_ledger.json":  "5af3b51dde06876af65e4892c3b6e344f5f1b5d308d341b90c7f330c00788ee3",
+                      "configs/week08_source_use_ledger.json":  "88fbc108b93c81d9041862cf31ab75ae8b291f4c4f3df91d1005c19c4b978dbb",
                       "data/holdout/week08/README.md":  "032e6bae040491ab96af8b48d312496ff755c6a3900e13c42afd24fb343237b9",
+                      "data/manifests/week08_holdout_sources.json":  "b84612a30abfb7c4e360cb20b4b278fac102960a5347c8bfe621a3b112bfd0cf",
                       "deliverables/week07_frozen_evidence.zip":  "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
                       "docs/PRE_WEEK08_INTEGRATION_PLAN.md":  "9f596e3ae81a7375cef91fb0c71f187a9a1de18ebf47908ff55a5cf880786060",
                       "docs/PRE_WEEK08_RELEASE_CHECKLIST.md":  "a7a815acec4770a7f68a6aade3a9795076711fe2aa6a5983b81c33c3cd0cb496",
@@ -71,6 +72,7 @@
                       "reports/pre_week08_phase2_integrity.json":  "8212f9cb0215970dd747e189384a3ec498dfaa6327b37e965e7654ff4588420a",
                       "reports/pre_week08_phase3_evaluator.json":  "a8415e45d5ed631782b8606a1af34c6502aa688d1068dfaa595ac5e177a44000",
                       "reports/pre_week08_stage_b_validation.json":  "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+                      "reports/pre_week08_source_registration.json":  "d191a3e9624f256c4320e854c43bfe6dd408aa31750432acf12c477aa2b001e8",
                       "reports/pre_week08_validation.json":  "9552af8a98c18ba2f77f4e8f44e22c38971753d8bcfb7c083f097036e5d55cd3",
                       "reports/progress_registry.json":  "20f166c8fa50a407608aae7396caafb9c2ba04aa84e18bfc84a9054f3e412ace",
                       "reports/week07_evidence_archive_manifest.json":  "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
@@ -92,10 +94,7 @@
                       "ui/streamlit_app.py":  "61d4df5b6b6edf9a0b10467c231e181454f664ca9b8460a877c47191aa0697b1",
                       "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json":  "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93"
                   },
-    "phase6_pending_artifacts":  [
-                                     "data/manifests/week08_holdout_sources.json",
-                                     "reports/pre_week08_source_registration.json"
-                                 ],
+    "phase6_pending_artifacts":  [],
     "post_release_metadata_allowlist":  [
                                             "configs/week08_source_use_ledger.json",
                                             "data/manifests/week08_holdout_sources.json",
@@ -104,34 +103,60 @@
                                         ],
     "final_readiness":  {
                             "authorized":  false,
-                            "expected_remaining_blocks":  [
-                                                              "heldout_source_independence",
-                                                              "strict_policy_config_analysis_hashes for the two Phase 6 artifacts",
-                                                              "strict_source_enrollment"
-                                                          ],
+                            "expected_remaining_blocks":  [],
+                            "release_reviewer_approval_pending":  true,
                             "week08_benchmark_executed":  false,
                             "real_week08_pixels_accessed":  false,
                             "real_week08_labels_accessed":  false
                         },
-    "strict_verification":  {
-                                "verified_utc":  "2026-11-14T18:53:33Z",
-                                "pass":  26,
-                                "warn":  0,
-                                "block":  3,
-                                "release_git_errors":  0,
-                                "stage_b_binding_errors":  0,
-                                "post_release_changed_paths":  [
-                                                                   "reports/pre_week08_release_manifest.json"
-                                                               ],
-                                "remaining_blocks":  [
-                                                         "heldout_source_independence",
-                                                         "strict_policy_config_analysis_hashes: missing Phase 6 holdout-source manifest and source-registration attestation",
-                                                         "strict_source_enrollment"
-                                                     ]
-                            },
+    "phase6_enrollment":  {
+                               "gate":  "G6",
+                               "status":  "PASS",
+                               "source_id":  "nasa_pia18033_earth",
+                               "source_sha256":  "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
+                               "canonical_source_id":  "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
+                               "ground_truth_route":  "synthetic_created_after_freeze",
+                               "release_freeze_id":  "pre-week08-g5-20261114",
+                               "custodian":  {
+                                                 "name":  "Md Moshiur Rahman",
+                                                 "role":  "data custodian and provenance reviewer",
+                                                 "decision":  "APPROVED",
+                                                 "attested_utc":  "2026-11-14T19:18:16Z"
+                                             },
+                               "ledger_sha256":  "88fbc108b93c81d9041862cf31ab75ae8b291f4c4f3df91d1005c19c4b978dbb",
+                               "holdout_manifest_sha256":  "b84612a30abfb7c4e360cb20b4b278fac102960a5347c8bfe621a3b112bfd0cf",
+                               "source_registration_sha256":  "d191a3e9624f256c4320e854c43bfe6dd408aa31750432acf12c477aa2b001e8",
+                               "validation":  {
+                                                  "provenance_license_canonical_identity":  "PASS",
+                                                  "prior_use_and_lineage_collision":  "PASS",
+                                                  "ground_truth_contract":  "PASS",
+                                                  "post_freeze_path_allowlist":  "PASS",
+                                                  "metadata_only":  true,
+                                                  "source_bytes_hashed":  true,
+                                                  "source_pixels_decoded":  false,
+                                                  "source_labels_accessed":  false,
+                                                  "strict_final_readiness":  "PENDING_CLEAN_G6_COMMIT"
+                                              }
+                           },
+    "g5_strict_verification":  {
+                                   "verified_utc":  "2026-11-14T18:53:33Z",
+                                   "pass":  26,
+                                   "warn":  0,
+                                   "block":  3,
+                                   "release_git_errors":  0,
+                                   "stage_b_binding_errors":  0,
+                                   "post_release_changed_paths":  [
+                                                                      "reports/pre_week08_release_manifest.json"
+                                                                  ],
+                                   "remaining_blocks":  [
+                                                            "heldout_source_independence",
+                                                            "strict_policy_config_analysis_hashes: missing Phase 6 holdout-source manifest and source-registration attestation",
+                                                            "strict_source_enrollment"
+                                                        ]
+                               },
     "limitations":  [
-                        "G5 freezes the runnable release candidate but does not enroll or validate an independent source.",
+                        "G6 enrolls one independently reviewed source; this single-source design limits generalizability.",
                         "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
-                        "Phase 6 must update only allowed metadata and must not decode held-out pixels or labels before G7 passes."
+                        "The holdout source remains unopened and undecoded; G7 human authorization is still required before any pixel or label access."
                     ]
 }
