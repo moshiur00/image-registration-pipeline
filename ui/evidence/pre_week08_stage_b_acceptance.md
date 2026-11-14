@@ -1,8 +1,8 @@
 # Pre-Week 8 Stage B: UI Acceptance and Freeze Checklist
 
-**Status: ATTESTATION V2 IMPLEMENTED, AUTOMATED QA PASSED, HUMAN WINDOWS QA PENDING (0/5 SCENARIOS + 0/5 SUPPLEMENTAL).**
+**Status: MANUALLY ACCEPTED (5/5 SCENARIOS + 5/5 SUPPLEMENTAL); UI v0.2 FROZEN.**
 
-This stage validates the existing UI v0.2 Automatic Comparison Preview. It does not introduce method ranking, deploy the Day 34 policy, or approve the Week 8 evaluation. UI v0.2 is a **release candidate**, not formally frozen, until every manual interaction below has been observed and documented on the target Windows environment.
+This stage validates the existing UI v0.2 Automatic Comparison Preview. It does not introduce method ranking, deploy the Day 34 policy, or approve the Week 8 evaluation. Every required interaction below was observed and documented on the target Windows environment; the accepted UI v0.2 scope is formally frozen.
 
 ## Protection and test boundaries
 
@@ -145,9 +145,11 @@ and the three recorded DEFERRED scope decisions:
 - Confirm the Stage A frozen-source and Week 7 evidence preflight still passes its corresponding checks. A BLOCK for an unregistered independent Week 8 source remains legitimate.
 - Only after every scenario and supplemental check passes, update `ui/DEVELOPMENT_STAGES.md`, `ui/README.md`, and the progress registry to **UI v0.2 FROZEN**. Do not freeze the UI based on the test suite alone.
 
-**Current decision (2026-11-13):** The hardened evidence contract is ready and
-its 30 focused tests pass. Human acceptance and formal freeze remain pending at
-0/5 scenarios and 0/5 supplemental checks. Stage C Research Evidence,
-interactive RIRE expansion, and the dormant
-recommendation display path are DEFERRED. Week 8 held-out data has not been
-opened for these QA fixtures.
+**Current decision (2026-11-14):** The hardened evidence contract and its 30
+focused tests pass. Named reviewer Md Moshiur Rahman accepted 5/5 scenarios and
+5/5 supplemental checks on Windows against tested commit
+`2cb75adef4e616b34f70d7697c781b23ab861174`. The sanitized report is
+`reports/pre_week08_stage_b_validation.json`, and UI v0.2 is formally frozen.
+Stage C Research Evidence, interactive RIRE expansion, and the dormant
+recommendation display path are DEFERRED. Week 8 held-out data was not opened
+for these QA fixtures and the Week 8 benchmark has not run.

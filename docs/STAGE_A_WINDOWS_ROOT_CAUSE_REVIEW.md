@@ -1,12 +1,13 @@
 # Stage A Windows root-cause review
 
-> **Superseding status - 13 November 2026:** The current Windows regression is
+> **Superseding status - 14 November 2026:** The current Windows regression is
 > green (702 backend passed, 3 expected skips; 179 UI passed), and the path
 > compatibility failures described here no longer reproduce. Stage A remains
-> **not accepted** because the independent-source gate is BLOCKED. The final
+> **not final-ready** because the independent-source gate is BLOCKED. The final
 > evaluator/decision-before-label contract is now implemented and verified.
-> Stage B attestation v2 exists, but human acceptance is 0/5 plus 0/5
-> supplemental checks and UI v0.2 is not frozen.
+> Stage B is accepted at 5/5 scenarios plus 5/5 supplemental checks, and UI
+> v0.2 is frozen. Phase 5 release binding and the later source/signoff gates
+> remain incomplete.
 
 ## Exact error
 
@@ -38,6 +39,7 @@ Previous Stage A builds passed tests on POSIX but the authoritative Windows reru
 Stop changing the Week 7 registration algorithms and Day 34 policy. Complete Stage A's Windows compatibility checks, then prioritize a small UI acceptance pass and a frozen Week 8 evaluation protocol. Defer user-facing confidence percentages and automatic cross-model recommendations until independent evaluation supports them.
 
 The compatibility-check action in that dated recommendation is now complete.
-The remaining recommendation still applies: preserve the frozen Week 7 work,
-finish the Stage B manual gate, and implement/freeze the Week 8 evaluator and
-label firewall before any independent-source bytes are made accessible.
+The remaining recommendation still applies: preserve the frozen Week 7 work
+and complete the Phase 5 release-candidate binding before any independent-source
+bytes are made accessible. The Stage B manual gate and evaluator label firewall
+are now complete.

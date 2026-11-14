@@ -212,11 +212,13 @@ frozen Week 7 evidence files. The preflight commands are metadata/byte-hash
 only. The non-dry development command writes
 `outputs/week08_preflight/preflight_report.json`; any `BLOCK` returns exit code
 1. Development mode currently reports 18 PASS / 1 BLOCK; the sole block is the
-intentionally empty `week08_sources` enrollment. The tracked G3 evidence and
-metadata-only runner probe pass. Strict mode reports 18 PASS / 11 BLOCK on the
-expected later release identity, validation, Stage B acceptance,
-dependency/environment, source, signoff, and clean-restoration prerequisites.
-A `WARN` can never qualify as strict final readiness.
+intentionally empty `week08_sources` enrollment. The tracked G3 evidence,
+metadata-only runner probe, and Stage B human acceptance report pass. Strict
+mode still reports 18 PASS / 11 BLOCK because Phase 5 has not yet bound a full
+release commit and the later dependency/environment, source, signoff, and
+clean-restoration prerequisites remain absent. The Stage B report itself is
+valid; its strict check awaits the Phase 5 release-manifest commit binding. A
+`WARN` can never qualify as strict final readiness.
 
 Strict mode recognizes the release contracts
 `pre_week08_release_manifest_v1`, `pre_week08_validation_v1`, and

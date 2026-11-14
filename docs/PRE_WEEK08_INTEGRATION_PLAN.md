@@ -1,8 +1,8 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 4 IN PROGRESS; HUMAN WINDOWS ACCEPTANCE PENDING
-**Revision date:** 2026-11-13
+**Status:** ACTIVE PLAN - PHASE 4 PASSED; PHASE 5 RELEASE-CANDIDATE FREEZE NEXT
+**Revision date:** 2026-11-14
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
 ### 1. Purpose and final objective
@@ -114,6 +114,19 @@ regression is 702 backend passed / 3 expected skips and 179 UI passed.
 Development preflight remains 18 PASS / 1 BLOCK and strict preflight 18 PASS /
 11 BLOCK. Scope decisions are all DEFERRED. Human status remains 0/5 scenarios
 and 0/5 supplemental checks, so G4 and UI v0.2 remain blocked/not frozen.
+
+#### 3.5 Phase 4 acceptance checkpoint (14 November 2026)
+
+Named Windows reviewer Md Moshiur Rahman completed and attested all five Stage
+B scenarios and all five supplemental checks against tested commit
+`2cb75adef4e616b34f70d7697c781b23ab861174`. Runtime-local screenshots and ZIP
+artifacts were revalidated by SHA-256 and size. The sanitized tracked record is
+`reports/pre_week08_stage_b_validation.json`; it records 702 backend tests
+passed with three expected skips, 179 UI tests passed, 5/5 scenario acceptance,
+5/5 supplemental acceptance, and `formal_ui_v02_frozen=true`. Stage C Research
+Evidence, interactive RIRE expansion, and the recommendation display path are
+all DEFERRED. G4 is PASSED and UI v0.2 is frozen. Week 8 held-out data was not
+used and the benchmark has not run.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -423,7 +436,7 @@ Report:
 
 ### 11. Phase 4 - Stage B UI acceptance and final UI scope
 
-**Status:** IN PROGRESS; attestation hardening complete, blocked at 0/5 scenarios + 0/5 supplemental human checks
+**Status:** PASSED; 5/5 scenarios + 5/5 supplemental checks accepted; UI v0.2 frozen
 **Priority:** P0
 **Owner:** developer for harness; human Windows operator/reviewer for attestation.
 
@@ -459,9 +472,10 @@ Keep private screenshots, uploads, and ZIPs under ignored ui/runtime/; publish a
 
 #### 11.2 Execute and attest
 
-**Status:** PENDING. No human scenario has been recorded. Computer-use
-automation was unavailable in the current session before any app interaction;
-this is not being substituted for the required human Windows attestation.
+**Status (2026-11-14): COMPLETE.** Named reviewer Md Moshiur Rahman completed
+the Windows walkthrough against the exact tested commit. All ten required
+records are PASS with hashed runtime-local screenshot/ZIP evidence. The earlier
+computer-use initialization failure was not substituted for human review.
 
 Pass all five current scenarios:
 
@@ -501,6 +515,10 @@ tracked validation report after human acceptance.
 - full suites have zero failures;
 - all scope decisions are explicit;
 - UI v0.2 is formally frozen, or v0.2.1 is frozen if Stage C was included.
+
+**G4 result (2026-11-14): PASSED.** Evidence:
+`reports/pre_week08_stage_b_validation.json`. UI v0.2 is frozen; all optional
+scope decisions remain DEFERRED.
 
 ### 12. Phase 5 - release-candidate freeze
 
@@ -814,7 +832,7 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G1 Reconcile/checkpoint | PASSED | `reports/pre_week08_phase1_checkpoint.json`; recoverable checkpoint commit contains the reconciled Stage A/B package |
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
 | G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 132 current focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
-| G4 UI acceptance/scope | BLOCKED | Attestation v2 and strict validator implemented; 0/5 scenarios plus 0/5 supplemental checks; UI v0.2 not frozen |
+| G4 UI acceptance/scope | PASSED | `reports/pre_week08_stage_b_validation.json`; 5/5 scenarios plus 5/5 supplemental checks; UI v0.2 frozen; optional scope DEFERRED |
 | G5 Release-candidate freeze | NOT STARTED | Checklist, manifest, lock, clean tag absent |
 | G6 Source enrollment | BLOCKED | week08_sources is empty |
 | G7 Final readiness/execution | BLOCKED | Depends on G4-G6 and the remaining strict release/readiness prerequisites |
@@ -853,18 +871,15 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. A named human Windows reviewer executes and signs the five Stage B scenarios
-   and five supplemental observations against the checkpoint commit.
-2. Generate the sanitized tracked Stage B validation report only after all ten
-   observations pass; then freeze UI v0.2. The optional UI scope is already
-   recorded as DEFERRED.
-3. Prepare the Phase 5 release checklist, dependency/environment record,
+1. Prepare the Phase 5 release checklist, dependency/environment record,
    validation report, clean-restoration evidence, and immutable
    release-candidate tag.
-4. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
+2. Bind the Stage B tested commit and the resulting release commit in the
+   Phase 5 release manifest without changing protected implementation paths.
+3. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
 
 **Current boundary:** This revision records completed Phase 3 evaluator and
-firewall controls plus Phase 4 attestation/preflight hardening. It does not
-impersonate a human reviewer, procure or enroll data, open real heldout pixels
-or labels, modify frozen algorithms/policy, complete manual UI acceptance,
-freeze a release candidate, or run Week 8.
+firewall controls plus completed Phase 4 human UI acceptance and UI v0.2 scope
+freeze. It does not procure or enroll data, open real heldout pixels or labels,
+modify frozen algorithms/policy, complete the Phase 5 repository-wide release
+freeze, or run Week 8.

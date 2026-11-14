@@ -1,0 +1,311 @@
+{
+  "acceptance_record_schema": "ui-stage-b-acceptance-v2",
+  "automated_validation": {
+    "backend": {
+      "failed": 0,
+      "passed": 702,
+      "skipped": 3
+    },
+    "ui": {
+      "failed": 0,
+      "passed": 179,
+      "skipped": 0
+    }
+  },
+  "fixture_manifest_sha256": "259f9b45914f7322c8a15dc817b2a88af62e02de77e65d850cf8627f444f7f39",
+  "formal_ui_v02_frozen": true,
+  "frozen_ui_version": "v0.2",
+  "full_regression_zero_failures": true,
+  "limitations": "Manual acceptance alone does not establish Week 8 benchmark readiness or scientific calibration.",
+  "manual_cases_accepted": 5,
+  "manual_cases_total": 5,
+  "manual_status": "MANUALLY_ACCEPTED",
+  "scenarios": {
+    "export_provenance": {
+      "attested_utc": "2026-11-14T12:44:13.510642+00:00",
+      "observation": "The prepared analysis ZIP contained all required JSON, CSV, README, and per-candidate evidence files. Input hashes matched the fixture manifest; source bytes were excluded; ground truth was unavailable; recommendation remained deferred; direction was Moving -> Fixed; inspection outputs were labeled INSPECTION_ONLY; and no calibrated winner or geometric-accuracy claim appeared.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b4/b4_paired_after_automatic_comparison_after_prepare_zip_4.png",
+          "sha256": "010c39610d9cfe0792a35bafa725b8abda0e8e8bf9134a8ee96284058aad46bd",
+          "size_bytes": 26681
+        }
+      ],
+      "verdict": "pass",
+      "zips": [
+        {
+          "reference": "b4/ui-auto-4f898830f3fe7a6279ac_automatic_analysis.zip",
+          "sha256": "e2ece30007407d8b316233224439a4ed95cb8180c9c67e400e58a2bc70c88efd",
+          "size_bytes": 827132
+        }
+      ]
+    },
+    "failed_check": {
+      "attested_utc": "2026-11-14T11:49:04.172736+00:00",
+      "observation": "Flat Monomodal Affine input produced four visible Failed candidates. The comparison table retained all candidates; execution issues and per-candidate panels showed failure reasons and diagnostics; the UI explained that no estimated transform or registered output was available; candidate_execution_issues.csv preserved all four failures.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b3/b3_compatibility_1.png",
+          "sha256": "0b847aaa59dc6688faafbb3a14001e28a7c468b95f0ab44dcc3f51dd2e132722",
+          "size_bytes": 82471
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_4.png",
+          "sha256": "9f088b38e17442bb0018e4251fc094c919506afbb0ac826a09c9ad295491ad3a",
+          "size_bytes": 74205
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_6.png",
+          "sha256": "629bb5499657541fafbccaa12cc93770396ff95bb1568dc5f077515f94533321",
+          "size_bytes": 84762
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_7.png",
+          "sha256": "b5136b54e2991d6896324931db54b6bbec8bcf9a6c2b7405466a977a289a65b4",
+          "size_bytes": 101738
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_8.png",
+          "sha256": "44302e43753714809ea2f79be5aeebfb1ed55477ce69131b528b973fc63565ec",
+          "size_bytes": 66639
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_candiadate_inspection_9.png",
+          "sha256": "72129e94f9ef4542276bf3b03a0999a9797fa629f27446078f604ebf1d32399c",
+          "size_bytes": 61613
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_candidate_inspection_10.png",
+          "sha256": "d1f907742f0cd8296255d88dc95f42e47295d63278117dbefa69fda627107230",
+          "size_bytes": 71516
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_candidate_inspection_11.png",
+          "sha256": "631ccd56240da287b7c518d469781a9383a460d81c997769f078757b0af89bbd",
+          "size_bytes": 63663
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_candidate_inspection_12.png",
+          "sha256": "7feccc7d3556ecf7ff01ea78fa3e20d35f141b99c4e71e42ed0aeae223ac8716",
+          "size_bytes": 71088
+        }
+      ],
+      "verdict": "pass",
+      "zips": [
+        {
+          "reference": "b3/ui-auto-2857408b16a17df592e0_automatic_analysis.zip",
+          "sha256": "06ad0632296286474706c63a410839e92851fa264ad8b3ca32d0787caf2cd8b4",
+          "size_bytes": 10606
+        }
+      ]
+    },
+    "multimodal": {
+      "attested_utc": "2026-11-14T11:32:25.873422+00:00",
+      "observation": "Multimodal Affine exposed only Mattes MI Affine 2D; execution completed; ground truth remained unavailable; TRE, parameter error, geometric correctness, a best method, and calibrated confidence were not claimed.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b1/b1_compatibility.png",
+          "sha256": "7219f7e8c0b03660452ff477612f7f28f2f292846f90d5126f8eac9807909b51",
+          "size_bytes": 301395
+        },
+        {
+          "reference": "b1/b1_compatibility_2.png",
+          "sha256": "439ae0b2d92ec2ca4cef470a355d461184c0b5f4798af06b5eb894b5c67c1ed5",
+          "size_bytes": 125119
+        },
+        {
+          "reference": "b1/b1_after_automatic_comparison_1.png",
+          "sha256": "54bee93f3d6cc91422eb9a856958f5c34396bb29b843d10167376c5dab0cf2eb",
+          "size_bytes": 51604
+        },
+        {
+          "reference": "b1/b1_after_automatic_comparison_2.png",
+          "sha256": "eeaafb07de34032502aa7a0bd21fb50da26693b953dd0c298c51c5d278aff107",
+          "size_bytes": 85364
+        },
+        {
+          "reference": "b1/b1_after_automatic_comparison_3.png",
+          "sha256": "d708dc79213771db86d736af6e0c4cdbb45f64f868c89733b392ea521e796bb0",
+          "size_bytes": 135113
+        }
+      ],
+      "verdict": "pass",
+      "zips": []
+    },
+    "single_candidate": {
+      "attested_utc": "2026-11-14T11:33:58.849035+00:00",
+      "observation": "The sole eligible Mattes MI Affine candidate completed. The UI reported insufficient eligible transforms with zero pairwise comparisons and no consensus anchor. The reviewer inspected analysis.json and confirmed eligible_count=1, pairwise_count=0, status=insufficient_candidates, consensus_anchor values null, and final_recommendation null.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b1/b1_after_automatic_comparison_2.png",
+          "sha256": "eeaafb07de34032502aa7a0bd21fb50da26693b953dd0c298c51c5d278aff107",
+          "size_bytes": 85364
+        },
+        {
+          "reference": "b1/b1_after_automatic_comparison_3.png",
+          "sha256": "d708dc79213771db86d736af6e0c4cdbb45f64f868c89733b392ea521e796bb0",
+          "size_bytes": 135113
+        }
+      ],
+      "verdict": "pass",
+      "zips": [
+        {
+          "reference": "b1/ui-auto-259f636abee2e4f42931_automatic_analysis.zip",
+          "sha256": "b5b7fcf951321139b4182d2226123ddf6739d34bf8a287448f1d0da29e1f01c9",
+          "size_bytes": 215773
+        }
+      ]
+    },
+    "stale_state": {
+      "attested_utc": "2026-11-14T12:38:08.363339+00:00",
+      "observation": "For paired Monomodal Affine input, a prepared download was visible. Changing Gaussian smoothing invalidated prior results and export. After rerunning and preparing a new ZIP, replacing Moving with altered_moving.png cleared results and export. Removing Moving also cleared candidate state and export while retaining a usable upload prompt.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b4/b4_1.png",
+          "sha256": "b5932360086e6c9f12a6fbb3126a6242f9fc9bae5427212f56770b8651e3ec60",
+          "size_bytes": 287654
+        },
+        {
+          "reference": "b4/b4_3.png",
+          "sha256": "df9f9a7d57a7bd7e9edf7dcd2796ea73365c1753e3a69d99025063a9ee80f67e",
+          "size_bytes": 26397
+        },
+        {
+          "reference": "b4/b4_4.png",
+          "sha256": "a6a1ff78d7eec4b5cb328bd0ba96a20c4b80979572a02113b7896c39ac8f5b75",
+          "size_bytes": 85557
+        },
+        {
+          "reference": "b4/b4_paired_1.png",
+          "sha256": "09b9c2333cd50ced428f32e6fa524a95250d6fdc72656656d3b6916d0cf89def",
+          "size_bytes": 291189
+        },
+        {
+          "reference": "b4/b4_paired_after_automatic_comparison_after_prepare_zip_4.png",
+          "sha256": "010c39610d9cfe0792a35bafa725b8abda0e8e8bf9134a8ee96284058aad46bd",
+          "size_bytes": 26681
+        },
+        {
+          "reference": "b4/b4_paired_to_after_uploading_altered_10.png",
+          "sha256": "90b8a00920213cc5d6cba466c94e0ad3637743be6c31af4e1746c5a8051c1efa",
+          "size_bytes": 201778
+        },
+        {
+          "reference": "b4/b4_after_removing_moving_image_6.png",
+          "sha256": "cfb5325dbe33958e5448e6cde77998d289b27d43711f368d340b3dbc3508ca05",
+          "size_bytes": 75973
+        }
+      ],
+      "verdict": "pass",
+      "zips": [
+        {
+          "reference": "b4/ui-auto-4f898830f3fe7a6279ac_automatic_analysis.zip",
+          "sha256": "e2ece30007407d8b316233224439a4ed95cb8180c9c67e400e58a2bc70c88efd",
+          "size_bytes": 827132
+        }
+      ]
+    }
+  },
+  "schema_version": "pre_week08_stage_b_validation_v1",
+  "scope_decisions": {
+    "interactive_rire_expansion": "DEFERRED",
+    "recommendation_display_path": "DEFERRED",
+    "stage_c_research_evidence": "DEFERRED"
+  },
+  "stage": "pre_week08_stage_b_ui_acceptance",
+  "supplemental_checks_accepted": 5,
+  "supplemental_checks_total": 5,
+  "supplemental_observations": {
+    "candidate_inspection_labels": {
+      "attested_utc": "2026-11-14T12:47:24.889851+00:00",
+      "observation": "Completed and Failed candidates were labeled consistently in tables, selectors, and inspection panels; failed candidates retained reasons and diagnostics, and unavailable visual output was explained.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b1/b1_after_automatic_comparison_3.png",
+          "sha256": "d708dc79213771db86d736af6e0c4cdbb45f64f868c89733b392ea521e796bb0",
+          "size_bytes": 135113
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_candiadate_inspection_9.png",
+          "sha256": "72129e94f9ef4542276bf3b03a0999a9797fa629f27446078f604ebf1d32399c",
+          "size_bytes": 61613
+        }
+      ],
+      "verdict": "pass"
+    },
+    "no_frozen_location_writes": {
+      "attested_utc": "2026-11-14T12:55:24.627417+00:00",
+      "observation": "After the witnessed UI walkthrough, dry-run preflight validated 101/101 immutable sources, 81/81 Week 7 evidence files, and frozen evidence hashes; Git reported a clean worktree at the exact reviewed HEAD. The only development preflight block was the expected unenrolled held-out source, unrelated to UI writes.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b4/b4_paired_1.png",
+          "sha256": "09b9c2333cd50ced428f32e6fa524a95250d6fdc72656656d3b6916d0cf89def",
+          "size_bytes": 291189
+        }
+      ],
+      "verdict": "pass"
+    },
+    "normal_monomodal": {
+      "attested_utc": "2026-11-14T12:47:22.081761+00:00",
+      "observation": "The paired Monomodal Affine comparison completed and reached the export-ready state while retaining unknown-ground-truth and no-recommendation limits.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b4/b4_paired_1.png",
+          "sha256": "09b9c2333cd50ced428f32e6fa524a95250d6fdc72656656d3b6916d0cf89def",
+          "size_bytes": 291189
+        },
+        {
+          "reference": "b4/b4_paired_after_automatic_comparison_3.png",
+          "sha256": "538df4abfdc5b512129367ceed552000163ae32061bbabf26e75780d29f889e5",
+          "size_bytes": 23877
+        }
+      ],
+      "verdict": "pass"
+    },
+    "rire_technical_only_caveat": {
+      "attested_utc": "2026-11-14T12:55:22.847754+00:00",
+      "observation": "The RIRE CT/MR-T1 panel visibly states that verified landmarks are not integrated, reports technical physical-space evidence only, and does not claim TRE, Dice, or anatomical correctness.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "supplemental/rire_technical_only.png",
+          "sha256": "4c09a0e424db90a166894e8388caffadabaeb670171bb0595be0ef34a1293480",
+          "size_bytes": 39148
+        }
+      ],
+      "verdict": "pass"
+    },
+    "unknown_upload_claim_suppression": {
+      "attested_utc": "2026-11-14T12:47:23.441762+00:00",
+      "observation": "Unknown uploaded inputs showed ground truth unavailable and explicitly suppressed TRE, parameter error, geometric PASS or correctness, calibrated confidence, and recommendation claims.",
+      "reviewer": "Md Moshiur Rahman",
+      "screenshots": [
+        {
+          "reference": "b1/b1_after_automatic_comparison_1.png",
+          "sha256": "54bee93f3d6cc91422eb9a856958f5c34396bb29b843d10167376c5dab0cf2eb",
+          "size_bytes": 51604
+        },
+        {
+          "reference": "b3/b3_after_automatic_comparison_7.png",
+          "sha256": "b5136b54e2991d6896324931db54b6bbec8bcf9a6c2b7405466a977a289a65b4",
+          "size_bytes": 101738
+        }
+      ],
+      "verdict": "pass"
+    }
+  },
+  "target": {
+    "environment": ".venv; Python 3.14.2; Streamlit 1.66.1; SimpleITK 2.5.6",
+    "platform": "Windows x64 25H2 build 26200.9974"
+  },
+  "tested_release_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
+  "week8_heldout_used": false
+}

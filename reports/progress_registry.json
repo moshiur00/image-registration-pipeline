@@ -298,21 +298,24 @@
       "current_validation": "702 backend passed, 3 expected skips; 179 UI passed; development preflight 18 PASS, 1 BLOCK; strict preflight 18 PASS, 11 BLOCK",
       "hard_block": "no genuinely independent Week 8 source registered",
       "development_warning": null,
-      "strict_block": "missing later release, Stage B, source, signoff, environment and restoration prerequisites",
+      "strict_block": "missing Phase 5 release binding, source, signoff, environment and restoration prerequisites",
       "hardening_incomplete": false,
       "policy_unchanged": true,
       "week08_evaluation_started": false
     },
     "stage_b": {
-      "status": "attestation_v2_hardened_human_acceptance_pending",
+      "status": "passed",
+      "date": "2026-11-14",
       "documentation": "ui/evidence/pre_week08_stage_b_acceptance.md",
       "summary": "docs/daily/pre_week08_stage_b_summary.md",
+      "evidence": "reports/pre_week08_stage_b_validation.json",
       "acceptance_schema": "ui-stage-b-acceptance-v2",
       "tracked_validation_schema": "pre_week08_stage_b_validation_v1",
+      "tested_release_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
       "scenario_count": 5,
-      "manual_cases_accepted": 0,
+      "manual_cases_accepted": 5,
       "supplemental_check_count": 5,
-      "supplemental_checks_accepted": 0,
+      "supplemental_checks_accepted": 5,
       "focused_tests": "30 Stage B and 66 preflight tests passed",
       "current_validation": "702 backend passed, 3 expected skips; 179 UI passed; development preflight 18 PASS, 1 BLOCK; strict preflight 18 PASS, 11 BLOCK",
       "scope_decisions": {
@@ -320,12 +323,13 @@
         "interactive_rire_expansion": "DEFERRED",
         "recommendation_display_path": "DEFERRED"
       },
-      "human_windows_attestation_pending": true,
-      "tracked_validation_report_generated": false,
-      "formal_ui_v02_frozen": false
+      "human_windows_attestation_pending": false,
+      "tracked_validation_report_generated": true,
+      "formal_ui_v02_frozen": true,
+      "week08_evaluation_started": false
     },
     "stage_c": {
-      "status": "not_started"
+      "status": "deferred"
     },
     "stage_d": {
       "status": "not_started"

@@ -1,6 +1,6 @@
 # Pre-Week 8 Integration: Stage A Implementation
 
-**Current status (2026-11-13): IMPLEMENTED AND CURRENT WINDOWS REGRESSION GREEN; NOT ACCEPTED. Independent-source enrollment is BLOCKED. The evaluator identity/label-firewall contract is complete; Phase 4 human UI acceptance remains pending.**
+**Current status (2026-11-14): IMPLEMENTED AND CURRENT WINDOWS REGRESSION GREEN; NOT FINAL-READY. Independent-source enrollment is BLOCKED. The evaluator identity/label-firewall contract and Phase 4 human UI acceptance are complete; UI v0.2 is frozen.**
 
 This is a pre-evaluation safety stage, not a Week 8 evaluation or a calibration update.
 
@@ -34,11 +34,11 @@ Preflight returns `BLOCK` intentionally until a documented, truly independent so
 
 No changes to existing `src/image_registration`, frozen Weeks 1 to 7 algorithm configurations, Day 34 calibration, `ui`, or original Week 7 result bytes. No image decoding, held-out label access, new registration runs or method retuning.
 
-**Current next step:** A named human Windows reviewer must execute the five
-Stage B scenarios and five supplemental observations against the Phase 4
-checkpoint. Independent-source enrollment comes only after release-candidate
-freeze. The Stage B contract is hardened, but human acceptance remains 0/5
-plus 0/5 supplemental checks; Stages C and D remain deferred/not started.
+**Current next step:** Complete Phase 5 release-candidate binding, dependency
+and environment evidence, clean-restoration validation, and release review.
+Independent-source enrollment comes only after that freeze. Stage B is accepted
+at 5/5 scenarios plus 5/5 supplemental checks and UI v0.2 is frozen; the
+independent-source gate remains intentionally blocked and Week 8 has not run.
 
 ## Windows Stage A preflight path-validator correction (23 October 2026)
 
