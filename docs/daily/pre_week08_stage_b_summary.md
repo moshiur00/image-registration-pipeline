@@ -15,7 +15,8 @@ Status: **ATTESTATION V2 IMPLEMENTED; HUMAN WINDOWS WALKTHROUGH PENDING AT 0/5 S
   no-frozen-write checks. Records are bound to the exact fixture manifest and a
   real ancestor Git commit.
 - Added a sanitized tracked-report builder. It cannot freeze UI v0.2 unless all
-  five valid human records pass and both full suites report zero failures.
+  five scenario records and all five supplemental human records pass and both
+  full suites report zero failures.
 - Generated fixtures intentionally reuse a development source. They are excluded from independent Week 8 held-out evaluation.
 
 ## Unchanged

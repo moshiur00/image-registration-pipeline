@@ -81,7 +81,9 @@ screenshots and downloaded analysis ZIPs under
 directory and rechecks its SHA-256 and byte size whenever status or a report is
 read. Record against the exact checked-out `HEAD` in a clean Git worktree;
 ignored runtime evidence is allowed, while tracked or ordinary untracked
-changes block attestation.
+changes block attestation. Relative evidence arguments are resolved from that
+runtime directory, so pass a filename or runtime-relative path rather than
+repeating `ui/runtime/pre_week08_stage_b/`.
 
 Every record requires one or more screenshots. Passed `single_candidate`,
 `failed_check`, and `export_provenance` records also require a readable ZIP.
@@ -99,7 +101,7 @@ $releaseCommit = (git rev-parse HEAD).Trim()
 .\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py record multimodal pass `
   --reviewer $reviewer --platform $platform --environment $environment `
   --release-commit $releaseCommit `
-  --screenshot ui/runtime/pre_week08_stage_b/b1_multimodal.png `
+  --screenshot b1_multimodal.png `
   --note "MI Affine was the sole compatible method; status was accurate; no TRE, winner, or confidence was shown"
 
 .\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py status
@@ -114,7 +116,7 @@ check IDs are `normal_monomodal`, `unknown_upload_claim_suppression`,
 .\.venv\Scripts\python.exe scripts/pre_week08_stage_b_ui_qa.py record-supplemental normal_monomodal pass `
   --reviewer $reviewer --platform $platform --environment $environment `
   --release-commit $releaseCommit `
-  --screenshot ui/runtime/pre_week08_stage_b/supplemental_normal_monomodal.png `
+  --screenshot supplemental_normal_monomodal.png `
   --note "Normal monomodal Affine comparison completed and retained truthful unknown-ground-truth limits"
 ```
 
@@ -144,7 +146,7 @@ and the three recorded DEFERRED scope decisions:
 - Only after every scenario and supplemental check passes, update `ui/DEVELOPMENT_STAGES.md`, `ui/README.md`, and the progress registry to **UI v0.2 FROZEN**. Do not freeze the UI based on the test suite alone.
 
 **Current decision (2026-11-13):** The hardened evidence contract is ready and
-its 28 focused tests pass. Human acceptance and formal freeze remain pending at
+its 30 focused tests pass. Human acceptance and formal freeze remain pending at
 0/5 scenarios and 0/5 supplemental checks. Stage C Research Evidence,
 interactive RIRE expansion, and the dormant
 recommendation display path are DEFERRED. Week 8 held-out data has not been

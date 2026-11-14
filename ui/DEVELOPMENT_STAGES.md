@@ -10,7 +10,7 @@ The UI is an isolated presentation and orchestration layer around the validated 
 
 **Current overall status (2026-11-13):** UI v0.1 FROZEN; Week 7 and pre-Week 8 Phase 3 are complete; UI v0.2 Automatic Comparison remains a release candidate. Post-hardening regression: 702 backend passed with 3 expected skips and 179 UI passed. The hardened Stage B attestation suite passes 30/30, but human status is 0/5 scenarios and 0/5 supplemental checks. Formal UI v0.2 freeze has NOT occurred.
 
-**Target release:** UI v0.1 frozen; UI v0.2 Automatic Comparison remains a release candidate pending the 5/5 Stage B manual gate
+**Target release:** UI v0.1 frozen; UI v0.2 Automatic Comparison remains a release candidate pending the 5/5 Stage B scenario gate plus 5/5 supplemental checks
 
 ---
 
@@ -2106,13 +2106,13 @@ Prior target Windows evidence remains valid **for the previous build**: 432/432 
 
 # Pre-Week 8 Stage B: UI Acceptance and Freeze
 
-**Status:** ATTESTATION V2 IMPLEMENTED; AUTOMATED VALIDATION PASSED; HUMAN WINDOWS ACCEPTANCE PENDING AT 0/5.
+**Status:** ATTESTATION V2 IMPLEMENTED; AUTOMATED VALIDATION PASSED; HUMAN WINDOWS ACCEPTANCE PENDING AT 0/5 SCENARIOS + 0/5 SUPPLEMENTAL.
 
 Stage B is a pre-release acceptance gate for the existing UI v0.2, not a new automatic recommendation feature. Deterministic QA fixtures and an operator-attested checklist were added under `ui/qa/`, `scripts/pre_week08_stage_b_ui_qa.py` and `ui/evidence/pre_week08_stage_b_acceptance.md`. The fixtures use the known development `camera.png` image and are stored exclusively under ignored `ui/runtime/`. The v2 recorder requires a named human Windows reviewer, target environment, exact tested commit, concrete note, and hashed screenshot/ZIP evidence. Five manual scenarios plus five supplemental observations remain pending until Windows UI interactions are observed and attested.
 
 The earlier Week 7 Windows suites completed with 575 backend passed, 2 skipped, and 149 UI passed after Stage A, as shown in user-provided terminal screenshots. Those counts are the baseline before Stage B, not acceptance of Stage B interactions. This stage does not alter frozen backend/UI production code or the Day 34 policy.
 
-**Exit criteria:** Stage B automated tests and full regression pass on Windows; all five manual cases receive operator-attested PASS with evidence and no unaddressed blocking defect; the Stage A frozen-source and evidence checks stay valid; only then record UI v0.2 FROZEN.
+**Exit criteria:** Stage B automated tests and full regression pass on Windows; all five manual scenarios and all five supplemental checks receive operator-attested PASS with evidence and no unaddressed blocking defect; the Stage A frozen-source and evidence checks stay valid; only then record UI v0.2 FROZEN.
 
 **Current checkpoint validation (2026-11-13):** The post-hardening regression
 is green: 702 backend tests passed with 3 expected skips and 179 UI tests
