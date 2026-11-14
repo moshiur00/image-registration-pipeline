@@ -2,8 +2,8 @@
     "schema_version":  "pre_week08_release_manifest_v1",
     "release_id":  "pre-week08-g5-20261114",
     "gate":  "G5",
-    "status":  "source_enrolled_strict_readiness_passed_g7_approval_pending",
-    "generated_utc":  "2026-11-14T19:29:18Z",
+    "status":  "phase7_blocked_predecode_test_incident",
+    "generated_utc":  "2026-11-14T22:37:55Z",
     "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
     "release_tag":  "pre-week08-g5-20261114",
     "clean_worktree":  true,
@@ -103,7 +103,11 @@
                                         ],
     "final_readiness":  {
                             "authorized":  false,
-                            "expected_remaining_blocks":  [],
+                            "expected_remaining_blocks":  [
+                                                              "clean_week08_final",
+                                                              "phase7_reviewer_recovery_decision",
+                                                              "independent_real_verified_gt_deviation_approval"
+                                                          ],
                             "release_reviewer_approval_pending":  true,
                             "week08_benchmark_executed":  false,
                             "real_week08_pixels_accessed":  false,
@@ -173,9 +177,81 @@
                                         "source_pixels_decoded":  false,
                                         "source_labels_accessed":  false
                                     },
+    "phase7_review":  {
+                           "status":  "BLOCKED",
+                           "review_started_utc":  "2026-11-14T22:37:55Z",
+                           "initial_strict_dry_run":  {
+                                                          "readiness":  "PASS",
+                                                          "pass":  29,
+                                                          "warn":  0,
+                                                          "block":  0,
+                                                          "week08_benchmark_executed":  false,
+                                                          "source_pixels_decoded":  false,
+                                                          "source_labels_accessed":  false
+                                                      },
+                           "frozen_test_validation":  {
+                                                          "result":  "BLOCKED",
+                                                          "failure_count":  1,
+                                                          "failing_test":  "tests/test_week08_phase3_cli.py::test_default_final_prepare_blocks_before_any_decoder",
+                                                          "finding":  "The pre-enrollment state test entered final preparation after G6 because automated strict readiness passed while human Phase 7 authorization remained pending."
+                                                      },
+                           "predecode_incident":  {
+                                                      "incident_id":  "phase7-predecode-test-20261114",
+                                                      "occurred_utc":  "2026-11-14T22:35:09Z",
+                                                      "trigger":  "Frozen test invoked make_final_artifacts with the canonical final configuration.",
+                                                      "phase_reached":  "pre_decode_receipt_and_plan_persistence",
+                                                      "real_image_decoder_invoked":  false,
+                                                      "decoder_stub_interceptions":  1,
+                                                      "source_pixels_decoded":  false,
+                                                      "source_labels_accessed":  false,
+                                                      "week08_evaluation_executed":  false,
+                                                      "scientific_attempts_executed":  0,
+                                                      "planned_counts":  {
+                                                                             "sources":  1,
+                                                                             "pairs":  150,
+                                                                             "attempts":  294
+                                                                         },
+                                                      "preserved_artifacts":  [
+                                                                                  {
+                                                                                      "path":  "outputs/week08_final/final_readiness_receipt.json",
+                                                                                      "bytes":  14909,
+                                                                                      "sha256":  "6aeef2fa8d489d82ed2c188915b1d23ab07ae7f8640a76d8138a85a2162a161c"
+                                                                                  },
+                                                                                  {
+                                                                                      "path":  "outputs/week08_final/evaluation_plan.json",
+                                                                                      "bytes":  728833,
+                                                                                      "sha256":  "a445e30fadca1cd0fc8bc56442e5bedc4365e9b9fee527947702104f7228e70d"
+                                                                                  }
+                                                                              ],
+                                                      "strict_after_incident":  {
+                                                                                     "readiness":  "BLOCK",
+                                                                                     "pass":  28,
+                                                                                     "warn":  0,
+                                                                                     "block":  1,
+                                                                                     "remaining_blocks":  [
+                                                                                                                "clean_week08_final"
+                                                                                                            ]
+                                                                                 },
+                                                      "canonical_output_reset_authorized":  false,
+                                                      "recoverability":  "PENDING_RELEASE_REVIEWER_DECISION"
+                                                  },
+                           "authorization_control":  {
+                                                         "manifest_authorized_value":  false,
+                                                         "manifest_approval_pending_value":  true,
+                                                         "enforced_by_prepare_before_decode":  false,
+                                                         "current_control_type":  "human_process_control"
+                                                     },
+                           "required_reviewer_decisions":  [
+                                                               "Choose documented pre-decode recovery or a new release cycle with machine-enforced authorization.",
+                                                               "Approve or reject continued use of the enrolled source after confirming no pixel, label, or outcome exposure.",
+                                                               "If recovery is approved, authorize removal of exactly the two preserved pre-decode artifacts before rerunning strict readiness.",
+                                                               "Explicitly approve the absence of an independent real verified-GT pair and restrict claims to source-specific software evidence."
+                                                           ]
+                       },
     "limitations":  [
                         "G6 enrolls one independently reviewed source; this single-source design limits generalizability.",
                         "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
-                        "The holdout source remains unopened and undecoded; G7 human authorization is still required before any pixel or label access."
+                        "The holdout source remains unopened and undecoded; G7 human authorization is still required before any pixel or label access.",
+                        "Phase 7 is blocked while the preserved pre-decode test artifacts and the process-only authorization control await reviewer disposition."
                     ]
 }
