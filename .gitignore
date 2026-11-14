@@ -43,3 +43,8 @@ outputs/*
 
 # Generated real multimodal test handoff package
 deliverables/real_multimodal_rire_test/
+
+# Private Week 8 enrollment staging. Only the attachment contract is tracked;
+# source pixels, labels, sidecars, and custodian packages must remain ignored.
+data/holdout/week08/*
+!data/holdout/week08/README.md

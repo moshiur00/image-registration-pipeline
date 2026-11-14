@@ -522,7 +522,7 @@ scope decisions remain DEFERRED.
 
 ### 12. Phase 5 - release-candidate freeze
 
-**Status:** NOT STARTED
+**Status:** PASSED
 **Priority:** P0
 **Owner:** developer; release reviewer signs.
 
@@ -572,6 +572,12 @@ The release manifest must cover:
 - release checklist signed through G5;
 - holdout pixels and labels still unopened by the development workflow.
 
+**G5 result (2026-11-14): PASSED.** Named release reviewer Md Moshiur
+Rahman approved the freeze. The signed checklist and automated evidence are
+bound to immutable tag `pre-week08-g5-20261114`; the self-reference-free
+release manifest is added only through the exact post-tag metadata allowlist.
+No real Week 8 pixel or label was accessed.
+
 ### 13. Phase 6 - independent-source enrollment
 
 **Status:** BLOCKED - no source registered
@@ -607,7 +613,7 @@ G5 tag and the current clean enrollment commit blocks final readiness.
 
 ### 14. Phase 7 - strict final-readiness gate
 
-**Status:** BLOCKED by G3, G4, G5, and G6
+**Status:** BLOCKED by G6
 **Priority:** P0
 **Owner:** release reviewer.
 
@@ -833,9 +839,9 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
 | G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 132 current focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
 | G4 UI acceptance/scope | PASSED | `reports/pre_week08_stage_b_validation.json`; 5/5 scenarios plus 5/5 supplemental checks; UI v0.2 frozen; optional scope DEFERRED |
-| G5 Release-candidate freeze | NOT STARTED | Checklist, manifest, lock, clean tag absent |
+| G5 Release-candidate freeze | PASSED | Named reviewer approved the signed checklist; exact lock, environment record, executable inventory, validation, clean install, restoration, immutable candidate tag, and manifest binding verify |
 | G6 Source enrollment | BLOCKED | week08_sources is empty |
-| G7 Final readiness/execution | BLOCKED | Depends on G4-G6 and the remaining strict release/readiness prerequisites |
+| G7 Final readiness/execution | BLOCKED | Depends on G6 source enrollment and the remaining source-dependent strict prerequisites |
 | G8 Analysis/release closure | NOT STARTED | Week 8 has not run |
 
 Update this table and link the tracked evidence whenever a gate changes.
@@ -871,15 +877,15 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. Prepare the Phase 5 release checklist, dependency/environment record,
-   validation report, clean-restoration evidence, and immutable
-   release-candidate tag.
-2. Bind the Stage B tested commit and the resulting release commit in the
-   Phase 5 release manifest without changing protected implementation paths.
-3. Keep real holdout pixels and labels inaccessible until the release candidate is frozen.
+1. Begin Phase 6 only through an independent custodian/provenance reviewer;
+   receive metadata and raw-byte hashes without developer visual screening.
+2. Add only the four exact Phase 6 metadata paths permitted after tag
+   `pre-week08-g5-20261114`, then rerun strict preflight.
+3. Keep real holdout pixels and labels inaccessible to the development workflow
+   until G7 strict final readiness passes.
 
 **Current boundary:** This revision records completed Phase 3 evaluator and
-firewall controls plus completed Phase 4 human UI acceptance and UI v0.2 scope
-freeze. It does not procure or enroll data, open real heldout pixels or labels,
-modify frozen algorithms/policy, complete the Phase 5 repository-wide release
-freeze, or run Week 8.
+firewall controls, completed Phase 4 human UI acceptance and UI v0.2 scope
+freeze, and the signed, immutable Phase 5 release-candidate freeze. It does not
+procure or enroll data, open real heldout pixels or labels, modify frozen
+algorithms/policy, pass G6/G7, or run Week 8.

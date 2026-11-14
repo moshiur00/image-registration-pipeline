@@ -1,0 +1,88 @@
+{
+  "schema_version": "pre_week08_environment_v1",
+  "recorded_utc": "2026-11-14T18:27:33Z",
+  "scope": "phase5_release_candidate",
+  "target": {
+    "operating_system": "Windows 11 x64 25H2 build 26200",
+    "platform_probe": "Windows-11-10.0.26200-SP0",
+    "architecture": "AMD64",
+    "processor": "Intel64 Family 6 Model 140 Stepping 2, GenuineIntel",
+    "python_implementation": "CPython",
+    "python_version": "3.14.2",
+    "python_compiler": "MSC v.1944 64 bit (AMD64)",
+    "git_version": "2.43.0.windows.1",
+    "uv_version": "0.11.32"
+  },
+  "accepted_environment": {
+    "path_policy": "project-local .venv; path itself is not release-bound",
+    "project_install": "editable local image-registration-pipeline 0.1.0",
+    "direct_versions": {
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "opencv-python": "4.14.0.94",
+      "pandas": "3.0.5",
+      "pytest": "9.1.1",
+      "PyYAML": "6.0.3",
+      "scikit-image": "0.26.0",
+      "scipy": "1.18.1",
+      "seaborn": "0.13.2",
+      "SimpleITK": "2.5.6",
+      "streamlit": "1.66.1"
+    }
+  },
+  "dependency_inputs": {
+    "pyproject.toml": "6489be331034a07a713c537e1bd7d8d8b83711da46ad1a3b8ac30065f2795d0b",
+    "requirements.txt": "8c92163ca11180f6b981273a77e7acdb119ce8724528ba27d2b2cd53c7d2672e",
+    "ui/requirements.txt": "b94947742a224e2b8b0501f9a6fd86384c5183b9b7e125617cfe20143ab8ad60"
+  },
+  "dependency_lock": {
+    "path": "reports/pre_week08_dependency_lock.txt",
+    "sha256": "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
+    "external_distribution_count": 55,
+    "all_external_distributions_exact_pinned": true,
+    "accepted_environment_diff_count": 0
+  },
+  "clean_install_rehearsal": {
+    "status": "PASS",
+    "environment": "new isolated Python 3.14.2 virtual environment under ignored workspace staging",
+    "installer": "uv pip",
+    "system_certificate_store_used": true,
+    "external_distributions_resolved": 55,
+    "external_distributions_installed": 55,
+    "lock_diff_count_after_install": 0,
+    "project_package": "image-registration-pipeline==0.1.0",
+    "project_install_mode": "built from the local source tree with --no-deps",
+    "import_smoke_passed": true,
+    "imported": [
+      "cv2",
+      "numpy",
+      "scipy",
+      "SimpleITK",
+      "skimage",
+      "pandas",
+      "matplotlib",
+      "seaborn",
+      "yaml",
+      "pytest",
+      "streamlit",
+      "image_registration"
+    ],
+    "metadata_only_plan_passed": true,
+    "metadata_only_plan_counts": {
+      "pairs": 4,
+      "compatible_attempts": 12,
+      "policy_eligible_pairs": 2
+    },
+    "real_week08_pixels_or_labels_accessed": false
+  },
+  "test_staging_constraint": {
+    "authoritative_pytest_temp_policy": "TEMP and TMP point to ignored project-local staging",
+    "reason": "The final-CLI fixture deliberately requires a project-relative test source path; a cross-drive Windows system temp path is outside that safety boundary.",
+    "product_runtime_impact": false
+  },
+  "bound_by": "reports/pre_week08_release_manifest.json",
+  "limitations": [
+    "This record identifies the validated release environment; it does not claim compatibility with untested operating systems, Python versions, hardware, or dependency versions.",
+    "The clean-install environment and development rehearsal are non-evidentiary and contain no real Week 8 source or label."
+  ]
+}

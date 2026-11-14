@@ -158,8 +158,9 @@ evidence only.
 ### 2.5 Phase ordering
 
 1. Phase 2 completed metadata, lineage, schema and evidence hardening with development artifacts only.
-2. Phase 3 builds the evaluator/firewall with development fixtures only.
-3. Phase 5 freezes code, policy, configuration, analysis and release manifests.
+2. Phase 3 completed the evaluator/firewall with development fixtures only.
+3. Phase 5 froze code, policy, configuration, analysis and release manifests at
+   immutable tag `pre-week08-g5-20261114` after named human release review.
 4. Phase 6 enrolls independently reviewed sources; only a custodian handles inaccessible source/label bytes before enrollment.
 5. Phase 7 runs strict final readiness. Any missing or invalid source, lineage, label evidence, release identity or signoff is `BLOCK`.
 6. Phase 8 performs the one-run prepare -> decide/seal -> evaluate sequence.
@@ -214,10 +215,11 @@ only. The non-dry development command writes
 1. Development mode currently reports 18 PASS / 1 BLOCK; the sole block is the
 intentionally empty `week08_sources` enrollment. The tracked G3 evidence,
 metadata-only runner probe, and Stage B human acceptance report pass. Strict
-mode still reports 18 PASS / 11 BLOCK because Phase 5 has not yet bound a full
-release commit and the later dependency/environment, source, signoff, and
-clean-restoration prerequisites remain absent. The Stage B report itself is
-valid; its strict check awaits the Phase 5 release-manifest commit binding. A
+mode reported 21 PASS / 8 BLOCK immediately before the Phase 5 binding. The
+manifest-bound run passes every G5-owned strict check; only the Phase 6
+source/enrollment-dependent blocks remain. Runner validation, Stage B binding,
+release signoff, dependency/environment binding, clean-staging restoration,
+and the integrity/restoration aggregate pass. A
 `WARN` can never qualify as strict final readiness.
 
 Strict mode recognizes the release contracts

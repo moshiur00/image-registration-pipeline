@@ -1,0 +1,899 @@
+{
+    "schema_version":  "pre_week08_executable_inventory_v1",
+    "scope":  "tracked Python executable and test code under src, scripts, ui, and tests",
+    "generated_utc":  "2026-11-14T18:27:33Z",
+    "source_checkpoint":  "f409906e3cea4fa21d957bfe01b959b8c991196b",
+    "policy":  {
+                   "roots":  [
+                                 "src",
+                                 "scripts",
+                                 "ui",
+                                 "tests"
+                             ],
+                   "extensions":  [
+                                      ".py"
+                                  ],
+                   "exact_path_set_required":  true,
+                   "exact_sha256_required":  true,
+                   "unexpected_additions_rejected":  true
+               },
+    "file_count":  219,
+    "files":  [
+                  {
+                      "path":  "scripts/cleanup_obsolete_files.py",
+                      "sha256":  "fa2cb2edcedd60c897f9a1555fdce4f162bfa302b476135212e2adf5725b9718"
+                  },
+                  {
+                      "path":  "scripts/day01_demo.py",
+                      "sha256":  "54287c3448a409b4ce23300e962f61155fb41fac4f1c9e97440c56b2b2aba333"
+                  },
+                  {
+                      "path":  "scripts/day02_rigid_demo.py",
+                      "sha256":  "ce3aca333730381ceabe2cd7fa684c569c8eab91a9b63a43aa55aa05ed254e83"
+                  },
+                  {
+                      "path":  "scripts/day03_warping_demo.py",
+                      "sha256":  "7030e07621655bff10f56f81f5689d2fe4dd1b53690fdae3b078913c5b1ba6cd"
+                  },
+                  {
+                      "path":  "scripts/day04_io_preprocessing_evaluation_demo.py",
+                      "sha256":  "e596cea02d184314a4b62ac394ff31162dbe02084b7b8e7d268d6690319acc58"
+                  },
+                  {
+                      "path":  "scripts/pre_week08_stage_b_ui_qa.py",
+                      "sha256":  "09316efdb91844189cb6f0ad1c39cf300f52fde49b529cbcb65104eab4a5300b"
+                  },
+                  {
+                      "path":  "scripts/run_experiment.py",
+                      "sha256":  "893dfdfcae49b13a408713f8b6f35385cc68b42f7108878ea715576874ad00c4"
+                  },
+                  {
+                      "path":  "scripts/week02_day01_synthetic_demo.py",
+                      "sha256":  "9225ac20ab8935f4bde1f4a260097116beca8fd7b13054dc31c608095ec4817b"
+                  },
+                  {
+                      "path":  "scripts/week02_day02_degradations_overlap_demo.py",
+                      "sha256":  "424e47e116db81eb48702d65db4c6e92f7d8cf9623d8da6251181b1283f05aa6"
+                  },
+                  {
+                      "path":  "scripts/week02_day03_multimodal_difficulty_demo.py",
+                      "sha256":  "48ad13ea5ed3b4c3cadaa7e80e1bc57a4482c384db311543c05a3c4da881fa5a"
+                  },
+                  {
+                      "path":  "scripts/week02_day04_prepare_real_data.py",
+                      "sha256":  "600e16c923603ea88dc3b601a73b19fe260d4e9ffeb4ddb2fde762d5eec849a0"
+                  },
+                  {
+                      "path":  "scripts/week02_day05_generate_benchmark.py",
+                      "sha256":  "1829ab2be468d41a6b04c45dc6a89154ea71d6093be26453a200818465942fe3"
+                  },
+                  {
+                      "path":  "scripts/week03_day01_phase_correlation_demo.py",
+                      "sha256":  "10ce4d5b61784bc202f256a17cd105768c24b696bab422a705be39bff20f81e1"
+                  },
+                  {
+                      "path":  "scripts/week03_day02_phase_robustness.py",
+                      "sha256":  "9b01e4e96306b73a5faf42ce878a454d5cfa26a8f3387818d90c8ff2f74f7dc6"
+                  },
+                  {
+                      "path":  "scripts/week03_day03_ecc_demo.py",
+                      "sha256":  "fa40195770b410b1f4358c526911b17f9261b461948910c904d32874b48fbee0"
+                  },
+                  {
+                      "path":  "scripts/week03_day04_ecc_affine_multiresolution.py",
+                      "sha256":  "adbf1272dab0ed59eacbf76482a31c43c16969975f13ded30cb87304131b9464"
+                  },
+                  {
+                      "path":  "scripts/week03_day05_integrated_baselines.py",
+                      "sha256":  "36e66c08395dfc241c38b94a5b75d3ee917311c3edd93aa91f3f86750afd4949"
+                  },
+                  {
+                      "path":  "scripts/week04_day01_orb_features.py",
+                      "sha256":  "17af7a414d5da5b3c46eec11e25eed26ed1c21ca70f97515d135698b0f3ea893"
+                  },
+                  {
+                      "path":  "scripts/week04_day02_orb_matching.py",
+                      "sha256":  "cb4ac26f620e11bb4cf0d033011aea7927dcbf7b564bd47d3c5f17872f6e05ec"
+                  },
+                  {
+                      "path":  "scripts/week04_day03_ransac_similarity.py",
+                      "sha256":  "8608b6428c6a7ae68757e8aa23d683c453cd4acf77b7518267dc4c0a87c38dc2"
+                  },
+                  {
+                      "path":  "scripts/week04_day04_ransac_affine_robustness.py",
+                      "sha256":  "33a32a010583a81e342486dc685e822715ca6c580cf40928b7885be0e96fc79b"
+                  },
+                  {
+                      "path":  "scripts/week04_day05_integrated_feature_baseline.py",
+                      "sha256":  "4a8253163629e5979077333007e7e4fadb87dc7a4258f0b2b5be1056bd2f94d8"
+                  },
+                  {
+                      "path":  "scripts/week04_orb_vs_sift_comparison.py",
+                      "sha256":  "68388ab88d7de0cdbcc3c5cc5195d36675393709678a3ed697758b81dc1b4582"
+                  },
+                  {
+                      "path":  "scripts/week04_sift_stage01_features_matching.py",
+                      "sha256":  "24826658ff1e87174f5f4eafabc167dc19fe197c48f0c0b8f35a4691d6cf314d"
+                  },
+                  {
+                      "path":  "scripts/week04_sift_stage02_ransac.py",
+                      "sha256":  "9cad043161016715c0bb565f1c9043b159c551d21a845d71f1f3f28e4028ff68"
+                  },
+                  {
+                      "path":  "scripts/week05_day01_mi_rigid.py",
+                      "sha256":  "0a62ef43fe9707e4904eb4c8a2e6ff8a6441c35ff50135fc8640798720d4acbc"
+                  },
+                  {
+                      "path":  "scripts/week05_day02_mi_rigid_study.py",
+                      "sha256":  "be596d6c156e408665243d0fff877e2e8132f8347a37688e488f982087d32838"
+                  },
+                  {
+                      "path":  "scripts/week05_day03_mi_affine_multiresolution.py",
+                      "sha256":  "1c6e9bd65527b59e6a07e1525dd9f0b3b446a5909fedead9c9a808a66784fcac"
+                  },
+                  {
+                      "path":  "scripts/week05_day04_rire_physical_registration.py",
+                      "sha256":  "12eeece75ee9132a20b8f333f838ec06c81557f9557fa88971fc628f1b707db7"
+                  },
+                  {
+                      "path":  "scripts/week05_day05_integrated_benchmark.py",
+                      "sha256":  "30f53fcbab87b2952cc86e3aea83d456dcf0cfceaeb6ba844ef18b25a750377d"
+                  },
+                  {
+                      "path":  "scripts/week06_day01_unified_evaluation_contract.py",
+                      "sha256":  "b5ce492bdd43cbba6b7cdd80e0492b9d1fc46d17faf832e5b017b9cddd7bfd31"
+                  },
+                  {
+                      "path":  "scripts/week06_day02_metric_validation.py",
+                      "sha256":  "1c7c8815a2b2d3c175f351fc9448c16fedc1d9361f690c7af578bcd2db110dd0"
+                  },
+                  {
+                      "path":  "scripts/week06_day03_benchmark_runner.py",
+                      "sha256":  "2f6ce66c991741d13363a73f0e0a65a7cb32b24a431f8e2c89e9a7ec65a614bc"
+                  },
+                  {
+                      "path":  "scripts/week06_day04_automatic_multi_method.py",
+                      "sha256":  "d9e5a5bf65fcdacce8d175d3ea19f777129a7f40425868e2f55a8c0edfb8301b"
+                  },
+                  {
+                      "path":  "scripts/week06_day05_agreement_consensus.py",
+                      "sha256":  "f2af9647202cd52a19f423f698fd40a99491b86cff33766d7bc07dbcec1b65e8"
+                  },
+                  {
+                      "path":  "scripts/week07_day01_robustness_design.py",
+                      "sha256":  "e72d81d9daac238f9169c8c9d5f488e0efb014c62d77f0e63e04eaed91fcf46b"
+                  },
+                  {
+                      "path":  "scripts/week07_day02_robustness_sweeps.py",
+                      "sha256":  "3458c598dd67242d3c3f179c9f43811abffd9e14816d9214bae54678af6e92e6"
+                  },
+                  {
+                      "path":  "scripts/week07_day03_failure_analysis.py",
+                      "sha256":  "a291821e592fbfac14fb7e4382c85dcc22884a33b14f95c3694affc2bac248c7"
+                  },
+                  {
+                      "path":  "scripts/week07_day04_offline_calibration.py",
+                      "sha256":  "a714734e5689ae7eff5231672fda490f98ea66eeeca87c71c97619e508bd471a"
+                  },
+                  {
+                      "path":  "scripts/week07_day05_integrated_validation.py",
+                      "sha256":  "57cff3f0ad0c3e612344aa13dec439449453e8e6a07ab120ee767758aca8b877"
+                  },
+                  {
+                      "path":  "scripts/week07_evidence_archive.py",
+                      "sha256":  "9b1ec4c65665d2aafadec8ab4f9dd5ea044079ae68851ed3c0fdafe02a480cd4"
+                  },
+                  {
+                      "path":  "scripts/week08_final_evaluation.py",
+                      "sha256":  "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b"
+                  },
+                  {
+                      "path":  "scripts/week08_preflight.py",
+                      "sha256":  "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1"
+                  },
+                  {
+                      "path":  "scripts/week08_prepare_holdout.py",
+                      "sha256":  "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be"
+                  },
+                  {
+                      "path":  "scripts/zip_project.py",
+                      "sha256":  "771a4989981fd9c45afdf440e55475bacf989f8453d96416240fdbec6dde6773"
+                  },
+                  {
+                      "path":  "src/image_registration/__init__.py",
+                      "sha256":  "75eb1f98e715add0a1af0a7e29bdfe75b1ca6e87be71da2859b323ee3d1b8089"
+                  },
+                  {
+                      "path":  "src/image_registration/affine_ransac.py",
+                      "sha256":  "2792ea6c5335973b31e8d38e583efcf002cf6b6a83ff725b2a917b3d98359b0e"
+                  },
+                  {
+                      "path":  "src/image_registration/automatic_agreement.py",
+                      "sha256":  "2e23990398a8e609612ee422ce63ad698044312ae41b811556121e6f5ec56141"
+                  },
+                  {
+                      "path":  "src/image_registration/automatic_registration.py",
+                      "sha256":  "3277d9e0a115a29ee92eec5ed851d7f79fbe56c77143400ccab21a5331fc4cc4"
+                  },
+                  {
+                      "path":  "src/image_registration/benchmark.py",
+                      "sha256":  "e7ee0d83228b71adf9393095e8c18b168f297360e6cb847a3e316307267307d5"
+                  },
+                  {
+                      "path":  "src/image_registration/benchmark_runner.py",
+                      "sha256":  "a679627a09415d64fa772d3e74440cf3a66fe91a8ec82c683085291366bd5855"
+                  },
+                  {
+                      "path":  "src/image_registration/config.py",
+                      "sha256":  "3e426fd49b9e70d2da84bf24531c073a1f7aecd0f837e4939e7bc09fa65f5f11"
+                  },
+                  {
+                      "path":  "src/image_registration/conventions.py",
+                      "sha256":  "dd606db555f18dc42468f769d8af56d19bf05d67f404552fa7a7a49017f0033e"
+                  },
+                  {
+                      "path":  "src/image_registration/datasets.py",
+                      "sha256":  "54c8dd8471ca6be1d7a14418827ea47d40ef7db4df13edfdd20265ed16bf0f6d"
+                  },
+                  {
+                      "path":  "src/image_registration/degradations.py",
+                      "sha256":  "b9a5ee2681c15d6ebfb3dd8a76e2db5eb916b12b8ab27a984739d77d852eb06c"
+                  },
+                  {
+                      "path":  "src/image_registration/difficulty.py",
+                      "sha256":  "d8d9fafea4968fba8b87cc588d7e5d2770d59c402e2ada22cdfa7943062c22ff"
+                  },
+                  {
+                      "path":  "src/image_registration/ecc.py",
+                      "sha256":  "1d715fc5d29729201579bda613b30ad50a97ddd74cd86a33ca288418b47aa40c"
+                  },
+                  {
+                      "path":  "src/image_registration/evaluation.py",
+                      "sha256":  "348f281fe9ef8f6df968014afdbfc5787f4d10af488e58ec869898753af3f01d"
+                  },
+                  {
+                      "path":  "src/image_registration/evaluation_contracts.py",
+                      "sha256":  "dbf36912d24634244a17163c2550e7b563563f11f02dc1f4c7b497382405ce35"
+                  },
+                  {
+                      "path":  "src/image_registration/feature_comparison.py",
+                      "sha256":  "712a6f48f504bc677bc3b3e457ec06ee86bd791fe0c84d665b62003948ec6e90"
+                  },
+                  {
+                      "path":  "src/image_registration/feature_matching.py",
+                      "sha256":  "88285c20f0cbcd58f8098b11a15189945ce7898d7c35c071ddf69ad7259a1734"
+                  },
+                  {
+                      "path":  "src/image_registration/feature_metrics.py",
+                      "sha256":  "de33f3e4437b389be4fcb84b1d9e3ea8563e0cdd84ca23cdeaaee934bc048d31"
+                  },
+                  {
+                      "path":  "src/image_registration/io.py",
+                      "sha256":  "13fef9f11d8506d7c0484e3528612b9713dd239f873453edeb619b5c7644ee6f"
+                  },
+                  {
+                      "path":  "src/image_registration/medical.py",
+                      "sha256":  "0cc373fc20f8329dbd801189f74b1d3299414a112121279593370cfbbc87527e"
+                  },
+                  {
+                      "path":  "src/image_registration/medical_mutual_information.py",
+                      "sha256":  "85104e6e98cb020d8baaac7ca03101a2526a8cd883b0fddf28ed48eb618dfa15"
+                  },
+                  {
+                      "path":  "src/image_registration/mi_study.py",
+                      "sha256":  "5efe440f09037c3c19356df5ad3a927e2fcd0ab152a5498eb4766ead60b3b301"
+                  },
+                  {
+                      "path":  "src/image_registration/multimodal.py",
+                      "sha256":  "8acf3844927eeca333bf722c945128f8b3919ca6bec92fc71f296c5d83a62819"
+                  },
+                  {
+                      "path":  "src/image_registration/mutual_information.py",
+                      "sha256":  "771418d44e3d5bb7deff446594457a4774f90ee0b73e27c6c5b234b295ac6c52"
+                  },
+                  {
+                      "path":  "src/image_registration/orb.py",
+                      "sha256":  "e7a8e69b50b25c39938b1a221eadd9aedff8668122625ac67fdc91318998ff50"
+                  },
+                  {
+                      "path":  "src/image_registration/overlap.py",
+                      "sha256":  "4621fd664628e27a8d0a36724aa438a5bb4c8071b2d43ba879d5cf024484ebdb"
+                  },
+                  {
+                      "path":  "src/image_registration/phase_correlation.py",
+                      "sha256":  "16f62889328b57e93bc440428104fc50393a9ee36d09f6de8bf902acab75bc32"
+                  },
+                  {
+                      "path":  "src/image_registration/pipeline.py",
+                      "sha256":  "da0aa018f22cccb55490c6705afdfff14f7c4430ac9d168860cf84638417c2f3"
+                  },
+                  {
+                      "path":  "src/image_registration/preprocessing.py",
+                      "sha256":  "3a1e038331b3b740e18f3d5470a82e2a0f6ac29de0653e19de5af850672bec8d"
+                  },
+                  {
+                      "path":  "src/image_registration/pyramids.py",
+                      "sha256":  "765f90b9de6ebbd621768b6ba5ff3ef39bb9cd12663342180b8b459d6d1c432c"
+                  },
+                  {
+                      "path":  "src/image_registration/ransac.py",
+                      "sha256":  "0a96a1025e643a52ee6c178713eb424327a7339a0191c51d7214b1b8e5e7efa9"
+                  },
+                  {
+                      "path":  "src/image_registration/registration.py",
+                      "sha256":  "89b534d85450e9ac8f050bee9fb17569a0e29c6020effad7c39281647a3b50cf"
+                  },
+                  {
+                      "path":  "src/image_registration/registration_metrics.py",
+                      "sha256":  "8d314c11b7c41a8857f0db4db2c2675e99ca9eef4ceb91efa9ef7594d75d0389"
+                  },
+                  {
+                      "path":  "src/image_registration/reporting.py",
+                      "sha256":  "a1d03e13c2c66c310065e40b205175988e1cd508e8bae00d02911ece51868322"
+                  },
+                  {
+                      "path":  "src/image_registration/rire.py",
+                      "sha256":  "45ac44ff5aaaeaf956441eed03ad2f4ec1af5729ec22c3c57cda90ebc02b8f29"
+                  },
+                  {
+                      "path":  "src/image_registration/sift.py",
+                      "sha256":  "8311180c5565aca107e4a6302a2ccedcec1e2dd426076102090bc30755112ef3"
+                  },
+                  {
+                      "path":  "src/image_registration/synthetic.py",
+                      "sha256":  "6b8cfa647b576416163b6d2bb284b27e137cadfefdfacd1867d5dba431525004"
+                  },
+                  {
+                      "path":  "src/image_registration/transforms.py",
+                      "sha256":  "0ec4eeda48544c62977330cc557195169f18d49892d1b0be3fc4ac0e084de58a"
+                  },
+                  {
+                      "path":  "src/image_registration/unified_metrics.py",
+                      "sha256":  "9108eef4ea08b364871bb222ff69d91ce3259692b33792847d8916502f1625c5"
+                  },
+                  {
+                      "path":  "src/image_registration/visualization.py",
+                      "sha256":  "f5d6d6544a64d0f56ee8e483028d83da4ebede32c7f551d8773b2ddeba2792e4"
+                  },
+                  {
+                      "path":  "src/image_registration/warping.py",
+                      "sha256":  "3954a5cc78d7f296a0717c9c2baec471810f4fa4bedffa8a3129f1ab71ef94da"
+                  },
+                  {
+                      "path":  "src/image_registration/week3_baseline.py",
+                      "sha256":  "84310daaa4b3a7beccf5e6b5156d5ff3ce934a9ce4733d91feaee620eebd6b12"
+                  },
+                  {
+                      "path":  "src/image_registration/week4_baseline.py",
+                      "sha256":  "ee5492237d7519f79e9e8918d6b4e4f5ab3c44d882055ff7caa8ec77e87abe83"
+                  },
+                  {
+                      "path":  "src/image_registration/week5_benchmark.py",
+                      "sha256":  "03b36e449ac3f119d703e44d16050638deca4f99f5a8eb4604779331c6db50c1"
+                  },
+                  {
+                      "path":  "src/image_registration/week7_calibration.py",
+                      "sha256":  "44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c"
+                  },
+                  {
+                      "path":  "src/image_registration/week7_failure_analysis.py",
+                      "sha256":  "765d07079bdf8758847e9caa604dcc0bf88bdd5262f510bfa7a2ac2840163ad8"
+                  },
+                  {
+                      "path":  "src/image_registration/week7_integration.py",
+                      "sha256":  "22eb6937aba2eae461db56081e310af4beedeeeeb8d97c4b4746a20dfa069aaf"
+                  },
+                  {
+                      "path":  "src/image_registration/week7_robustness.py",
+                      "sha256":  "ca43e715f35cb1109131028a0642c5ebd4d956c329ef7de719aa4fcc58d97459"
+                  },
+                  {
+                      "path":  "src/image_registration/week7_sweeps.py",
+                      "sha256":  "76aac8bbaaee9587ad8f88a6cb33a1985b0c706d7f62c63a2731bf4c1e394fdc"
+                  },
+                  {
+                      "path":  "src/image_registration/week8_evaluation.py",
+                      "sha256":  "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31"
+                  },
+                  {
+                      "path":  "tests/test_affine_ecc.py",
+                      "sha256":  "b6044f934da732d9f260bb19683f6aed030b9b329c95323e7fba8eeaaf1e38f5"
+                  },
+                  {
+                      "path":  "tests/test_affine_ransac.py",
+                      "sha256":  "2b96d66e3063710bb52109480dad415c48a0dca6ffd2a0cd2150dea701c7f231"
+                  },
+                  {
+                      "path":  "tests/test_automatic_agreement.py",
+                      "sha256":  "8332d2f16f7fcdfb8ef8fb5ae8ada18e3799da5d9934c65eb3df0f202f819028"
+                  },
+                  {
+                      "path":  "tests/test_automatic_registration.py",
+                      "sha256":  "b9d57078e060bb5c984cf309a14fcab81898aff4531c9aad243d1bb8e82aee3f"
+                  },
+                  {
+                      "path":  "tests/test_benchmark.py",
+                      "sha256":  "0e12c962f65a20632d1e10d02b714810cc99d957493abef898345bcd38c2f520"
+                  },
+                  {
+                      "path":  "tests/test_benchmark_runner.py",
+                      "sha256":  "bb4f7be483dd8dcd48151ce7dbb9dd766cf637890ad9c6b0aabcc7a657330a87"
+                  },
+                  {
+                      "path":  "tests/test_config.py",
+                      "sha256":  "7bd2f76c98ef67b52f48dab876854be0cd15a8ababb137891b93396a362a2a43"
+                  },
+                  {
+                      "path":  "tests/test_conventions.py",
+                      "sha256":  "812780fceffb32fc7997756196485a5b822414aa2838d075c7faec28cac9b920"
+                  },
+                  {
+                      "path":  "tests/test_datasets.py",
+                      "sha256":  "6b4981bcc7470e64f7bbd2c9644cceede2af9ba4a78dcacac2b515354c6b2e58"
+                  },
+                  {
+                      "path":  "tests/test_degradations.py",
+                      "sha256":  "d76393b0318cd19876674a7f760619521303c2db934112499c859e2f5e1d35a1"
+                  },
+                  {
+                      "path":  "tests/test_difficulty.py",
+                      "sha256":  "4ca7109cc9f4a5e3ee6bab5a78b2a237a800b1f55d819840fc419d103ac2c097"
+                  },
+                  {
+                      "path":  "tests/test_ecc.py",
+                      "sha256":  "569a35ac832c67e923fdeb33b3e961eb9ba706cac3401ade5e1dc0e4682bf2f3"
+                  },
+                  {
+                      "path":  "tests/test_evaluation.py",
+                      "sha256":  "f5774255ffba23681035980991e293314e00611af09056f30f6e1c16796190f9"
+                  },
+                  {
+                      "path":  "tests/test_evaluation_contracts.py",
+                      "sha256":  "d1531ae0580fe59a1753e9cdd3d241b797a88aa96683171ee2b081417b429861"
+                  },
+                  {
+                      "path":  "tests/test_feature_matching.py",
+                      "sha256":  "a3b8ce5a61b3e1128d54d15aff803cb2dd03c063be285cbd9aff71c142593ae6"
+                  },
+                  {
+                      "path":  "tests/test_feature_metrics.py",
+                      "sha256":  "064c89555fdff86be9e922f1a96fe9ee6dc0c40301c43c1bcbac8c67441f7fbc"
+                  },
+                  {
+                      "path":  "tests/test_io.py",
+                      "sha256":  "4451054f861ad81157f92ce7954d6545b0020368d0c021fdc36cb8f43570c10b"
+                  },
+                  {
+                      "path":  "tests/test_medical.py",
+                      "sha256":  "a1297e2c7b84488ddd258fbd33c34eb3911cb5a3376489454ae6b5c0fa948f37"
+                  },
+                  {
+                      "path":  "tests/test_medical_mutual_information.py",
+                      "sha256":  "3b1b9bf7e964c921fe9f16b3e27e3ce92052f5b438acf39c83d644503152beb9"
+                  },
+                  {
+                      "path":  "tests/test_mi_study.py",
+                      "sha256":  "de7e404a0941bf5e6333329e1896a17041e852527c0cfc1f3115cdda48ad3771"
+                  },
+                  {
+                      "path":  "tests/test_multimodal.py",
+                      "sha256":  "dbddcdb11bf12bf24eb4ff936ff89433be9256e6dcf195634d40f108f6fe2b6e"
+                  },
+                  {
+                      "path":  "tests/test_mutual_information.py",
+                      "sha256":  "e88e6dfaaa53b7cb05b89059fa72f6993c7f0b03c54a6b0ec768475d764f2b13"
+                  },
+                  {
+                      "path":  "tests/test_mutual_information_affine.py",
+                      "sha256":  "e7db0d4c6faf5104589494b94ca8a0d373880932a67e74102bd056ecac01642b"
+                  },
+                  {
+                      "path":  "tests/test_orb.py",
+                      "sha256":  "f95fe89035d646918d66cdb865873785bae33123aa3f49ab72adf1cba68ec13c"
+                  },
+                  {
+                      "path":  "tests/test_overlap.py",
+                      "sha256":  "0623c2d21841ebee41f7065f6c6f773b0c29133fc6328348af1af48c3bb7fad1"
+                  },
+                  {
+                      "path":  "tests/test_phase_correlation.py",
+                      "sha256":  "85c6d4790bcb2fe4a9e770ea57dad681696caf76707ba6fd6edfd8cddb0407e5"
+                  },
+                  {
+                      "path":  "tests/test_phase_robustness.py",
+                      "sha256":  "7eac4e3ff560abc3224e57ae57215aa2f5ba18f6ea1e49f02a95cb6256c52473"
+                  },
+                  {
+                      "path":  "tests/test_pipeline.py",
+                      "sha256":  "d465fa925b5a2df7b145abe88802e9cec8ff34db208e506cccba4bfffea8c04e"
+                  },
+                  {
+                      "path":  "tests/test_preprocessing.py",
+                      "sha256":  "68061946aac0c82f0b009c81a390e4c0d1699d287fbbb0bcd803816638440242"
+                  },
+                  {
+                      "path":  "tests/test_pyramids.py",
+                      "sha256":  "5cd2c6131c2739d6bb09a7ca169fb9b2ceb1be49cb1696836938cc0a2f7c6caf"
+                  },
+                  {
+                      "path":  "tests/test_ransac_similarity.py",
+                      "sha256":  "5244c73d6fa2272425c0e6edfc4fe3d872e050be49eaba7db77dbec4a11f478e"
+                  },
+                  {
+                      "path":  "tests/test_registration.py",
+                      "sha256":  "db6351b2dcd19bb575f1a8bc15f3d490b80eb46a5ac1161bfa115c7768793b5d"
+                  },
+                  {
+                      "path":  "tests/test_registration_metrics_affine.py",
+                      "sha256":  "14f7a43911d1171c8d8fdeedf27c4d675b5ccbb32a5580580090996b09064b2e"
+                  },
+                  {
+                      "path":  "tests/test_reporting.py",
+                      "sha256":  "be791474fee8337d2a908b51c59f0da58caf2ba7b79f9e0925c6125da6a3eee8"
+                  },
+                  {
+                      "path":  "tests/test_rire.py",
+                      "sha256":  "d5b872683bf4d524ffcbee6e1e715d0efa2cba766ec2424f7b91c0ae3bab10c4"
+                  },
+                  {
+                      "path":  "tests/test_sift.py",
+                      "sha256":  "b8a4df27ffcbcfe6df7eddb5de102eb6f0653f8a18017a994aaf06098f770b19"
+                  },
+                  {
+                      "path":  "tests/test_sift_comparison.py",
+                      "sha256":  "8c9db4db460f342b8de1533bc9df087ec0b0abfdc63c07ed0ee16ec7bad2b1c7"
+                  },
+                  {
+                      "path":  "tests/test_sift_ransac.py",
+                      "sha256":  "eff0e448153fe5d8c6ce6db21a3f6cb1f1a4852712acab4ea27189ccef7252d3"
+                  },
+                  {
+                      "path":  "tests/test_synthetic.py",
+                      "sha256":  "3052234bef0708736da25c5e3cd5b6fec98c8138f09b10963a05891ec38ace54"
+                  },
+                  {
+                      "path":  "tests/test_transforms.py",
+                      "sha256":  "670d41ae93801d4010fe353558947b1f4840f275eb98d1d6fc7594dc4d6af271"
+                  },
+                  {
+                      "path":  "tests/test_unified_metrics.py",
+                      "sha256":  "96b665f15a645bc5af3009b85366c9eb11827c0f0b3382e1d7e25dc42d0748db"
+                  },
+                  {
+                      "path":  "tests/test_visualization.py",
+                      "sha256":  "5b10a5b67dfd58a8ed30d312c8357421cfadc07bef6556b057d1f98c77fbac82"
+                  },
+                  {
+                      "path":  "tests/test_warping.py",
+                      "sha256":  "d270c72f4b940d6025117d83a7b09956de4d10c0a98c2d99f7a185126ea77a3a"
+                  },
+                  {
+                      "path":  "tests/test_week07_evidence_archive.py",
+                      "sha256":  "32c033b70aa2bb62f5a7400978f6f5c529aec220c3a39108da7a639e34ca8382"
+                  },
+                  {
+                      "path":  "tests/test_week08_final_evaluation.py",
+                      "sha256":  "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c"
+                  },
+                  {
+                      "path":  "tests/test_week08_phase3_cli.py",
+                      "sha256":  "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c"
+                  },
+                  {
+                      "path":  "tests/test_week08_preflight.py",
+                      "sha256":  "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762"
+                  },
+                  {
+                      "path":  "tests/test_week3_baseline.py",
+                      "sha256":  "6439cca2ed4e3107e60960f640708505a85eba9df98a3d98d76b1a4d21d77f9a"
+                  },
+                  {
+                      "path":  "tests/test_week4_baseline.py",
+                      "sha256":  "741939c26bd215a64bcd3b6300ee31f45ba0b8ce5bbed04e1ccd33411f54dc6d"
+                  },
+                  {
+                      "path":  "tests/test_week5_integrated_benchmark.py",
+                      "sha256":  "6f1fc6f5db9a809fe820094a568de860a511a297891eef5d00120125e25a236e"
+                  },
+                  {
+                      "path":  "tests/test_week7_day31_robustness.py",
+                      "sha256":  "7c73f6f68ce954836b0fe157f2326859bc1c622437827f5c61ba847e1ba39e94"
+                  },
+                  {
+                      "path":  "tests/test_week7_day32_sweeps.py",
+                      "sha256":  "205bffc08d9619a09fb836924c00bc08fbf23c2037813aeda44d067a70cc6843"
+                  },
+                  {
+                      "path":  "tests/test_week7_day33_failure_analysis.py",
+                      "sha256":  "0569a29dcfc0805074c7e588169cc7ea06300d1fa57c998105054f0b2c9c3475"
+                  },
+                  {
+                      "path":  "tests/test_week7_day34_offline_calibration.py",
+                      "sha256":  "1c8760aac6c0418358ab34515363f9c25a6234892f9db80c4eb12ec384c692ad"
+                  },
+                  {
+                      "path":  "tests/test_week7_day35_integrated_validation.py",
+                      "sha256":  "979697f1294b8a1cfcbf24c6c28bf0571cb0cce81722f14b40d533cf82a96fb0"
+                  },
+                  {
+                      "path":  "tests/test_zip_project_benchmark.py",
+                      "sha256":  "f361691a64458ca110d966415220d460c871040c852c2ded7d5c9e3ec812eaa7"
+                  },
+                  {
+                      "path":  "ui/__init__.py",
+                      "sha256":  "0743f10205cdd0100d38993b5fa5aa216e01bd49aca18e58140180a01e474db6"
+                  },
+                  {
+                      "path":  "ui/adapters/__init__.py",
+                      "sha256":  "c8e401e87a1663355fbddd3ccfffade94fe15fa6cfe3c513af502a72d2f3b769"
+                  },
+                  {
+                      "path":  "ui/adapters/common.py",
+                      "sha256":  "713b63b877e374b91f287b8ff1c6c3e047ea96815f91ff4b7775a140b6e65c0c"
+                  },
+                  {
+                      "path":  "ui/adapters/ecc_adapter.py",
+                      "sha256":  "d766f88c7d244237b468c26683c77501228acfe58cb66f3e68a8c24202205d52"
+                  },
+                  {
+                      "path":  "ui/adapters/feature_adapter.py",
+                      "sha256":  "15aab03d68983849a94b5afef5d263028052d474cd455fa1ac71dd9bf52397ff"
+                  },
+                  {
+                      "path":  "ui/adapters/mutual_information_adapter.py",
+                      "sha256":  "943fe831c2139a243ec69eb8b9f9a65e43fb31b59e030e78c92a6b60b5ce037e"
+                  },
+                  {
+                      "path":  "ui/adapters/phase_correlation_adapter.py",
+                      "sha256":  "5f624b0e050cfb5867e643a4269ab89c6401b30a0ea5413f37e96530cae03d2c"
+                  },
+                  {
+                      "path":  "ui/automatic/__init__.py",
+                      "sha256":  "e0cd6884386381a3d4dc84189abc957d2e1f5ade4ee87fdb9e0638151c1ab923"
+                  },
+                  {
+                      "path":  "ui/automatic/agreement_presenter.py",
+                      "sha256":  "ffc09ebe100fdd6613b5d8b2c1192a17d87339eba7f5980287042de44ae6f639"
+                  },
+                  {
+                      "path":  "ui/automatic/automatic_export.py",
+                      "sha256":  "b2262e9bbd0be01db6ae436497a8e49f865cb02def534bcda8435cd4e49df5d9"
+                  },
+                  {
+                      "path":  "ui/automatic/automatic_presenter.py",
+                      "sha256":  "a6637a7687737c698aed22e1429e9d3963f4fb0d1cc93413c66bdb27deb61096"
+                  },
+                  {
+                      "path":  "ui/automatic/automatic_service.py",
+                      "sha256":  "2383e83e94ee79c04dbcfd526023b9efb34bb78e70b351cb6c79a99ee9944ded"
+                  },
+                  {
+                      "path":  "ui/automatic/candidate_inspection.py",
+                      "sha256":  "562d7b4a9214bf36d1c094efb946835bf7f77a5574941999df6ed785d02b2f11"
+                  },
+                  {
+                      "path":  "ui/automatic/candidate_summary.py",
+                      "sha256":  "707841150df6cccdfbe270de9e8dfcd41d3edef563be496785b4777e670a54f3"
+                  },
+                  {
+                      "path":  "ui/automatic/models.py",
+                      "sha256":  "0996bc05d977e40bfca326c4efce648dda386fa5f769484690e6a4332f703c55"
+                  },
+                  {
+                      "path":  "ui/core/__init__.py",
+                      "sha256":  "bbdcac2d0660eaa99eb554962f2e4b38530b205f2deb78e61e8b4eaba68b275e"
+                  },
+                  {
+                      "path":  "ui/core/contracts.py",
+                      "sha256":  "64ab8669d2c806b282eabb5a21a8cd4cc4ff9819c43da35933f22634c2f2a0fd"
+                  },
+                  {
+                      "path":  "ui/core/dataset_catalog.py",
+                      "sha256":  "ddcccedb6f536fcdd60c1b09b4b15cb8601e745d72878ad77bf85975a0c57135"
+                  },
+                  {
+                      "path":  "ui/core/enums.py",
+                      "sha256":  "fb33d159fc27a6ed73d56acd2d30916d31d9a202601fcadf422c19273d9f1da6"
+                  },
+                  {
+                      "path":  "ui/core/export_service.py",
+                      "sha256":  "a71fb74082fa929cc3535191d3e7184b2c070e99a02525458c73c39ed336a252"
+                  },
+                  {
+                      "path":  "ui/core/image_inputs.py",
+                      "sha256":  "2c1af6dde15af100df1e5435d6755fc1c509951b3cecd4c18d4ae52e1e603442"
+                  },
+                  {
+                      "path":  "ui/core/method_registry.py",
+                      "sha256":  "75873afc33b81fb5671111a8fbc1989d0c179307241b7f31a7d3accde5c76ba0"
+                  },
+                  {
+                      "path":  "ui/core/registration_service.py",
+                      "sha256":  "24bd2ba5e3b5278e59102025b5b77475bc9efb32f029a58cf9ecb8c1ec4db15d"
+                  },
+                  {
+                      "path":  "ui/core/result_presenter.py",
+                      "sha256":  "a4a7d3dd486900bed04de97df016f8b06a355310caf5524e300a20690e6e3ef5"
+                  },
+                  {
+                      "path":  "ui/core/validation.py",
+                      "sha256":  "71612e52133ffe1067721b2f7bbb2cc3bd694772ac5ac5338c2c9d7718718194"
+                  },
+                  {
+                      "path":  "ui/qa/__init__.py",
+                      "sha256":  "69eac93c6a4a3148441b45a645bace7169d7c281b09d541fba0862a6ea231492"
+                  },
+                  {
+                      "path":  "ui/qa/stage_b_acceptance.py",
+                      "sha256":  "3dd50fd1af7f37d6dd5e9590579e1949c76471a891b623c61b1340cdd6fe625f"
+                  },
+                  {
+                      "path":  "ui/streamlit/__init__.py",
+                      "sha256":  "72391ee7636d89654b254296ae6e18e4c1fe83eeace2db6b70bf21787c4a262c"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/__init__.py",
+                      "sha256":  "596bdf9bfce44fdda10bee493af047e6f993de3724c647d53c85590506c52384"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/diagnostics_panel.py",
+                      "sha256":  "86b7480e067473f7c9c6fa7e0c53b1ac9d994b518133733cb22924b97e918491"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/export_panel.py",
+                      "sha256":  "adc31e6f577dfac474a8ad90cdd40cf6ee79d8617802310b838b9b260652e185"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/image_comparison.py",
+                      "sha256":  "38b1decde4df72ae06c5de59dfd3c13c116e6cea3ce26ac05b56a7de12ec512a"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/method_controls.py",
+                      "sha256":  "40ca187349222e807fb3e942f1b4c111a5d484280ba166b5df306f43acfeeb33"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/metrics_panel.py",
+                      "sha256":  "cd92f5d697a300f86418ab3b2066c0ba77c0fbfa281e45285909a342694c04f8"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/provenance_panel.py",
+                      "sha256":  "3313a66a66bcccf70b6ed3b8777d3f428aeeef38b780b863ffd6b5ff3843211b"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/source_selector.py",
+                      "sha256":  "4e193e54ec317ab38f4a4ee246d4acb042a48a0c2832fdd494dc4475e5759078"
+                  },
+                  {
+                      "path":  "ui/streamlit/components/visuals.py",
+                      "sha256":  "6bdc110f27133b55659bf27b1ea74e2b4abb882daa9dbd0a895725a5536fa373"
+                  },
+                  {
+                      "path":  "ui/streamlit/pages/__init__.py",
+                      "sha256":  "6d35e75a6f2ba4f7f92f381b1ab4e009677f8379179d4f18125bca5b0115dc8b"
+                  },
+                  {
+                      "path":  "ui/streamlit/pages/automatic_comparison.py",
+                      "sha256":  "155bd38ddffa50c8549b32fc6e4d566f71c014970b7c4de0817fb2eafd620687"
+                  },
+                  {
+                      "path":  "ui/streamlit/pages/benchmark_explorer.py",
+                      "sha256":  "d375e32c475b1c0c60aeb55970135731dfebedca88bf346dee0820b1d2ef0646"
+                  },
+                  {
+                      "path":  "ui/streamlit/pages/method_reference.py",
+                      "sha256":  "3949f0104955a0a27c1ebe2c4f6aef3f4151869981e2c02fe6e7f8ce502f2098"
+                  },
+                  {
+                      "path":  "ui/streamlit/pages/workbench.py",
+                      "sha256":  "2d40dff8907f14735c0862f3d10ee6a2ce7dedf3eac01f7e81366209e15adfad"
+                  },
+                  {
+                      "path":  "ui/streamlit/view_model.py",
+                      "sha256":  "a5568259646ca8d049eda031f14f354a704533ac9f48a8fa564f4587cac60333"
+                  },
+                  {
+                      "path":  "ui/streamlit_app.py",
+                      "sha256":  "61d4df5b6b6edf9a0b10467c231e181454f664ca9b8460a877c47191aa0697b1"
+                  },
+                  {
+                      "path":  "ui/tests/test_automatic_service.py",
+                      "sha256":  "41b2d26237d1777d810cae81d1b81bafc3781c26d9e6db57dce0ccbb24202091"
+                  },
+                  {
+                      "path":  "ui/tests/test_contracts.py",
+                      "sha256":  "315c19f90a14530559bad2dd765bb9b3f49a993fb7a82cbf27e5d10d14df5f4b"
+                  },
+                  {
+                      "path":  "ui/tests/test_dataset_catalog.py",
+                      "sha256":  "03d9bac92692224d59e60669edbbb5f6aeb17b062e1c6651ae8a00fb124d72ec"
+                  },
+                  {
+                      "path":  "ui/tests/test_image_inputs.py",
+                      "sha256":  "76f91b235e627597c4dbe84a91516ca8c5311617ae58a436e2fd34177a27c479"
+                  },
+                  {
+                      "path":  "ui/tests/test_method_registry.py",
+                      "sha256":  "04ec924353afcfda1d9a954746aeb889cc7f0ca5d61f0f1b4ad49dbf6a2548c1"
+                  },
+                  {
+                      "path":  "ui/tests/test_pre_week08_stage_b_acceptance.py",
+                      "sha256":  "37f314e4f3615c576085d3ebe5790b82f0ff84a31ee843c5e5a1a623f0d48ce8"
+                  },
+                  {
+                      "path":  "ui/tests/test_registration_service.py",
+                      "sha256":  "03f03d4f2419f2adbf1ebf7b2d324486756abcc3be14c9428dd999aa18bb9621"
+                  },
+                  {
+                      "path":  "ui/tests/test_result_presenter.py",
+                      "sha256":  "04ce8cff652fde008b0e21e209d792acfd4f75b3a2054e274f329229898678ee"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage1_structure.py",
+                      "sha256":  "34b89a11d978c4b2018465c76cc3ec3184d8175cfd6a8774709596d712475f70"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage3_adapters.py",
+                      "sha256":  "89b912fe04122f01b3c81f7ec0821cf1c4ecba3174a40388285c29592b76a38d"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_benchmark_explorer.py",
+                      "sha256":  "8e077d8d02994cd1c5de37b2f6902b6dde4f46c556ce2da27606da4505ec5361"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_header_hierarchy.py",
+                      "sha256":  "ad92beee12d3b38f8d2375c19ddff95c08f369015445c715716cb783d59d4976"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_isolation.py",
+                      "sha256":  "0eb70c2554af0361eb55910a3351db6465a6e76e1e798c8e4c7e14c095e2333b"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_method_reference.py",
+                      "sha256":  "dd023e396cf1a5665f73de286f7a1ef47bd6675261d3d948f4f61ffe39a79935"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_view_model.py",
+                      "sha256":  "81df0d68df1777aac29e90fe26c146da33222082c14fd217305d8ee57b0c036b"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage4_visuals.py",
+                      "sha256":  "c0aa7cd109ce3d7a48fa7c09f274eb3ec0226bcb934166a99f58846493f6ae64"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage5_exports.py",
+                      "sha256":  "f0fdb3a4da8511369907885a8953af2ef893d936fe99548daaafbedbf5013b7d"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage5_polish.py",
+                      "sha256":  "4a2d4cac4d74e6baf9108fbf5e70bc07a852504a801c5d23f857f5a5b881b326"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage6_agreement_inspection.py",
+                      "sha256":  "369eda305483c7890a32e57a8a4421215ceb41f1f2d12643560b7a51509f5ac7"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage6_automatic_page.py",
+                      "sha256":  "03edb97f64504b92f1eb0b91da7112b5defdc8b8623bb2a3f7b8a91b8f8ff51c"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage6_candidate_execution.py",
+                      "sha256":  "b55eb4f9ca4b487d86faaba327d4aef98e87600eeaed00d9e1709db66eec0e6c"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage6_export_freeze.py",
+                      "sha256":  "752aca0caf2a01969c7741b09ae1844bf9ef74703a76a179a0ea935693a69a41"
+                  },
+                  {
+                      "path":  "ui/tests/test_stage6_final_qa_patch.py",
+                      "sha256":  "87d9bff69e3d60de49bbb9cb0e31d2325985c6b6e9df10451107eedf77f1e00a"
+                  },
+                  {
+                      "path":  "ui/tests/test_streamlit_smoke.py",
+                      "sha256":  "9d5414af83596fa3a0950e16a7cba3f56a217ebe3e0deaa9448c7a0403f6dec4"
+                  },
+                  {
+                      "path":  "ui/tests/test_validation.py",
+                      "sha256":  "1bd7202e4ab7d4aecf8cd167f26e7db7bccd251c32bb95a22af8747c13a19298"
+                  }
+              ]
+}

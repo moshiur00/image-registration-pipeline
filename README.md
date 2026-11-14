@@ -24,7 +24,7 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 7 and pre-Week 8 G1-G4 complete; Stage B accepted at 5/5 scenarios plus 5/5 supplemental checks and UI v0.2 frozen; Phase 5 release-candidate freeze is next; Week 8 not run |
+| Current status | Weeks 1 to 7 and pre-Week 8 G1-G5 complete; immutable Phase 5 candidate tagged and manifest-bound; Phase 6 independent-source enrollment is next; Week 8 not run |
 | Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
@@ -315,11 +315,16 @@ firewall are complete and hash-bound to the current preflight. Current
 validation is 702 backend tests passed with three expected unsupported-symlink
 skips and 179 UI tests passed. Development preflight is 18 PASS / 1 BLOCK; the
 sole block is the still-empty independent Week 8 source enrollment. Do not run
-the Week 8 benchmark. Phase 4 is complete; the next step is the Phase 5
-release-candidate checklist, manifest, dependency/environment record, and
-clean-restoration evidence. See `docs/PRE_WEEK08_INTEGRATION_PLAN.md`,
-`reports/pre_week08_phase3_evaluator.json`, and
-`reports/pre_week08_stage_b_validation.json`.
+the Week 8 benchmark. Phase 4 is complete. Phase 5 now has an exact 55-package
+lock, clean-install smoke test, 149/150 release-critical tests passed with one
+expected Windows symlink skip, clean restoration, a 12/12 sealed
+development-only rehearsal with zero-execution resume, and a 219-file
+executable inventory. Named reviewer Md Moshiur Rahman approved G5; immutable
+tag `pre-week08-g5-20261114` and its metadata-only release manifest bind the
+candidate. Phase 6 independent-source enrollment is next. See
+`docs/PRE_WEEK08_RELEASE_CHECKLIST.md`,
+`reports/pre_week08_validation.json`, and
+`reports/pre_week08_environment.json`.
 
 ### Pre-Week 8 Stage B UI acceptance
 
