@@ -2,8 +2,8 @@
     "schema_version":  "pre_week08_release_manifest_v1",
     "release_id":  "pre-week08-g5-20261114",
     "gate":  "G5",
-    "status":  "source_enrolled_phase7_review_pending",
-    "generated_utc":  "2026-11-14T19:23:43Z",
+    "status":  "source_enrolled_strict_readiness_passed_g7_approval_pending",
+    "generated_utc":  "2026-11-14T19:29:18Z",
     "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
     "release_tag":  "pre-week08-g5-20261114",
     "clean_worktree":  true,
@@ -135,7 +135,7 @@
                                                   "source_bytes_hashed":  true,
                                                   "source_pixels_decoded":  false,
                                                   "source_labels_accessed":  false,
-                                                  "strict_final_readiness":  "PENDING_CLEAN_G6_COMMIT"
+                                                  "strict_final_readiness":  "PASS"
                                               }
                            },
     "g5_strict_verification":  {
@@ -154,6 +154,25 @@
                                                             "strict_source_enrollment"
                                                         ]
                                },
+    "phase6_strict_verification":  {
+                                        "verified_utc":  "2026-11-14T19:29:18Z",
+                                        "verified_commit":  "d207630bf86c7c0f7dd62530a4f8857fe93fa41b",
+                                        "readiness":  "PASS",
+                                        "pass":  29,
+                                        "warn":  0,
+                                        "block":  0,
+                                        "release_git_errors":  0,
+                                        "stage_b_binding_errors":  0,
+                                        "post_release_changed_paths":  [
+                                                                           "configs/week08_source_use_ledger.json",
+                                                                           "data/manifests/week08_holdout_sources.json",
+                                                                           "reports/pre_week08_release_manifest.json",
+                                                                           "reports/pre_week08_source_registration.json"
+                                                                       ],
+                                        "week08_benchmark_executed":  false,
+                                        "source_pixels_decoded":  false,
+                                        "source_labels_accessed":  false
+                                    },
     "limitations":  [
                         "G6 enrolls one independently reviewed source; this single-source design limits generalizability.",
                         "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
