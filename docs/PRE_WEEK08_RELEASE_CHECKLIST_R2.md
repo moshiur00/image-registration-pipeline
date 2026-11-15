@@ -1,12 +1,12 @@
 # Pre-Week 8 Release Checklist — Authorization-Hardening Cycle
 
 **Prepared:** 15 November 2026  
-**Status:** IN PROGRESS — not approved and not tagged  
+**Status:** G5 APPROVED — R2 tag creation authorized
 **Historical release:** `pre-week08-g5-20261114` remains immutable evidence
 
 This checklist governs the new release cycle started after the documented
-Phase 7 pre-decode test incident. It does not approve G5, enroll a source,
-authorize G7, or permit access to held-out pixels or labels.
+Phase 7 pre-decode test incident. It records renewed G5 approval; it does not
+enroll a source, authorize G7, or permit access to held-out pixels or labels.
 
 ## Incident disposition
 
@@ -37,16 +37,16 @@ authorize G7, or permit access to held-out pixels or labels.
 - [x] Focused authorization, preflight, preparation, evaluator, and tamper
   tests pass with zero failures.
 - [x] Full backend and UI regressions pass with zero failures.
-- [ ] Frozen baseline, integrity anchor, evaluator evidence, dependency and
+- [x] Frozen baseline, integrity anchor, evaluator evidence, dependency and
   environment records, executable inventory, and validation report are
   regenerated and mutually consistent.
-- [ ] `reports/pre_week08_stage_b_rebinding_r2.json` binds the unchanged base
+- [x] `reports/pre_week08_stage_b_rebinding_r2.json` binds the unchanged base
   acceptance report, exact implementation checkpoint and protected-path delta,
   zero UI runtime/test changes, current regressions, and an explicit renewed
   release-reviewer approval. The original 5/5 + 5/5 evidence is identified as
   inherited, not rerun.
 - [x] Clean-staging restoration passes.
-- [ ] The candidate worktree is clean.
+- [x] The reviewed candidate worktree is clean.
 - [x] The authorization-hardening implementation checkpoint is
   `9824e701c47ce9c1788ff8694b4c5bfe089f0933`.
 
@@ -56,17 +56,17 @@ authorize G7, or permit access to held-out pixels or labels.
 - [x] The Phase 6 enrollment manifest and source-registration attestation are
   absent from the candidate.
 - [x] Private PIA18033 bytes remain ignored and unopened.
-- [ ] The candidate tag is created only after explicit G5 approval.
-- [ ] After tagging, only the declared G6/G7 metadata allowlist may change.
+- [x] Tag creation was authorized only after explicit G5 approval.
+- [x] After tagging, only the declared G6/G7 metadata allowlist may change.
 
 ## Required renewed G5 signoff
 
-- **Release reviewer:** pending
-- **Decision:** pending
-- **Attested UTC:** pending
+- **Release reviewer:** Md Moshiur Rahman
+- **Decision:** APPROVED
+- **Attested UTC:** `2026-11-15T12:20:55Z`
 - **Implementation checkpoint:** `9824e701c47ce9c1788ff8694b4c5bfe089f0933`
-- **Candidate release commit:** pending reviewer approval
-- **Candidate tag:** proposed `pre-week08-g5r2-20261115`
+- **Reviewed candidate:** `4dd77bbb1555cbb84ab17bce50c8d806481342a3`
+- **Candidate tag:** authorized `pre-week08-g5r2-20261115`
 
 Required attestation: the reviewer confirms that the authorization hardening,
 incident disposition, regression evidence, renewed Stage B binding, frozen

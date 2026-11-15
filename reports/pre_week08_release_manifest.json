@@ -2,32 +2,32 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "R2_REVIEW_PENDING",
-  "generated_utc": "2026-11-15T11:45:21Z",
+  "status": "G5_APPROVED_TAG_PENDING",
+  "generated_utc": "2026-11-15T12:20:55Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": null,
   "release_tag": null,
   "proposed_release_tag": "pre-week08-g5r2-20261115",
-  "clean_worktree": false,
-  "required_signoffs_complete": false,
+  "clean_worktree": true,
+  "required_signoffs_complete": true,
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": null,
+    "name": "Md Moshiur Rahman",
     "role": "release reviewer",
-    "decision": "PENDING",
-    "attested_utc": null
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-15T12:20:55Z"
   },
   "stage_b_binding": {
     "base_validation_path": "reports/pre_week08_stage_b_validation.json",
     "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
     "rebinding_path": "reports/pre_week08_stage_b_rebinding_r2.json",
-    "rebinding_sha256": "4199ca998b90c4e431bc72646acccf3e329fa7a7c96413b906eb01bf5d7e300a",
+    "rebinding_sha256": "cb4d190e70a3d56641bf1d193cdcc1480f1a845de1df03c20a42a13172c3f1c5",
     "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
     "frozen_ui_version": "v0.2",
     "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
     "ui_runtime_or_ui_test_paths_changed": false,
-    "review_status": "PENDING"
+    "review_status": "APPROVED"
   },
   "dependency_lock": {
     "path": "reports/pre_week08_dependency_lock.txt",
@@ -58,7 +58,7 @@
     "frozen_algorithms_and_configs": "configs/week08_frozen_baseline.json binds 101 immutable files",
     "week7_evidence": "reports/week07_evidence_archive_manifest.json binds 81 restored files",
     "runner_and_firewall": "reports/pre_week08_phase3_evaluator.json plus explicit runner paths",
-    "ui_release": "unchanged reports/pre_week08_stage_b_validation.json plus pending R2 rebinding",
+    "ui_release": "unchanged reports/pre_week08_stage_b_validation.json plus reviewer-approved R2 rebinding",
     "dependencies": "unchanged exact lock, requirement inputs, and environment record",
     "private_data_policy": ".gitignore plus data/holdout/week08/README.md"
   },
@@ -68,16 +68,16 @@
     "configs/week08_integrity_anchor.json": "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3",
     "configs/week08_source_use_ledger.json": "5af3b51dde06876af65e4892c3b6e344f5f1b5d308d341b90c7f330c00788ee3",
     "data/manifests/week08_holdout_sources.json": null,
-    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md": "3c2b2510a263b0694cfbb0ebafc47ac8ec176a422175c392a3d11d6e9c6c0331",
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md": "84b28ca961bc2f9898a0bf00ed2ff44a52117f5e3850a86728ba3534772f0571",
     "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "c097a919dd04073652597ef66e16a9f334a9c0ba70de82fd66832800475dda89",
     "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
     "reports/pre_week08_executable_inventory.json": "8debe2a1ec29e860f8a67a54c2107c54ca2ef9dd35b9a2eb5e19c2482a33dc0a",
     "reports/pre_week08_phase3_evaluator.json": "8bfb562f1228cd43ae5852d247d4e4c6edeb6270e6e6a7a9624c115c8e729148",
     "reports/pre_week08_phase7_incident.json": "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596",
     "reports/pre_week08_source_registration.json": null,
-    "reports/pre_week08_stage_b_rebinding_r2.json": "4199ca998b90c4e431bc72646acccf3e329fa7a7c96413b906eb01bf5d7e300a",
+    "reports/pre_week08_stage_b_rebinding_r2.json": "cb4d190e70a3d56641bf1d193cdcc1480f1a845de1df03c20a42a13172c3f1c5",
     "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
-    "reports/pre_week08_validation.json": "c950a5c52e183836e576cf0b5dc533f80e7f7289f993db4d2b56b3cfda91a2a5",
+    "reports/pre_week08_validation.json": "7a33b9c60bb4dc13cd836ab1ace78c0ccbd9cc6ed93163e579b8b137d9840363",
     "reports/week07_evidence_archive_manifest.json": "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
     "scripts/week08_final_evaluation.py": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
     "scripts/week08_preflight.py": "8071a8c6e69827d983975de0a891e56982107a59ea820cf078e307280539bf5f",
@@ -106,7 +106,7 @@
     "authorized": false,
     "release_reviewer_approval_pending": true,
     "expected_remaining_blocks": [
-      "renewed_g5_signoff_and_tag",
+      "renewed_g5_tag_binding",
       "renewed_g6_source_enrollment",
       "machine_verified_phase7_authorization"
     ],
@@ -117,8 +117,8 @@
   "g5_candidate": {
     "automated_validation": "PASS",
     "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
-    "stage_b_rebinding": "PENDING_REVIEW",
-    "release_reviewer_signoff": "PENDING",
+    "stage_b_rebinding": "APPROVED",
+    "release_reviewer_signoff": "APPROVED",
     "tag_created": false
   },
   "phase6_enrollment": {
@@ -155,9 +155,9 @@
     ]
   },
   "limitations": [
-    "This in-progress R2 manifest does not approve G5, create a release tag, enroll a source, authorize G7, or permit held-out pixel or label access.",
-    "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding remains pending explicit reviewer approval.",
-    "The candidate is deliberately pre-enrollment, so strict readiness must remain blocked until renewed G5, G6, and G7 are complete.",
+    "This pre-tag R2 manifest records renewed G5 approval but does not enroll a source, authorize G7, or permit held-out pixel or label access.",
+    "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
+    "The candidate is deliberately pre-enrollment, so strict readiness must remain blocked until renewed G6 and G7 are complete.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
   ]
 }

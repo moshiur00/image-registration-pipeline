@@ -2,7 +2,7 @@
   "schema_version": "pre_week08_validation_v1",
   "recorded_utc": "2026-11-15T11:45:21Z",
   "gate": "G5",
-  "status": "PASS_R2_AUTOMATED_VALIDATION_G5_REVIEW_PENDING",
+  "status": "PASS_R2_G5_APPROVED_FOR_FREEZE",
   "scope": "authorization_hardening_release_candidate_before_renewed_source_enrollment",
   "runner_contract_passed": true,
   "full_regression_zero_failures": true,
@@ -152,10 +152,10 @@
       "path": "reports/pre_week08_stage_b_rebinding_r2.json",
       "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
       "ui_runtime_or_ui_test_paths_changed": false,
-      "status": "PENDING_REVIEW",
-      "reviewer": null,
-      "decision": "PENDING",
-      "attested_utc": null
+      "status": "APPROVED",
+      "reviewer": "Md Moshiur Rahman",
+      "decision": "APPROVED",
+      "attested_utc": "2026-11-15T12:20:55Z"
     }
   },
   "executable_inventory": {
@@ -177,20 +177,21 @@
   },
   "release_review": {
     "automated_evidence_complete": true,
-    "human_g5_signoff_complete": false,
+    "human_g5_signoff_complete": true,
     "requested_reviewer": "Md Moshiur Rahman",
-    "reviewer": null,
-    "decision": "PENDING",
-    "attested_utc": null,
-    "release_commit_created": false,
-    "release_tag_created": false,
-    "release_manifest_bound": false,
-    "renewed_stage_b_binding_complete": false
+    "reviewer": "Md Moshiur Rahman",
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-15T12:20:55Z",
+    "reviewed_candidate": "4dd77bbb1555cbb84ab17bce50c8d806481342a3",
+    "release_commit_creation_authorized": true,
+    "release_tag_creation_authorized": true,
+    "renewed_stage_b_binding_complete": true,
+    "record_state": "PRE_TAG_APPROVAL_RECORD"
   },
   "limitations": [
     "This is software and release evidence, not a Week 8 benchmark result or an independent scientific validation claim.",
-    "The original Stage B manual evidence is inherited because the UI runtime and UI tests are unchanged; the R2 release binding still requires explicit renewed reviewer approval.",
-    "The candidate is intentionally pre-enrollment and cannot enter final preparation until renewed G5, G6, and machine-verified G7 authorization are complete.",
+    "The original Stage B manual evidence is inherited because the UI runtime and UI tests are unchanged; its R2 release binding received explicit renewed reviewer approval.",
+    "The candidate is intentionally pre-enrollment and cannot enter final preparation until renewed G6 and machine-verified G7 authorization are complete.",
     "No real Week 8 image or label was previewed, decoded, or evaluated during R2 validation."
   ]
 }
