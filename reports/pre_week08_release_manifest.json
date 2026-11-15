@@ -2,8 +2,8 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "G7_PASS_PHASE8_AUTHORIZED",
-  "generated_utc": "2026-11-15T15:32:52Z",
+  "status": "PHASE8_START_RECORDED",
+  "generated_utc": "2026-11-15T15:40:35Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
   "release_tag": "pre-week08-g5r2-20261115",
@@ -219,7 +219,37 @@
       "source_pixels_decoded": false,
       "source_labels_accessed": false
     },
-    "execution_status": "AUTHORIZED_NOT_STARTED"
+    "execution_status": "START_RECORDED_NOT_EXECUTED"
+  },
+  "phase8_run": {
+    "run_id": "week08-final-r2-20261115T154035Z",
+    "release_id": "pre-week08-g5r2-20261115",
+    "authorization_id": "g7-r2-pia18033-20261115",
+    "authorization_commit": "61a34e87473348fdd8139ccd7128da1d087fc280",
+    "start_recorded_utc": "2026-11-15T15:40:35Z",
+    "status": "START_AUTHORIZED_NOT_EXECUTED",
+    "authorized_sequence": [
+      "prepare",
+      "decide",
+      "evaluate"
+    ],
+    "execution_count_authorized": 1,
+    "commands": [
+      ".venv/Scripts/python.exe scripts/week08_prepare_holdout.py --config configs/week08_final_evaluation.yaml",
+      ".venv/Scripts/python.exe scripts/week08_final_evaluation.py decide --config configs/week08_final_evaluation.yaml",
+      ".venv/Scripts/python.exe scripts/week08_final_evaluation.py evaluate --config configs/week08_final_evaluation.yaml"
+    ],
+    "environment_record": {
+      "path": "reports/pre_week08_environment.json",
+      "sha256": "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239"
+    },
+    "output_roots": [
+      "outputs/week08_holdout",
+      "outputs/week08_final"
+    ],
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "week08_benchmark_executed": false
   },
   "historical_release": {
     "release_id": "pre-week08-g5-20261114",
