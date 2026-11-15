@@ -1,0 +1,9 @@
+{
+  "schema_version": "week08_holdout_sources_v1",
+  "release_id": "pre-week08-g5r2-20261115-pia18033",
+  "ledger_sha256": "97fe46f1bf3b483d2806ba05760e45b7482a276476d13e9f4437a553e9874b41",
+  "source_ids": [
+    "nasa_pia18033_earth"
+  ],
+  "pairs": []
+}

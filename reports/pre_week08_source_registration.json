@@ -1,0 +1,144 @@
+{
+  "schema_version": "pre_week08_source_registration_v1",
+  "gate": "G6",
+  "status": "PASS",
+  "registered_utc": "2026-11-15T12:30:10Z",
+  "release_binding": {
+    "g5_release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
+    "g5_release_tag": "pre-week08-g5r2-20261115",
+    "release_id": "pre-week08-g5r2-20261115-pia18033"
+  },
+  "custodian_attestation": {
+    "name": "Md Moshiur Rahman",
+    "role": "data custodian/provenance reviewer",
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-15T12:30:10Z",
+    "statement": "I approve reuse of PIA18033 for renewed G6 under pre-week08-g5r2-20261115. I confirm no pixel, label, or outcome exposure occurred; its provenance, permitted use, project independence, and canonical identity remain valid; and its synthetic-after-freeze ground-truth route may be rebound to the new freeze.",
+    "source_reuse_approved": true,
+    "intake_record": {
+      "path": "data/holdout/week08/custodian_intake.nasa_pia18033.json",
+      "sha256": "3a126b2f6920b5fa0cc462974d638cbad90cc27bc058bd5a80fea49af1dab948"
+    }
+  },
+  "source": {
+    "source_id": "nasa_pia18033_earth",
+    "path": "data/holdout/week08/nasa_pia18033_earth.jpg",
+    "format": "jpg",
+    "modality": "visible",
+    "role": "full_project_independent",
+    "size_bytes": 7246556,
+    "sha256": "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
+    "transport_etag": "7e0fc43be21021708ba4ae1e814ccebc",
+    "transport_md5_matches_etag": true,
+    "official_source_page": "https://science.nasa.gov/photojournal/earth/",
+    "official_download": "https://images-assets.nasa.gov/image/PIA18033/PIA18033~orig.jpg",
+    "catalog_id": "PIA18033",
+    "credit": "NASA",
+    "mission": "Suomi NPP",
+    "instrument": "VIIRS",
+    "reference_or_license": "NASA Photojournal PIA18033, credited to NASA. NASA content is generally not subject to copyright in the United States and may be used for educational or informational purposes under the NASA Images and Media Usage Guidelines; NASA should be acknowledged and no endorsement implied."
+  },
+  "canonical_identity": {
+    "canonical_dataset_id": "nasa_photojournal",
+    "canonical_subject_id": "earth",
+    "canonical_case_id": "pia18033",
+    "canonical_acquisition_id": "suomi_npp_viirs_2012_01_composite",
+    "canonical_source_id": "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
+    "lineage_ancestors": [
+      "nasa:suomi_npp",
+      "nasa:suomi_npp:viirs",
+      "nasa_photojournal:pia18033"
+    ],
+    "lineage_status": "custodian_attested_official_nasa_catalog_source",
+    "lineage_evidence": {
+      "path": "data/holdout/week08/nasa_pia18033_lineage.json",
+      "sha256": "16c82fe0d1bdd290829bf4105fe37b9aa528ae009fd048d22c57033fab683242"
+    }
+  },
+  "independence_review": {
+    "previously_used": false,
+    "prior_usage": [],
+    "known_prior_source_count_checked": 7,
+    "path_collision": false,
+    "sha256_collision": false,
+    "canonical_source_collision": false,
+    "lineage_collision": false,
+    "canonical_case_collision": false,
+    "preflight_source_ledger_schema": "PASS",
+    "preflight_prior_source_inventory": "PASS",
+    "preflight_heldout_source_independence": "PASS",
+    "historical_enrollment_was_metadata_only": true,
+    "historical_enrollment_changed_previously_used_status": false
+  },
+  "incident_and_reuse_review": {
+    "incident_id": "phase7-predecode-test-20261114",
+    "incident_report": "reports/pre_week08_phase7_incident.json",
+    "source_reuse_approved": true,
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "scientific_outcomes_accessed": false,
+    "scientific_attempts_executed": 0
+  },
+  "ground_truth": {
+    "type": "synthetic_created_after_freeze",
+    "release_freeze_id": "pre-week08-g5r2-20261115",
+    "generator_id": "week08_frozen_synthetic_transform_generator",
+    "generator_version": "week08_evaluator_firewall_v1",
+    "seeds": [81103, 81117, 81131],
+    "coordinate_convention": "moving_to_fixed",
+    "config": {
+      "path": "data/holdout/week08/nasa_pia18033_synthetic_gt_config.json",
+      "sha256": "83db4cd75e7169efa12bfd8c9dd45c66e26b2bd8e53dc6708e9ee8248238fd95"
+    },
+    "case_specification": {
+      "path": "data/holdout/week08/nasa_pia18033_case_specification.json",
+      "sha256": "0a50ecbb75d1cf33486a6a4087bc5bbe6a1799a59ddd07e157a811da85653f6d"
+    },
+    "manifest": {
+      "path": "data/holdout/week08/nasa_pia18033_synthetic_gt_manifest.json",
+      "sha256": "7140c206c0af864b9766063568064e9ea81de2dd7d8a10483fb065d6d7158859"
+    },
+    "synthetic_pairs_generated": false,
+    "labels_generated": false
+  },
+  "tracked_enrollment": {
+    "source_ledger": {
+      "path": "configs/week08_source_use_ledger.json",
+      "sha256": "97fe46f1bf3b483d2806ba05760e45b7482a276476d13e9f4437a553e9874b41"
+    },
+    "holdout_source_manifest": {
+      "path": "data/manifests/week08_holdout_sources.json",
+      "sha256": "c450000e23b921f99ca0bbe5e955f13a4b011a67541769b7f559089706efda50"
+    },
+    "source_ids": [
+      "nasa_pia18033_earth"
+    ],
+    "explicit_pair_rows": 0,
+    "synthetic_matrix_expansion": true
+  },
+  "access_boundary": {
+    "raw_bytes_hashed_without_decode": true,
+    "source_pixels_previewed_by_developer": false,
+    "source_pixels_decoded_by_developer": false,
+    "labels_previewed_by_developer": false,
+    "labels_decoded_by_developer": false,
+    "scientific_outcomes_accessed": false,
+    "week08_benchmark_executed": false,
+    "next_permitted_action": "G7 technical and authorization-required final-readiness review"
+  },
+  "post_tag_policy": {
+    "allowed_paths": [
+      "configs/week08_source_use_ledger.json",
+      "data/manifests/week08_holdout_sources.json",
+      "reports/pre_week08_phase7_authorization.json",
+      "reports/pre_week08_release_manifest.json",
+      "reports/pre_week08_source_registration.json"
+    ],
+    "implementation_or_threshold_changes": false
+  },
+  "limitations": [
+    "One independently enrolled source can pass the software gate but cannot establish cross-source, population, anatomical, clinical, or external validity.",
+    "PIA18033 is a NASA Earth composite and does not provide medical-domain validation.",
+    "The synthetic transforms and labels do not exist until the isolated prepare phase runs after G7 approval."
+  ]
+}

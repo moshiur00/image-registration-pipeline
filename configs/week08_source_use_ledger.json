@@ -216,6 +216,53 @@
       "lineage_status": "documented_dataset_subject_case_and_acquisition"
     }
   ],
-  "week08_sources": [],
+  "week08_sources": [
+    {
+      "source_id": "nasa_pia18033_earth",
+      "path": "data/holdout/week08/nasa_pia18033_earth.jpg",
+      "sha256": "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
+      "format": "jpg",
+      "modality": "visible",
+      "role": "full_project_independent",
+      "previously_used": false,
+      "prior_usage": [],
+      "reference_or_license": "NASA Photojournal PIA18033, credited to NASA. NASA content is generally not subject to copyright in the United States and may be used for educational or informational purposes under the NASA Images and Media Usage Guidelines; NASA should be acknowledged and no endorsement implied.",
+      "canonical_dataset_id": "nasa_photojournal",
+      "canonical_subject_id": "earth",
+      "canonical_case_id": "pia18033",
+      "canonical_acquisition_id": "suomi_npp_viirs_2012_01_composite",
+      "canonical_source_id": "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
+      "lineage_ancestors": [
+        "nasa:suomi_npp",
+        "nasa:suomi_npp:viirs",
+        "nasa_photojournal:pia18033"
+      ],
+      "lineage_evidence": {
+        "manifest_path": "data/holdout/week08/nasa_pia18033_lineage.json",
+        "manifest_sha256": "16c82fe0d1bdd290829bf4105fe37b9aa528ae009fd048d22c57033fab683242"
+      },
+      "lineage_status": "custodian_attested_official_nasa_catalog_source",
+      "ground_truth": {
+        "type": "synthetic_created_after_freeze",
+        "generator_id": "week08_frozen_synthetic_transform_generator",
+        "generator_version": "week08_evaluator_firewall_v1",
+        "seeds": [
+          81103,
+          81117,
+          81131
+        ],
+        "interpolation": "linear",
+        "border_overlap_policy": "frozen Week 8 task-matrix policy",
+        "coordinate_convention": "moving_to_fixed",
+        "release_freeze_id": "pre-week08-g5r2-20261115",
+        "config_path": "data/holdout/week08/nasa_pia18033_synthetic_gt_config.json",
+        "config_sha256": "83db4cd75e7169efa12bfd8c9dd45c66e26b2bd8e53dc6708e9ee8248238fd95",
+        "case_spec_path": "data/holdout/week08/nasa_pia18033_case_specification.json",
+        "case_spec_sha256": "0a50ecbb75d1cf33486a6a4087bc5bbe6a1799a59ddd07e157a811da85653f6d",
+        "manifest_path": "data/holdout/week08/nasa_pia18033_synthetic_gt_manifest.json",
+        "manifest_sha256": "7140c206c0af864b9766063568064e9ea81de2dd7d8a10483fb065d6d7158859"
+      }
+    }
+  ],
   "registration_instructions": "Do not enroll real Week 8 sources before release-candidate freeze. Every reserved source must satisfy the v2 common fields and a typed ground_truth evidence contract; canonical lineage is reviewed before bytes become development-accessible. moon may only be a policy_transfer_check, and RIRE training_001 remains real_technical_only without verified labels."
 }
