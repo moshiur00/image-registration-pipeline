@@ -2,8 +2,8 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "G6_PASS_G7_PENDING",
-  "generated_utc": "2026-11-15T15:21:18Z",
+  "status": "G7_APPROVED_VERIFICATION_PENDING",
+  "generated_utc": "2026-11-15T15:28:27Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
   "release_tag": "pre-week08-g5r2-20261115",
@@ -100,13 +100,13 @@
   ],
   "phase7_authorization": {
     "path": "reports/pre_week08_phase7_authorization.json",
-    "sha256": null
+    "sha256": "f6d0e13b91ed2851b89e3e94cc740e842e0ba5c8a0ab28b477ccb537dab0c5f4"
   },
   "final_readiness": {
-    "authorized": false,
-    "release_reviewer_approval_pending": true,
+    "authorized": true,
+    "release_reviewer_approval_pending": false,
     "expected_remaining_blocks": [
-      "machine_verified_phase7_authorization"
+      "strict_phase7_authorization_verification"
     ],
     "week08_benchmark_executed": false,
     "real_week08_pixels_accessed": false,
@@ -183,6 +183,29 @@
     "source_labels_accessed": false,
     "scientific_attempts_executed": 0
   },
+  "phase7_review": {
+    "gate": "G7",
+    "status": "APPROVED_PENDING_STRICT_VERIFICATION",
+    "authorization_id": "g7-r2-pia18033-20261115",
+    "authorization_sha256": "f6d0e13b91ed2851b89e3e94cc740e842e0ba5c8a0ab28b477ccb537dab0c5f4",
+    "reviewer": {
+      "name": "Md Moshiur Rahman",
+      "role": "release reviewer",
+      "decision": "APPROVED",
+      "attested_utc": "2026-11-15T15:28:27Z"
+    },
+    "reviewed_enrollment_commit": "b9a03d09158bb007102f9a897da055c24dd367ba",
+    "source_reuse_approved": true,
+    "independent_real_verified_gt_deviation_approved": true,
+    "claim_scope": "source_specific_software_evidence_only",
+    "one_run_sequence": [
+      "prepare",
+      "decide",
+      "evaluate"
+    ],
+    "infrastructure_resume_only": true,
+    "execution_status": "AUTHORIZED_NOT_STARTED"
+  },
   "historical_release": {
     "release_id": "pre-week08-g5-20261114",
     "release_commit": "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
@@ -196,14 +219,15 @@
     "purpose": "Require machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
     "renewed_g5_status": "PASS",
     "renewed_g6_status": "PASS",
+    "renewed_g7_status": "APPROVED_PENDING_STRICT_VERIFICATION",
     "renewed_gates_required": [
       "G7"
     ]
   },
   "limitations": [
-    "This manifest records renewed metadata-only G6 enrollment but does not authorize G7 or permit held-out pixel or label decoding.",
+    "This manifest records explicit G7 one-run approval; held-out pixel or label decoding remains blocked until clean authorization-required final readiness passes.",
     "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
-    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; G7 authorization remains required.",
+    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; G7 strict verification remains required before execution.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
   ]
 }

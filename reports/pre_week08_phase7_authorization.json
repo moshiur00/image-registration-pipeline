@@ -1,0 +1,63 @@
+{
+  "schema_version": "pre_week08_phase7_authorization_v1",
+  "authorization_id": "g7-r2-pia18033-20261115",
+  "gate": "G7",
+  "decision": "APPROVED",
+  "reviewer": {
+    "name": "Md Moshiur Rahman",
+    "role": "release reviewer",
+    "attested_utc": "2026-11-15T15:28:27Z"
+  },
+  "release": {
+    "release_id": "pre-week08-g5r2-20261115",
+    "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
+    "release_tag": "pre-week08-g5r2-20261115"
+  },
+  "enrollment": {
+    "reviewed_commit": "b9a03d09158bb007102f9a897da055c24dd367ba",
+    "source_ids": [
+      "nasa_pia18033_earth"
+    ],
+    "source_ledger_sha256": "97fe46f1bf3b483d2806ba05760e45b7482a276476d13e9f4437a553e9874b41",
+    "holdout_manifest_sha256": "c450000e23b921f99ca0bbe5e955f13a4b011a67541769b7f559089706efda50",
+    "source_registration_sha256": "c05648140ff00fba93b618e1a5b57e59d127bb33cf04ecbbd4f63bff3d9cc923"
+  },
+  "runtime_bindings": {
+    "config_sha256": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
+    "preflight_sha256": "8071a8c6e69827d983975de0a891e56982107a59ea820cf078e307280539bf5f",
+    "prepare_sha256": "344a1c42c05fd6aaaadc293d8b0da71d8057b2d53686cb6467cde6e3eceaf926",
+    "final_evaluation_sha256": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
+    "runner_sha256": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31"
+  },
+  "incident_disposition": {
+    "incident_id": "phase7-predecode-test-20261114",
+    "report_path": "reports/pre_week08_phase7_incident.json",
+    "report_sha256": "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596",
+    "canonical_outputs_reset": true,
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "scientific_attempts_executed": 0,
+    "source_reuse_approved": true
+  },
+  "deviation_approval": {
+    "independent_real_verified_gt_absent": true,
+    "approved": true,
+    "claim_scope": "source_specific_software_evidence_only",
+    "prohibited_claims": [
+      "anatomical_generalization",
+      "clinical_recommendation",
+      "external_validity",
+      "modality_wide_generalization",
+      "population_generalization"
+    ]
+  },
+  "authorization": {
+    "authorizes_phase8_one_run": true,
+    "sequence": [
+      "prepare",
+      "decide",
+      "evaluate"
+    ],
+    "infrastructure_resume_only": true
+  }
+}
