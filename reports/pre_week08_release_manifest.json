@@ -2,8 +2,8 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "G7_APPROVED_VERIFICATION_PENDING",
-  "generated_utc": "2026-11-15T15:28:27Z",
+  "status": "G7_PASS_PHASE8_AUTHORIZED",
+  "generated_utc": "2026-11-15T15:32:52Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
   "release_tag": "pre-week08-g5r2-20261115",
@@ -105,9 +105,7 @@
   "final_readiness": {
     "authorized": true,
     "release_reviewer_approval_pending": false,
-    "expected_remaining_blocks": [
-      "strict_phase7_authorization_verification"
-    ],
+    "expected_remaining_blocks": [],
     "week08_benchmark_executed": false,
     "real_week08_pixels_accessed": false,
     "real_week08_labels_accessed": false
@@ -185,7 +183,8 @@
   },
   "phase7_review": {
     "gate": "G7",
-    "status": "APPROVED_PENDING_STRICT_VERIFICATION",
+    "status": "PASS",
+    "authorization_commit": "61a34e87473348fdd8139ccd7128da1d087fc280",
     "authorization_id": "g7-r2-pia18033-20261115",
     "authorization_sha256": "f6d0e13b91ed2851b89e3e94cc740e842e0ba5c8a0ab28b477ccb537dab0c5f4",
     "reviewer": {
@@ -204,6 +203,22 @@
       "evaluate"
     ],
     "infrastructure_resume_only": true,
+    "strict_verification": {
+      "verified_utc": "2026-11-15T15:32:52Z",
+      "verified_commit": "61a34e87473348fdd8139ccd7128da1d087fc280",
+      "mode": "final_readiness",
+      "readiness": "PASS",
+      "pass": 30,
+      "warn": 0,
+      "block": 0,
+      "post_enrollment_changed_paths": [
+        "reports/pre_week08_phase7_authorization.json",
+        "reports/pre_week08_release_manifest.json"
+      ],
+      "week08_benchmark_executed": false,
+      "source_pixels_decoded": false,
+      "source_labels_accessed": false
+    },
     "execution_status": "AUTHORIZED_NOT_STARTED"
   },
   "historical_release": {
@@ -219,15 +234,13 @@
     "purpose": "Require machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
     "renewed_g5_status": "PASS",
     "renewed_g6_status": "PASS",
-    "renewed_g7_status": "APPROVED_PENDING_STRICT_VERIFICATION",
-    "renewed_gates_required": [
-      "G7"
-    ]
+    "renewed_g7_status": "PASS",
+    "renewed_gates_required": []
   },
   "limitations": [
-    "This manifest records explicit G7 one-run approval; held-out pixel or label decoding remains blocked until clean authorization-required final readiness passes.",
+    "This manifest records explicit G7 one-run approval and a clean 30/30 authorization-required final-readiness PASS.",
     "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
-    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; G7 strict verification remains required before execution.",
+    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; exactly one prepare, decide, evaluate sequence is authorized.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
   ]
 }
