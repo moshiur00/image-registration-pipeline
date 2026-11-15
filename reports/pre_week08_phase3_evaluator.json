@@ -13,12 +13,12 @@
     "configs/week08_final_evaluation.yaml": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
     "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "c097a919dd04073652597ef66e16a9f334a9c0ba70de82fd66832800475dda89",
     "scripts/week08_final_evaluation.py": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
-    "scripts/week08_preflight.py": "f1cfd38d9e9b502a5e398901895064eb607caa312acb7d17461fe2641b97f0fb",
+    "scripts/week08_preflight.py": "8071a8c6e69827d983975de0a891e56982107a59ea820cf078e307280539bf5f",
     "scripts/week08_prepare_holdout.py": "344a1c42c05fd6aaaadc293d8b0da71d8057b2d53686cb6467cde6e3eceaf926",
     "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
     "tests/test_week08_final_evaluation.py": "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
     "tests/test_week08_phase3_cli.py": "82f7c1467db8fdf967e21a78e20a2d06d9cc5d6ed554d688fd5af7ea356681d9",
-    "tests/test_week08_preflight.py": "a7ea4c87873e46b01e4e92b575fe255d4c2471c4a7c1eaa2ac8edd8eefe5c07b"
+    "tests/test_week08_preflight.py": "7123183349b9bbaa1d972c36d68e2629b555e2c2be663da72230350bf2cb4d7d"
   },
   "focused_tests": {
     "week08_final_evaluation": {
@@ -37,7 +37,7 @@
     },
     "week08_preflight": {
       "path": "tests/test_week08_preflight.py",
-      "passed": 77,
+      "passed": 80,
       "failed": 0,
       "errors": 0,
       "skipped": 0
@@ -66,8 +66,8 @@
     "real_week08_source_or_label_accessed": false
   },
   "full_regression": {
-    "backend_collected": 717,
-    "backend_passed": 714,
+    "backend_collected": 720,
+    "backend_passed": 717,
     "backend_skipped": 3,
     "backend_failed": 0,
     "ui_collected": 179,
@@ -94,10 +94,19 @@
   "authorization_hardening_refresh": {
     "date": "2026-11-15",
     "reason": "Bind the G3 evaluator evidence to machine-enforced G7 authorization, approval-bound readiness receipts, and state-independent no-side-effect preparation tests.",
-    "focused_tests_passed": 144,
+    "focused_tests_passed": 147,
     "focused_tests_failed": 0,
     "real_week08_source_or_label_accessed": false,
     "week08_benchmark_executed": false
+  },
+  "stage_b_rebinding_refresh": {
+    "date": "2026-11-15",
+    "reason": "Bind the unchanged Stage B UI evidence to a separately reviewed authorization-hardening checkpoint without claiming that the manual walkthrough was rerun.",
+    "base_manual_scenarios_inherited": 5,
+    "base_supplemental_checks_inherited": 5,
+    "ui_runtime_or_ui_test_files_changed": false,
+    "reviewer_approval_pending": true,
+    "real_week08_source_or_label_accessed": false
   },
   "limitations": [
     "The rehearsal uses only the tracked camera development fixture.",

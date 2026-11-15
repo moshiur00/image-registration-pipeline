@@ -74,6 +74,7 @@ RELEASE_MANIFEST_REL = Path("reports/pre_week08_release_manifest.json")
 VALIDATION_REL = Path("reports/pre_week08_validation.json")
 RELEASE_CHECKLIST_REL = Path("docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md")
 STAGE_B_VALIDATION_REL = Path("reports/pre_week08_stage_b_validation.json")
+STAGE_B_REBINDING_REL = Path("reports/pre_week08_stage_b_rebinding_r2.json")
 SOURCE_REGISTRATION_REL = Path("reports/pre_week08_source_registration.json")
 HOLDOUT_SOURCE_MANIFEST_REL = Path("data/manifests/week08_holdout_sources.json")
 PHASE7_AUTHORIZATION_REL = Path("reports/pre_week08_phase7_authorization.json")
@@ -82,6 +83,7 @@ RELEASE_MANIFEST_VERSION = "pre_week08_release_manifest_v2"
 PHASE7_AUTHORIZATION_VERSION = "pre_week08_phase7_authorization_v1"
 VALIDATION_VERSION = "pre_week08_validation_v1"
 STAGE_B_VALIDATION_VERSION = "pre_week08_stage_b_validation_v1"
+STAGE_B_REBINDING_VERSION = "pre_week08_stage_b_rebinding_v1"
 STAGE_B_ACCEPTANCE_RECORD_VERSION = "ui-stage-b-acceptance-v2"
 STAGE_B_SCENARIOS = (
     "multimodal",
@@ -106,6 +108,10 @@ STAGE_B_SUPPLEMENTAL_CHECKS = (
     "no_frozen_location_writes",
 )
 STAGE_B_SCREENSHOT_SUFFIXES = frozenset({".png", ".jpg", ".jpeg", ".webp"})
+STAGE_B_REBINDING_AUTOMATED_COUNTS = {
+    "backend": {"passed": 717, "skipped": 3, "failed": 0},
+    "ui": {"passed": 179, "skipped": 0, "failed": 0},
+}
 POST_RELEASE_METADATA_PATHS = {
     LEDGER_REL.as_posix(),
     RELEASE_MANIFEST_REL.as_posix(),
@@ -385,6 +391,232 @@ def validate_stage_b_validation_report(
     if report.get("week8_heldout_used") is not False:
         errors.append("Stage B does not attest zero Week 8 held-out use")
     return errors
+
+
+def _stage_b_protected_path(path: str) -> bool:
+    if path in {"pyproject.toml", "requirements.txt"}:
+        return True
+    if any(path.startswith(prefix) for prefix in ("src/", "scripts/", "configs/", "tests/")):
+        return True
+    return path.startswith("ui/") and PurePosixPath(path).suffix.lower() != ".md"
+
+
+def validate_stage_b_rebinding_report(
+    report: Any,
+    *,
+    base_report: Mapping[str, Any],
+    base_sha256: str,
+) -> list[str]:
+    """Validate an explicit reviewer-approved rebind of unchanged Stage B UI evidence."""
+    errors: list[str] = []
+    if not isinstance(report, dict):
+        return ["Stage B R2 rebinding must be a JSON object"]
+    expected_fields = {
+        "schema_version", "stage", "status", "basis", "candidate",
+        "automated_validation", "inheritance", "reviewer", "week8_heldout_used",
+    }
+    if set(report) != expected_fields:
+        errors.append("Stage B R2 rebinding fields are not exact")
+    if report.get("schema_version") != STAGE_B_REBINDING_VERSION:
+        errors.append("unsupported Stage B R2 rebinding schema_version")
+    if report.get("stage") != "pre_week08_stage_b_release_rebinding":
+        errors.append("Stage B R2 rebinding has the wrong stage identifier")
+    if report.get("status") != "APPROVED":
+        errors.append("Stage B R2 rebinding status is not APPROVED")
+
+    basis = report.get("basis")
+    expected_basis_fields = {"validation_path", "validation_sha256", "tested_release_commit"}
+    if not isinstance(basis, dict) or set(basis) != expected_basis_fields:
+        errors.append("Stage B R2 basis fields are not exact")
+        basis = {}
+    if basis.get("validation_path") != STAGE_B_VALIDATION_REL.as_posix():
+        errors.append("Stage B R2 basis path does not identify the inherited validation")
+    if not is_sha256(basis.get("validation_sha256")):
+        errors.append("Stage B R2 basis SHA-256 is invalid")
+    elif basis.get("validation_sha256") != base_sha256:
+        errors.append("Stage B R2 basis SHA-256 does not match the inherited validation")
+    if basis.get("tested_release_commit") != base_report.get("tested_release_commit"):
+        errors.append("Stage B R2 tested commit does not match the inherited validation")
+
+    candidate = report.get("candidate")
+    expected_candidate_fields = {
+        "implementation_commit", "protected_changed_paths", "ui_runtime_changed", "rationale",
+    }
+    if not isinstance(candidate, dict) or set(candidate) != expected_candidate_fields:
+        errors.append("Stage B R2 candidate fields are not exact")
+        candidate = {}
+    implementation_commit = candidate.get("implementation_commit")
+    if not isinstance(implementation_commit, str) or re.fullmatch(r"[0-9a-f]{40}", implementation_commit) is None:
+        errors.append("Stage B R2 implementation commit is not a full lowercase SHA-1 object ID")
+    protected_paths = candidate.get("protected_changed_paths")
+    if not isinstance(protected_paths, list) or not protected_paths:
+        errors.append("Stage B R2 protected changed paths must be a non-empty list")
+    else:
+        if protected_paths != sorted(set(protected_paths)):
+            errors.append("Stage B R2 protected changed paths are not sorted and unique")
+        for path in protected_paths:
+            if not isinstance(path, str) or not _stage_b_protected_path(path):
+                errors.append("Stage B R2 protected changed path is invalid")
+                break
+            if path.startswith("ui/"):
+                errors.append("Stage B R2 cannot inherit evidence across a UI runtime/test change")
+                break
+    if candidate.get("ui_runtime_changed") is not False:
+        errors.append("Stage B R2 must attest that the UI runtime and tests are unchanged")
+    if not nonempty_text(candidate.get("rationale")):
+        errors.append("Stage B R2 rebinding rationale is missing")
+
+    counts = report.get("automated_validation")
+    if counts != STAGE_B_REBINDING_AUTOMATED_COUNTS:
+        errors.append("Stage B R2 automated validation counts do not match the reviewed regression")
+
+    inheritance = report.get("inheritance")
+    expected_inheritance = {
+        "manual_scenarios_inherited", "supplemental_checks_inherited",
+        "evidence_unchanged", "manual_evidence_rerun",
+    }
+    if not isinstance(inheritance, dict) or set(inheritance) != expected_inheritance:
+        errors.append("Stage B R2 inheritance fields are not exact")
+        inheritance = {}
+    if inheritance.get("manual_scenarios_inherited") != len(STAGE_B_SCENARIOS):
+        errors.append("Stage B R2 does not inherit all five manual scenarios")
+    if inheritance.get("supplemental_checks_inherited") != len(STAGE_B_SUPPLEMENTAL_CHECKS):
+        errors.append("Stage B R2 does not inherit all five supplemental checks")
+    if inheritance.get("evidence_unchanged") is not True:
+        errors.append("Stage B R2 does not attest unchanged inherited evidence")
+    if inheritance.get("manual_evidence_rerun") is not False:
+        errors.append("Stage B R2 must identify the manual evidence as inherited, not rerun")
+
+    reviewer = report.get("reviewer")
+    if not isinstance(reviewer, dict) or set(reviewer) != {"name", "role", "decision", "attested_utc"}:
+        errors.append("Stage B R2 reviewer fields are not exact")
+        reviewer = {}
+    if not nonempty_text(reviewer.get("name")):
+        errors.append("Stage B R2 reviewer name is missing")
+    if reviewer.get("role") != "release reviewer":
+        errors.append("Stage B R2 reviewer role is not release reviewer")
+    if reviewer.get("decision") != "APPROVED":
+        errors.append("Stage B R2 reviewer decision is not APPROVED")
+    if not _valid_stage_b_utc(reviewer.get("attested_utc")):
+        errors.append("Stage B R2 reviewer timestamp is not valid UTC")
+    if report.get("week8_heldout_used") is not False:
+        errors.append("Stage B R2 does not attest zero Week 8 held-out use")
+    return errors
+
+
+def verify_stage_b_rebinding(
+    root: Path,
+    report: Mapping[str, Any],
+    release_commit: Any,
+) -> tuple[list[str], dict[str, Any]]:
+    """Verify the reviewed protected-path delta and reports/docs-only release tail."""
+    errors: list[str] = []
+    basis = report.get("basis") if isinstance(report.get("basis"), dict) else {}
+    candidate = report.get("candidate") if isinstance(report.get("candidate"), dict) else {}
+    tested_commit = basis.get("tested_release_commit")
+    implementation_commit = candidate.get("implementation_commit")
+    observed: dict[str, Any] = {
+        "tested_commit": tested_commit,
+        "implementation_commit": implementation_commit,
+        "release_commit": release_commit,
+        "candidate_changed_paths": [],
+        "protected_changed_paths": [],
+        "ui_runtime_changed_paths": [],
+        "release_tail_changed_paths": [],
+    }
+    for value, label, pattern in (
+        (tested_commit, "Stage B tested commit", r"[0-9a-f]{40}"),
+        (implementation_commit, "Stage B R2 implementation commit", r"[0-9a-f]{40}"),
+        (release_commit, "release manifest commit", r"[0-9a-f]{40}|[0-9a-f]{64}"),
+    ):
+        if not isinstance(value, str) or re.fullmatch(pattern, value) is None:
+            errors.append(f"{label} must be a full lowercase Git object ID")
+    if errors:
+        return errors, observed
+
+    command = ["git", "-c", f"safe.directory={root.resolve().as_posix()}", "-C", str(root.resolve())]
+
+    def git(*args: str) -> subprocess.CompletedProcess[str] | None:
+        try:
+            return subprocess.run(
+                [*command, *args], capture_output=True, text=True, check=False, timeout=20
+            )
+        except (OSError, subprocess.SubprocessError) as exc:
+            errors.append(f"cannot execute Stage B R2 Git verification: {exc}")
+            return None
+
+    def resolve(commit: str, label: str) -> str | None:
+        result = git("rev-parse", "--verify", f"{commit}^{{commit}}")
+        if result is None:
+            return None
+        if result.returncode != 0:
+            errors.append(f"cannot resolve {label}")
+            return None
+        resolved = result.stdout.strip().lower()
+        if resolved != commit:
+            errors.append(f"{label} does not resolve to itself")
+            return None
+        return resolved
+
+    tested = resolve(tested_commit, "Stage B tested commit")
+    implementation = resolve(implementation_commit, "Stage B R2 implementation commit")
+    release = resolve(release_commit, "release manifest commit")
+    if tested is None or implementation is None or release is None:
+        return errors, observed
+
+    for ancestor, descendant, label in (
+        (tested, implementation, "Stage B tested commit is not an ancestor of the R2 implementation commit"),
+        (implementation, release, "Stage B R2 implementation commit is not an ancestor of the release commit"),
+    ):
+        result = git("merge-base", "--is-ancestor", ancestor, descendant)
+        if result is None:
+            return errors, observed
+        if result.returncode != 0:
+            errors.append(label)
+    if errors:
+        return errors, observed
+
+    def changed_paths(ancestor: str, descendant: str, label: str) -> list[str] | None:
+        result = git("log", "--format=", "--name-only", "-z", f"{ancestor}..{descendant}", "--")
+        if result is None:
+            return None
+        if result.returncode != 0:
+            errors.append(f"cannot inspect {label}")
+            return None
+        return sorted({path.strip() for path in result.stdout.split("\0") if path.strip()})
+
+    candidate_paths = changed_paths(tested, implementation, "Stage B R2 candidate changes")
+    release_tail = changed_paths(implementation, release, "Stage B R2 release-tail changes")
+    if candidate_paths is None or release_tail is None:
+        return errors, observed
+    protected_paths = [path for path in candidate_paths if _stage_b_protected_path(path)]
+    ui_runtime_paths = [
+        path for path in candidate_paths
+        if path.startswith("ui/") and PurePosixPath(path).suffix.lower() != ".md"
+    ]
+    observed.update({
+        "candidate_changed_paths": candidate_paths,
+        "protected_changed_paths": protected_paths,
+        "ui_runtime_changed_paths": ui_runtime_paths,
+        "release_tail_changed_paths": release_tail,
+    })
+    if candidate.get("protected_changed_paths") != protected_paths:
+        errors.append("Stage B R2 protected changed paths do not match Git history")
+    if ui_runtime_paths:
+        errors.append(
+            "UI runtime/test paths changed after the inherited Stage B evidence: "
+            + ", ".join(ui_runtime_paths)
+        )
+    forbidden_tail = [
+        path for path in release_tail
+        if not path.startswith("docs/") and not path.startswith("reports/")
+    ]
+    if forbidden_tail:
+        errors.append(
+            "post-rebind release changes exceed the docs/reports allowlist: "
+            + ", ".join(forbidden_tail)
+        )
+    return errors, observed
 
 
 def safe_file(root: Path, rel: str | None) -> Path | None:
@@ -1084,14 +1316,7 @@ def verify_stage_b_release_binding(
     changed_paths = sorted({path.strip() for path in changed.stdout.split("\0") if path.strip()})
     observed["changed_paths"] = changed_paths
 
-    def protected(path: str) -> bool:
-        if path in {"pyproject.toml", "requirements.txt"}:
-            return True
-        if any(path.startswith(prefix) for prefix in ("src/", "scripts/", "configs/", "tests/")):
-            return True
-        return path.startswith("ui/") and PurePosixPath(path).suffix.lower() != ".md"
-
-    protected_paths = [path for path in changed_paths if protected(path)]
+    protected_paths = [path for path in changed_paths if _stage_b_protected_path(path)]
     observed["protected_changed_paths"] = protected_paths
     if protected_paths:
         errors.append(
@@ -1872,6 +2097,7 @@ class Audit:
             REQUIRED_EVIDENCE["day34_policy"],
             VALIDATION_REL.as_posix(),
             STAGE_B_VALIDATION_REL.as_posix(),
+            STAGE_B_REBINDING_REL.as_posix(),
             RELEASE_CHECKLIST_REL.as_posix(),
             PHASE7_INCIDENT_REL.as_posix(),
             SOURCE_REGISTRATION_REL.as_posix(),
@@ -1919,8 +2145,10 @@ class Audit:
                  errors=restoration_errors)
 
         stage_b_path = safe_file(self.root, STAGE_B_VALIDATION_REL.as_posix())
+        stage_b_rebinding_path = safe_file(self.root, STAGE_B_REBINDING_REL.as_posix())
         stage_b_errors: list[str] = []
         stage_b: dict[str, Any] = {}
+        stage_b_rebinding: dict[str, Any] = {}
         stage_b_binding: dict[str, Any] = {}
         if stage_b_path is None or not stage_b_path.is_file():
             stage_b_errors.append(f"missing {STAGE_B_VALIDATION_REL.as_posix()}")
@@ -1930,16 +2158,30 @@ class Audit:
                 if not isinstance(stage_b, dict):
                     raise TypeError("Stage B validation must be a JSON object")
                 stage_b_errors.extend(validate_stage_b_validation_report(stage_b))
-                binding_errors, stage_b_binding = verify_stage_b_release_binding(
+            except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+                stage_b_errors.append(f"invalid Stage B validation: {exc}")
+        if stage_b_rebinding_path is None or not stage_b_rebinding_path.is_file():
+            stage_b_errors.append(f"missing {STAGE_B_REBINDING_REL.as_posix()}")
+        elif stage_b_path is not None and stage_b_path.is_file() and isinstance(stage_b, dict):
+            try:
+                stage_b_rebinding = read_json(stage_b_rebinding_path)
+                if not isinstance(stage_b_rebinding, dict):
+                    raise TypeError("Stage B R2 rebinding must be a JSON object")
+                stage_b_errors.extend(validate_stage_b_rebinding_report(
+                    stage_b_rebinding,
+                    base_report=stage_b,
+                    base_sha256=digest(stage_b_path),
+                ))
+                binding_errors, stage_b_binding = verify_stage_b_rebinding(
                     self.root,
-                    stage_b.get("tested_release_commit"),
+                    stage_b_rebinding,
                     release.get("release_commit"),
                 )
                 stage_b_errors.extend(binding_errors)
             except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
-                stage_b_errors.append(f"invalid Stage B validation: {exc}")
+                stage_b_errors.append(f"invalid Stage B R2 rebinding: {exc}")
         self.add("strict_stage_b_acceptance", "BLOCK" if stage_b_errors else "PASS",
-                 "Tracked Stage B acceptance is 5/5 and UI v0.2 is frozen",
+                 "Inherited Stage B acceptance is 5/5 and the R2 release binding is reviewer-approved",
                  errors=stage_b_errors, observed=stage_b_binding)
 
         checklist_path = safe_file(self.root, RELEASE_CHECKLIST_REL.as_posix())

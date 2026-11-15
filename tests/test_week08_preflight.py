@@ -378,6 +378,47 @@ def valid_stage_b_validation(commit: str = "a" * 40) -> dict:
     }
 
 
+def valid_stage_b_rebinding(
+    base_report: dict,
+    *,
+    base_sha256: str = "d" * 64,
+    implementation_commit: str = "e" * 40,
+    protected_changed_paths: list[str] | None = None,
+) -> dict:
+    return {
+        "schema_version": pre.STAGE_B_REBINDING_VERSION,
+        "stage": "pre_week08_stage_b_release_rebinding",
+        "status": "APPROVED",
+        "basis": {
+            "validation_path": pre.STAGE_B_VALIDATION_REL.as_posix(),
+            "validation_sha256": base_sha256,
+            "tested_release_commit": base_report["tested_release_commit"],
+        },
+        "candidate": {
+            "implementation_commit": implementation_commit,
+            "protected_changed_paths": protected_changed_paths
+            if protected_changed_paths is not None
+            else ["configs/week08_final_evaluation.yaml"],
+            "ui_runtime_changed": False,
+            "rationale": "Authorization hardening changed no frozen UI runtime or UI test bytes.",
+        },
+        "automated_validation": pre.STAGE_B_REBINDING_AUTOMATED_COUNTS,
+        "inheritance": {
+            "manual_scenarios_inherited": 5,
+            "supplemental_checks_inherited": 5,
+            "evidence_unchanged": True,
+            "manual_evidence_rerun": False,
+        },
+        "reviewer": {
+            "name": "Release Reviewer",
+            "role": "release reviewer",
+            "decision": "APPROVED",
+            "attested_utc": "2026-11-15T12:00:00Z",
+        },
+        "week8_heldout_used": False,
+    }
+
+
 def synthetic_ground_truth(root: Path) -> dict:
     records = {}
     for name, rel in {
@@ -993,6 +1034,175 @@ def test_stage_b_validation_report_rejects_false_freeze_paths():
         mutate(tampered)
         found = pre.validate_stage_b_validation_report(tampered)
         assert any(expected in error for error in found), (name, found)
+
+
+def test_stage_b_r2_rebinding_accepts_only_exact_approved_contract():
+    base = valid_stage_b_validation()
+    base_sha256 = "d" * 64
+    report = valid_stage_b_rebinding(base, base_sha256=base_sha256)
+    assert pre.validate_stage_b_rebinding_report(
+        report, base_report=base, base_sha256=base_sha256,
+    ) == []
+
+    cases = [
+        (
+            "pending",
+            lambda value: value.update({"status": "PENDING_REVIEW"}),
+            "status is not APPROVED",
+        ),
+        (
+            "basis hash",
+            lambda value: value["basis"].update({"validation_sha256": "f" * 64}),
+            "does not match",
+        ),
+        (
+            "basis commit",
+            lambda value: value["basis"].update({"tested_release_commit": "f" * 40}),
+            "tested commit",
+        ),
+        (
+            "candidate commit",
+            lambda value: value["candidate"].update({"implementation_commit": "BAD"}),
+            "implementation commit",
+        ),
+        (
+            "ui runtime",
+            lambda value: value["candidate"].update({
+                "protected_changed_paths": ["ui/streamlit_app.py"],
+                "ui_runtime_changed": True,
+            }),
+            "UI runtime",
+        ),
+        (
+            "regression count",
+            lambda value: value["automated_validation"]["backend"].update({"passed": 713}),
+            "automated validation counts",
+        ),
+        (
+            "false rerun",
+            lambda value: value["inheritance"].update({"manual_evidence_rerun": True}),
+            "inherited, not rerun",
+        ),
+        (
+            "review pending",
+            lambda value: value["reviewer"].update({
+                "name": None, "decision": "PENDING", "attested_utc": None,
+            }),
+            "reviewer decision",
+        ),
+        (
+            "holdout used",
+            lambda value: value.update({"week8_heldout_used": True}),
+            "zero Week 8 held-out use",
+        ),
+    ]
+    for name, mutate, expected in cases:
+        tampered = json.loads(json.dumps(report))
+        mutate(tampered)
+        found = pre.validate_stage_b_rebinding_report(
+            tampered, base_report=base, base_sha256=base_sha256,
+        )
+        assert any(expected in error for error in found), (name, found)
+
+
+def test_stage_b_r2_git_binding_accepts_reviewed_delta_and_docs_reports_tail(tmp_path):
+    repository = tmp_path / "stage_b_r2_binding"
+    repository.mkdir()
+
+    def git(*args):
+        return subprocess.run(
+            ["git", "-c", f"safe.directory={repository.as_posix()}", "-C", str(repository), *args],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    git("init")
+    git("config", "user.email", "stage-b-r2-test@example.invalid")
+    git("config", "user.name", "Stage B R2 Test")
+    ui_path = repository / "ui/streamlit_app.py"
+    ui_path.parent.mkdir(parents=True)
+    ui_path.write_text("frozen_ui = True\n", encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "tested UI checkpoint")
+    tested = git("rev-parse", "HEAD")
+
+    protected = repository / "configs/week08_final_evaluation.yaml"
+    protected.parent.mkdir(parents=True)
+    protected.write_text("authorization: enforced\n", encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "enforce authorization")
+    implementation = git("rev-parse", "HEAD")
+
+    for relative, content in {
+        "docs/release.md": "review notes\n",
+        "reports/stage_b_r2.json": "{}\n",
+    }.items():
+        path = repository / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "record release evidence")
+    release = git("rev-parse", "HEAD")
+
+    base = valid_stage_b_validation(tested)
+    report = valid_stage_b_rebinding(
+        base,
+        implementation_commit=implementation,
+        protected_changed_paths=["configs/week08_final_evaluation.yaml"],
+    )
+    errors, observed = pre.verify_stage_b_rebinding(repository, report, release)
+    assert errors == []
+    assert observed["ui_runtime_changed_paths"] == []
+    assert observed["release_tail_changed_paths"] == [
+        "docs/release.md", "reports/stage_b_r2.json",
+    ]
+
+    wrong_paths = json.loads(json.dumps(report))
+    wrong_paths["candidate"]["protected_changed_paths"] = ["scripts/not_changed.py"]
+    errors, _ = pre.verify_stage_b_rebinding(repository, wrong_paths, release)
+    assert any("do not match Git history" in error for error in errors)
+
+    late_change = repository / "configs/late_change.yaml"
+    late_change.write_text("late: true\n", encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "late protected change")
+    late_release = git("rev-parse", "HEAD")
+    errors, _ = pre.verify_stage_b_rebinding(repository, report, late_release)
+    assert any("docs/reports allowlist" in error for error in errors)
+
+
+def test_stage_b_r2_git_binding_rejects_ui_runtime_change(tmp_path):
+    repository = tmp_path / "stage_b_r2_ui_change"
+    repository.mkdir()
+
+    def git(*args):
+        return subprocess.run(
+            ["git", "-c", f"safe.directory={repository.as_posix()}", "-C", str(repository), *args],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    git("init")
+    git("config", "user.email", "stage-b-r2-test@example.invalid")
+    git("config", "user.name", "Stage B R2 Test")
+    ui_path = repository / "ui/streamlit_app.py"
+    ui_path.parent.mkdir(parents=True)
+    ui_path.write_text("frozen_ui = True\n", encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "tested UI checkpoint")
+    tested = git("rev-parse", "HEAD")
+    ui_path.write_text("frozen_ui = False\n", encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "change UI runtime")
+    implementation = git("rev-parse", "HEAD")
+
+    base = valid_stage_b_validation(tested)
+    report = valid_stage_b_rebinding(
+        base,
+        implementation_commit=implementation,
+        protected_changed_paths=["ui/streamlit_app.py"],
+    )
+    errors, observed = pre.verify_stage_b_rebinding(repository, report, implementation)
+    assert any("UI runtime/test paths changed" in error for error in errors)
+    assert observed["ui_runtime_changed_paths"] == ["ui/streamlit_app.py"]
 
 
 def test_stage_b_release_binding_accepts_equal_and_documentation_only_descendant(tmp_path):

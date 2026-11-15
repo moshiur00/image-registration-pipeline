@@ -20,27 +20,31 @@ authorize G7, or permit access to held-out pixels or labels.
 
 ## Machine-enforced G7 authorization
 
-- [ ] Technical readiness and authorization-required readiness are separate.
-- [ ] Missing, malformed, stale, or tampered authorization fails closed.
-- [ ] Preparation cannot create directories, receipts, plans, or decoder calls
+- [x] Technical readiness and authorization-required readiness are separate.
+- [x] Missing, malformed, stale, or tampered authorization fails closed.
+- [x] Preparation cannot create directories, receipts, plans, or decoder calls
   before authorization-required readiness passes.
-- [ ] Authorization binds the release commit/tag, reviewed G6 commit, source
+- [x] Authorization binds the release commit/tag, reviewed G6 commit, source
   ledger, enrollment manifest, source registration, runtime files, incident
   disposition, source-reuse decision, deviation approval, claim limits, and
   one-run Phase 8 sequence.
-- [ ] The final-readiness receipt binds the exact release manifest and Phase 7
+- [x] The final-readiness receipt binds the exact release manifest and Phase 7
   authorization hashes.
-- [ ] No test invokes canonical final preparation against the live repository.
+- [x] No test invokes canonical final preparation against the live repository.
 
 ## Regression and release bindings
 
-- [ ] Focused authorization, preflight, preparation, evaluator, and tamper
+- [x] Focused authorization, preflight, preparation, evaluator, and tamper
   tests pass with zero failures.
-- [ ] Full backend and UI regressions pass with zero failures.
+- [x] Full backend and UI regressions pass with zero failures.
 - [ ] Frozen baseline, integrity anchor, evaluator evidence, dependency and
   environment records, executable inventory, and validation report are
   regenerated and mutually consistent.
-- [ ] Stage B release binding is renewed for the changed protected paths.
+- [ ] `reports/pre_week08_stage_b_rebinding_r2.json` binds the unchanged base
+  acceptance report, exact implementation checkpoint and protected-path delta,
+  zero UI runtime/test changes, current regressions, and an explicit renewed
+  release-reviewer approval. The original 5/5 + 5/5 evidence is identified as
+  inherited, not rerun.
 - [ ] Clean-staging restoration passes.
 - [ ] The candidate worktree is clean.
 - [ ] A unique candidate commit is identified.

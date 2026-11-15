@@ -146,6 +146,16 @@ machine-enforce G7 authorization, rerun regression and release binding, and
 renew G5, G6, and G7 review. PIA18033 remains unopened and may be reused only
 after renewed G6 approval.
 
+The Stage B screenshots, ZIPs, observations, and 5/5 + 5/5 manual verdicts
+remain bound to the unchanged UI v0.2 runtime. They are not relabeled as a new
+walkthrough. A separate `pre_week08_stage_b_rebinding_v1` record must bind the
+original report hash and tested commit to the authorization-hardening
+implementation checkpoint, enumerate the exact protected-path delta, prove
+that no non-Markdown UI path changed, record the current zero-failure backend
+and UI regressions, and receive a renewed release-reviewer approval. Strict
+preflight permits only docs/reports changes between that implementation
+checkpoint and the new G5 release commit.
+
 ### 4. Non-negotiable scientific and engineering invariants
 
 1. Preserve the project transform convention: **Moving -> Fixed**.
