@@ -1,0 +1,257 @@
+{
+  "analysis_contract": {
+    "post_label_threshold_or_policy_change": false,
+    "raw_method_objectives_compared_across_families": false,
+    "registration_or_evaluation_rerun": false,
+    "runtime_intervals_are_distribution_summaries_not_confidence_intervals": true,
+    "runtime_scope": "recorded_total_runtime_ms_single_environment",
+    "sealed_label_content_opened": false,
+    "source_pixels_or_prepared_arrays_opened": false,
+    "wilson_intervals_reused_from_sealed_summary": true
+  },
+  "claim_scope": {
+    "policy_status": "non_deployed",
+    "prohibited_claims": [
+      "anatomical_generalization",
+      "clinical_recommendation",
+      "external_validity",
+      "modality_wide_generalization",
+      "population_generalization"
+    ],
+    "scope": "source_specific_software_evidence_only"
+  },
+  "coverage": {
+    "condition_behavior": [
+      "reports/week08_phase9_tables/track_a_by_condition.csv",
+      "docs/figures/week08_phase9/track_a_condition_rates.svg"
+    ],
+    "modality_comparison": [
+      "reports/week08_phase9_tables/track_a_by_modality.csv",
+      "docs/figures/week08_phase9/track_a_modality_rates.svg"
+    ],
+    "repeated_pattern_failures": [
+      "reports/week08_phase9_tables/repeated_pattern_by_method.csv",
+      "docs/figures/week08_phase9/repeated_pattern_outcomes.svg"
+    ],
+    "runtime_and_uncertainty": [
+      "reports/week08_phase9_tables/track_a_runtime_by_method.csv",
+      "docs/figures/week08_phase9/track_a_runtime_by_method.svg"
+    ],
+    "similarity_versus_geometry": [
+      "reports/week08_phase9_tables/similarity_geometry_availability.csv",
+      "docs/figures/week08_phase9/similarity_geometry_availability.svg"
+    ],
+    "track_a_completion_and_geometric_success": [
+      "reports/week08_phase9_tables/track_a_overall.csv",
+      "docs/figures/week08_phase9/track_a_overall_rates.svg"
+    ],
+    "track_b_policy": [
+      "reports/week08_phase9_tables/track_b_policy.csv",
+      "docs/figures/week08_phase9/track_b_policy.svg"
+    ]
+  },
+  "findings": {
+    "repeated_pattern": {
+      "attempts": 36,
+      "completed": 26,
+      "completed_geometric_failures": 1,
+      "execution_failures": 10,
+      "geometric_successes": 25
+    },
+    "similarity_geometry_disagreement": {
+      "attempt_denominator": 294,
+      "common_similarity_fields_available": 0,
+      "reason": "common MAE, MSE, NCC, SSIM, MI, and overlap were not recorded; family-native objectives are noncommensurate",
+      "status": "NOT_EVALUABLE_FROM_SEALED_FINAL_RECORDS"
+    },
+    "track_a": {
+      "attempts": 294,
+      "completed": 284,
+      "conditional_accuracy": {
+        "denominator": 284,
+        "numerator": 278,
+        "value": 0.9788732394366197
+      },
+      "execution_completion_rate": {
+        "denominator": 294,
+        "numerator": 284,
+        "value": 0.9659863945578231
+      },
+      "failed": 10,
+      "geometric_success_rate": {
+        "denominator": 294,
+        "numerator": 278,
+        "value": 0.9455782312925171
+      },
+      "geometric_successes": 278
+    },
+    "track_b": {
+      "abstained_pairs": 24,
+      "abstention_rate": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "coverage": {
+        "denominator": 24,
+        "numerator": 0,
+        "value": 0.0
+      },
+      "eligible_pairs": 24,
+      "recommendation_disposition": "preserve_results_keep_policy_non_deployed",
+      "selected_pairs": 0,
+      "selective_correctness": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      }
+    }
+  },
+  "identity": {
+    "generated_utc": "2026-11-15T21:27:17Z",
+    "phase": "9.2",
+    "phase9_1_report_payload_sha256": "e1ebf2d2e7fec780e61048c1d19dc7f7ddad966f65057efd7a920acdc3b8f77f",
+    "release_id": "pre-week08-g5r2-20261115",
+    "run_id": "week08-final-r2-20261115T154035Z",
+    "work_package": "final_analysis"
+  },
+  "inputs": {
+    "decision_seal_file_sha256": "69f84d4caa57c64b9ddb99f0c4a87cc2a9bad97e913924bc462985c1e58bb326",
+    "evaluation_summary_file_sha256": "d83e1a23ccae29d7e40d090384d2ba8b2eff24c6d25fe1d234bffacc5bd88fd4",
+    "label_access_audit_file_sha256": "e2d9ca2587709b5264ccb424d0d5a727cd98eb0275cbeefc41757e15e0b6bfc8",
+    "phase9_1_report_file_sha256": "04cb0faa2ecbc9baab5d119564b4c503ac54a2681eb513654b7e50b0ec98c4d8",
+    "phase9_1_report_payload_sha256": "e1ebf2d2e7fec780e61048c1d19dc7f7ddad966f65057efd7a920acdc3b8f77f",
+    "phase9_2_generator_sha256": "343c095f9e29ea43952c5d9f1bfdc4473c33960629f3f4d306dbc13a1331bf04",
+    "release_manifest_file_sha256": "93eecca7de8fc4eee43d02d33a0f9bbfe921fbd5fb52f34164d5ef51bc3e7db7",
+    "scientific_records_file_sha256": "b9fdf3004adbfeda8875c4820f6a7f04c02cac06cacc5277678cefac299924df"
+  },
+  "limitations": [
+    "One independent source does not provide independent source replication or external validity.",
+    "Synthetic-after-freeze ground truth supports source-specific software evaluation, not anatomical or clinical claims.",
+    "The 294 attempts are correlated cases from one source and must not be treated as 294 independent source samples.",
+    "Runtime is descriptive for one recorded environment; median and p95 are distribution summaries, not confidence intervals.",
+    "Common post-registration similarity evidence was not sealed, so similarity-versus-geometry disagreement is not estimable rather than zero.",
+    "Track B selected no pairs; selective correctness is undefined, not zero."
+  ],
+  "manifest_payload_sha256": "c604685fe41686f303d330bd58febfd36363af1b6f81eb3b48e368c6eb44d0bb",
+  "next": "Phase 9.3 documentation: update README, reproduction guide, maintained gate register, and progress registry without changing frozen methods or policy.",
+  "outputs": [
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/track_a_overall.csv",
+      "role": "track_a_completion_geometric_uncertainty_table",
+      "sha256": "b7e04e32aa5691cc9eb69962fcc3cdcb9c30ece89d4cb6597d7257ebdbc6f733",
+      "size_bytes": 927
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/track_a_by_modality.csv",
+      "role": "track_a_modality_comparison_table",
+      "sha256": "4d27cf261dec46fd4dd9d020125bc3e9e5ffcd5a9be017dabdc0e8ad8981d001",
+      "size_bytes": 1192
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/track_a_by_condition.csv",
+      "role": "track_a_condition_table",
+      "sha256": "c6cf9bf48a827cc38e158f41843bac0e8ec9acd8e23b401b4e5d13abda4e394d",
+      "size_bytes": 2940
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/track_a_runtime_by_method.csv",
+      "role": "track_a_runtime_distribution_table",
+      "sha256": "6bcfce6ba51d432e419deaa5be4df333de9168bc816f531d15565155149d8743",
+      "size_bytes": 1563
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/repeated_pattern_by_method.csv",
+      "role": "repeated_pattern_failure_table",
+      "sha256": "d20e672d1d146ec4348772c6c67251b9423be3af600fb29d7d035d56ff815274",
+      "size_bytes": 664
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/similarity_geometry_availability.csv",
+      "role": "similarity_geometry_availability_audit_table",
+      "sha256": "de4b6421da792bfc028ed04ccb9e96ce7a1b3a25953e524a308ef53d62e9796b",
+      "size_bytes": 1513
+    },
+    {
+      "format": "csv",
+      "path": "reports/week08_phase9_tables/track_b_policy.csv",
+      "role": "track_b_policy_outcome_table",
+      "sha256": "7a51d5de527b65715d49047e4a623585966f629f84572d4a5d77f475980218b9",
+      "size_bytes": 1532
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/track_a_overall_rates.svg",
+      "role": "track_a_completion_geometric_uncertainty_figure",
+      "sha256": "32e399ffc2fef345832ce0fe2c98a20b70b041d4aa97f037be9026181e3f2cbf",
+      "size_bytes": 12571
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/track_a_modality_rates.svg",
+      "role": "track_a_modality_comparison_figure",
+      "sha256": "20d2c5ac6818d1d69d042dcdb8d055ed645229d50d019e4bffc26ff4a9e54c87",
+      "size_bytes": 12876
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/track_a_condition_rates.svg",
+      "role": "track_a_condition_figure",
+      "sha256": "0ac20ff69639886404d0533387c9e320349faee5f5194edf2c2c326e8a8c4b06",
+      "size_bytes": 26474
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/track_a_runtime_by_method.svg",
+      "role": "track_a_runtime_distribution_figure",
+      "sha256": "deaad3153edc3a1c6d49aed05d083f4a76d061aba5e910bdbee7bb3ac9647ef2",
+      "size_bytes": 19837
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/repeated_pattern_outcomes.svg",
+      "role": "repeated_pattern_failure_figure",
+      "sha256": "fdae82343fdad48ffd5e44869220d8a2407a2a5c382953b32208258bcbfe5eb2",
+      "size_bytes": 20090
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/similarity_geometry_availability.svg",
+      "role": "similarity_geometry_availability_audit_figure",
+      "sha256": "9d6a616841962bc39533088231252ecc655b757b7f0905cf4f7250383b03a2c1",
+      "size_bytes": 14616
+    },
+    {
+      "format": "svg",
+      "path": "docs/figures/week08_phase9/track_b_policy.svg",
+      "role": "track_b_policy_outcome_figure",
+      "sha256": "2545b58c1a0113d4727bf6fd5218d33c238a703b5144d61972603367b6a5d30f",
+      "size_bytes": 10836
+    }
+  ],
+  "privacy": {
+    "classification": "tracked_sanitized_aggregate",
+    "contains_pixels_arrays_labels_transforms_or_diagnostic_traces": false,
+    "contains_private_archive_inventory": false,
+    "contains_source_pair_or_attempt_identifiers": false
+  },
+  "review": {
+    "developer_analyst": {
+      "status": "COMPLETE"
+    },
+    "release_reviewer": {
+      "status": "PENDING"
+    },
+    "scientific_reviewer": {
+      "status": "PENDING"
+    }
+  },
+  "schema_version": "week08_phase9_final_analysis_v1",
+  "status": "PASS_PENDING_SCIENTIFIC_AND_RELEASE_REVIEW"
+}

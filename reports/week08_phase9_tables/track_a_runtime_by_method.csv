@@ -1,0 +1,12 @@
+method_id,attempts,runtime_min_ms,runtime_median_ms,runtime_mean_ms,runtime_p95_ms,runtime_max_ms,runtime_scope,uncertainty_note
+overall,294,15.834100,80.505700,166.498511,460.808560,1352.325800,total_runtime_ms,distribution_summary_not_confidence_interval
+phase_translation,24,15.834100,27.584050,28.545125,40.383440,43.894800,total_runtime_ms,distribution_summary_not_confidence_interval
+ecc_translation,24,31.904900,52.034900,65.733812,126.704335,276.014300,total_runtime_ms,distribution_summary_not_confidence_interval
+ecc_rigid,24,32.804400,57.236050,68.319992,129.151145,238.053100,total_runtime_ms,distribution_summary_not_confidence_interval
+ecc_affine,24,32.740500,60.432650,81.148400,162.744280,168.073500,total_runtime_ms,distribution_summary_not_confidence_interval
+orb_similarity,24,24.076500,59.706800,57.413104,75.775885,85.342100,total_runtime_ms,distribution_summary_not_confidence_interval
+sift_similarity,24,43.117700,78.023350,78.353721,102.159555,106.948700,total_runtime_ms,distribution_summary_not_confidence_interval
+orb_affine,24,26.355100,56.831650,64.717546,84.069470,268.471000,total_runtime_ms,distribution_summary_not_confidence_interval
+sift_affine,24,58.143000,83.824350,84.131004,105.058405,123.672600,total_runtime_ms,distribution_summary_not_confidence_interval
+mi_rigid_2d,51,171.519500,270.767200,301.921516,502.041000,625.180800,total_runtime_ms,distribution_summary_not_confidence_interval
+mi_affine_2d,51,267.836500,371.981300,409.252157,616.036800,1352.325800,total_runtime_ms,distribution_summary_not_confidence_interval

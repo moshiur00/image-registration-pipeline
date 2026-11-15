@@ -1,0 +1,11 @@
+method_id,attempts,completed,geometric_successes,completed_geometric_failures,execution_failures,insufficient_filtered_matches,insufficient_ransac_inliers,interpretation
+phase_translation,3,3,3,0,0,0,0,descriptive_low_count
+ecc_translation,3,3,3,0,0,0,0,descriptive_low_count
+ecc_rigid,3,3,3,0,0,0,0,descriptive_low_count
+ecc_affine,3,3,3,0,0,0,0,descriptive_low_count
+orb_similarity,3,0,0,0,3,1,2,descriptive_low_count
+sift_similarity,3,1,1,0,2,2,0,descriptive_low_count
+orb_affine,3,0,0,0,3,3,0,descriptive_low_count
+sift_affine,3,1,1,0,2,0,2,descriptive_low_count
+mi_rigid_2d,6,6,5,1,0,0,0,descriptive_low_count
+mi_affine_2d,6,6,6,0,0,0,0,descriptive_low_count

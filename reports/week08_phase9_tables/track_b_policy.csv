@@ -1,0 +1,10 @@
+scope,eligible_pairs,selected_pairs,abstained_pairs,invalid_pairs,missing_decision_pairs,coverage_numerator,coverage_denominator,coverage_value,coverage_ci_lower,coverage_ci_upper,coverage_ci_method,abstention_numerator,abstention_denominator,abstention_value,abstention_ci_lower,abstention_ci_upper,abstention_ci_method,selective_correctness_value,interpretation
+overall,24,0,24,0,0,0,24,0.000000,0.000000,0.137981,wilson_95,24,24,1.000000,0.862019,1.000000,wilson_95,NA,preregistered_overall
+none,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+gaussian_noise,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+gaussian_blur,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+illumination,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+occlusion,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+partial_overlap,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+low_texture,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
+repeated_pattern,3,0,3,0,0,0,3,0.000000,0.000000,0.561506,wilson_95,3,3,1.000000,0.438494,1.000000,wilson_95,NA,descriptive_low_count
