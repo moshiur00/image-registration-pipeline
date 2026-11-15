@@ -10,15 +10,15 @@
   "week08_benchmark_executed": false,
   "final_claims_allowed": false,
   "artifact_hashes": {
-    "configs/week08_final_evaluation.yaml": "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
-    "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "e34160a0c602a583e95e66819a35365b28e5562ccb5db6fbaab2846817a43912",
-    "scripts/week08_final_evaluation.py": "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b",
-    "scripts/week08_preflight.py": "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1",
-    "scripts/week08_prepare_holdout.py": "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be",
+    "configs/week08_final_evaluation.yaml": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
+    "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "c097a919dd04073652597ef66e16a9f334a9c0ba70de82fd66832800475dda89",
+    "scripts/week08_final_evaluation.py": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
+    "scripts/week08_preflight.py": "f1cfd38d9e9b502a5e398901895064eb607caa312acb7d17461fe2641b97f0fb",
+    "scripts/week08_prepare_holdout.py": "344a1c42c05fd6aaaadc293d8b0da71d8057b2d53686cb6467cde6e3eceaf926",
     "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
     "tests/test_week08_final_evaluation.py": "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
-    "tests/test_week08_phase3_cli.py": "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c",
-    "tests/test_week08_preflight.py": "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762"
+    "tests/test_week08_phase3_cli.py": "82f7c1467db8fdf967e21a78e20a2d06d9cc5d6ed554d688fd5af7ea356681d9",
+    "tests/test_week08_preflight.py": "a7ea4c87873e46b01e4e92b575fe255d4c2471c4a7c1eaa2ac8edd8eefe5c07b"
   },
   "focused_tests": {
     "week08_final_evaluation": {
@@ -30,14 +30,14 @@
     },
     "week08_phase3_cli": {
       "path": "tests/test_week08_phase3_cli.py",
-      "passed": 9,
+      "passed": 10,
       "failed": 0,
       "errors": 0,
       "skipped": 0
     },
     "week08_preflight": {
       "path": "tests/test_week08_preflight.py",
-      "passed": 66,
+      "passed": 77,
       "failed": 0,
       "errors": 0,
       "skipped": 0
@@ -66,8 +66,8 @@
     "real_week08_source_or_label_accessed": false
   },
   "full_regression": {
-    "backend_collected": 705,
-    "backend_passed": 702,
+    "backend_collected": 717,
+    "backend_passed": 714,
     "backend_skipped": 3,
     "backend_failed": 0,
     "ui_collected": 179,
@@ -76,7 +76,7 @@
     "ui_failed": 0
   },
   "preflight": {
-    "report_version": "pre_week08_preflight_v3",
+    "report_version": "pre_week08_preflight_v4",
     "mode": "development",
     "runner_contract_status": "PASS",
     "pass_count": 18,
@@ -90,6 +90,14 @@
     "reason": "Bind the unchanged G3 runner contract to the Phase 4 hardened Stage B preflight validator and its tamper tests.",
     "runner_or_evaluator_changed": false,
     "real_week08_source_or_label_accessed": false
+  },
+  "authorization_hardening_refresh": {
+    "date": "2026-11-15",
+    "reason": "Bind the G3 evaluator evidence to machine-enforced G7 authorization, approval-bound readiness receipts, and state-independent no-side-effect preparation tests.",
+    "focused_tests_passed": 144,
+    "focused_tests_failed": 0,
+    "real_week08_source_or_label_accessed": false,
+    "week08_benchmark_executed": false
   },
   "limitations": [
     "The rehearsal uses only the tracked camera development fixture.",

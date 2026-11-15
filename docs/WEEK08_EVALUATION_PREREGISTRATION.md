@@ -21,6 +21,29 @@ about Phase 3 scope.  They remain false after later gates pass; final execution
 is authorized by the separate G3-G7 gate contract, not by changing the Phase 3
 history.
 
+### Machine-enforced Phase 7 authorization
+
+The authorization-hardening cycle separates two commands:
+
+- `--technical-readiness` runs every strict technical, enrollment, release,
+  integrity, restoration, output-location, and Stage B gate without treating
+  human approval as already granted;
+- `--final-readiness` additionally requires an exact, hash-bound
+  `pre_week08_phase7_authorization_v1` record.
+
+The authorization record binds the immutable release commit/tag, the reviewed
+G6 enrollment commit, source ledger, enrollment manifest, source registration,
+runtime files, tracked incident disposition, source-reuse decision,
+independent-real-verified-GT deviation, restricted claim scope, named reviewer
+and UTC attestation, and the one-run `prepare -> decide -> evaluate` sequence.
+Missing, malformed, stale, or tampered authorization is a `BLOCK`.
+
+Preparation may not create directories, receipts, plans, or decoder calls
+until authorization-required final readiness passes. The persisted readiness
+receipt uses `week08_final_readiness_receipt_v2` and binds the exact release
+manifest and authorization hashes. The final plan binds that receipt hash, so
+the authorization is carried through decision sealing and evaluation.
+
 The preregistration freezes the evaluator design before any final source is
 opened:
 

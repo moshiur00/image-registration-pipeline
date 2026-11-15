@@ -263,7 +263,11 @@ def require_strict_final_readiness(config_path: Path = DEFAULT_CONFIG) -> dict[s
     if resolve_path(config_path).resolve() != DEFAULT_CONFIG.resolve():
         raise ValueError("Final preparation requires the canonical preregistered config path.")
     report = Audit(ROOT, final_readiness=True).run()
-    if report.get("readiness") != "PASS":
+    if (
+        report.get("readiness") != "PASS"
+        or report.get("mode") != "final_readiness"
+        or report.get("phase7_authorization_required") is not True
+    ):
         blocked = [
             check["check"] for check in report.get("checks", [])
             if check.get("status") == "BLOCK"
@@ -288,14 +292,33 @@ def _atomic_json(path: Path, value: Mapping[str, Any]) -> None:
 def _final_readiness_receipt(
     config: Mapping[str, Any], readiness: Mapping[str, Any],
 ) -> dict[str, Any]:
+    authorization_contract = config["safety"]["phase7_authorization"]
+    release_manifest_path = resolve_path(authorization_contract["release_manifest_path"])
+    authorization_path = resolve_path(authorization_contract["authorization_path"])
+    authorization = json.loads(authorization_path.read_text(encoding="utf-8"))
+    if not isinstance(authorization, dict):
+        raise ValueError("Phase 7 authorization must be a JSON object.")
+    release_binding = (
+        authorization.get("release")
+        if isinstance(authorization.get("release"), dict)
+        else {}
+    )
     payload: dict[str, Any] = {
         "schema_version": FINAL_READINESS_RECEIPT_VERSION,
         "readiness": "PASS",
         "config_sha256": sha256_file(DEFAULT_CONFIG),
         "runner_code_sha256": runner_code_sha256(config),
+        "release_manifest_sha256": sha256_file(release_manifest_path),
+        "phase7_authorization_sha256": sha256_file(authorization_path),
+        "phase7_authorization_id": authorization.get("authorization_id"),
+        "release_commit": release_binding.get("release_commit"),
+        "release_tag": release_binding.get("release_tag"),
         "source_ledger_sha256": sha256_file(resolve_path(config["sources"]["ledger_path"])),
         "enrollment_manifest_sha256": sha256_file(
             resolve_path(config["sources"]["enrollment_manifest_path"])
+        ),
+        "source_registration_sha256": sha256_file(
+            resolve_path("reports/pre_week08_source_registration.json")
         ),
         "method_catalog_sha256": str(config["frozen_assets"]["method_catalog"]["sha256"]),
         "policy_sha256": str(config["frozen_assets"]["policy"]["sha256"]),

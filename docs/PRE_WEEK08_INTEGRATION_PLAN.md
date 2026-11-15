@@ -1,8 +1,8 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 4 PASSED; PHASE 5 RELEASE-CANDIDATE FREEZE NEXT
-**Revision date:** 2026-11-14
+**Status:** ACTIVE PLAN - AUTHORIZATION-HARDENING RELEASE CYCLE IN PROGRESS
+**Revision date:** 2026-11-15
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
 ### 1. Purpose and final objective
@@ -127,6 +127,24 @@ passed with three expected skips, 179 UI tests passed, 5/5 scenario acceptance,
 Evidence, interactive RIRE expansion, and the recommendation display path are
 all DEFERRED. G4 is PASSED and UI v0.2 is frozen. Week 8 held-out data was not
 used and the benchmark has not run.
+
+#### 3.6 Phase 7 pre-decode incident and release-cycle restart (15 November 2026)
+
+The first Phase 7 technical dry-run passed 29/29 checks. During the frozen
+regression suite, a state-dependent test invoked canonical final preparation
+after G6 enrollment. The function persisted the readiness receipt and final
+plan before its first decoder call, as designed. The test's decoder stub then
+stopped the call: no real decoder or label reader ran, no scientific attempt
+executed, and no held-out pixel, label, or outcome was exposed.
+
+The incident is tracked in `reports/pre_week08_phase7_incident.json`; the two
+files are hash-preserved under the ignored incident archive. The canonical
+output location was reset as a documented new-cycle reset, not a resume. The
+historical G5 tag and G6 commits remain immutable evidence. Md Moshiur Rahman
+selected the conservative remediation: return to a pre-enrollment candidate,
+machine-enforce G7 authorization, rerun regression and release binding, and
+renew G5, G6, and G7 review. PIA18033 remains unopened and may be reused only
+after renewed G6 approval.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -572,15 +590,20 @@ The release manifest must cover:
 - release checklist signed through G5;
 - holdout pixels and labels still unopened by the development workflow.
 
-**G5 result (2026-11-14): PASSED.** Named release reviewer Md Moshiur
+**Historical G5 result (2026-11-14): PASSED.** Named release reviewer Md Moshiur
 Rahman approved the freeze. The signed checklist and automated evidence are
 bound to immutable tag `pre-week08-g5-20261114`; the self-reference-free
 release manifest is added only through the exact post-tag metadata allowlist.
 No real Week 8 pixel or label was accessed.
 
+That tag is not the candidate for the authorization-hardening cycle. A new G5
+candidate and unique tag require the unsigned
+`docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md` to be completed and explicitly
+approved. Do not move or rewrite the historical tag.
+
 ### 13. Phase 6 - independent-source enrollment
 
-**Status:** BLOCKED - no source registered
+**Status:** BLOCKED - new-cycle candidate reset to pre-enrollment
 **Priority:** P0
 **Owner:** data custodian/provenance reviewer; developer performs metadata-only integration.
 
@@ -596,11 +619,14 @@ Only after G5:
 
 The G5 code/config tag remains immutable. The G6 enrollment commit layers only the source ledger, attestation, and source-manifest hashes on that tag; together they identify the final runnable release candidate.
 
-The strict post-tag allowlist is exact: `configs/week08_source_use_ledger.json`,
+For the new cycle, the strict post-tag allowlist is exact:
+`configs/week08_source_use_ledger.json`,
 `data/manifests/week08_holdout_sources.json`,
 `reports/pre_week08_source_registration.json`, and
-`reports/pre_week08_release_manifest.json`. Any other path changed between the
-G5 tag and the current clean enrollment commit blocks final readiness.
+`reports/pre_week08_release_manifest.json` during G6, plus
+`reports/pre_week08_phase7_authorization.json` during G7. Any other path
+changed between the new G5 tag and the current clean commit blocks final
+readiness.
 
 #### Exit gate G6
 
@@ -613,7 +639,7 @@ G5 tag and the current clean enrollment commit blocks final readiness.
 
 ### 14. Phase 7 - strict final-readiness gate
 
-**Status:** BLOCKED by G6
+**Status:** BLOCKED - authorization hardening and renewed G5/G6 required
 **Priority:** P0
 **Owner:** release reviewer.
 
@@ -629,8 +655,19 @@ The final benchmark may start only when:
 - clean staging can restore evidence and pass preflight;
 - outputs/week08_holdout and outputs/week08_final are absent or empty;
 - the signed checklist contains no open P0 item.
+- `--technical-readiness` passes all strict technical gates before approval;
+- a separate `pre_week08_phase7_authorization_v1` record binds the exact new
+  release tag, reviewed G6 commit, enrollment/runtime hashes, incident
+  disposition, source-reuse decision, deviation approval, restricted claim
+  scope, and one-run Phase 8 sequence;
+- authorization-required `--final-readiness` passes after that record is
+  committed.
 
 Any failure means **do not run**. Fixes before source exposure require a new release candidate. Fixes after enrollment invalidate G5/G6 and require renewed review.
+
+The preparation command may not create an output directory, readiness receipt,
+plan, or decoder call until authorization-required final readiness passes. The
+receipt must bind the exact release-manifest and Phase 7 authorization hashes.
 
 ### 15. Phase 8 - one-run execution
 
@@ -839,9 +876,9 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
 | G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 132 current focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
 | G4 UI acceptance/scope | PASSED | `reports/pre_week08_stage_b_validation.json`; 5/5 scenarios plus 5/5 supplemental checks; UI v0.2 frozen; optional scope DEFERRED |
-| G5 Release-candidate freeze | PASSED | Named reviewer approved the signed checklist; exact lock, environment record, executable inventory, validation, clean install, restoration, immutable candidate tag, and manifest binding verify |
-| G6 Source enrollment | BLOCKED | week08_sources is empty |
-| G7 Final readiness/execution | BLOCKED | Depends on G6 source enrollment and the remaining source-dependent strict prerequisites |
+| G5 Release-candidate freeze | IN PROGRESS | Historical tag remains preserved; authorization-hardening candidate, regression evidence, Stage B rebinding, checklist R2, and renewed reviewer approval are pending |
+| G6 Source enrollment | BLOCKED | New candidate is intentionally pre-enrollment; PIA18033 reuse requires renewed approval after the new G5 tag |
+| G7 Final readiness/execution | BLOCKED | Machine-enforced authorization, renewed G5/G6, incident disposition, deviation approval, and signed one-run authorization are required |
 | G8 Analysis/release closure | NOT STARTED | Week 8 has not run |
 
 Update this table and link the tracked evidence whenever a gate changes.
@@ -861,6 +898,7 @@ python scripts/week07_evidence_archive.py verify
 python scripts/week07_evidence_archive.py restore --destination <new-empty-staging-directory>
 python scripts/week07_evidence_archive.py verify-restored --destination <staging-directory>
 python scripts/week08_preflight.py --dry-run
+python scripts/week08_preflight.py --dry-run --technical-readiness
 python scripts/week08_preflight.py --dry-run --final-readiness
 python scripts/pre_week08_stage_b_ui_qa.py prepare
 python scripts/pre_week08_stage_b_ui_qa.py status
@@ -877,15 +915,21 @@ Never run prepare, decide, or evaluate on real Week 8 data before G7.
 
 ### 23. Immediate next actions
 
-1. Begin Phase 6 only through an independent custodian/provenance reviewer;
-   receive metadata and raw-byte hashes without developer visual screening.
-2. Add only the four exact Phase 6 metadata paths permitted after tag
-   `pre-week08-g5-20261114`, then rerun strict preflight.
-3. Keep real holdout pixels and labels inaccessible to the development workflow
-   until G7 strict final readiness passes.
+1. Complete fail-closed G7 authorization code, tests, documentation, receipt
+   binding, regression evidence, integrity/freeze records, and Stage B
+   rebinding without opening PIA18033.
+2. Prepare a clean pre-enrollment release candidate and stop for explicit
+   renewed G5 approval before creating `pre-week08-g5r2-20261115`.
+3. After the new tag, renew G6 source enrollment and custodian approval for
+   PIA18033 reuse and the updated synthetic-after-freeze binding.
+4. Run technical readiness, obtain and commit the separate hash-bound G7
+   authorization, then run authorization-required final readiness.
+5. Keep held-out pixels and labels inaccessible until the authorization-required
+   G7 gate passes.
 
 **Current boundary:** This revision records completed Phase 3 evaluator and
 firewall controls, completed Phase 4 human UI acceptance and UI v0.2 scope
-freeze, and the signed, immutable Phase 5 release-candidate freeze. It does not
-procure or enroll data, open real heldout pixels or labels, modify frozen
-algorithms/policy, pass G6/G7, or run Week 8.
+freeze, the historical Phase 5/G6 evidence, and the documented pre-decode
+incident. The active candidate is intentionally reset to pre-enrollment while
+authorization hardening is implemented. It does not open real held-out pixels
+or labels, pass renewed G5/G6/G7, or run Week 8.

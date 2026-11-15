@@ -1,0 +1,71 @@
+{
+  "schema_version": "pre_week08_phase7_incident_v1",
+  "incident_id": "phase7-predecode-test-20261114",
+  "phase": "phase7_final_readiness",
+  "status": "NEW_RELEASE_CYCLE_STARTED",
+  "occurred_utc": "2026-11-14T22:35:09Z",
+  "recorded_utc": "2026-11-14T23:10:20Z",
+  "trigger": {
+    "test": "tests/test_week08_phase3_cli.py::test_default_final_prepare_blocks_before_any_decoder",
+    "description": "A state-dependent frozen test invoked make_final_artifacts with the canonical final configuration after G6 enrollment. Automated strict readiness passed while human Phase 7 authorization remained pending."
+  },
+  "phase_reached": "pre_decode_receipt_and_plan_persistence",
+  "exposure": {
+    "real_image_decoder_invoked": false,
+    "decoder_stub_interceptions": 1,
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "scientific_attempts_executed": 0,
+    "week08_evaluation_executed": false
+  },
+  "planned_counts_materialized_before_stub": {
+    "sources": 1,
+    "pairs": 150,
+    "attempts": 294
+  },
+  "preserved_artifacts": [
+    {
+      "original_path": "outputs/week08_final/final_readiness_receipt.json",
+      "archived_path": "outputs/incidents/phase7-predecode-test-20261114/final_readiness_receipt.json",
+      "bytes": 14909,
+      "sha256": "6aeef2fa8d489d82ed2c188915b1d23ab07ae7f8640a76d8138a85a2162a161c"
+    },
+    {
+      "original_path": "outputs/week08_final/evaluation_plan.json",
+      "archived_path": "outputs/incidents/phase7-predecode-test-20261114/evaluation_plan.json",
+      "bytes": 728833,
+      "sha256": "a445e30fadca1cd0fc8bc56442e5bedc4365e9b9fee527947702104f7228e70d"
+    }
+  ],
+  "canonical_output_reset": {
+    "method": "Moved the two exact pre-decode artifacts to the ignored incident archive after their hashes were recorded and verified.",
+    "outputs_week08_final_empty": true,
+    "outputs_week08_holdout_absent": true,
+    "reset_is_resume": false
+  },
+  "authorization_gap": {
+    "release_manifest_authorized_value_at_incident": false,
+    "release_manifest_approval_pending_value_at_incident": true,
+    "enforced_by_prepare_before_decode": false,
+    "required_remediation": "Machine-enforced, hash-bound Phase 7 authorization before any preparation side effect."
+  },
+  "recovery_decision": {
+    "decision": "START_NEW_RELEASE_CYCLE",
+    "decision_text": "Go with your recommended approach",
+    "decision_maker": "Md Moshiur Rahman",
+    "decision_utc": "2026-11-14T23:10:20Z",
+    "renewed_gates_required": [
+      "G5",
+      "G6",
+      "G7"
+    ],
+    "source_reuse": "PENDING_RENEWED_G6_CUSTODIAN_AND_RELEASE_REVIEW",
+    "new_holdout_required": false,
+    "new_holdout_rationale": "No source pixel, label, or scientific outcome was exposed; reuse remains subject to renewed review."
+  },
+  "historical_bindings": {
+    "g5_tag": "pre-week08-g5-20261114",
+    "g6_enrollment_commit": "d207630bf86c7c0f7dd62530a4f8857fe93fa41b",
+    "phase7_incident_manifest_commit": "f1b105e9368344918172c5b02200ef115eef470c"
+  }
+}

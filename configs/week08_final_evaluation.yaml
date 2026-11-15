@@ -12,6 +12,26 @@ safety:
   phase3_allows_real_week08_label_access: false
   final_execution_requires_gates: [G3, G4, G5, G6]
   final_execution_gate: G7
+  phase7_authorization:
+    required_for_final_readiness: true
+    technical_readiness_may_defer_authorization: true
+    release_manifest_path: reports/pre_week08_release_manifest.json
+    release_manifest_schema_version: pre_week08_release_manifest_v2
+    authorization_path: reports/pre_week08_phase7_authorization.json
+    authorization_schema_version: pre_week08_phase7_authorization_v1
+    incident_report_path: reports/pre_week08_phase7_incident.json
+    authorization_must_bind:
+      - release_commit_and_tag
+      - reviewed_g6_enrollment_commit
+      - source_ledger
+      - holdout_manifest
+      - source_registration
+      - runtime_files
+      - incident_disposition
+      - source_reuse_decision
+      - independent_real_verified_gt_deviation
+      - restricted_claim_scope
+      - phase8_one_run_sequence
   source_count_locked_before_first_pixel_decode: true
   source_count_may_increase_after_any_enrolled_pixel_is_opened: false
   source_count_may_increase_after_any_enrolled_label_is_opened: false

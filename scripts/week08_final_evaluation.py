@@ -38,7 +38,7 @@ from image_registration.week8_evaluation import (  # noqa: E402
 )
 
 DEFAULT_CONFIG = ROOT / "configs/week08_final_evaluation.yaml"
-FINAL_READINESS_RECEIPT_VERSION = "week08_final_readiness_receipt_v1"
+FINAL_READINESS_RECEIPT_VERSION = "week08_final_readiness_receipt_v2"
 
 
 class _UniqueSafeLoader(yaml.SafeLoader):
@@ -320,14 +320,33 @@ def verify_final_readiness_receipt(
     received_hash = receipt.pop("receipt_sha256", None)
     if not _is_sha256(received_hash) or canonical_sha256(receipt) != received_hash:
         raise ValueError("Final readiness receipt self-hash mismatch.")
+    authorization_contract = config["safety"]["phase7_authorization"]
+    release_manifest_path = resolve_path(authorization_contract["release_manifest_path"])
+    authorization_path = resolve_path(authorization_contract["authorization_path"])
+    authorization = load_json(authorization_path)
+    if not isinstance(authorization, dict):
+        raise ValueError("Phase 7 authorization must be a JSON object.")
+    release_binding = (
+        authorization.get("release")
+        if isinstance(authorization.get("release"), dict)
+        else {}
+    )
     expected = {
         "schema_version": FINAL_READINESS_RECEIPT_VERSION,
         "readiness": "PASS",
         "config_sha256": sha256_file(DEFAULT_CONFIG),
         "runner_code_sha256": runner_code_sha256(config),
+        "release_manifest_sha256": sha256_file(release_manifest_path),
+        "phase7_authorization_sha256": sha256_file(authorization_path),
+        "phase7_authorization_id": authorization.get("authorization_id"),
+        "release_commit": release_binding.get("release_commit"),
+        "release_tag": release_binding.get("release_tag"),
         "source_ledger_sha256": sha256_file(resolve_path(config["sources"]["ledger_path"])),
         "enrollment_manifest_sha256": sha256_file(
             resolve_path(config["sources"]["enrollment_manifest_path"])
+        ),
+        "source_registration_sha256": sha256_file(
+            resolve_path("reports/pre_week08_source_registration.json")
         ),
         "method_catalog_sha256": str(config["frozen_assets"]["method_catalog"]["sha256"]),
         "policy_sha256": str(config["frozen_assets"]["policy"]["sha256"]),
@@ -337,9 +356,20 @@ def verify_final_readiness_receipt(
             raise ValueError(f"Final readiness receipt {name} mismatch.")
     if receipt.get("week08_evaluation_executed") is not False:
         raise ValueError("Final readiness receipt must predate Week 8 evaluation.")
+    if receipt.get("real_week08_source_or_label_decoded") is not False:
+        raise ValueError("Final readiness receipt must predate source or label decoding.")
     report = receipt.get("preflight_report")
     if not isinstance(report, dict) or report.get("readiness") != "PASS" or report.get("mode") != "final_readiness":
         raise ValueError("Final readiness receipt does not contain the passing strict report.")
+    if report.get("phase7_authorization_required") is not True:
+        raise ValueError("Final readiness receipt was not produced by authorization-required mode.")
+    checks = report.get("checks") if isinstance(report.get("checks"), list) else []
+    authorization_checks = [
+        item for item in checks
+        if isinstance(item, dict) and item.get("check") == "strict_phase7_authorization"
+    ]
+    if len(authorization_checks) != 1 or authorization_checks[0].get("status") != "PASS":
+        raise ValueError("Final readiness receipt lacks a passing Phase 7 authorization check.")
     if receipt.get("preflight_report_sha256") != canonical_sha256(report):
         raise ValueError("Final readiness receipt preflight report hash mismatch.")
     receipt["receipt_sha256"] = received_hash

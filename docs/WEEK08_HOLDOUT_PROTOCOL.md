@@ -165,6 +165,12 @@ evidence only.
 5. Phase 7 runs strict final readiness. Any missing or invalid source, lineage, label evidence, release identity or signoff is `BLOCK`.
 6. Phase 8 performs the one-run prepare -> decide/seal -> evaluate sequence.
 
+Phase 7 has two machine-distinct modes. Technical readiness verifies all
+non-authorization gates for reviewer inspection. Final readiness additionally
+requires a separate `pre_week08_phase7_authorization_v1` artifact. Preparation
+uses only authorization-required final readiness and must fail before any
+output write or decoder call when approval is missing or stale.
+
 No real Week 8 source may be downloaded, previewed, decoded or used to shape
 implementation before the Phase 5 freeze passes.
 
@@ -232,5 +238,12 @@ After the Phase 5 tag, tracked changes are limited to the Phase 6 metadata
 overlay: `configs/week08_source_use_ledger.json`,
 `data/manifests/week08_holdout_sources.json`,
 `reports/pre_week08_source_registration.json`, and
-`reports/pre_week08_release_manifest.json`. Strict mode compares the tagged
+`reports/pre_week08_release_manifest.json`; Phase 7 may additionally add
+`reports/pre_week08_phase7_authorization.json`. Strict mode compares the tagged
 commit with the current clean commit and blocks every other changed path.
+
+The authorization record must bind the tagged release, reviewed G6 enrollment
+commit, enrollment and runtime hashes, incident disposition, source-reuse
+decision, deviation approval, restricted claims, reviewer identity/time, and
+the one-run Phase 8 sequence. The readiness receipt binds the exact release
+manifest and authorization hashes before any decoder can run.

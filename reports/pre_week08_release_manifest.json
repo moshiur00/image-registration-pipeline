@@ -2,8 +2,8 @@
     "schema_version":  "pre_week08_release_manifest_v1",
     "release_id":  "pre-week08-g5-20261114",
     "gate":  "G5",
-    "status":  "phase7_blocked_predecode_test_incident",
-    "generated_utc":  "2026-11-14T22:37:55Z",
+    "status":  "new_release_cycle_authorization_hardening_in_progress",
+    "generated_utc":  "2026-11-14T23:10:20Z",
     "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
     "release_tag":  "pre-week08-g5-20261114",
     "clean_worktree":  true,
@@ -94,7 +94,10 @@
                       "ui/streamlit_app.py":  "61d4df5b6b6edf9a0b10467c231e181454f664ca9b8460a877c47191aa0697b1",
                       "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json":  "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93"
                   },
-    "phase6_pending_artifacts":  [],
+    "phase6_pending_artifacts":  [
+                                     "data/manifests/week08_holdout_sources.json",
+                                     "reports/pre_week08_source_registration.json"
+                                 ],
     "post_release_metadata_allowlist":  [
                                             "configs/week08_source_use_ledger.json",
                                             "data/manifests/week08_holdout_sources.json",
@@ -104,9 +107,10 @@
     "final_readiness":  {
                             "authorized":  false,
                             "expected_remaining_blocks":  [
-                                                              "clean_week08_final",
-                                                              "phase7_reviewer_recovery_decision",
-                                                              "independent_real_verified_gt_deviation_approval"
+                                                              "new_release_candidate",
+                                                              "renewed_g5_signoff",
+                                                              "renewed_g6_source_enrollment",
+                                                              "machine_verified_phase7_authorization"
                                                           ],
                             "release_reviewer_approval_pending":  true,
                             "week08_benchmark_executed":  false,
@@ -178,7 +182,7 @@
                                         "source_labels_accessed":  false
                                     },
     "phase7_review":  {
-                           "status":  "BLOCKED",
+                           "status":  "SUPERSEDED_BY_NEW_RELEASE_CYCLE",
                            "review_started_utc":  "2026-11-14T22:37:55Z",
                            "initial_strict_dry_run":  {
                                                           "readiness":  "PASS",
@@ -232,8 +236,13 @@
                                                                                                                 "clean_week08_final"
                                                                                                             ]
                                                                                  },
-                                                      "canonical_output_reset_authorized":  false,
-                                                      "recoverability":  "PENDING_RELEASE_REVIEWER_DECISION"
+                                                      "canonical_output_reset_authorized":  true,
+                                                      "canonical_outputs_archived_and_reset":  true,
+                                                      "tracked_incident_report":  {
+                                                                                         "path":  "reports/pre_week08_phase7_incident.json",
+                                                                                         "sha256":  "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596"
+                                                                                     },
+                                                      "recoverability":  "NEW_RELEASE_CYCLE_STARTED"
                                                   },
                            "authorization_control":  {
                                                          "manifest_authorized_value":  false,
@@ -242,16 +251,37 @@
                                                          "current_control_type":  "human_process_control"
                                                      },
                            "required_reviewer_decisions":  [
-                                                               "Choose documented pre-decode recovery or a new release cycle with machine-enforced authorization.",
-                                                               "Approve or reject continued use of the enrolled source after confirming no pixel, label, or outcome exposure.",
-                                                               "If recovery is approved, authorize removal of exactly the two preserved pre-decode artifacts before rerunning strict readiness.",
-                                                               "Explicitly approve the absence of an independent real verified-GT pair and restrict claims to source-specific software evidence."
+                                                               "Approve the new release candidate at renewed G5 after regression and binding evidence are complete.",
+                                                               "Approve or reject continued use of PIA18033 during renewed G6 after confirming no pixel, label, or outcome exposure.",
+                                                               "At G7, authorize the one-run Phase 8 sequence and explicitly approve the independent-real-GT deviation and restricted claim scope."
                                                            ]
                        },
+    "new_release_cycle":  {
+                               "decision":  "STARTED",
+                               "decision_utc":  "2026-11-14T23:10:20Z",
+                               "decision_maker":  "Md Moshiur Rahman",
+                               "decision_text":  "Go with your recommended approach",
+                               "purpose":  "Add machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
+                               "historical_g5_tag_preserved":  "pre-week08-g5-20261114",
+                               "historical_g6_enrollment_commit":  "d207630bf86c7c0f7dd62530a4f8857fe93fa41b",
+                               "incident_report":  {
+                                                       "path":  "reports/pre_week08_phase7_incident.json",
+                                                       "sha256":  "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596"
+                                                   },
+                               "candidate_enrollment_state":  "RESET_TO_PRE_ENROLLMENT",
+                               "private_source_bytes_retained_unopened":  true,
+                               "source_reuse":  "PENDING_RENEWED_G6_REVIEW",
+                               "renewed_gates_required":  [
+                                                               "G5",
+                                                               "G6",
+                                                               "G7"
+                                                           ]
+                           },
     "limitations":  [
                         "G6 enrolls one independently reviewed source; this single-source design limits generalizability.",
                         "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
                         "The holdout source remains unopened and undecoded; G7 human authorization is still required before any pixel or label access.",
-                        "Phase 7 is blocked while the preserved pre-decode test artifacts and the process-only authorization control await reviewer disposition."
+                        "The pre-decode incident artifacts are preserved in an ignored archive and the canonical final-output location was reset for a new evaluation cycle.",
+                        "The historical G5/G6 records remain evidence only; the new cycle requires renewed G5, G6, and machine-verified G7 approval."
                     ]
 }

@@ -156,18 +156,43 @@ def test_final_plan_path_with_empty_enrollment_is_metadata_only(monkeypatch) -> 
     assert calls == 0
 
 
-def test_default_final_prepare_blocks_before_any_decoder(monkeypatch) -> None:
-    calls = 0
+def test_unapproved_final_prepare_blocks_before_any_side_effect(
+    tmp_path: Path, monkeypatch,
+) -> None:
+    paths = Week8Paths.final_layout(
+        holdout_root=tmp_path / "holdout",
+        final_root=tmp_path / "final",
+    )
+    calls: list[str] = []
 
-    def forbidden_decode(*_args, **_kwargs):
-        nonlocal calls
-        calls += 1
-        raise AssertionError("strictly blocked preparation decoded an image")
+    def blocked_readiness(*_args, **_kwargs):
+        calls.append("strict_readiness")
+        raise ValueError(
+            "Strict final readiness did not pass; no final source was decoded. "
+            "Blocking checks: strict_phase7_authorization"
+        )
 
-    monkeypatch.setattr(prepare_cli, "load_image", forbidden_decode)
-    with pytest.raises(ValueError, match="no final source was decoded"):
+    def forbidden(name):
+        def stop(*_args, **_kwargs):
+            calls.append(name)
+            raise AssertionError(f"unapproved preparation reached {name}")
+        return stop
+
+    monkeypatch.setattr(
+        prepare_cli, "load_protocol",
+        lambda *_a, **_k: (final_cli.DEFAULT_CONFIG, {"test": True}),
+    )
+    monkeypatch.setattr(prepare_cli, "require_strict_final_readiness", blocked_readiness)
+    monkeypatch.setattr(prepare_cli, "final_paths", forbidden("final_paths"))
+    monkeypatch.setattr(prepare_cli, "load_final_enrollment", forbidden("enrollment"))
+    monkeypatch.setattr(prepare_cli, "_atomic_json", forbidden("write"))
+    monkeypatch.setattr(prepare_cli, "load_image", forbidden("decode"))
+
+    with pytest.raises(ValueError, match="strict_phase7_authorization"):
         prepare_cli.make_final_artifacts(final_cli.DEFAULT_CONFIG)
-    assert calls == 0
+    assert calls == ["strict_readiness"]
+    assert not paths.root.exists()
+    assert not paths.prepared.exists()
 
 
 def test_receipt_and_plan_are_persisted_before_first_decode(tmp_path: Path, monkeypatch) -> None:
@@ -224,12 +249,19 @@ def test_receipt_and_plan_are_persisted_before_first_decode(tmp_path: Path, monk
 
     monkeypatch.setattr(prepare_cli, "load_protocol", lambda *_a, **_k: (final_cli.DEFAULT_CONFIG, config))
     monkeypatch.setattr(prepare_cli, "require_strict_final_readiness", lambda *_a: {
-        "readiness": "PASS", "mode": "final_readiness", "checks": [],
+        "readiness": "PASS",
+        "mode": "final_readiness",
+        "phase7_authorization_required": True,
+        "checks": [{"check": "strict_phase7_authorization", "status": "PASS"}],
     })
     monkeypatch.setattr(prepare_cli, "final_paths", lambda _config: paths)
     monkeypatch.setattr(prepare_cli, "load_final_enrollment", lambda _config: (ledger, manifest))
     monkeypatch.setattr(prepare_cli, "_final_readiness_receipt", lambda *_a: {
-        "schema_version": "test", "receipt_sha256": "8" * 64,
+        "schema_version": "test",
+        "release_manifest_sha256": "8" * 64,
+        "phase7_authorization_sha256": "9" * 64,
+        "phase7_authorization_id": "g7-test-approval",
+        "receipt_sha256": "a" * 64,
     })
     monkeypatch.setattr(prepare_cli, "verify_final_readiness_receipt", lambda *_a: {})
     monkeypatch.setattr(
@@ -249,11 +281,97 @@ def test_receipt_and_plan_are_persisted_before_first_decode(tmp_path: Path, monk
     def stop_at_decode(*_args, **_kwargs):
         assert paths.final_readiness_receipt.is_file()
         assert paths.plan.is_file()
+        receipt = json.loads(paths.final_readiness_receipt.read_text(encoding="utf-8"))
+        assert receipt["release_manifest_sha256"] == "8" * 64
+        assert receipt["phase7_authorization_sha256"] == "9" * 64
+        assert receipt["phase7_authorization_id"] == "g7-test-approval"
         raise DecodeReached
 
     monkeypatch.setattr(prepare_cli, "load_image", stop_at_decode)
     with pytest.raises(DecodeReached):
         prepare_cli.make_final_artifacts(final_cli.DEFAULT_CONFIG)
+
+
+def test_final_readiness_receipt_binds_release_manifest_and_authorization(
+    tmp_path: Path, monkeypatch,
+) -> None:
+    config_path = tmp_path / "week08.yaml"
+    config_path.write_text("schema_version: test\n", encoding="utf-8")
+    release_path = tmp_path / "release.json"
+    authorization_path = tmp_path / "authorization.json"
+    ledger_path = tmp_path / "ledger.json"
+    enrollment_path = tmp_path / "enrollment.json"
+    registration_path = tmp_path / "reports/pre_week08_source_registration.json"
+    registration_path.parent.mkdir(parents=True)
+    release_path.write_text(json.dumps({"release_id": "r2"}), encoding="utf-8")
+    authorization = {
+        "authorization_id": "g7-r2",
+        "release": {"release_commit": "a" * 40, "release_tag": "r2-tag"},
+    }
+    authorization_path.write_text(json.dumps(authorization), encoding="utf-8")
+    ledger_path.write_text(json.dumps({"week08_sources": []}), encoding="utf-8")
+    enrollment_path.write_text(json.dumps({"source_ids": []}), encoding="utf-8")
+    registration_path.write_text(json.dumps({"status": "test"}), encoding="utf-8")
+    config = {
+        "safety": {
+            "phase7_authorization": {
+                "release_manifest_path": str(release_path),
+                "authorization_path": str(authorization_path),
+            },
+        },
+        "sources": {
+            "ledger_path": str(ledger_path),
+            "enrollment_manifest_path": str(enrollment_path),
+        },
+        "frozen_assets": {
+            "method_catalog": {"sha256": "1" * 64},
+            "policy": {"sha256": "2" * 64},
+        },
+    }
+    report = {
+        "readiness": "PASS",
+        "mode": "final_readiness",
+        "phase7_authorization_required": True,
+        "checks": [{"check": "strict_phase7_authorization", "status": "PASS"}],
+    }
+    payload = {
+        "schema_version": final_cli.FINAL_READINESS_RECEIPT_VERSION,
+        "readiness": "PASS",
+        "config_sha256": sha256_file(config_path),
+        "runner_code_sha256": "3" * 64,
+        "release_manifest_sha256": sha256_file(release_path),
+        "phase7_authorization_sha256": sha256_file(authorization_path),
+        "phase7_authorization_id": "g7-r2",
+        "release_commit": "a" * 40,
+        "release_tag": "r2-tag",
+        "source_ledger_sha256": sha256_file(ledger_path),
+        "enrollment_manifest_sha256": sha256_file(enrollment_path),
+        "source_registration_sha256": sha256_file(registration_path),
+        "method_catalog_sha256": "1" * 64,
+        "policy_sha256": "2" * 64,
+        "preflight_report": report,
+        "preflight_report_sha256": canonical_sha256(report),
+        "week08_evaluation_executed": False,
+        "real_week08_source_or_label_decoded": False,
+    }
+    payload["receipt_sha256"] = canonical_sha256(payload)
+    receipt_path = tmp_path / "receipt.json"
+    receipt_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    monkeypatch.setattr(final_cli, "ROOT", tmp_path)
+    monkeypatch.setattr(final_cli, "DEFAULT_CONFIG", config_path)
+    monkeypatch.setattr(final_cli, "runner_code_sha256", lambda _config: "3" * 64)
+    assert final_cli.verify_final_readiness_receipt(config, receipt_path)[
+        "phase7_authorization_id"
+    ] == "g7-r2"
+
+    release_path.write_text(json.dumps({"release_id": "tampered"}), encoding="utf-8")
+    with pytest.raises(ValueError, match="release_manifest_sha256 mismatch"):
+        final_cli.verify_final_readiness_receipt(config, receipt_path)
+    release_path.write_text(json.dumps({"release_id": "r2"}), encoding="utf-8")
+    authorization_path.write_text(json.dumps({**authorization, "decision": "tampered"}), encoding="utf-8")
+    with pytest.raises(ValueError, match="phase7_authorization_sha256 mismatch"):
+        final_cli.verify_final_readiness_receipt(config, receipt_path)
 
 
 def test_recommendation_criteria_are_loaded_from_preregistration() -> None:

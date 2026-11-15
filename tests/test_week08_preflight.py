@@ -194,6 +194,131 @@ def write_fixture(root: Path, rel: str, content: bytes) -> str:
     return hashlib.sha256(content).hexdigest()
 
 
+def phase7_authorization_fixture(tmp_path: Path) -> tuple[Path, dict, Path, str]:
+    """Create a tiny Git-backed G5 -> G6 -> G7 authorization chain."""
+    root = tmp_path / "phase7_authorization"
+    root.mkdir(parents=True)
+
+    def git(*args: str) -> str:
+        return subprocess.run(
+            ["git", "-c", f"safe.directory={root.as_posix()}", "-C", str(root), *args],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    def write_json(relative: str, value: dict) -> str:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value, sort_keys=True), encoding="utf-8")
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    git("init")
+    git("config", "user.email", "phase7-test@example.invalid")
+    git("config", "user.name", "Phase 7 Test")
+    runtime_paths = {
+        "config_sha256": "configs/week08_final_evaluation.yaml",
+        "preflight_sha256": "scripts/week08_preflight.py",
+        "prepare_sha256": "scripts/week08_prepare_holdout.py",
+        "final_evaluation_sha256": "scripts/week08_final_evaluation.py",
+        "runner_sha256": "src/image_registration/week8_evaluation.py",
+    }
+    runtime_hashes = {
+        field: write_fixture(root, relative, f"{field}-frozen\n".encode())
+        for field, relative in runtime_paths.items()
+    }
+    incident_hash = write_json(pre.PHASE7_INCIDENT_REL.as_posix(), {
+        "schema_version": "pre_week08_phase7_incident_v1",
+        "incident_id": "phase7-predecode-test-20261114",
+        "source_pixels_decoded": False,
+        "source_labels_accessed": False,
+    })
+    ledger_path = root / pre.LEDGER_REL
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    ledger_path.write_text(json.dumps({"week08_sources": []}), encoding="utf-8")
+    git("add", ".")
+    git("commit", "-m", "release candidate")
+    release_commit = git("rev-parse", "HEAD")
+    release_tag = "phase7-authorization-test"
+    git("tag", release_tag, release_commit)
+
+    source_id = "test-independent-source"
+    ledger_hash = write_json(pre.LEDGER_REL.as_posix(), {
+        "week08_sources": [{"source_id": source_id}],
+    })
+    holdout_hash = write_json(pre.HOLDOUT_SOURCE_MANIFEST_REL.as_posix(), {
+        "source_ids": [source_id],
+    })
+    registration_hash = write_json(pre.SOURCE_REGISTRATION_REL.as_posix(), {
+        "source_id": source_id,
+    })
+    git("add", ".")
+    git("commit", "-m", "enroll source")
+    reviewed_commit = git("rev-parse", "HEAD")
+
+    authorization = {
+        "schema_version": pre.PHASE7_AUTHORIZATION_VERSION,
+        "authorization_id": "g7-test-approval",
+        "gate": "G7",
+        "decision": "APPROVED",
+        "reviewer": {
+            "name": "Test Reviewer",
+            "role": "release reviewer",
+            "attested_utc": "2026-11-15T00:00:00Z",
+        },
+        "release": {
+            "release_id": "test-release",
+            "release_commit": release_commit,
+            "release_tag": release_tag,
+        },
+        "enrollment": {
+            "reviewed_commit": reviewed_commit,
+            "source_ids": [source_id],
+            "source_ledger_sha256": ledger_hash,
+            "holdout_manifest_sha256": holdout_hash,
+            "source_registration_sha256": registration_hash,
+        },
+        "runtime_bindings": runtime_hashes,
+        "incident_disposition": {
+            "incident_id": "phase7-predecode-test-20261114",
+            "report_path": pre.PHASE7_INCIDENT_REL.as_posix(),
+            "report_sha256": incident_hash,
+            "canonical_outputs_reset": True,
+            "source_pixels_decoded": False,
+            "source_labels_accessed": False,
+            "scientific_attempts_executed": 0,
+            "source_reuse_approved": True,
+        },
+        "deviation_approval": {
+            "independent_real_verified_gt_absent": True,
+            "approved": True,
+            "claim_scope": "source_specific_software_evidence_only",
+            "prohibited_claims": pre.PHASE7_PROHIBITED_CLAIMS,
+        },
+        "authorization": {
+            "authorizes_phase8_one_run": True,
+            "sequence": ["prepare", "decide", "evaluate"],
+            "infrastructure_resume_only": True,
+        },
+    }
+    authorization_hash = write_json(pre.PHASE7_AUTHORIZATION_REL.as_posix(), authorization)
+    release = {
+        "release_id": "test-release",
+        "release_commit": release_commit,
+        "release_tag": release_tag,
+        "phase7_authorization": {
+            "path": pre.PHASE7_AUTHORIZATION_REL.as_posix(),
+            "sha256": authorization_hash,
+        },
+        "final_readiness": {
+            "authorized": True,
+            "release_reviewer_approval_pending": False,
+        },
+    }
+    write_json(pre.RELEASE_MANIFEST_REL.as_posix(), release)
+    git("add", ".")
+    git("commit", "-m", "record approval")
+    return root, release, root / pre.PHASE7_AUTHORIZATION_REL, reviewed_commit
+
+
 def valid_stage_b_validation(commit: str = "a" * 40) -> dict:
     def evidence(reference: str) -> dict:
         return {"reference": reference, "sha256": "b" * 64, "size_bytes": 123}
@@ -1007,9 +1132,105 @@ def test_final_readiness_explicitly_blocks_later_phase_artifacts(tmp_path):
         'strict_runner_validation', 'strict_clean_staging_restoration',
         'strict_stage_b_acceptance',
         'strict_release_signoffs', 'strict_dependency_environment',
-        'strict_source_enrollment', 'strict_integrity_and_restoration',
+        'strict_source_enrollment', 'strict_phase7_authorization',
+        'strict_integrity_and_restoration',
     ):
         assert status(report, code) == 'BLOCK', code
+
+
+def test_phase7_authorization_accepts_exact_hash_bound_approval(tmp_path):
+    root, release, _, reviewed_commit = phase7_authorization_fixture(tmp_path)
+    errors, observed = pre.verify_phase7_authorization(root, release)
+    assert errors == []
+    assert observed['reviewed_enrollment_commit'] == reviewed_commit
+    assert observed['post_enrollment_changed_paths'] == [
+        pre.PHASE7_AUTHORIZATION_REL.as_posix(),
+        pre.RELEASE_MANIFEST_REL.as_posix(),
+    ]
+
+
+def test_phase7_authorization_requires_exact_file_and_manifest_flags(tmp_path):
+    root, release, authorization_path, _ = phase7_authorization_fixture(tmp_path)
+    authorization_path.unlink()
+    errors, _ = pre.verify_phase7_authorization(root, release)
+    assert any('Missing or unsafe file' in error for error in errors)
+
+    root, release, _, _ = phase7_authorization_fixture(tmp_path / 'flags')
+    release['final_readiness']['authorized'] = False
+    release['final_readiness']['release_reviewer_approval_pending'] = True
+    errors, _ = pre.verify_phase7_authorization(root, release)
+    assert any('authorized is not true' in error for error in errors)
+    assert any('approval pending' in error for error in errors)
+
+
+def test_phase7_authorization_rejects_stale_enrollment_and_incident_hashes(tmp_path):
+    root, release, _, _ = phase7_authorization_fixture(tmp_path)
+    (root / pre.SOURCE_REGISTRATION_REL).write_text('stale registration\n', encoding='utf-8')
+    (root / pre.PHASE7_INCIDENT_REL).write_text('stale incident\n', encoding='utf-8')
+    errors, _ = pre.verify_phase7_authorization(root, release)
+    assert any('source_registration_sha256' in error and 'mismatch' in error.lower() for error in errors)
+    assert any(pre.PHASE7_INCIDENT_REL.as_posix() in error and 'mismatch' in error.lower() for error in errors)
+
+
+@pytest.mark.parametrize(
+    ('section', 'field', 'value', 'message'),
+    [
+        ('reviewer', 'role', 'developer', 'named release reviewer'),
+        ('release', 'release_tag', 'wrong-tag', 'release_tag'),
+        ('deviation_approval', 'approved', False, 'real-verified-GT deviation'),
+        ('deviation_approval', 'claim_scope', 'broad_support', 'claim scope'),
+        ('incident_disposition', 'source_reuse_approved', False, 'source reuse'),
+        ('authorization', 'authorizes_phase8_one_run', False, 'one-run sequence'),
+    ],
+)
+def test_phase7_authorization_fails_closed_on_invalid_decision_fields(
+    tmp_path, section, field, value, message,
+):
+    root, release, authorization_path, _ = phase7_authorization_fixture(tmp_path)
+    authorization = json.loads(authorization_path.read_text(encoding='utf-8'))
+    authorization[section][field] = value
+    authorization_path.write_text(json.dumps(authorization, sort_keys=True), encoding='utf-8')
+    release['phase7_authorization']['sha256'] = hashlib.sha256(
+        authorization_path.read_bytes()
+    ).hexdigest()
+    errors, _ = pre.verify_phase7_authorization(root, release)
+    assert any(message in error for error in errors), errors
+
+
+def test_phase7_authorization_rejects_runtime_tamper_and_post_g6_changes(tmp_path):
+    root, release, _, _ = phase7_authorization_fixture(tmp_path)
+    config_path = root / 'configs/week08_final_evaluation.yaml'
+    config_path.write_text('tampered after approval\n', encoding='utf-8')
+    errors, _ = pre.verify_phase7_authorization(root, release)
+    assert any('config_sha256' in error and 'mismatch' in error.lower() for error in errors)
+
+    subprocess.run(
+        ['git', '-c', f'safe.directory={root.as_posix()}', '-C', str(root), 'add', '.'],
+        check=True,
+    )
+    subprocess.run(
+        ['git', '-c', f'safe.directory={root.as_posix()}', '-C', str(root),
+         'commit', '-m', 'forbidden post approval change'],
+        check=True, capture_output=True, text=True,
+    )
+    errors, observed = pre.verify_phase7_authorization(root, release)
+    assert 'configs/week08_final_evaluation.yaml' in observed['post_enrollment_changed_paths']
+    assert any('authorization allowlist' in error for error in errors)
+
+
+def test_technical_readiness_mode_defers_phase7_authorization(tmp_path):
+    root = stage(tmp_path)
+    report = pre.Audit(
+        root,
+        final_readiness=True,
+        require_phase7_authorization=False,
+    ).run()
+    assert report['mode'] == 'technical_readiness'
+    assert report['phase7_authorization_required'] is False
+    assert not any(
+        check['check'] == 'strict_phase7_authorization'
+        for check in report['checks']
+    )
 
 
 def test_final_readiness_cli_dry_run_writes_nothing(tmp_path):

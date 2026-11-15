@@ -18,11 +18,11 @@ import subprocess
 import sys
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import platform
-from typing import Any
+from typing import Any, Mapping
 
 import yaml
 
-VERSION = "pre_week08_preflight_v3"
+VERSION = "pre_week08_preflight_v4"
 BASELINE_VERSION = "pre_week08_stage_a_v1"
 EXPECTED_FROZEN_FILES = 101
 EXPECTED_EVIDENCE_FILES = 81
@@ -72,11 +72,14 @@ WEEK08_EVALUATION_CONFIG_VERSION = "week08_final_evaluation_v1"
 WEEK08_RUNNER_PROBE_VERSION = "week08_runner_contract_probe_v1"
 RELEASE_MANIFEST_REL = Path("reports/pre_week08_release_manifest.json")
 VALIDATION_REL = Path("reports/pre_week08_validation.json")
-RELEASE_CHECKLIST_REL = Path("docs/PRE_WEEK08_RELEASE_CHECKLIST.md")
+RELEASE_CHECKLIST_REL = Path("docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md")
 STAGE_B_VALIDATION_REL = Path("reports/pre_week08_stage_b_validation.json")
 SOURCE_REGISTRATION_REL = Path("reports/pre_week08_source_registration.json")
 HOLDOUT_SOURCE_MANIFEST_REL = Path("data/manifests/week08_holdout_sources.json")
-RELEASE_MANIFEST_VERSION = "pre_week08_release_manifest_v1"
+PHASE7_AUTHORIZATION_REL = Path("reports/pre_week08_phase7_authorization.json")
+PHASE7_INCIDENT_REL = Path("reports/pre_week08_phase7_incident.json")
+RELEASE_MANIFEST_VERSION = "pre_week08_release_manifest_v2"
+PHASE7_AUTHORIZATION_VERSION = "pre_week08_phase7_authorization_v1"
 VALIDATION_VERSION = "pre_week08_validation_v1"
 STAGE_B_VALIDATION_VERSION = "pre_week08_stage_b_validation_v1"
 STAGE_B_ACCEPTANCE_RECORD_VERSION = "ui-stage-b-acceptance-v2"
@@ -108,7 +111,15 @@ POST_RELEASE_METADATA_PATHS = {
     RELEASE_MANIFEST_REL.as_posix(),
     SOURCE_REGISTRATION_REL.as_posix(),
     HOLDOUT_SOURCE_MANIFEST_REL.as_posix(),
+    PHASE7_AUTHORIZATION_REL.as_posix(),
 }
+PHASE7_PROHIBITED_CLAIMS = [
+    "anatomical_generalization",
+    "clinical_recommendation",
+    "external_validity",
+    "modality_wide_generalization",
+    "population_generalization",
+]
 REQUIRED_EVIDENCE = {
     "day32_journal": "outputs/week07_day02_full/benchmark_records.jsonl",
     "day32_plan": "outputs/week07_day02_full/benchmark_plan.json",
@@ -760,6 +771,249 @@ def verify_release_git(root: Path, commit: Any, tag: Any) -> tuple[list[str], di
     return errors, observed
 
 
+def verify_phase7_authorization(
+    root: Path, release: Mapping[str, Any],
+) -> tuple[list[str], dict[str, Any]]:
+    """Verify a human G7 approval and every immutable binding without decoding data."""
+    errors: list[str] = []
+    observed: dict[str, Any] = {
+        "authorization_path": PHASE7_AUTHORIZATION_REL.as_posix(),
+        "reviewed_enrollment_commit": None,
+        "post_enrollment_changed_paths": [],
+    }
+    descriptor = (
+        release.get("phase7_authorization")
+        if isinstance(release.get("phase7_authorization"), dict)
+        else {}
+    )
+    if descriptor.get("path") != PHASE7_AUTHORIZATION_REL.as_posix():
+        errors.append("release manifest does not name the exact Phase 7 authorization path")
+    authorization_problem = check_path_hash(
+        root, descriptor.get("path"), descriptor.get("sha256")
+    )
+    if authorization_problem:
+        errors.append(authorization_problem)
+        return errors, observed
+
+    authorization_path = safe_file(root, PHASE7_AUTHORIZATION_REL.as_posix())
+    if authorization_path is None:
+        errors.append("Phase 7 authorization path is unsafe")
+        return errors, observed
+    try:
+        authorization = read_json(authorization_path)
+        if not isinstance(authorization, dict):
+            raise TypeError("authorization must be a JSON object")
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        errors.append(f"invalid Phase 7 authorization: {exc}")
+        return errors, observed
+
+    expected_top = {
+        "schema_version", "authorization_id", "gate", "decision", "reviewer",
+        "release", "enrollment", "runtime_bindings", "incident_disposition",
+        "deviation_approval", "authorization",
+    }
+    if set(authorization) != expected_top:
+        errors.append("Phase 7 authorization top-level fields are not exact")
+    if authorization.get("schema_version") != PHASE7_AUTHORIZATION_VERSION:
+        errors.append("unsupported Phase 7 authorization schema_version")
+    if not nonempty_text(authorization.get("authorization_id")):
+        errors.append("Phase 7 authorization_id is missing")
+    if authorization.get("gate") != "G7" or authorization.get("decision") != "APPROVED":
+        errors.append("Phase 7 authorization decision is not APPROVED for G7")
+
+    reviewer = authorization.get("reviewer") if isinstance(authorization.get("reviewer"), dict) else {}
+    if set(reviewer) != {"name", "role", "attested_utc"}:
+        errors.append("Phase 7 reviewer fields are not exact")
+    if not nonempty_text(reviewer.get("name")) or reviewer.get("role") != "release reviewer":
+        errors.append("Phase 7 authorization requires a named release reviewer")
+    if not _valid_stage_b_utc(reviewer.get("attested_utc")):
+        errors.append("Phase 7 reviewer attestation is not a valid UTC timestamp")
+
+    release_binding = (
+        authorization.get("release") if isinstance(authorization.get("release"), dict) else {}
+    )
+    if set(release_binding) != {"release_id", "release_commit", "release_tag"}:
+        errors.append("Phase 7 release binding fields are not exact")
+    for name in ("release_id", "release_commit", "release_tag"):
+        if release_binding.get(name) != release.get(name):
+            errors.append(f"Phase 7 authorization {name} does not match the release manifest")
+
+    enrollment = (
+        authorization.get("enrollment")
+        if isinstance(authorization.get("enrollment"), dict)
+        else {}
+    )
+    expected_enrollment_fields = {
+        "reviewed_commit", "source_ids", "source_ledger_sha256",
+        "holdout_manifest_sha256", "source_registration_sha256",
+    }
+    if set(enrollment) != expected_enrollment_fields:
+        errors.append("Phase 7 enrollment binding fields are not exact")
+    reviewed_commit = enrollment.get("reviewed_commit")
+    observed["reviewed_enrollment_commit"] = reviewed_commit
+    if not isinstance(reviewed_commit, str) or re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", reviewed_commit) is None:
+        errors.append("Phase 7 reviewed enrollment commit is invalid")
+
+    current_artifacts = {
+        "source_ledger_sha256": LEDGER_REL.as_posix(),
+        "holdout_manifest_sha256": HOLDOUT_SOURCE_MANIFEST_REL.as_posix(),
+        "source_registration_sha256": SOURCE_REGISTRATION_REL.as_posix(),
+    }
+    for field, path in current_artifacts.items():
+        expected_hash = enrollment.get(field)
+        problem = check_path_hash(root, path, expected_hash)
+        if problem:
+            errors.append(f"Phase 7 {field}: {problem}")
+
+    ledger_path = safe_file(root, LEDGER_REL.as_posix())
+    if ledger_path is not None and ledger_path.is_file():
+        try:
+            ledger = read_json(ledger_path)
+            entries = ledger.get("week08_sources") if isinstance(ledger, dict) else None
+            source_ids = sorted(
+                entry.get("source_id") for entry in entries
+                if isinstance(entry, dict) and nonempty_text(entry.get("source_id"))
+            ) if isinstance(entries, list) else []
+            if enrollment.get("source_ids") != source_ids or not source_ids:
+                errors.append("Phase 7 authorization source_ids do not match enrolled sources")
+            observed["source_ids"] = source_ids
+        except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+            errors.append(f"cannot verify Phase 7 enrolled source IDs: {exc}")
+
+    runtime = (
+        authorization.get("runtime_bindings")
+        if isinstance(authorization.get("runtime_bindings"), dict)
+        else {}
+    )
+    runtime_paths = {
+        "config_sha256": "configs/week08_final_evaluation.yaml",
+        "preflight_sha256": "scripts/week08_preflight.py",
+        "prepare_sha256": "scripts/week08_prepare_holdout.py",
+        "final_evaluation_sha256": "scripts/week08_final_evaluation.py",
+        "runner_sha256": "src/image_registration/week8_evaluation.py",
+    }
+    if set(runtime) != set(runtime_paths):
+        errors.append("Phase 7 runtime binding fields are not exact")
+    for field, path in runtime_paths.items():
+        problem = check_path_hash(root, path, runtime.get(field))
+        if problem:
+            errors.append(f"Phase 7 {field}: {problem}")
+
+    incident = (
+        authorization.get("incident_disposition")
+        if isinstance(authorization.get("incident_disposition"), dict)
+        else {}
+    )
+    expected_incident_fields = {
+        "incident_id", "report_path", "report_sha256", "canonical_outputs_reset",
+        "source_pixels_decoded", "source_labels_accessed",
+        "scientific_attempts_executed", "source_reuse_approved",
+    }
+    if set(incident) != expected_incident_fields:
+        errors.append("Phase 7 incident-disposition fields are not exact")
+    if incident.get("incident_id") != "phase7-predecode-test-20261114":
+        errors.append("Phase 7 authorization does not bind the recorded incident")
+    if incident.get("report_path") != PHASE7_INCIDENT_REL.as_posix():
+        errors.append("Phase 7 authorization names the wrong incident report")
+    incident_problem = check_path_hash(
+        root, incident.get("report_path"), incident.get("report_sha256")
+    )
+    if incident_problem:
+        errors.append(incident_problem)
+    if incident.get("canonical_outputs_reset") is not True:
+        errors.append("Phase 7 authorization does not approve the documented output reset")
+    if incident.get("source_pixels_decoded") is not False:
+        errors.append("Phase 7 incident disposition does not attest zero pixel decoding")
+    if incident.get("source_labels_accessed") is not False:
+        errors.append("Phase 7 incident disposition does not attest zero label access")
+    if incident.get("scientific_attempts_executed") != 0:
+        errors.append("Phase 7 incident disposition does not attest zero scientific attempts")
+    if incident.get("source_reuse_approved") is not True:
+        errors.append("Phase 7 authorization does not approve enrolled-source reuse")
+
+    deviation = (
+        authorization.get("deviation_approval")
+        if isinstance(authorization.get("deviation_approval"), dict)
+        else {}
+    )
+    expected_deviation_fields = {
+        "independent_real_verified_gt_absent", "approved", "claim_scope",
+        "prohibited_claims",
+    }
+    if set(deviation) != expected_deviation_fields:
+        errors.append("Phase 7 deviation-approval fields are not exact")
+    if deviation.get("independent_real_verified_gt_absent") is not True or deviation.get("approved") is not True:
+        errors.append("Phase 7 authorization does not approve the real-verified-GT deviation")
+    if deviation.get("claim_scope") != "source_specific_software_evidence_only":
+        errors.append("Phase 7 claim scope is not restricted to source-specific software evidence")
+    if deviation.get("prohibited_claims") != PHASE7_PROHIBITED_CLAIMS:
+        errors.append("Phase 7 prohibited-claims list is not exact")
+
+    one_run = (
+        authorization.get("authorization")
+        if isinstance(authorization.get("authorization"), dict)
+        else {}
+    )
+    expected_one_run_fields = {
+        "authorizes_phase8_one_run", "sequence", "infrastructure_resume_only",
+    }
+    if set(one_run) != expected_one_run_fields:
+        errors.append("Phase 7 one-run authorization fields are not exact")
+    if one_run.get("authorizes_phase8_one_run") is not True:
+        errors.append("Phase 7 does not authorize the Phase 8 one-run sequence")
+    if one_run.get("sequence") != ["prepare", "decide", "evaluate"]:
+        errors.append("Phase 7 one-run sequence is not exact")
+    if one_run.get("infrastructure_resume_only") is not True:
+        errors.append("Phase 7 authorization does not restrict resumes to infrastructure failures")
+
+    final_readiness = (
+        release.get("final_readiness") if isinstance(release.get("final_readiness"), dict) else {}
+    )
+    if final_readiness.get("authorized") is not True:
+        errors.append("release manifest final_readiness.authorized is not true")
+    if final_readiness.get("release_reviewer_approval_pending") is not False:
+        errors.append("release manifest still marks Phase 7 reviewer approval pending")
+
+    if isinstance(reviewed_commit, str) and re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", reviewed_commit):
+        command = [
+            "git", "-c", f"safe.directory={root.resolve().as_posix()}",
+            "-C", str(root.resolve()),
+        ]
+        try:
+            ancestor = subprocess.run(
+                [*command, "merge-base", "--is-ancestor", reviewed_commit, "HEAD"],
+                capture_output=True, text=True, check=False, timeout=20,
+            )
+            if ancestor.returncode != 0:
+                errors.append("reviewed G6 enrollment commit is not an ancestor of HEAD")
+            else:
+                changed = subprocess.run(
+                    [*command, "diff", "--name-only", "-z", reviewed_commit, "HEAD", "--"],
+                    capture_output=True, text=True, check=False, timeout=20,
+                )
+                if changed.returncode != 0:
+                    errors.append("cannot inspect paths changed after reviewed G6 enrollment")
+                else:
+                    changed_paths = sorted(path for path in changed.stdout.split("\0") if path)
+                    observed["post_enrollment_changed_paths"] = changed_paths
+                    allowed = {
+                        RELEASE_MANIFEST_REL.as_posix(), PHASE7_AUTHORIZATION_REL.as_posix(),
+                    }
+                    forbidden = sorted(set(changed_paths) - allowed)
+                    if forbidden:
+                        errors.append(
+                            "post-G6 changes exceed the Phase 7 authorization allowlist: "
+                            + ", ".join(forbidden)
+                        )
+        except (OSError, subprocess.SubprocessError) as exc:
+            errors.append(f"cannot verify reviewed G6 enrollment commit: {exc}")
+
+    observed["authorization_id"] = authorization.get("authorization_id")
+    observed["reviewer"] = reviewer.get("name")
+    observed["authorization_sha256"] = descriptor.get("sha256")
+    return errors, observed
+
+
 def verify_stage_b_release_binding(
     root: Path,
     tested_commit: Any,
@@ -848,9 +1102,18 @@ def verify_stage_b_release_binding(
 
 
 class Audit:
-    def __init__(self, root: Path, *, final_readiness: bool = False):
+    def __init__(
+        self,
+        root: Path,
+        *,
+        final_readiness: bool = False,
+        require_phase7_authorization: bool = True,
+    ):
         self.root = root.resolve()
         self.final_readiness = final_readiness
+        self.require_phase7_authorization = bool(
+            final_readiness and require_phase7_authorization
+        )
         self.checks: list[dict[str, Any]] = []
         self.development_metadata: dict[str, dict[str, Any]] = {}
         self.evidence_archive_record: dict[str, Any] = {}
@@ -1610,6 +1873,7 @@ class Audit:
             VALIDATION_REL.as_posix(),
             STAGE_B_VALIDATION_REL.as_posix(),
             RELEASE_CHECKLIST_REL.as_posix(),
+            PHASE7_INCIDENT_REL.as_posix(),
             SOURCE_REGISTRATION_REL.as_posix(),
             HOLDOUT_SOURCE_MANIFEST_REL.as_posix(),
         }
@@ -1699,6 +1963,18 @@ class Audit:
         self.add("strict_source_enrollment", "PASS" if source_ready else "BLOCK",
                  "Independent source, lineage and ground-truth evidence are enrolled and valid")
 
+        if self.require_phase7_authorization:
+            authorization_errors, authorization_observed = verify_phase7_authorization(
+                self.root, release,
+            )
+            self.add(
+                "strict_phase7_authorization",
+                "BLOCK" if authorization_errors else "PASS",
+                "Human G7 approval is hash-bound to the release, renewed G6 enrollment, incident disposition and one-run scope",
+                errors=authorization_errors,
+                observed=authorization_observed,
+            )
+
         phase2_ready = (
             self.check_status("integrity_anchor") == "PASS" and
             self.check_status("week07_evidence_packaging") == "PASS" and
@@ -1735,9 +2011,15 @@ class Audit:
                 "week7_complete_evidence", "evidence_hashes",
             )
         )
+        mode = (
+            "final_readiness" if self.require_phase7_authorization
+            else "technical_readiness" if self.final_readiness
+            else "development_preflight"
+        )
         report = {"version": VERSION, "readiness": status, "checks": self.checks,
                   "environment": env, "development_plan_metadata": self.development_metadata,
-                  "mode": "final_readiness" if self.final_readiness else "development_preflight",
+                  "mode": mode,
+                  "phase7_authorization_required": self.require_phase7_authorization,
                   "week08_evaluation_executed": False,
                   "baseline_sha256": digest(self.root / FROZEN_REL) if (self.root / FROZEN_REL).is_file() else None,
                   "development_evidence_immutable": evidence_immutable,
@@ -1750,12 +2032,22 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--dry-run", action="store_true", help="Print report only, do not write preflight output")
-    parser.add_argument(
+    readiness = parser.add_mutually_exclusive_group()
+    readiness.add_argument(
         "--final-readiness", action="store_true",
-        help="Fail closed on every missing evaluator, source, release, UI and signoff gate",
+        help="Fail closed on every technical gate and the hash-bound human G7 authorization",
+    )
+    readiness.add_argument(
+        "--technical-readiness", action="store_true",
+        help="Run every strict technical gate while intentionally deferring human G7 authorization",
     )
     args = parser.parse_args(argv)
-    audit = Audit(args.root, final_readiness=args.final_readiness)
+    strict = args.final_readiness or args.technical_readiness
+    audit = Audit(
+        args.root,
+        final_readiness=strict,
+        require_phase7_authorization=args.final_readiness,
+    )
     report = audit.run()
     for check in report["checks"]:
         print(f"[{check['status']}] {check['check']}: {check['details']}")
