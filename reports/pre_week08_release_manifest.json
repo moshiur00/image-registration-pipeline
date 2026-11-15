@@ -2,8 +2,8 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "G6_ENROLLED_VERIFICATION_PENDING",
-  "generated_utc": "2026-11-15T12:30:10Z",
+  "status": "G6_PASS_G7_PENDING",
+  "generated_utc": "2026-11-15T15:21:18Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
   "release_tag": "pre-week08-g5r2-20261115",
@@ -123,7 +123,8 @@
   },
   "phase6_enrollment": {
     "gate": "G6",
-    "status": "ENROLLED_PENDING_STRICT_VERIFICATION",
+    "status": "PASS",
+    "enrollment_commit": "b9a03d09158bb007102f9a897da055c24dd367ba",
     "release_id": "pre-week08-g5r2-20261115-pia18033",
     "source_id": "nasa_pia18033_earth",
     "source_sha256": "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
@@ -153,6 +154,24 @@
       "source_labels_accessed": false,
       "scientific_outcomes_accessed": false,
       "week08_benchmark_executed": false
+    },
+    "strict_verification": {
+      "verified_utc": "2026-11-15T15:21:18Z",
+      "verified_commit": "b9a03d09158bb007102f9a897da055c24dd367ba",
+      "mode": "technical_readiness",
+      "readiness": "PASS",
+      "pass": 29,
+      "warn": 0,
+      "block": 0,
+      "post_release_changed_paths": [
+        "configs/week08_source_use_ledger.json",
+        "data/manifests/week08_holdout_sources.json",
+        "reports/pre_week08_release_manifest.json",
+        "reports/pre_week08_source_registration.json"
+      ],
+      "week08_benchmark_executed": false,
+      "source_pixels_decoded": false,
+      "source_labels_accessed": false
     }
   },
   "incident_disposition": {
@@ -176,15 +195,15 @@
     "decision_text": "Go with your recommended approach",
     "purpose": "Require machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
     "renewed_g5_status": "PASS",
+    "renewed_g6_status": "PASS",
     "renewed_gates_required": [
-      "G6",
       "G7"
     ]
   },
   "limitations": [
     "This manifest records renewed metadata-only G6 enrollment but does not authorize G7 or permit held-out pixel or label decoding.",
     "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
-    "PIA18033 is enrolled under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; strict verification and G7 authorization remain required.",
+    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; G7 authorization remains required.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
   ]
 }
