@@ -2,11 +2,11 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "G5_APPROVED_TAG_PENDING",
-  "generated_utc": "2026-11-15T12:20:55Z",
+  "status": "G5_PASS",
+  "generated_utc": "2026-11-15T12:25:33Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
-  "release_commit": null,
-  "release_tag": null,
+  "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
+  "release_tag": "pre-week08-g5r2-20261115",
   "proposed_release_tag": "pre-week08-g5r2-20261115",
   "clean_worktree": true,
   "required_signoffs_complete": true,
@@ -106,7 +106,6 @@
     "authorized": false,
     "release_reviewer_approval_pending": true,
     "expected_remaining_blocks": [
-      "renewed_g5_tag_binding",
       "renewed_g6_source_enrollment",
       "machine_verified_phase7_authorization"
     ],
@@ -119,7 +118,9 @@
     "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
     "stage_b_rebinding": "APPROVED",
     "release_reviewer_signoff": "APPROVED",
-    "tag_created": false
+    "tag_created": true,
+    "freeze_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
+    "freeze_tag": "pre-week08-g5r2-20261115"
   },
   "phase6_enrollment": {
     "gate": "G6",
@@ -148,14 +149,14 @@
     "decision_maker": "Md Moshiur Rahman",
     "decision_text": "Go with your recommended approach",
     "purpose": "Require machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
+    "renewed_g5_status": "PASS",
     "renewed_gates_required": [
-      "G5",
       "G6",
       "G7"
     ]
   },
   "limitations": [
-    "This pre-tag R2 manifest records renewed G5 approval but does not enroll a source, authorize G7, or permit held-out pixel or label access.",
+    "This G5 PASS manifest binds the immutable R2 tag but does not enroll a source, authorize G7, or permit held-out pixel or label access.",
     "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
     "The candidate is deliberately pre-enrollment, so strict readiness must remain blocked until renewed G6 and G7 are complete.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
