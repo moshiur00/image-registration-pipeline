@@ -1,287 +1,163 @@
 {
-    "schema_version":  "pre_week08_release_manifest_v1",
-    "release_id":  "pre-week08-g5-20261114",
-    "gate":  "G5",
-    "status":  "new_release_cycle_authorization_hardening_in_progress",
-    "generated_utc":  "2026-11-14T23:10:20Z",
-    "release_commit":  "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
-    "release_tag":  "pre-week08-g5-20261114",
-    "clean_worktree":  true,
-    "required_signoffs_complete":  true,
-    "reviewer":  {
-                     "name":  "Md Moshiur Rahman",
-                     "role":  "release reviewer",
-                     "decision":  "APPROVED",
-                     "attested_utc":  "2026-11-14T18:41:16Z"
-                 },
-    "stage_b_binding":  {
-                            "tested_release_commit":  "2cb75adef4e616b34f70d7697c781b23ab861174",
-                            "frozen_ui_version":  "v0.2",
-                            "formal_acceptance":  "5/5 scenarios and 5/5 supplemental checks",
-                            "protected_changes_after_tested_commit":  false
-                        },
-    "dependency_lock":  {
-                            "path":  "reports/pre_week08_dependency_lock.txt",
-                            "sha256":  "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
-                            "external_distribution_count":  55
-                        },
-    "environment_record":  {
-                               "path":  "reports/pre_week08_environment.json",
-                               "sha256":  "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239"
-                           },
-    "executable_inventory":  {
-                                 "path":  "reports/pre_week08_executable_inventory.json",
-                                 "sha256":  "b3ff6d78b5ad6cf418d85e69df08ae7fffae52bb0d588ecf03b9346cb682545a",
-                                 "tracked_python_files":  219,
-                                 "unexpected_additions_rejected":  true
-                             },
-    "evidence_archive":  {
-                             "path":  "deliverables/week07_frozen_evidence.zip",
-                             "sha256":  "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
-                             "manifest_path":  "reports/week07_evidence_archive_manifest.json",
-                             "manifest_sha256":  "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
-                             "file_count":  81
-                         },
-    "coverage_chains":  {
-                            "frozen_algorithms_and_configs":  "configs/week08_frozen_baseline.json binds 101 immutable files",
-                            "week7_evidence":  "reports/week07_evidence_archive_manifest.json binds 81 restored files",
-                            "runner_and_firewall":  "reports/pre_week08_phase3_evaluator.json plus explicit runner paths",
-                            "ui_release":  "reports/pre_week08_stage_b_validation.json plus executable inventory",
-                            "dependencies":  "exact lock, source requirement inputs, and environment record",
-                            "private_data_policy":  ".gitignore plus data/holdout/week08/README.md"
-                        },
-    "artifacts":  {
-                      ".gitignore":  "b08b992747d2f9106528c581b3778b62cc98b0f23f6f7231b778e7e63a9704bd",
-                      "README.md":  "51bdf1653521390771161fea0a72ba6bb323366baa15baaf84cdb2b3bee05a96",
-                      "configs/week07_day01_frozen_methods.yaml":  "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
-                      "configs/week08_final_evaluation.yaml":  "7ec535f78441237fd5c7b8e6bf19d903567b520dfc26104d0a8d2683d4b1bf6b",
-                      "configs/week08_frozen_baseline.json":  "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
-                      "configs/week08_integrity_anchor.json":  "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3",
-                      "configs/week08_source_use_ledger.json":  "88fbc108b93c81d9041862cf31ab75ae8b291f4c4f3df91d1005c19c4b978dbb",
-                      "data/holdout/week08/README.md":  "032e6bae040491ab96af8b48d312496ff755c6a3900e13c42afd24fb343237b9",
-                      "data/manifests/week08_holdout_sources.json":  "b84612a30abfb7c4e360cb20b4b278fac102960a5347c8bfe621a3b112bfd0cf",
-                      "deliverables/week07_frozen_evidence.zip":  "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
-                      "docs/PRE_WEEK08_INTEGRATION_PLAN.md":  "9f596e3ae81a7375cef91fb0c71f187a9a1de18ebf47908ff55a5cf880786060",
-                      "docs/PRE_WEEK08_RELEASE_CHECKLIST.md":  "a7a815acec4770a7f68a6aade3a9795076711fe2aa6a5983b81c33c3cd0cb496",
-                      "docs/WEEK08_EVALUATION_PREREGISTRATION.md":  "e34160a0c602a583e95e66819a35365b28e5562ccb5db6fbaab2846817a43912",
-                      "docs/WEEK08_HOLDOUT_PROTOCOL.md":  "2c3b01d87330c1e2963c76e57c8bf5deb0b37fa277f07ca277aefa766f930be7",
-                      "pyproject.toml":  "6489be331034a07a713c537e1bd7d8d8b83711da46ad1a3b8ac30065f2795d0b",
-                      "reports/pre_week08_dependency_lock.txt":  "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
-                      "reports/pre_week08_environment.json":  "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239",
-                      "reports/pre_week08_executable_inventory.json":  "b3ff6d78b5ad6cf418d85e69df08ae7fffae52bb0d588ecf03b9346cb682545a",
-                      "reports/pre_week08_phase2_integrity.json":  "8212f9cb0215970dd747e189384a3ec498dfaa6327b37e965e7654ff4588420a",
-                      "reports/pre_week08_phase3_evaluator.json":  "a8415e45d5ed631782b8606a1af34c6502aa688d1068dfaa595ac5e177a44000",
-                      "reports/pre_week08_stage_b_validation.json":  "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
-                      "reports/pre_week08_source_registration.json":  "d191a3e9624f256c4320e854c43bfe6dd408aa31750432acf12c477aa2b001e8",
-                      "reports/pre_week08_validation.json":  "9552af8a98c18ba2f77f4e8f44e22c38971753d8bcfb7c083f097036e5d55cd3",
-                      "reports/progress_registry.json":  "20f166c8fa50a407608aae7396caafb9c2ba04aa84e18bfc84a9054f3e412ace",
-                      "reports/week07_evidence_archive_manifest.json":  "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
-                      "requirements.txt":  "8c92163ca11180f6b981273a77e7acdb119ce8724528ba27d2b2cd53c7d2672e",
-                      "scripts/week08_final_evaluation.py":  "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b",
-                      "scripts/week08_preflight.py":  "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1",
-                      "scripts/week08_prepare_holdout.py":  "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be",
-                      "src/image_registration/week7_calibration.py":  "44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c",
-                      "src/image_registration/week8_evaluation.py":  "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
-                      "tests/test_week7_day34_offline_calibration.py":  "1c8760aac6c0418358ab34515363f9c25a6234892f9db80c4eb12ec384c692ad",
-                      "tests/test_week08_final_evaluation.py":  "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
-                      "tests/test_week08_phase3_cli.py":  "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c",
-                      "tests/test_week08_preflight.py":  "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762",
-                      "ui/DEVELOPMENT_STAGES.md":  "49152deb1e0e2cd7c3d31168725788783b3f1740095f08d16987e77255f199d8",
-                      "ui/README.md":  "562cfb2ad4872e2b452c9a6427455f3e712e550d607fd1d6f8d0cc9b267f75dd",
-                      "ui/evidence/pre_week08_stage_b_acceptance.md":  "30b4db58fa1e883c38802178eb75d13fbff78c3601104e4e72766ba15b2a6202",
-                      "ui/qa/stage_b_acceptance.py":  "3dd50fd1af7f37d6dd5e9590579e1949c76471a891b623c61b1340cdd6fe625f",
-                      "ui/requirements.txt":  "b94947742a224e2b8b0501f9a6fd86384c5183b9b7e125617cfe20143ab8ad60",
-                      "ui/streamlit_app.py":  "61d4df5b6b6edf9a0b10467c231e181454f664ca9b8460a877c47191aa0697b1",
-                      "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json":  "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93"
-                  },
-    "phase6_pending_artifacts":  [
-                                     "data/manifests/week08_holdout_sources.json",
-                                     "reports/pre_week08_source_registration.json"
-                                 ],
-    "post_release_metadata_allowlist":  [
-                                            "configs/week08_source_use_ledger.json",
-                                            "data/manifests/week08_holdout_sources.json",
-                                            "reports/pre_week08_source_registration.json",
-                                            "reports/pre_week08_release_manifest.json"
-                                        ],
-    "final_readiness":  {
-                            "authorized":  false,
-                            "expected_remaining_blocks":  [
-                                                              "new_release_candidate",
-                                                              "renewed_g5_signoff",
-                                                              "renewed_g6_source_enrollment",
-                                                              "machine_verified_phase7_authorization"
-                                                          ],
-                            "release_reviewer_approval_pending":  true,
-                            "week08_benchmark_executed":  false,
-                            "real_week08_pixels_accessed":  false,
-                            "real_week08_labels_accessed":  false
-                        },
-    "phase6_enrollment":  {
-                               "gate":  "G6",
-                               "status":  "PASS",
-                               "source_id":  "nasa_pia18033_earth",
-                               "source_sha256":  "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
-                               "canonical_source_id":  "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
-                               "ground_truth_route":  "synthetic_created_after_freeze",
-                               "release_freeze_id":  "pre-week08-g5-20261114",
-                               "custodian":  {
-                                                 "name":  "Md Moshiur Rahman",
-                                                 "role":  "data custodian and provenance reviewer",
-                                                 "decision":  "APPROVED",
-                                                 "attested_utc":  "2026-11-14T19:18:16Z"
-                                             },
-                               "ledger_sha256":  "88fbc108b93c81d9041862cf31ab75ae8b291f4c4f3df91d1005c19c4b978dbb",
-                               "holdout_manifest_sha256":  "b84612a30abfb7c4e360cb20b4b278fac102960a5347c8bfe621a3b112bfd0cf",
-                               "source_registration_sha256":  "d191a3e9624f256c4320e854c43bfe6dd408aa31750432acf12c477aa2b001e8",
-                               "validation":  {
-                                                  "provenance_license_canonical_identity":  "PASS",
-                                                  "prior_use_and_lineage_collision":  "PASS",
-                                                  "ground_truth_contract":  "PASS",
-                                                  "post_freeze_path_allowlist":  "PASS",
-                                                  "metadata_only":  true,
-                                                  "source_bytes_hashed":  true,
-                                                  "source_pixels_decoded":  false,
-                                                  "source_labels_accessed":  false,
-                                                  "strict_final_readiness":  "PASS"
-                                              }
-                           },
-    "g5_strict_verification":  {
-                                   "verified_utc":  "2026-11-14T18:53:33Z",
-                                   "pass":  26,
-                                   "warn":  0,
-                                   "block":  3,
-                                   "release_git_errors":  0,
-                                   "stage_b_binding_errors":  0,
-                                   "post_release_changed_paths":  [
-                                                                      "reports/pre_week08_release_manifest.json"
-                                                                  ],
-                                   "remaining_blocks":  [
-                                                            "heldout_source_independence",
-                                                            "strict_policy_config_analysis_hashes: missing Phase 6 holdout-source manifest and source-registration attestation",
-                                                            "strict_source_enrollment"
-                                                        ]
-                               },
-    "phase6_strict_verification":  {
-                                        "verified_utc":  "2026-11-14T19:29:18Z",
-                                        "verified_commit":  "d207630bf86c7c0f7dd62530a4f8857fe93fa41b",
-                                        "readiness":  "PASS",
-                                        "pass":  29,
-                                        "warn":  0,
-                                        "block":  0,
-                                        "release_git_errors":  0,
-                                        "stage_b_binding_errors":  0,
-                                        "post_release_changed_paths":  [
-                                                                           "configs/week08_source_use_ledger.json",
-                                                                           "data/manifests/week08_holdout_sources.json",
-                                                                           "reports/pre_week08_release_manifest.json",
-                                                                           "reports/pre_week08_source_registration.json"
-                                                                       ],
-                                        "week08_benchmark_executed":  false,
-                                        "source_pixels_decoded":  false,
-                                        "source_labels_accessed":  false
-                                    },
-    "phase7_review":  {
-                           "status":  "SUPERSEDED_BY_NEW_RELEASE_CYCLE",
-                           "review_started_utc":  "2026-11-14T22:37:55Z",
-                           "initial_strict_dry_run":  {
-                                                          "readiness":  "PASS",
-                                                          "pass":  29,
-                                                          "warn":  0,
-                                                          "block":  0,
-                                                          "week08_benchmark_executed":  false,
-                                                          "source_pixels_decoded":  false,
-                                                          "source_labels_accessed":  false
-                                                      },
-                           "frozen_test_validation":  {
-                                                          "result":  "BLOCKED",
-                                                          "failure_count":  1,
-                                                          "failing_test":  "tests/test_week08_phase3_cli.py::test_default_final_prepare_blocks_before_any_decoder",
-                                                          "finding":  "The pre-enrollment state test entered final preparation after G6 because automated strict readiness passed while human Phase 7 authorization remained pending."
-                                                      },
-                           "predecode_incident":  {
-                                                      "incident_id":  "phase7-predecode-test-20261114",
-                                                      "occurred_utc":  "2026-11-14T22:35:09Z",
-                                                      "trigger":  "Frozen test invoked make_final_artifacts with the canonical final configuration.",
-                                                      "phase_reached":  "pre_decode_receipt_and_plan_persistence",
-                                                      "real_image_decoder_invoked":  false,
-                                                      "decoder_stub_interceptions":  1,
-                                                      "source_pixels_decoded":  false,
-                                                      "source_labels_accessed":  false,
-                                                      "week08_evaluation_executed":  false,
-                                                      "scientific_attempts_executed":  0,
-                                                      "planned_counts":  {
-                                                                             "sources":  1,
-                                                                             "pairs":  150,
-                                                                             "attempts":  294
-                                                                         },
-                                                      "preserved_artifacts":  [
-                                                                                  {
-                                                                                      "path":  "outputs/week08_final/final_readiness_receipt.json",
-                                                                                      "bytes":  14909,
-                                                                                      "sha256":  "6aeef2fa8d489d82ed2c188915b1d23ab07ae7f8640a76d8138a85a2162a161c"
-                                                                                  },
-                                                                                  {
-                                                                                      "path":  "outputs/week08_final/evaluation_plan.json",
-                                                                                      "bytes":  728833,
-                                                                                      "sha256":  "a445e30fadca1cd0fc8bc56442e5bedc4365e9b9fee527947702104f7228e70d"
-                                                                                  }
-                                                                              ],
-                                                      "strict_after_incident":  {
-                                                                                     "readiness":  "BLOCK",
-                                                                                     "pass":  28,
-                                                                                     "warn":  0,
-                                                                                     "block":  1,
-                                                                                     "remaining_blocks":  [
-                                                                                                                "clean_week08_final"
-                                                                                                            ]
-                                                                                 },
-                                                      "canonical_output_reset_authorized":  true,
-                                                      "canonical_outputs_archived_and_reset":  true,
-                                                      "tracked_incident_report":  {
-                                                                                         "path":  "reports/pre_week08_phase7_incident.json",
-                                                                                         "sha256":  "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596"
-                                                                                     },
-                                                      "recoverability":  "NEW_RELEASE_CYCLE_STARTED"
-                                                  },
-                           "authorization_control":  {
-                                                         "manifest_authorized_value":  false,
-                                                         "manifest_approval_pending_value":  true,
-                                                         "enforced_by_prepare_before_decode":  false,
-                                                         "current_control_type":  "human_process_control"
-                                                     },
-                           "required_reviewer_decisions":  [
-                                                               "Approve the new release candidate at renewed G5 after regression and binding evidence are complete.",
-                                                               "Approve or reject continued use of PIA18033 during renewed G6 after confirming no pixel, label, or outcome exposure.",
-                                                               "At G7, authorize the one-run Phase 8 sequence and explicitly approve the independent-real-GT deviation and restricted claim scope."
-                                                           ]
-                       },
-    "new_release_cycle":  {
-                               "decision":  "STARTED",
-                               "decision_utc":  "2026-11-14T23:10:20Z",
-                               "decision_maker":  "Md Moshiur Rahman",
-                               "decision_text":  "Go with your recommended approach",
-                               "purpose":  "Add machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
-                               "historical_g5_tag_preserved":  "pre-week08-g5-20261114",
-                               "historical_g6_enrollment_commit":  "d207630bf86c7c0f7dd62530a4f8857fe93fa41b",
-                               "incident_report":  {
-                                                       "path":  "reports/pre_week08_phase7_incident.json",
-                                                       "sha256":  "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596"
-                                                   },
-                               "candidate_enrollment_state":  "RESET_TO_PRE_ENROLLMENT",
-                               "private_source_bytes_retained_unopened":  true,
-                               "source_reuse":  "PENDING_RENEWED_G6_REVIEW",
-                               "renewed_gates_required":  [
-                                                               "G5",
-                                                               "G6",
-                                                               "G7"
-                                                           ]
-                           },
-    "limitations":  [
-                        "G6 enrolls one independently reviewed source; this single-source design limits generalizability.",
-                        "This manifest is added after the immutable tag through its exact metadata allowlist to avoid a self-referential commit hash.",
-                        "The holdout source remains unopened and undecoded; G7 human authorization is still required before any pixel or label access.",
-                        "The pre-decode incident artifacts are preserved in an ignored archive and the canonical final-output location was reset for a new evaluation cycle.",
-                        "The historical G5/G6 records remain evidence only; the new cycle requires renewed G5, G6, and machine-verified G7 approval."
-                    ]
+  "schema_version": "pre_week08_release_manifest_v2",
+  "release_id": "pre-week08-g5r2-20261115",
+  "gate": "G5",
+  "status": "R2_REVIEW_PENDING",
+  "generated_utc": "2026-11-15T11:45:21Z",
+  "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+  "release_commit": null,
+  "release_tag": null,
+  "proposed_release_tag": "pre-week08-g5r2-20261115",
+  "clean_worktree": false,
+  "required_signoffs_complete": false,
+  "reviewer": {
+    "requested_reviewer": "Md Moshiur Rahman",
+    "name": null,
+    "role": "release reviewer",
+    "decision": "PENDING",
+    "attested_utc": null
+  },
+  "stage_b_binding": {
+    "base_validation_path": "reports/pre_week08_stage_b_validation.json",
+    "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+    "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
+    "rebinding_path": "reports/pre_week08_stage_b_rebinding_r2.json",
+    "rebinding_sha256": "4199ca998b90c4e431bc72646acccf3e329fa7a7c96413b906eb01bf5d7e300a",
+    "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+    "frozen_ui_version": "v0.2",
+    "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
+    "ui_runtime_or_ui_test_paths_changed": false,
+    "review_status": "PENDING"
+  },
+  "dependency_lock": {
+    "path": "reports/pre_week08_dependency_lock.txt",
+    "sha256": "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
+    "external_distribution_count": 55,
+    "r2_evidence_basis": "unchanged from the historical G5 release"
+  },
+  "environment_record": {
+    "path": "reports/pre_week08_environment.json",
+    "sha256": "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239",
+    "r2_evidence_basis": "unchanged from the historical G5 release"
+  },
+  "executable_inventory": {
+    "path": "reports/pre_week08_executable_inventory.json",
+    "sha256": "8debe2a1ec29e860f8a67a54c2107c54ca2ef9dd35b9a2eb5e19c2482a33dc0a",
+    "source_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+    "tracked_python_files": 219,
+    "unexpected_additions_rejected": true
+  },
+  "evidence_archive": {
+    "path": "deliverables/week07_frozen_evidence.zip",
+    "sha256": "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
+    "manifest_path": "reports/week07_evidence_archive_manifest.json",
+    "manifest_sha256": "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
+    "file_count": 81
+  },
+  "coverage_chains": {
+    "frozen_algorithms_and_configs": "configs/week08_frozen_baseline.json binds 101 immutable files",
+    "week7_evidence": "reports/week07_evidence_archive_manifest.json binds 81 restored files",
+    "runner_and_firewall": "reports/pre_week08_phase3_evaluator.json plus explicit runner paths",
+    "ui_release": "unchanged reports/pre_week08_stage_b_validation.json plus pending R2 rebinding",
+    "dependencies": "unchanged exact lock, requirement inputs, and environment record",
+    "private_data_policy": ".gitignore plus data/holdout/week08/README.md"
+  },
+  "artifacts": {
+    "configs/week08_final_evaluation.yaml": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
+    "configs/week08_frozen_baseline.json": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
+    "configs/week08_integrity_anchor.json": "9cf4110fb6da89c78b663aa8998bd9b9dd79d6a4782b8f753846c03ea90ba8a3",
+    "configs/week08_source_use_ledger.json": "5af3b51dde06876af65e4892c3b6e344f5f1b5d308d341b90c7f330c00788ee3",
+    "data/manifests/week08_holdout_sources.json": null,
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md": "3c2b2510a263b0694cfbb0ebafc47ac8ec176a422175c392a3d11d6e9c6c0331",
+    "docs/WEEK08_EVALUATION_PREREGISTRATION.md": "c097a919dd04073652597ef66e16a9f334a9c0ba70de82fd66832800475dda89",
+    "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+    "reports/pre_week08_executable_inventory.json": "8debe2a1ec29e860f8a67a54c2107c54ca2ef9dd35b9a2eb5e19c2482a33dc0a",
+    "reports/pre_week08_phase3_evaluator.json": "8bfb562f1228cd43ae5852d247d4e4c6edeb6270e6e6a7a9624c115c8e729148",
+    "reports/pre_week08_phase7_incident.json": "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596",
+    "reports/pre_week08_source_registration.json": null,
+    "reports/pre_week08_stage_b_rebinding_r2.json": "4199ca998b90c4e431bc72646acccf3e329fa7a7c96413b906eb01bf5d7e300a",
+    "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+    "reports/pre_week08_validation.json": "c950a5c52e183836e576cf0b5dc533f80e7f7289f993db4d2b56b3cfda91a2a5",
+    "reports/week07_evidence_archive_manifest.json": "e177f091314ab1aacd3742c6793731480f95ac59cfe4efe27a4d36c6154bb284",
+    "scripts/week08_final_evaluation.py": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
+    "scripts/week08_preflight.py": "8071a8c6e69827d983975de0a891e56982107a59ea820cf078e307280539bf5f",
+    "scripts/week08_prepare_holdout.py": "344a1c42c05fd6aaaadc293d8b0da71d8057b2d53686cb6467cde6e3eceaf926",
+    "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31",
+    "tests/test_week08_final_evaluation.py": "9c6ac228fbc19c744fe9c932efe43e6ce1f85fa8e1fddf1c28639521372a3d4c",
+    "tests/test_week08_phase3_cli.py": "82f7c1467db8fdf967e21a78e20a2d06d9cc5d6ed554d688fd5af7ea356681d9",
+    "tests/test_week08_preflight.py": "7123183349b9bbaa1d972c36d68e2629b555e2c2be663da72230350bf2cb4d7d"
+  },
+  "phase6_pending_artifacts": [
+    "data/manifests/week08_holdout_sources.json",
+    "reports/pre_week08_source_registration.json"
+  ],
+  "post_release_metadata_allowlist": [
+    "configs/week08_source_use_ledger.json",
+    "data/manifests/week08_holdout_sources.json",
+    "reports/pre_week08_phase7_authorization.json",
+    "reports/pre_week08_release_manifest.json",
+    "reports/pre_week08_source_registration.json"
+  ],
+  "phase7_authorization": {
+    "path": "reports/pre_week08_phase7_authorization.json",
+    "sha256": null
+  },
+  "final_readiness": {
+    "authorized": false,
+    "release_reviewer_approval_pending": true,
+    "expected_remaining_blocks": [
+      "renewed_g5_signoff_and_tag",
+      "renewed_g6_source_enrollment",
+      "machine_verified_phase7_authorization"
+    ],
+    "week08_benchmark_executed": false,
+    "real_week08_pixels_accessed": false,
+    "real_week08_labels_accessed": false
+  },
+  "g5_candidate": {
+    "automated_validation": "PASS",
+    "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+    "stage_b_rebinding": "PENDING_REVIEW",
+    "release_reviewer_signoff": "PENDING",
+    "tag_created": false
+  },
+  "phase6_enrollment": {
+    "gate": "G6",
+    "status": "PENDING_RENEWED_REVIEW",
+    "candidate_enrollment_state": "RESET_TO_PRE_ENROLLMENT",
+    "source_reuse": "PENDING_RENEWED_G6_REVIEW",
+    "private_source_bytes_retained_unopened": true
+  },
+  "incident_disposition": {
+    "incident_id": "phase7-predecode-test-20261114",
+    "report": "reports/pre_week08_phase7_incident.json",
+    "report_sha256": "c569dafd01e6943875cced398a3e4415aaa26c1833872c183817af3f0372a596",
+    "canonical_outputs_archived_and_reset": true,
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "scientific_attempts_executed": 0
+  },
+  "historical_release": {
+    "release_id": "pre-week08-g5-20261114",
+    "release_commit": "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
+    "release_tag": "pre-week08-g5-20261114",
+    "status": "PRESERVED_IMMUTABLE_EVIDENCE"
+  },
+  "new_release_cycle": {
+    "decision": "STARTED",
+    "decision_maker": "Md Moshiur Rahman",
+    "decision_text": "Go with your recommended approach",
+    "purpose": "Require machine-enforced, hash-bound G7 authorization before any final-preparation side effect.",
+    "renewed_gates_required": [
+      "G5",
+      "G6",
+      "G7"
+    ]
+  },
+  "limitations": [
+    "This in-progress R2 manifest does not approve G5, create a release tag, enroll a source, authorize G7, or permit held-out pixel or label access.",
+    "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding remains pending explicit reviewer approval.",
+    "The candidate is deliberately pre-enrollment, so strict readiness must remain blocked until renewed G5, G6, and G7 are complete.",
+    "The historical G5 tag remains immutable and is not moved or rewritten."
+  ]
 }

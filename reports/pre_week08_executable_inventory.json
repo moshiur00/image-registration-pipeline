@@ -1,8 +1,8 @@
 {
     "schema_version":  "pre_week08_executable_inventory_v1",
     "scope":  "tracked Python executable and test code under src, scripts, ui, and tests",
-    "generated_utc":  "2026-11-14T18:27:33Z",
-    "source_checkpoint":  "f409906e3cea4fa21d957bfe01b959b8c991196b",
+    "generated_utc":  "2026-11-15T11:45:21Z",
+    "source_checkpoint":  "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
     "policy":  {
                    "roots":  [
                                  "src",
@@ -185,15 +185,15 @@
                   },
                   {
                       "path":  "scripts/week08_final_evaluation.py",
-                      "sha256":  "a0b9bf9bf8b242aaef2c682886dd74ce03eb2f38223b6b895edf5c24da0cc69b"
+                      "sha256":  "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe"
                   },
                   {
                       "path":  "scripts/week08_preflight.py",
-                      "sha256":  "331a78b59be9854d903601c76f53115c56b6ccbc494ceba2119e96e6b59eadc1"
+                      "sha256":  "8071a8c6e69827d983975de0a891e56982107a59ea820cf078e307280539bf5f"
                   },
                   {
                       "path":  "scripts/week08_prepare_holdout.py",
-                      "sha256":  "7a5614711164b2d8e997d488dd8581431a13f4c2ccafc36076ead6fd4fa8f6be"
+                      "sha256":  "344a1c42c05fd6aaaadc293d8b0da71d8057b2d53686cb6467cde6e3eceaf926"
                   },
                   {
                       "path":  "scripts/zip_project.py",
@@ -577,11 +577,11 @@
                   },
                   {
                       "path":  "tests/test_week08_phase3_cli.py",
-                      "sha256":  "13dd8fcfac72f47f8aac2198c0b61e498756a602ab308886ce75746503d70e0c"
+                      "sha256":  "82f7c1467db8fdf967e21a78e20a2d06d9cc5d6ed554d688fd5af7ea356681d9"
                   },
                   {
                       "path":  "tests/test_week08_preflight.py",
-                      "sha256":  "abab5b6e347c2641fea887f94d2ee460efc496bf60a6aade8af22124e60c9762"
+                      "sha256":  "7123183349b9bbaa1d972c36d68e2629b555e2c2be663da72230350bf2cb4d7d"
                   },
                   {
                       "path":  "tests/test_week3_baseline.py",

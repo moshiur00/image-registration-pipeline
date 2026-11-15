@@ -45,9 +45,10 @@ authorize G7, or permit access to held-out pixels or labels.
   zero UI runtime/test changes, current regressions, and an explicit renewed
   release-reviewer approval. The original 5/5 + 5/5 evidence is identified as
   inherited, not rerun.
-- [ ] Clean-staging restoration passes.
+- [x] Clean-staging restoration passes.
 - [ ] The candidate worktree is clean.
-- [ ] A unique candidate commit is identified.
+- [x] The authorization-hardening implementation checkpoint is
+  `9824e701c47ce9c1788ff8694b4c5bfe089f0933`.
 
 ## Pre-enrollment boundary
 
@@ -63,7 +64,8 @@ authorize G7, or permit access to held-out pixels or labels.
 - **Release reviewer:** pending
 - **Decision:** pending
 - **Attested UTC:** pending
-- **Candidate commit:** pending
+- **Implementation checkpoint:** `9824e701c47ce9c1788ff8694b4c5bfe089f0933`
+- **Candidate release commit:** pending reviewer approval
 - **Candidate tag:** proposed `pre-week08-g5r2-20261115`
 
 Required attestation: the reviewer confirms that the authorization hardening,

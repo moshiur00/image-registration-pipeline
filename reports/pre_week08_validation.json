@@ -1,13 +1,14 @@
 {
   "schema_version": "pre_week08_validation_v1",
-  "recorded_utc": "2026-11-14T18:27:33Z",
+  "recorded_utc": "2026-11-15T11:45:21Z",
   "gate": "G5",
-  "status": "PASS_G5_APPROVED_AND_RELEASE_BOUND",
-  "scope": "release_candidate_validation_before_source_enrollment",
+  "status": "PASS_R2_AUTOMATED_VALIDATION_G5_REVIEW_PENDING",
+  "scope": "authorization_hardening_release_candidate_before_renewed_source_enrollment",
   "runner_contract_passed": true,
   "full_regression_zero_failures": true,
   "clean_staging_restoration_passed": true,
   "clean_install_smoke_passed": true,
+  "clean_install_evidence_basis": "Inherited from the historical G5 clean-install run because requirements.txt, pyproject.toml, the dependency lock, and the environment record are unchanged; it was not rerun for R2.",
   "development_rehearsal_passed": true,
   "tamper_rehearsal_passed": true,
   "real_week08_pixels_accessed": false,
@@ -15,47 +16,32 @@
   "week08_benchmark_executed": false,
   "full_regression": {
     "backend": {
-      "command": ".venv/Scripts/python.exe -m pytest",
-      "temporary_directory_policy": "TEMP and TMP set to ignored project-local .venv staging",
-      "collected": 705,
-      "passed": 702,
+      "command": ".venv/Scripts/python.exe -m pytest -q",
+      "temporary_directory_policy": "TEMP and TMP set to ignored project-local .venv staging on the project drive",
+      "collected": 720,
+      "passed": 717,
       "skipped": 3,
       "failed": 0,
-      "warnings": 1,
-      "duration_seconds": 71.95,
       "skip_class": "expected Windows symlink limitations"
     },
     "ui": {
-      "command": ".venv/Scripts/python.exe -m pytest -c ui/pytest.ini ui/tests",
+      "command": ".venv/Scripts/python.exe -m pytest -c ui/pytest.ini ui/tests -q",
+      "temporary_directory_policy": "isolated short project-local .venv/u2 staging path",
       "collected": 179,
       "passed": 179,
       "skipped": 0,
-      "failed": 0,
-      "warnings": 1,
-      "duration_seconds": 45.02
-    },
-    "initial_backend_environment_diagnostic": {
-      "collected": 705,
-      "passed": 701,
-      "skipped": 3,
-      "failed": 1,
-      "classification": "test-staging path mismatch",
-      "failure": "tests/test_week08_phase3_cli.py::test_receipt_and_plan_are_persisted_before_first_decode",
-      "cause": "Windows system TEMP was on C: and outside the E: project root, while the fixture intentionally requires a project-relative source path.",
-      "resolution": "Rerun the unchanged suite with TEMP/TMP in ignored project-local staging; 702 passed, 3 skipped, 0 failed.",
-      "product_code_changed": false
+      "failed": 0
     }
   },
   "release_critical_tests": {
-    "command": ".venv/Scripts/python.exe -m pytest tests/test_week08_preflight.py tests/test_week07_evidence_archive.py tests/test_week08_final_evaluation.py tests/test_week08_phase3_cli.py -v",
-    "collected": 150,
-    "passed": 149,
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_week08_preflight.py tests/test_week07_evidence_archive.py tests/test_week08_final_evaluation.py tests/test_week08_phase3_cli.py -q",
+    "collected": 165,
+    "passed": 164,
     "skipped": 1,
     "failed": 0,
-    "duration_seconds": 55.19,
     "components": {
       "preflight": {
-        "passed": 66,
+        "passed": 80,
         "skipped": 0
       },
       "evidence_archive": {
@@ -68,64 +54,52 @@
         "skipped": 0
       },
       "phase3_cli": {
-        "passed": 9,
+        "passed": 10,
         "skipped": 0
       }
     },
     "coverage": [
-      "runner identity and denominator contracts",
-      "decision-before-label firewall",
-      "source, config, policy, plan, journal and seal tamper blocking",
-      "resume contract and infrastructure-only retry rules",
-      "deterministic evidence archive build, verification, restoration and tamper rejection",
-      "strict release, Stage B, dependency and source gate fail-closed behavior"
+      "machine-enforced G7 authorization and stale-approval rejection",
+      "authorization-before-side-effect preparation boundary",
+      "release-manifest and authorization-bound readiness receipts",
+      "state-independent decoder-boundary tests",
+      "Stage B inherited-evidence rebinding and protected-path tamper rejection",
+      "runner identity, decision-before-label firewall, source and journal tamper blocking",
+      "deterministic evidence archive restoration and verification"
     ]
   },
-  "clean_install": {
-    "environment_record": "reports/pre_week08_environment.json",
-    "dependency_lock": "reports/pre_week08_dependency_lock.txt",
-    "locked_external_distributions": 55,
-    "installed_external_distributions": 55,
-    "post_install_diff_count": 0,
-    "project_package_built_and_installed": true,
-    "scientific_ui_import_smoke": "PASS",
-    "metadata_only_plan_smoke": "PASS"
-  },
-  "development_rehearsal": {
-    "mode": "development_rehearsal",
-    "output_root": "outputs/pre_week08_phase5_development_rehearsal_20261114",
-    "output_tracked": false,
-    "source": "tracked phase3_camera_fixture only",
-    "plan_sha256": "563c373357316d24c532c7e7f4278489ab0c236b8283356de54baedd10b150a8",
-    "planned_pairs": 4,
-    "planned_attempts": 12,
-    "policy_eligible_pairs": 2,
-    "first_decide": {
-      "executed_this_call": 12,
-      "terminal_records": 12,
-      "infrastructure_errors": 0,
-      "sealed": true
+  "environment_diagnostics": [
+    {
+      "event": "parallel UI validation used an overly long temporary path",
+      "classification": "Windows test-staging path/Git diagnostic",
+      "resolution": "The unchanged UI suite was rerun alone with short project-local staging and passed 179/179.",
+      "product_code_changed": false
     },
-    "resume_decide": {
-      "executed_this_call": 0,
-      "preexisting_terminal": 12,
-      "terminal_records": 12,
-      "infrastructure_errors": 0,
-      "sealed": true
-    },
-    "evaluation": {
-      "summary_sha256": "d46b8bf5b7a4cf765586195ba48cb7433619df722f162e5bb4a6b9ae677574eb",
-      "decision_seal_file_sha256": "f2dcdbb6a4b9eeaa4ac2b14f77f015114a651585a2fb2ded0f692bedebec5947",
-      "decision_seal_sha256": "0225f08dd6f056861e9a783db14e83f796d4a674e951bc6096acb56c06971170",
-      "completed_attempts": 12,
-      "geometric_successes": 12,
-      "infrastructure_incidents": 0,
-      "eligible_pairs": 2,
-      "abstained_pairs": 2,
-      "selected_pairs": 0,
-      "labels_accessed_only_after_verified_seal": true,
-      "final_evidence": false
+    {
+      "event": "one focused rerun inherited the full system TEMP drive",
+      "classification": "system TEMP capacity diagnostic",
+      "resolution": "The same 80-test preflight suite was rerun in project-local staging and passed 80/80.",
+      "product_code_changed": false
     }
+  ],
+  "authorization_hardening": {
+    "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+    "technical_and_authorization_readiness_separated": true,
+    "missing_malformed_stale_or_tampered_authorization_blocks": true,
+    "preparation_side_effects_blocked_before_authorization": true,
+    "receipt_schema": "week08_final_readiness_receipt_v2",
+    "receipt_binds_release_manifest_and_authorization": true,
+    "live_repository_final_preparation_test_removed": true,
+    "real_week08_source_or_label_accessed": false
+  },
+  "incident_disposition": {
+    "report": "reports/pre_week08_phase7_incident.json",
+    "incident_id": "phase7-predecode-test-20261114",
+    "canonical_outputs_archived_and_reset": true,
+    "source_pixels_decoded": false,
+    "source_labels_accessed": false,
+    "scientific_attempts_executed": 0,
+    "candidate_reset_to_pre_enrollment": true
   },
   "evidence_restoration": {
     "archive_path": "deliverables/week07_frozen_evidence.zip",
@@ -140,54 +114,83 @@
   },
   "evidence_archive_sha256": "0081dfb436d585f4a4d91fd83c0ee6ae8f2b6d468a78aea260a158d8b7430b26",
   "preflight": {
+    "report_version": "pre_week08_preflight_v4",
     "development": {
       "pass": 18,
       "block": 1,
       "warn": 0,
       "readiness": "BLOCK",
-      "expected_block": "heldout_source_independence"
+      "expected_block": "heldout_source_independence",
+      "reason": "The R2 candidate is intentionally reset to pre-enrollment before renewed G5 and G6."
     },
-    "strict_before_phase5_binding": {
-      "pass": 18,
-      "block": 11,
+    "technical_readiness_before_review": {
+      "pass": 23,
+      "block": 6,
       "warn": 0,
       "readiness": "BLOCK",
-      "expected_later_phase_blocks": true
+      "expected_blocks": [
+        "heldout_source_independence",
+        "strict_release_commit_tag",
+        "strict_policy_config_analysis_hashes",
+        "strict_stage_b_acceptance",
+        "strict_release_signoffs",
+        "strict_source_enrollment"
+      ],
+      "phase7_authorization_intentionally_deferred": true
     }
   },
-  "ui_release_rehearsal": {
-    "evidence": "reports/pre_week08_stage_b_validation.json",
-    "evidence_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
-    "tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
-    "human_reviewer": "Md Moshiur Rahman",
-    "manual_scenarios": "5/5 PASS",
-    "supplemental_observations": "5/5 PASS",
-    "formal_ui_v02_frozen": true,
-    "scope_decisions": {
-      "stage_c_research_evidence": "DEFERRED",
-      "interactive_rire_expansion": "DEFERRED",
-      "recommendation_display_path": "DEFERRED"
+  "stage_b": {
+    "base_evidence": {
+      "path": "reports/pre_week08_stage_b_validation.json",
+      "sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+      "tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
+      "manual_scenarios": "5/5 PASS",
+      "supplemental_observations": "5/5 PASS",
+      "evidence_use": "inherited unchanged, not rerun"
+    },
+    "r2_rebinding": {
+      "path": "reports/pre_week08_stage_b_rebinding_r2.json",
+      "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
+      "ui_runtime_or_ui_test_paths_changed": false,
+      "status": "PENDING_REVIEW",
+      "reviewer": null,
+      "decision": "PENDING",
+      "attested_utc": null
     }
   },
   "executable_inventory": {
     "path": "reports/pre_week08_executable_inventory.json",
-    "sha256": "b3ff6d78b5ad6cf418d85e69df08ae7fffae52bb0d588ecf03b9346cb682545a",
+    "sha256": "8debe2a1ec29e860f8a67a54c2107c54ca2ef9dd35b9a2eb5e19c2482a33dc0a",
+    "source_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
     "tracked_python_files": 219,
-    "unexpected_additions_rejected": true
+    "unexpected_additions_rejected": true,
+    "hash_mismatches": 0
   },
-  "release_review": {
-    "automated_evidence_complete": true,
-    "human_g5_signoff_complete": true,
+  "historical_release": {
+    "release_id": "pre-week08-g5-20261114",
+    "release_commit": "0a2bc99e709a3d962bc17b0aec7c411210d3b8e7",
+    "release_tag": "pre-week08-g5-20261114",
     "reviewer": "Md Moshiur Rahman",
     "decision": "APPROVED",
     "attested_utc": "2026-11-14T18:41:16Z",
-    "release_commit_created": true,
-    "release_tag_created": true,
-    "release_manifest_bound": true
+    "status": "SUPERSEDED_AS_ACTIVE_CANDIDATE_AFTER_PHASE7_INCIDENT"
+  },
+  "release_review": {
+    "automated_evidence_complete": true,
+    "human_g5_signoff_complete": false,
+    "requested_reviewer": "Md Moshiur Rahman",
+    "reviewer": null,
+    "decision": "PENDING",
+    "attested_utc": null,
+    "release_commit_created": false,
+    "release_tag_created": false,
+    "release_manifest_bound": false,
+    "renewed_stage_b_binding_complete": false
   },
   "limitations": [
-    "This is development/release evidence, not a Week 8 benchmark result or an independent scientific validation claim.",
-    "Strict final readiness must remain BLOCK until Phase 5 binding is complete and Phase 6 enrolls an independent source with valid ground-truth evidence.",
-    "No real Week 8 image or label was procured, previewed, decoded, or evaluated."
+    "This is software and release evidence, not a Week 8 benchmark result or an independent scientific validation claim.",
+    "The original Stage B manual evidence is inherited because the UI runtime and UI tests are unchanged; the R2 release binding still requires explicit renewed reviewer approval.",
+    "The candidate is intentionally pre-enrollment and cannot enter final preparation until renewed G5, G6, and machine-verified G7 authorization are complete.",
+    "No real Week 8 image or label was previewed, decoded, or evaluated during R2 validation."
   ]
 }
