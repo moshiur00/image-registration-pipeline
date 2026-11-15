@@ -2,7 +2,7 @@
   "schema_version": "pre_week08_release_manifest_v2",
   "release_id": "pre-week08-g5r2-20261115",
   "gate": "G5",
-  "status": "PHASE8_START_RECORDED",
+  "status": "PHASE8_COMPLETED_ARCHIVED",
   "generated_utc": "2026-11-15T15:40:35Z",
   "implementation_checkpoint": "9824e701c47ce9c1788ff8694b4c5bfe089f0933",
   "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
@@ -219,7 +219,7 @@
       "source_pixels_decoded": false,
       "source_labels_accessed": false
     },
-    "execution_status": "START_RECORDED_NOT_EXECUTED"
+    "execution_status": "COMPLETED"
   },
   "phase8_run": {
     "run_id": "week08-final-r2-20261115T154035Z",
@@ -227,13 +227,18 @@
     "authorization_id": "g7-r2-pia18033-20261115",
     "authorization_commit": "61a34e87473348fdd8139ccd7128da1d087fc280",
     "start_recorded_utc": "2026-11-15T15:40:35Z",
-    "status": "START_AUTHORIZED_NOT_EXECUTED",
+    "status": "COMPLETED_ARCHIVED",
+    "completed_utc": "2026-11-15T15:48:42Z",
+    "archived_utc": "2026-11-15T15:53:36Z",
     "authorized_sequence": [
       "prepare",
       "decide",
       "evaluate"
     ],
     "execution_count_authorized": 1,
+    "one_run_scientific_sequence_count": 1,
+    "prepare_process_invocation_count": 2,
+    "predecode_infrastructure_resume_count": 1,
     "commands": [
       ".venv/Scripts/python.exe scripts/week08_prepare_holdout.py --config configs/week08_final_evaluation.yaml",
       ".venv/Scripts/python.exe scripts/week08_final_evaluation.py decide --config configs/week08_final_evaluation.yaml",
@@ -247,9 +252,132 @@
       "outputs/week08_holdout",
       "outputs/week08_final"
     ],
-    "source_pixels_decoded": false,
-    "source_labels_accessed": false,
-    "week08_benchmark_executed": false
+    "claim_scope": "source_specific_software_evidence_only",
+    "prohibited_claims": [
+      "anatomical_generalization",
+      "clinical_recommendation",
+      "external_validity",
+      "modality_wide_generalization",
+      "population_generalization"
+    ],
+    "infrastructure_resume": {
+      "stage": "prepare_embedded_final_readiness",
+      "blocking_check": "week08_runner_identity_contract",
+      "classification": "openblas_memory_allocation",
+      "error": "OpenBLAS error: Memory allocation still failed after 10 retries, giving up.",
+      "predecode": true,
+      "receipt_written": false,
+      "plan_written": false,
+      "holdout_artifacts_written": false,
+      "source_pixels_decoded": false,
+      "source_labels_accessed": false,
+      "scientific_attempts_executed": 0,
+      "authorization_basis": "infrastructure_resume_only",
+      "remediation": {
+        "type": "process_scoped_resource_limits",
+        "environment": {
+          "OPENBLAS_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1"
+        },
+        "frozen_code_or_config_changed": false
+      },
+      "resume_result": "PASS"
+    },
+    "sequence_results": {
+      "prepare": {
+        "status": "COMPLETED_AFTER_AUTHORIZED_INFRASTRUCTURE_RESUME",
+        "prepared_pair_count": 150,
+        "plan_sha256": "fd4fd65e117ac8c3d39f4ea9075a77e36457bf9d73bbe85529959d8b92978796",
+        "prepare_receipt_sha256": "5bf3e117139986006cab3adae8275dbc13441126011dc44f45719f27f30e032b"
+      },
+      "decide": {
+        "status": "COMPLETED",
+        "executed_this_call": 294,
+        "terminal_records": 294,
+        "preexisting_terminal": 0,
+        "infrastructure_errors": 0,
+        "policy_eligible_pairs": 24,
+        "decision_seal_sha256": "459b90cf985b7da761beec7f2f23e30cd9d81cc9353ae2ffcdea67bbb7e29e5f"
+      },
+      "evaluate": {
+        "status": "COMPLETED_ONCE",
+        "final_evidence": true,
+        "label_access_events": 1,
+        "label_access_after_verified_decision_seal": true,
+        "no_post_label_change_attested": true
+      }
+    },
+    "integrity": {
+      "status": "PASS",
+      "verified_utc": "2026-11-15T15:53:36Z",
+      "expected_final_file_count": 10,
+      "expected_holdout_file_count": 304,
+      "exact_output_inventory_verified": true,
+      "decision_and_label_linkage_verified": true,
+      "csv_and_summary_consistency_verified": true,
+      "label_access_event_count": 1,
+      "scientific_infrastructure_event_count": 0,
+      "file_hashes": {
+        "outputs/week08_final/final_readiness_receipt.json": "e8c1b1b3cb07c78a0cf7de47ebd0e5adb7c00ea302353f45f1ccbe4645d63fdc",
+        "outputs/week08_final/evaluation_plan.json": "d534338fff03f554a1a8a4227822b547c6ead360ece5d4dc3b4404c3cf111f94",
+        "outputs/week08_final/attempt_events.jsonl": "c352b673e7fc806c4ec546b8b6a9253ee0ed0de23c7395911f8a59a62e8d2fda",
+        "outputs/week08_final/scientific_records.jsonl": "b9fdf3004adbfeda8875c4820f6a7f04c02cac06cacc5277678cefac299924df",
+        "outputs/week08_final/policy_decisions.json": "b07a602d05199e47a9f17420f3c0dd0e0894a13f8e8dd82d7f98f57efd4d5b14",
+        "outputs/week08_final/decision_seal.json": "69f84d4caa57c64b9ddb99f0c4a87cc2a9bad97e913924bc462985c1e58bb326",
+        "outputs/week08_final/label_access_audit.jsonl": "e2d9ca2587709b5264ccb424d0d5a727cd98eb0275cbeefc41757e15e0b6bfc8",
+        "outputs/week08_final/evaluation_summary.json": "d83e1a23ccae29d7e40d090384d2ba8b2eff24c6d25fe1d234bffacc5bd88fd4",
+        "outputs/week08_final/track_a_attempts.csv": "ed06b7f374f95f82a69c692332446f7a9a1576de7938fa9de54a0552d4446cb4",
+        "outputs/week08_final/track_b_pairs.csv": "a570d73be5e6df6474161c50e6e9c36231d7cb4bb6fa4b230756968794027957",
+        "outputs/week08_holdout/prepare_receipt.json": "b3d44b5a08b6df6c28c72ea364f5120c79e383f5ccde18c25747f4738e57da06",
+        "outputs/week08_holdout/observable_manifest.json": "19c5494392d5f996197d5381052b24c7cffd67c55c324deeafc96927afe7337d",
+        "outputs/week08_holdout/sealed_labels/label_manifest.json": "6e181b3aae8fc33dd601c0818c5f0cb3385d507d61b6bfab095ef1d7f22c87d1",
+        "outputs/week08_holdout/sealed_labels/labels.json": "3771b32a5d012ee65c7bb5202e0f6a5cfc77b2f785fe17f457387571dd95a6cd"
+      }
+    },
+    "outcome": {
+      "track_a": {
+        "planned_attempts": 294,
+        "valid_ground_truth_attempts": 294,
+        "completed_attempts": 284,
+        "failed_attempts": 10,
+        "geometric_successes": 278,
+        "scientific_infrastructure_incidents": 0
+      },
+      "track_b": {
+        "eligible_pairs": 24,
+        "selected_pairs": 0,
+        "abstained_pairs": 24,
+        "invalid_pairs": 0,
+        "missing_decision_pairs": 0,
+        "coverage": 0.0
+      },
+      "recommendation": "preserve_results_keep_policy_non_deployed"
+    },
+    "private_evidence_archive": {
+      "distribution": "private_restricted_not_for_public_release",
+      "path": "outputs/week08_archives/week08-final-r2-20261115T154035Z/week08-final-r2-20261115T154035Z-evidence.zip",
+      "format": "zip",
+      "compression": "stored",
+      "sha256": "0d6fc03f943065f604fd1c4324a5cf45519728e9f237e16c3ffe66f7bd907e3e",
+      "size_bytes": 15561536,
+      "file_count": 314,
+      "total_source_bytes": 15490512,
+      "file_set_sha256": "43221cd3b47b8b453eaf93b8f27b1acedcd6e089fcf368edf6117beeb5b9cd39",
+      "checksum_manifest_path": "outputs/week08_archives/week08-final-r2-20261115T154035Z/week08-final-r2-20261115T154035Z-evidence-manifest.json",
+      "checksum_manifest_file_sha256": "a395615040fed980ba04fb9ef727e68872dd1d5221411be85d14198b65c1af74",
+      "checksum_manifest_self_sha256": "dc8fb2932f45b0a36e3ed7afd93ba33b4174be4dc02a94c450f2b5d3f6c95019",
+      "included_roots": {
+        "outputs/week08_final": 10,
+        "outputs/week08_holdout": 304
+      },
+      "archive_members_verified": true,
+      "workspace_file_set_verified_unchanged": true
+    },
+    "source_pixels_decoded": true,
+    "source_labels_accessed": true,
+    "week08_benchmark_executed": true
   },
   "historical_release": {
     "release_id": "pre-week08-g5-20261114",
@@ -270,7 +398,9 @@
   "limitations": [
     "This manifest records explicit G7 one-run approval and a clean 30/30 authorization-required final-readiness PASS.",
     "The original Stage B observations are inherited because the UI runtime and tests are unchanged; the R2 release binding is explicitly reviewer-approved.",
-    "PIA18033 is enrolled and strictly verified under the R2 freeze with unchanged raw bytes and a rebound synthetic-after-freeze route; exactly one prepare, decide, evaluate sequence is authorized.",
+    "PIA18033 was evaluated under the R2 freeze with unchanged raw bytes and the approved synthetic-after-freeze route; exactly one scientific prepare, decide, evaluate sequence completed, with one authorized pre-decode infrastructure resume.",
+    "The automatic policy abstained on all 24 eligible pairs and remains non-deployed; the preserved evidence supports only source-specific software behavior.",
+    "No anatomical, clinical, external-validity, modality-wide, population, or general deployment claim is authorized.",
     "The historical G5 tag remains immutable and is not moved or rewritten."
   ]
 }
