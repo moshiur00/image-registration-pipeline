@@ -1,0 +1,429 @@
+{
+  "acceptance": {
+    "all_failures_recorded": true,
+    "all_planned_attempts_accounted_for": true,
+    "all_policy_decisions_accounted_for": true,
+    "all_terminal_statuses_accounted_for": true,
+    "denominators_reconciled": true,
+    "g8_status": "IN_PROGRESS",
+    "hash_bindings_verified": true,
+    "infrastructure_resume_reconciled": true,
+    "modality_and_source_roles_consistent": true,
+    "no_post_label_tuning_attested": true,
+    "numeric_values_valid": true,
+    "privacy_boundary_verified": true,
+    "technical_data_quality_status": "PASS"
+  },
+  "aggregate_strata": {
+    "condition": [
+      {
+        "attempts": 36,
+        "geometric_successes": 36,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "gaussian_blur"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 36,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "gaussian_noise"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 36,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "illumination"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 36,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "low_texture"
+      },
+      {
+        "attempts": 6,
+        "geometric_successes": 6,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 6,
+          "failed": 0
+        },
+        "value": "multimodal_mapping"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 36,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "none"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 34,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "occlusion"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 33,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 36,
+          "failed": 0
+        },
+        "value": "partial_overlap"
+      },
+      {
+        "attempts": 36,
+        "geometric_successes": 25,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 26,
+          "failed": 10
+        },
+        "value": "repeated_pattern"
+      }
+    ],
+    "modality_class": [
+      {
+        "attempts": 240,
+        "geometric_successes": 227,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 230,
+          "failed": 10
+        },
+        "value": "monomodal"
+      },
+      {
+        "attempts": 54,
+        "geometric_successes": 51,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 54,
+          "failed": 0
+        },
+        "value": "simulated_multimodal"
+      }
+    ],
+    "source_role": [
+      {
+        "attempts": 294,
+        "geometric_successes": 278,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 284,
+          "failed": 10
+        },
+        "value": "full_project_independent"
+      }
+    ],
+    "transform_model": [
+      {
+        "attempts": 123,
+        "geometric_successes": 114,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 118,
+          "failed": 5
+        },
+        "value": "affine"
+      },
+      {
+        "attempts": 75,
+        "geometric_successes": 73,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 75,
+          "failed": 0
+        },
+        "value": "rigid"
+      },
+      {
+        "attempts": 48,
+        "geometric_successes": 43,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 43,
+          "failed": 5
+        },
+        "value": "similarity"
+      },
+      {
+        "attempts": 48,
+        "geometric_successes": 48,
+        "status_counts": {
+          "CHECK": 0,
+          "completed": 48,
+          "failed": 0
+        },
+        "value": "translation"
+      }
+    ]
+  },
+  "attempt_reconciliation": {
+    "attempted": 294,
+    "conditional_accuracy": {
+      "denominator": 284,
+      "numerator": 278,
+      "value": 0.9788732394366197
+    },
+    "execution_completion_rate": {
+      "denominator": 294,
+      "numerator": 284,
+      "value": 0.9659863945578231
+    },
+    "geometric_failures_among_completed": 6,
+    "geometric_success_rate": {
+      "denominator": 294,
+      "numerator": 278,
+      "value": 0.9455782312925171
+    },
+    "geometric_successes": 278,
+    "ground_truth_route": "synthetic_created_after_freeze",
+    "not_geometrically_evaluable_due_to_execution_failure": 10,
+    "planned_attempts": 294,
+    "scientific_infrastructure_incident_rate": {
+      "denominator": 294,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "status_counts": {
+      "CHECK": 0,
+      "completed": 284,
+      "failed": 10
+    },
+    "terminal_records": 294,
+    "valid_ground_truth_attempts": 294
+  },
+  "claim_scope": {
+    "prohibited_claims": [
+      "anatomical_generalization",
+      "clinical_recommendation",
+      "external_validity",
+      "modality_wide_generalization",
+      "population_generalization"
+    ],
+    "recommendation_disposition": "preserve_results_keep_policy_non_deployed",
+    "scope": "source_specific_software_evidence_only"
+  },
+  "data_quality_checks": {
+    "attempt_id_integrity": {
+      "duplicate_observed_ids": 0,
+      "duplicate_planned_ids": 0,
+      "exact_set_match": true,
+      "missing_ids": 0,
+      "observed_count": 294,
+      "observed_unique_count": 294,
+      "planned_count": 294,
+      "planned_unique_count": 294,
+      "unexpected_ids": 0
+    },
+    "event_journal": {
+      "attempt_started": 294,
+      "duplicate_event_rows": 0,
+      "event_count": 588,
+      "missing_event_rows": 0,
+      "scientific_outcome": 294,
+      "unexpected_event_ids": 0
+    },
+    "final_output_files_expected": 10,
+    "final_output_files_observed": 10,
+    "impossible_metric_values": 0,
+    "inconsistent_modality_or_source_roles": 0,
+    "inconsistent_task_metadata": 0,
+    "label_access_after_verified_decision_seal": true,
+    "label_access_events": 1,
+    "no_post_label_change_attested": true,
+    "non_finite_numeric_values": 0,
+    "overwritten_attempt_ids": 0,
+    "policy_decision_id_integrity": {
+      "duplicate_observed_ids": 0,
+      "duplicate_planned_ids": 0,
+      "exact_set_match": true,
+      "missing_ids": 0,
+      "observed_count": 24,
+      "observed_unique_count": 24,
+      "planned_count": 24,
+      "planned_unique_count": 24,
+      "unexpected_ids": 0
+    },
+    "prepared_holdout_files_archived": 304,
+    "private_evidence_files_archived": 314,
+    "summary_attempt_id_integrity": {
+      "duplicate_observed_ids": 0,
+      "duplicate_planned_ids": 0,
+      "exact_set_match": true,
+      "missing_ids": 0,
+      "observed_count": 294,
+      "observed_unique_count": 294,
+      "planned_count": 294,
+      "planned_unique_count": 294,
+      "unexpected_ids": 0
+    },
+    "summary_policy_id_integrity": {
+      "duplicate_observed_ids": 0,
+      "duplicate_planned_ids": 0,
+      "exact_set_match": true,
+      "missing_ids": 0,
+      "observed_count": 24,
+      "observed_unique_count": 24,
+      "planned_count": 24,
+      "planned_unique_count": 24,
+      "unexpected_ids": 0
+    },
+    "unrecorded_failures": 0
+  },
+  "hash_bindings": {
+    "attempt_events_file_sha256": "c352b673e7fc806c4ec546b8b6a9253ee0ed0de23c7395911f8a59a62e8d2fda",
+    "config_sha256": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
+    "decision_seal_file_sha256": "69f84d4caa57c64b9ddb99f0c4a87cc2a9bad97e913924bc462985c1e58bb326",
+    "decision_seal_sha256": "459b90cf985b7da761beec7f2f23e30cd9d81cc9353ae2ffcdea67bbb7e29e5f",
+    "enrollment_manifest_sha256": "c450000e23b921f99ca0bbe5e955f13a4b011a67541769b7f559089706efda50",
+    "environment_record_sha256": "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239",
+    "evaluation_summary_file_sha256": "d83e1a23ccae29d7e40d090384d2ba8b2eff24c6d25fe1d234bffacc5bd88fd4",
+    "final_readiness_receipt_file_sha256": "e8c1b1b3cb07c78a0cf7de47ebd0e5adb7c00ea302353f45f1ccbe4645d63fdc",
+    "label_access_audit_file_sha256": "e2d9ca2587709b5264ccb424d0d5a727cd98eb0275cbeefc41757e15e0b6bfc8",
+    "phase9_generator_sha256": "9c1207181f9cfcdcc39d83a46d5ec9a00553b9b581094c70eec16e0d7ec72cff",
+    "plan_file_sha256": "d534338fff03f554a1a8a4227822b547c6ead360ece5d4dc3b4404c3cf111f94",
+    "plan_sha256": "fd4fd65e117ac8c3d39f4ea9075a77e36457bf9d73bbe85529959d8b92978796",
+    "policy_decisions_file_sha256": "b07a602d05199e47a9f17420f3c0dd0e0894a13f8e8dd82d7f98f57efd4d5b14",
+    "policy_sha256": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+    "private_evidence_archive_sha256": "0d6fc03f943065f604fd1c4324a5cf45519728e9f237e16c3ffe66f7bd907e3e",
+    "private_evidence_file_count": 314,
+    "private_evidence_file_set_sha256": "43221cd3b47b8b453eaf93b8f27b1acedcd6e089fcf368edf6117beeb5b9cd39",
+    "runner_code_sha256": "f4365a1daaad0b51a7dcbd77e401354c7921aaafdf5ebdbbca96d4d115e50b91",
+    "scientific_records_file_sha256": "b9fdf3004adbfeda8875c4820f6a7f04c02cac06cacc5277678cefac299924df",
+    "source_ledger_sha256": "97fe46f1bf3b483d2806ba05760e45b7482a276476d13e9f4437a553e9874b41",
+    "source_registration_sha256": "c05648140ff00fba93b618e1a5b57e59d127bb33cf04ecbbd4f63bff3d9cc923",
+    "track_a_table_file_sha256": "ed06b7f374f95f82a69c692332446f7a9a1576de7938fa9de54a0552d4446cb4",
+    "track_b_table_file_sha256": "a570d73be5e6df6474161c50e6e9c36231d7cb4bb6fa4b230756968794027957"
+  },
+  "identity": {
+    "authorization_id": "g7-r2-pia18033-20261115",
+    "generated_utc": "2026-11-15T21:03:14Z",
+    "phase": "9.1",
+    "phase8_closeout_commit": "651e719ee1b02a2b3f1aebc23c5fc91e34e4a02f",
+    "release_commit": "0c052e8b8dcf2bb38743cb3b0118ca8f41892d74",
+    "release_id": "pre-week08-g5r2-20261115",
+    "reviewed_enrollment_commit": "b9a03d09158bb007102f9a897da055c24dd367ba",
+    "run_id": "week08-final-r2-20261115T154035Z",
+    "work_package": "data_quality_closure"
+  },
+  "infrastructure": {
+    "artifacts_written_before_resume": false,
+    "authorized_predecode_resumes": 1,
+    "blocking_check": "week08_runner_identity_contract",
+    "classification": "openblas_memory_allocation",
+    "frozen_code_or_config_changed": false,
+    "pixels_or_labels_decoded_before_resume": false,
+    "predecode_infrastructure_failures": 1,
+    "prepare_process_invocations": 2,
+    "resume_result": "PASS",
+    "scientific_attempts_before_resume": 0,
+    "scientific_infrastructure_incidents": 0,
+    "scientific_sequence_count": 1
+  },
+  "limitations": [
+    "The final evidence contains one independent source and synthetic-after-freeze ground truth; it does not establish external validity.",
+    "There is no independent real verified-ground-truth subset.",
+    "All 24 policy-eligible pairs were abstained, so selective correctness is undefined and the policy remains non-deployed.",
+    "This report is an aggregate data-quality closure, not a new scientific analysis or a basis for retuning."
+  ],
+  "next": "Phase 9.2 final reporting: generate preregistered tables, figures, condition-specific conclusions, runtime analysis, and failure analysis without changing the frozen methods or policy.",
+  "policy_reconciliation": {
+    "abstention_rate": {
+      "denominator": 24,
+      "numerator": 24,
+      "value": 1.0
+    },
+    "coverage": {
+      "denominator": 24,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "decision_counts": {
+      "abstained": 24,
+      "invalid": 0,
+      "missing": 0,
+      "selected": 0
+    },
+    "decision_records": 24,
+    "eligible_pairs": 24,
+    "invalid_rate": {
+      "denominator": 24,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "missing_decision_rate": {
+      "denominator": 24,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "selective_correctness": {
+      "denominator": 0,
+      "numerator": 0,
+      "value": null
+    }
+  },
+  "privacy": {
+    "classification": "tracked_sanitized_aggregate",
+    "contains_label_payload_or_ground_truth_values": false,
+    "contains_pair_or_attempt_identifiers": false,
+    "contains_private_archive_member_inventory": false,
+    "contains_raw_pixels_or_arrays": false,
+    "contains_transforms_or_method_diagnostics": false,
+    "excluded_content": [
+      "raw source pixels and prepared arrays",
+      "sealed labels and per-case ground-truth values",
+      "pair and attempt identifiers",
+      "estimated transforms and method diagnostics",
+      "private archive member names and paths"
+    ]
+  },
+  "report_payload_sha256": "e1ebf2d2e7fec780e61048c1d19dc7f7ddad966f65057efd7a920acdc3b8f77f",
+  "review": {
+    "developer_analyst": {
+      "basis": "deterministic aggregate reconciliation and hash verification",
+      "status": "COMPLETE"
+    },
+    "release_reviewer": {
+      "status": "PENDING"
+    },
+    "scientific_reviewer": {
+      "status": "PENDING"
+    }
+  },
+  "schema_version": "week08_phase9_data_quality_closure_v1",
+  "scope_reconciliation": {
+    "planned_attempts": 294,
+    "planned_pairs": 150,
+    "policy_eligible_pairs": 24,
+    "prepared_pairs": 150,
+    "sources": 1
+  },
+  "status": "PASS_PENDING_SCIENTIFIC_AND_RELEASE_REVIEW"
+}
