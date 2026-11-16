@@ -23,7 +23,36 @@ pip check
 pytest -v
 ```
 
-The completed Week 5 repository collects 364 tests. The target Windows validation result is `364 passed in 4.56s`.
+Test counts grow with the project. Use the current suite result rather than the historical Week 5 count as the environment check.
+
+## Week 8 final-analysis verification
+
+The Week 8 evaluation has already run and labels have been revealed under the signed one-run authorization. The commands in this section verify sanitized evidence; they do **not** rerun registration, preparation, decision, or evaluation.
+
+### Public or lightweight checkout
+
+Run the tracked aggregate/integrity tests:
+
+```powershell
+.venv\Scripts\python.exe -B -m pytest tests\test_week08_phase9_final_analysis.py -q -p no:cacheprovider
+```
+
+Without the restricted `outputs/week08_final/` evidence, seven public aggregate, hash, privacy, and SVG checks run and the private-evidence byte-rebuild check skips. This verifies the published headline values, the seven CSV tables, the seven vector figures, and their hashes; it does not independently regenerate them from unavailable private evidence.
+
+The tracked result is summarized in [WEEK08_FINAL_ANALYSIS.md](WEEK08_FINAL_ANALYSIS.md) and bound by `reports/week08_phase9_final_analysis.json`.
+
+### Authorized attached sealed evidence
+
+When the authorized private evidence package has been restored to its canonical ignored locations, run:
+
+```powershell
+.venv\Scripts\python.exe -B scripts\week08_phase9_data_quality_closure.py --check
+.venv\Scripts\python.exe -B scripts\week08_phase9_final_analysis.py --check
+```
+
+The first command verifies the tracked Phase 9.1 reconciliation report. The second privately rebuilds all seven aggregate CSV tables and seven SVG figures from sealed metadata/results and compares every tracked byte. Both commands are read-only reporting checks: they do not open source images, prepared arrays, or sealed label content, and they do not execute registration or evaluation.
+
+The public Week 8 result layer contains only sanitized aggregate evidence. `outputs/week08_final/`, the prepared holdout, and the private evidence archive remain restricted and are restored or distributed only through the authorized evidence workflow. Never use `week08_prepare_holdout.py` or the `decide`/`evaluate` commands as post-label reproduction steps. Any new algorithm, metric, threshold, policy, or confirmatory evaluation requires a future cycle with newly reserved data.
 
 ## Real-data preparation
 

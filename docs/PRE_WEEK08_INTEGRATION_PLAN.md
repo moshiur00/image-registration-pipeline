@@ -1,8 +1,8 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - AUTHORIZATION-HARDENING RELEASE CYCLE IN PROGRESS
-**Revision date:** 2026-11-15
+**Status:** ACTIVE PLAN - PHASE 9 RELEASE CLOSURE IN PROGRESS
+**Revision date:** 2026-11-16
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
 ### 1. Purpose and final objective
@@ -156,6 +156,30 @@ and UI regressions, and receive a renewed release-reviewer approval. Strict
 preflight permits only docs/reports changes between that implementation
 checkpoint and the new G5 release commit.
 
+#### 3.7 Renewed release, final run, and Phase 9 checkpoint (16 November 2026)
+
+The authorization-hardening cycle completed. Renewed G5 is bound to immutable
+tag `pre-week08-g5r2-20261115`; renewed G6 source reuse and custodian review are
+tracked in `reports/pre_week08_source_registration.json`; and the signed G7
+one-run authorization is tracked in
+`reports/pre_week08_phase7_authorization.json`.
+
+Phase 8 completed the authorized prepare -> decide -> evaluate sequence and the
+private evidence archive passed inventory and checksum verification. The final
+run contains 294 Track A attempts, 284 completed executions, 10 execution
+failures, and 278 geometric successes. Track B abstained on all 24 eligible
+pairs, giving 0% coverage and undefined selective correctness. One authorized
+pre-decode infrastructure resume occurred before any scientific attempt; one
+label-access event occurred only after the verified decision seal. No
+post-label tuning or unauthorized rerun occurred.
+
+Phase 9.1 data-quality closure and Phase 9.2 final analysis are technically
+complete and remain pending scientific and release review. Phase 9.3 reconciles
+the README, reproduction guide, report index, maintained gate register, and
+progress registry. Claims remain restricted to source-specific software
+evidence and the recommendation policy remains non-deployed. G8 remains in
+progress until the reviews and remaining release deliverables are complete.
+
 ### 4. Non-negotiable scientific and engineering invariants
 
 1. Preserve the project transform convention: **Moving -> Fixed**.
@@ -231,7 +255,10 @@ Phase 8: One-run execution: prepare -> decide/seal -> evaluate
 Phase 9: Analysis, reproducibility, report, demo, archive, release
 ~~~
 
-Phases 2, 3, and 4 may proceed in parallel using development data only. Real holdout pixels and labels remain inaccessible until Phase 5 passes.
+Phases 2, 3, and 4 used development data only. Real holdout pixels and labels
+remained inaccessible until signed G7 authorization passed; no further access
+is authorized beyond the completed one-run sequence and controlled evidence
+verification.
 
 ### 7. Phase 0 - preserve the holdout boundary
 
@@ -606,14 +633,15 @@ bound to immutable tag `pre-week08-g5-20261114`; the self-reference-free
 release manifest is added only through the exact post-tag metadata allowlist.
 No real Week 8 pixel or label was accessed.
 
-That tag is not the candidate for the authorization-hardening cycle. A new G5
-candidate and unique tag require the unsigned
-`docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md` to be completed and explicitly
-approved. Do not move or rewrite the historical tag.
+**Renewed G5 result (2026-11-15): PASSED.** The authorization-hardening
+candidate is bound to immutable tag `pre-week08-g5r2-20261115`, the approved
+R2 checklist, Stage B rebinding record, and
+`reports/pre_week08_release_manifest.json`. The historical tag remains
+unchanged.
 
 ### 13. Phase 6 - independent-source enrollment
 
-**Status:** BLOCKED - new-cycle candidate reset to pre-enrollment
+**Status:** PASSED (renewed 2026-11-15)
 **Priority:** P0
 **Owner:** data custodian/provenance reviewer; developer performs metadata-only integration.
 
@@ -647,9 +675,15 @@ readiness.
 - only ledger/attestation/manifest metadata changed after G5;
 - pixels and labels remain uninspected by developers.
 
+**G6 result (2026-11-15): PASSED.** The data custodian approved reuse under
+the renewed release freeze. Provenance, permitted use, independence, canonical
+identity, and the synthetic-after-freeze ground-truth route are recorded in
+`reports/pre_week08_source_registration.json`; only the authorized metadata
+paths changed after G5.
+
 ### 14. Phase 7 - strict final-readiness gate
 
-**Status:** BLOCKED - authorization hardening and renewed G5/G6 required
+**Status:** PASSED (2026-11-15)
 **Priority:** P0
 **Owner:** release reviewer.
 
@@ -679,13 +713,19 @@ The preparation command may not create an output directory, readiness receipt,
 plan, or decoder call until authorization-required final readiness passes. The
 receipt must bind the exact release-manifest and Phase 7 authorization hashes.
 
+**G7 result (2026-11-15): PASSED.** The signed authorization in
+`reports/pre_week08_phase7_authorization.json` binds the exact renewed release,
+reviewed G6 enrollment, incident disposition, restricted claim scope, and one
+prepare -> decide -> evaluate sequence. Authorization-required final readiness
+passed before Phase 8 began.
+
 ### 15. Phase 8 - one-run execution
 
-**Status:** NOT STARTED
+**Status:** COMPLETED AND ARCHIVED (2026-11-15)
 **Priority:** P0
 **Owner:** designated run operator; release reviewer observes records.
 
-Expected command sequence after implementation:
+Authorized command sequence completed once (historical record; do not rerun):
 
 ~~~powershell
 python scripts/week08_preflight.py --final-readiness
@@ -726,9 +766,15 @@ If a scientific or implementation defect is discovered after label reveal, repor
 - no unauthorized rerun or post-freeze change occurred;
 - immutable raw Week 8 evidence archive and tracked checksum manifest exist.
 
+**Phase 8 result:** PASSED. `reports/pre_week08_release_manifest.json` records
+`PHASE8_COMPLETED_ARCHIVED`, exact final and holdout inventories, verified
+decision/label linkage, one authorized pre-decode infrastructure resume, one
+post-seal label-access event, zero scientific infrastructure incidents, and a
+verified restricted private evidence archive.
+
 ### 16. Phase 9 - final analysis, documentation, demonstration, and release
 
-**Status:** NOT STARTED
+**Status:** IN PROGRESS - Phases 9.1-9.3 technically complete; G8 reviews and remaining release deliverables pending
 **Priority:** P0
 **Owner:** developer/analyst; scientific and release reviewers sign.
 
@@ -881,15 +927,15 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 
 | Gate | Current status | Evidence / blocking condition |
 |---|---|---|
-| G0 Holdout boundary | PASSED | No Week 8 pixels/labels accessed |
+| G0 Holdout boundary | PASSED | Boundary held until signed G7 authorization; `reports/pre_week08_release_manifest.json` records one post-seal label-access event, no unauthorized rerun, and no post-label change |
 | G1 Reconcile/checkpoint | PASSED | `reports/pre_week08_phase1_checkpoint.json`; recoverable checkpoint commit contains the reconciled Stage A/B package |
 | G2 Integrity/preflight hardening | PASSED | `reports/pre_week08_phase2_integrity.json`; ledger v2, strict mode, 101/101 + 81/81 verification, deterministic archive and clean restore passed |
 | G3 Evaluator/firewall | PASSED | `reports/pre_week08_phase3_evaluator.json`; 132 current focused tests, 12/12 sealed development attempts, hash-bound preflight contract, no real Week 8 access |
 | G4 UI acceptance/scope | PASSED | `reports/pre_week08_stage_b_validation.json`; 5/5 scenarios plus 5/5 supplemental checks; UI v0.2 frozen; optional scope DEFERRED |
-| G5 Release-candidate freeze | IN PROGRESS | Historical tag remains preserved; authorization-hardening candidate, regression evidence, Stage B rebinding, checklist R2, and renewed reviewer approval are pending |
-| G6 Source enrollment | BLOCKED | New candidate is intentionally pre-enrollment; PIA18033 reuse requires renewed approval after the new G5 tag |
-| G7 Final readiness/execution | BLOCKED | Machine-enforced authorization, renewed G5/G6, incident disposition, deviation approval, and signed one-run authorization are required |
-| G8 Analysis/release closure | NOT STARTED | Week 8 has not run |
+| G5 Release-candidate freeze | PASSED | `docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md`, `reports/pre_week08_stage_b_rebinding_r2.json`, immutable tag `pre-week08-g5r2-20261115`, and `reports/pre_week08_release_manifest.json` |
+| G6 Source enrollment | PASSED | `reports/pre_week08_source_registration.json`, tracked ledger/enrollment manifest, and renewed custodian approval |
+| G7 Final readiness/execution | PASSED | `reports/pre_week08_phase7_authorization.json` and `reports/pre_week08_release_manifest.json`; the authorized one-run sequence completed and the restricted evidence archive verified |
+| G8 Analysis/release closure | IN PROGRESS | `reports/week08_phase9_data_quality_closure.json`, `reports/week08_phase9_final_analysis.json`, and `docs/WEEK08_FINAL_ANALYSIS.md`; Phase 9.1-9.3 technical work is complete, while scientific/release review and remaining release deliverables are pending |
 
 Update this table and link the tracked evidence whenever a gate changes.
 
@@ -914,32 +960,44 @@ python scripts/pre_week08_stage_b_ui_qa.py prepare
 python scripts/pre_week08_stage_b_ui_qa.py status
 ~~~
 
-Phase 3 commands now available:
+Historical Phase 3 verification command:
 
 ~~~powershell
 python -m pytest tests/test_week08_preflight.py tests/test_week08_final_evaluation.py tests/test_week08_phase3_cli.py -v
 python scripts/week08_final_evaluation.py plan --config configs/week08_final_evaluation.yaml
 ~~~
 
-Never run prepare, decide, or evaluate on real Week 8 data before G7.
+Before G7, prepare, decide, and evaluate were prohibited. After the completed
+authorized run and label reveal, those commands remain prohibited as
+reproduction steps.
+
+Current Phase 9 reporting verification commands:
+
+~~~powershell
+python -m pytest tests/test_week08_phase9_final_analysis.py -q -p no:cacheprovider
+python scripts/week08_phase9_data_quality_closure.py --check
+python scripts/week08_phase9_final_analysis.py --check
+~~~
+
+The last two commands require the authorized private final evidence at its
+canonical ignored locations. They rebuild or verify sanitized reporting only;
+they do not rerun preparation, registration, decision, or evaluation. After
+label reveal, the Phase 8 prepare/decide/evaluate commands above are historical
+records and must not be used as reproduction commands.
 
 ### 23. Immediate next actions
 
-1. Complete fail-closed G7 authorization code, tests, documentation, receipt
-   binding, regression evidence, integrity/freeze records, and Stage B
-   rebinding without opening PIA18033.
-2. Prepare a clean pre-enrollment release candidate and stop for explicit
-   renewed G5 approval before creating `pre-week08-g5r2-20261115`.
-3. After the new tag, renew G6 source enrollment and custodian approval for
-   PIA18033 reuse and the updated synthetic-after-freeze binding.
-4. Run technical readiness, obtain and commit the separate hash-bound G7
-   authorization, then run authorization-required final readiness.
-5. Keep held-out pixels and labels inaccessible until the authorization-required
-   G7 gate passes.
+1. Obtain scientific and release review of the Phase 9.1 and Phase 9.2 evidence
+   without changing methods, metrics, thresholds, denominators, or policy.
+2. Complete the presentation/timed-demo rehearsal, sanitized public release
+   archive and checksums, and final closure summary.
+3. Perform clean G8 verification and reviewer signoff, then create the final
+   release tag/snapshot.
+4. Reserve any new algorithm, metric, recommendation-policy, confidence, or
+   deployment work for a future cycle with newly reserved evaluation data.
 
-**Current boundary:** This revision records completed Phase 3 evaluator and
-firewall controls, completed Phase 4 human UI acceptance and UI v0.2 scope
-freeze, the historical Phase 5/G6 evidence, and the documented pre-decode
-incident. The active candidate is intentionally reset to pre-enrollment while
-authorization hardening is implemented. It does not open real held-out pixels
-or labels, pass renewed G5/G6/G7, or run Week 8.
+**Current boundary:** Phase 8 is complete and archived; Phase 9.1 data-quality
+closure, Phase 9.2 final analysis, and Phase 9.3 documentation are technically
+complete. The policy remains non-deployed, scientific and release reviews are
+pending, and G8 is IN PROGRESS. No new run, post-label tuning, or broader claim
+is authorized.

@@ -139,4 +139,4 @@ The command privately rebuilds the aggregate tables and SVG figures and verifies
 
 ## Review and next step
 
-Developer/analyst review is complete. Scientific and release review remain pending. Phase 9.3 should update the README, reproduction guide, maintained gate register, and progress registry without changing frozen methods or policy.
+Developer/analyst review and Phase 9.3 documentation reconciliation are complete. Scientific and release review remain pending. The next work is the remaining G8 release closure: reviewer signoff, presentation/timed-demo rehearsal, sanitized release archive and checksums, closure summary, and final release snapshot. Frozen methods and the non-deployed policy remain unchanged.

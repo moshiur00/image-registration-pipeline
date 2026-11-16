@@ -100,3 +100,13 @@ Day 28 intentionally validates runner behavior with Phase Correlation and ECC tr
 `week06_day05_agreement_consensus.json` stores the Day 30 closure evidence. It compares compatible candidate transforms on a common image-space control grid, reports pairwise RMS/median/p95/max disagreement, identifies a descriptive transform-medoid consensus anchor, aggregates only common Week 6 evidence by method and modality, and keeps hidden synthetic ground truth outside the automatic service.
 
 Target Windows validation is complete. Week 6 is formally closed and frozen. The Day 30 run completed all 13 / 13 automatic candidates with no CHECK, failures, or validation errors while preserving the ground-truth firewall and deferred recommendation policy.
+
+## Week 8 final evidence
+
+`pre_week08_release_manifest.json` is the tracked release/run authority. Its `PHASE8_COMPLETED_ARCHIVED` status records the authorized one-run sequence, verified decision-to-label linkage, exact output inventory, final aggregate outcome, and restricted private evidence archive. The raw final evidence under `outputs/week08_final/`, prepared holdout artifacts, and private archive are controlled evidence and are not public report snapshots.
+
+`week08_phase9_data_quality_closure.json` is the sanitized Phase 9.1 reconciliation. It accounts for all 294 Track A attempts and all 24 Track B policy decisions, records the one authorized pre-decode infrastructure resume and zero scientific infrastructure incidents, verifies evidence hashes and denominators, and contains no pair- or attempt-level identifiers.
+
+`week08_phase9_final_analysis.json` is the self-hashed Phase 9.2 analysis manifest. It binds seven aggregate CSV tables under `week08_phase9_tables/` and seven vector SVG figures under `docs/figures/week08_phase9/`. The corresponding narrative is `docs/WEEK08_FINAL_ANALYSIS.md`.
+
+Phase 9.1 and Phase 9.2 both have status `PASS_PENDING_SCIENTIFIC_AND_RELEASE_REVIEW`. Their claims are restricted to source-specific software evidence. Track B abstained on 24/24 eligible pairs, so the recommendation policy remains non-deployed and selective correctness is undefined. The tracked reports, tables, and figures are sanitized aggregates; they are not substitutes for the authorized private evidence package.

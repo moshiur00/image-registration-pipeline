@@ -242,16 +242,44 @@
       "current_day": null,
       "latest_benchmark_closure": "reports/week07_day05_closure.json",
       "latest_completed_day": "day_35",
-      "latest_implementation": "Day 35 development integration complete and Windows validated; Week 7 development study closed. Week 8 independent policy evaluation not started.",
+      "latest_implementation": "Day 35 development integration complete and Windows validated; Week 7 development study closed. Final Week 8 evidence is indexed separately.",
       "latest_target_validation": "Day 35 Windows: 552 backend passed, 3 expected skips; 149 UI passed; 88 attempts with 61 geometric successes, 11 failures; 0 executed/88 resumed.",
-      "next_day": "pre_week08_phase4_stage_b_acceptance",
+      "next_day": null,
       "plan": "docs/weekly/week_07_plan.md",
       "status": "complete",
       "week_closure": "reports/week07_week_closure.json"
+    },
+    "week_08": {
+      "status": "in_progress",
+      "latest_completed_phase": "phase_9_3_documentation",
+      "final_run_status": "completed_archived",
+      "g8_status": "in_progress",
+      "release_manifest": "reports/pre_week08_release_manifest.json",
+      "data_quality_closure": "reports/week08_phase9_data_quality_closure.json",
+      "analysis_manifest": "reports/week08_phase9_final_analysis.json",
+      "final_analysis": "docs/WEEK08_FINAL_ANALYSIS.md",
+      "track_a": {
+        "attempted": 294,
+        "completed": 284,
+        "failed": 10,
+        "geometric_successes": 278
+      },
+      "track_b": {
+        "eligible_pairs": 24,
+        "selected_pairs": 0,
+        "abstained_pairs": 24,
+        "coverage": 0.0,
+        "selective_correctness": null
+      },
+      "claim_scope": "source_specific_software_evidence_only",
+      "policy_status": "non_deployed",
+      "scientific_review": "pending",
+      "release_review": "pending",
+      "next_work_package": "g8_scientific_release_review_and_remaining_release_deliverables"
     }
   },
   "pre_week08_integration": {
-    "next_phase": "phase_4_stage_b_manual_ui_acceptance_and_scope_freeze",
+    "next_phase": "g8_scientific_release_review_and_remaining_release_deliverables",
     "phase_1_checkpoint": {
       "status": "passed",
       "date": "2026-11-03",
@@ -290,18 +318,20 @@
       "week08_evaluation_started": false
     },
     "stage_a": {
-      "status": "evaluator_implemented_not_final_ready",
+      "status": "final_evaluation_completed_archived",
       "summary": "docs/daily/pre_week08_stage_a_summary.md",
       "phase_2_summary": "docs/daily/pre_week08_phase2_summary.md",
       "phase_3_summary": "docs/daily/pre_week08_phase3_summary.md",
       "phase_3_evidence": "reports/pre_week08_phase3_evaluator.json",
-      "current_validation": "702 backend passed, 3 expected skips; 179 UI passed; 149/150 release-critical tests passed with 1 expected Windows symlink skip; development preflight 18 PASS, 1 BLOCK; pre-binding strict preflight 21 PASS, 8 BLOCK",
-      "hard_block": "no genuinely independent Week 8 source registered",
+      "current_validation": "Phase 8 completed and archived; Phase 9.1 reconciliation passed; Phase 9.2 byte-for-byte table/figure rebuild passed; 87 Phase 9 focused and safety tests passed after documentation reconciliation",
+      "hard_block": null,
       "development_warning": null,
-      "strict_block": "Phase 5 release binding passes; Phase 6 source enrollment and source-dependent artifact hashes remain pending",
+      "strict_block": null,
       "hardening_incomplete": false,
       "policy_unchanged": true,
-      "week08_evaluation_started": false
+      "final_evidence": true,
+      "week08_evaluation_started": true,
+      "week08_evaluation_completed": true
     },
     "stage_b": {
       "status": "passed",
@@ -351,6 +381,100 @@
       "release_manifest_bound": true,
       "real_week08_source_or_label_accessed": false,
       "week08_evaluation_started": false
+    },
+    "phase_5_r2_release_candidate": {
+      "status": "passed",
+      "date": "2026-11-15",
+      "release_id": "pre-week08-g5r2-20261115",
+      "release_tag": "pre-week08-g5r2-20261115",
+      "checklist": "docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md",
+      "stage_b_rebinding": "reports/pre_week08_stage_b_rebinding_r2.json",
+      "release_manifest": "reports/pre_week08_release_manifest.json",
+      "release_reviewer": "Md Moshiur Rahman",
+      "human_release_review_pending": false
+    },
+    "phase_6_source_enrollment": {
+      "status": "passed",
+      "date": "2026-11-15",
+      "evidence": "reports/pre_week08_source_registration.json",
+      "source_ledger": "configs/week08_source_use_ledger.json",
+      "holdout_manifest": "data/manifests/week08_holdout_sources.json",
+      "custodian": "Md Moshiur Rahman",
+      "pixel_label_or_outcome_exposure_before_reapproval": false
+    },
+    "phase_7_final_readiness": {
+      "status": "passed",
+      "date": "2026-11-15",
+      "authorization": "reports/pre_week08_phase7_authorization.json",
+      "incident_record": "reports/pre_week08_phase7_incident.json",
+      "decision": "approved",
+      "authorized_sequence": [
+        "prepare",
+        "decide",
+        "evaluate"
+      ],
+      "authorized_scientific_sequence_count": 1
+    },
+    "phase_8_final_evaluation": {
+      "status": "completed_archived",
+      "date": "2026-11-15",
+      "evidence": "reports/pre_week08_release_manifest.json",
+      "track_a_attempts": 294,
+      "track_a_completed": 284,
+      "track_a_failed": 10,
+      "track_a_geometric_successes": 278,
+      "track_b_eligible_pairs": 24,
+      "track_b_selected_pairs": 0,
+      "track_b_abstained_pairs": 24,
+      "authorized_predecode_infrastructure_resumes": 1,
+      "scientific_infrastructure_incidents": 0,
+      "label_access_events_after_verified_seal": 1,
+      "post_label_tuning": false,
+      "private_evidence_archive_verified": true
+    },
+    "phase_9_1_data_quality_closure": {
+      "status": "technical_complete_reviews_pending",
+      "date": "2026-11-15",
+      "evidence": "reports/week08_phase9_data_quality_closure.json",
+      "attempts_reconciled": 294,
+      "policy_decisions_reconciled": 24,
+      "scientific_review": "pending",
+      "release_review": "pending"
+    },
+    "phase_9_2_final_analysis": {
+      "status": "technical_complete_reviews_pending",
+      "date": "2026-11-15",
+      "manifest": "reports/week08_phase9_final_analysis.json",
+      "report": "docs/WEEK08_FINAL_ANALYSIS.md",
+      "aggregate_tables": 7,
+      "vector_figures": 7,
+      "reproducibility_check": "passed",
+      "policy_status": "non_deployed",
+      "scientific_review": "pending",
+      "release_review": "pending"
+    },
+    "phase_9_3_documentation": {
+      "status": "complete",
+      "date": "2026-11-16",
+      "readme": "README.md",
+      "reproduction_guide": "docs/REPRODUCTION_GUIDE.md",
+      "maintained_plan": "docs/PRE_WEEK08_INTEGRATION_PLAN.md",
+      "report_index": "reports/README.md",
+      "progress_registry": "reports/progress_registry.json",
+      "frozen_methods_changed": false,
+      "frozen_policy_changed": false,
+      "next": "g8_scientific_release_review_and_remaining_release_deliverables"
+    },
+    "gate_summary": {
+      "G0": "passed",
+      "G1": "passed",
+      "G2": "passed",
+      "G3": "passed",
+      "G4": "passed",
+      "G5": "passed",
+      "G6": "passed",
+      "G7": "passed",
+      "G8": "in_progress"
     },
     "stage_c": {
       "status": "deferred"

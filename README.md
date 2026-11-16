@@ -4,6 +4,16 @@ A research-focused Python framework for studying classical image registration un
 
 The central question is not which registration method is universally best. It is **which method is reliable under which geometric and appearance conditions, and why it fails when those conditions change**.
 
+## Week 8 final evaluation and analysis
+
+**Status:** The authorized Phase 8 final run is complete and archived. Phase 9.1 data-quality closure, Phase 9.2 final analysis, and Phase 9.3 documentation are technically complete. Scientific and release review, the remaining release deliverables, and final G8 signoff are pending. The recommendation policy remains non-deployed.
+
+The sealed final evidence contains 294 preregistered Track A attempts: 284/294 completed (96.60%), 278/294 met the frozen geometric-success criterion (94.56%), and 278/284 completed attempts were geometrically successful (97.89%). Track B abstained on all 24 eligible pairs, giving 0% coverage; selective correctness is undefined because no pair was selected.
+
+These results are **source-specific software evidence from one independently enrolled source with synthetic-after-freeze ground truth**. They do not support anatomical, clinical, external-validity, modality-wide, population, or cross-source claims. Common post-registration similarity fields were available for 0/294 attempts, so similarity-versus-geometric disagreement is `NOT_EVALUABLE_FROM_SEALED_FINAL_RECORDS`, not zero.
+
+See the [final analysis](docs/WEEK08_FINAL_ANALYSIS.md), [data-quality closure](reports/week08_phase9_data_quality_closure.json), [analysis manifest](reports/week08_phase9_final_analysis.json), and [aggregate tables](reports/week08_phase9_tables/).
+
 ## Week 7: robustness study and validation handoff
 
 The development-only calibration script `scripts/week07_day04_offline_calibration.py`
@@ -13,7 +23,7 @@ three-family agreement candidate, but abstains on 435/486 synthetic development
 pairs. This is **not** a deployed confidence score or production method selector.
 Windows validated and formally closed. See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`.
 
-The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 11 execution failures and all records preserved. The unchanged experimental Day 34 gate tentatively supported 2/40 development pairs (both synthetic ground-truth correct) and abstained on 38/40; it is **not** independent validation or a confidence percentage. Independent Week 8 evaluation remains blocked pending source enrollment and a frozen evaluator/label firewall.
+The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 11 execution failures and all records preserved. The unchanged experimental Day 34 gate tentatively supported 2/40 development pairs (both synthetic ground-truth correct) and abstained on 38/40; it is **not** independent validation or a confidence percentage. This development evidence is retained as historical context and is superseded by the final Week 8 status above.
 
 ## Project at a glance
 
@@ -24,7 +34,7 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1 to 7 and pre-Week 8 G1-G5 complete; immutable Phase 5 candidate tagged and manifest-bound; Phase 6 independent-source enrollment is next; Week 8 not run |
+| Current status | Weeks 1-7 complete; Phase 8 final evaluation completed and archived; Phases 9.1-9.3 technically complete; G8 scientific/release review and remaining release deliverables pending; policy non-deployed |
 | Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
@@ -221,6 +231,9 @@ The most useful entry points are:
 - [Reproduction guide](docs/REPRODUCTION_GUIDE.md)
 - [Progress registry](reports/progress_registry.json)
 - [Week 5 findings](reports/findings_week05.json)
+- [Week 8 final analysis](docs/WEEK08_FINAL_ANALYSIS.md)
+- [Week 8 data-quality closure](reports/week08_phase9_data_quality_closure.json)
+- [Week 8 reproducible analysis manifest](reports/week08_phase9_final_analysis.json)
 
 ## Project status and roadmap
 
@@ -233,9 +246,9 @@ The most useful entry points are:
 | 5 | Multimodal Mutual Information and RIRE validation | Complete |
 | 6 | Unified evaluation and reproducible benchmarking | Complete and target-validated |
 | 7 | Robustness, runtime analysis, and failure diagnosis | Complete and Windows validated through Day 35 |
-| 8 | Final benchmark, analysis, documentation, and demonstration | Planned; blocked pending pre-Week 8 gates |
+| 8 | Final benchmark, analysis, documentation, and demonstration | Final evaluation archived; Phases 9.1-9.3 technically complete; G8 review and release closure in progress |
 
-Week 6 is complete and target-validated. It established the unified evaluation contract, independently validated metric implementation, deterministic resumable benchmark execution, automatic compatible-candidate execution, common evidence normalization, transform-space disagreement, preliminary descriptive consensus, robust method summaries, and a preserved ground-truth firewall. A final best-method recommendation remains intentionally deferred because the current evidence is development-only and narrow; independent Week 8 validation has not run.
+Week 8 executed the frozen evaluation once under the signed authorization and preserved all planned outcomes. The final evidence supports source-specific software conclusions only. Because Track B selected no pairs, the preregistered recommendation disposition is to preserve the transparent comparison results, keep the policy non-deployed, and defer any new recommendation or confidence path to a future cycle with newly reserved evaluation data.
 
 ## License
 
@@ -290,50 +303,31 @@ See `docs/WEEK07_DAY34_OFFLINE_CALIBRATION.md`, `reports/week07_day04_closure.js
 
 ### Week 7 Day 35 closure
 
-Day 35 is complete and Windows validated. The 40-pair controlled combined-stress study retained all 88 attempts: 61 geometric successes and 11 failed registrations. The unchanged Day 34 policy supported 2/40 pairs and abstained on 38/40. Closure evidence records 552 backend tests passed with 3 expected skips, 149 UI tests passed, and 88 attempts resumed with 0 rerun. See `docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md` and `reports/week07_day05_closure.json`. UI and registration algorithms are unchanged. Week 8 has not run.
+Day 35 is complete and Windows validated. The 40-pair controlled combined-stress study retained all 88 attempts: 61 geometric successes and 11 failed registrations. The unchanged Day 34 policy supported 2/40 pairs and abstained on 38/40. Closure evidence records 552 backend tests passed with 3 expected skips, 149 UI tests passed, and 88 attempts resumed with 0 rerun. See `docs/WEEK07_DAY35_INTEGRATED_VALIDATION.md` and `reports/week07_day05_closure.json`. UI and registration algorithms are unchanged. At that historical checkpoint Week 8 had not run; the final status at the top of this README supersedes it.
 
-### Pre-Week 8 Stage A safety preflight
+### Historical pre-Week 8 Stage A safety preflight
 
-G2 integrity hardening is complete. The source ledger now covers the Week 1,
-general-image, and prior RIRE CT/MR-T1 assets with canonical lineage. Strict
-preflight fails closed on later-phase requirements, and a deterministic archive
-preserves all 81 ignored Week 7 evidence files with a tracked manifest and
-clean-restore verification. Run:
+The following Stage A and Stage B sections preserve the pre-run gate state. They are historical evidence, not the current project status.
 
-```bash
-python scripts/week07_evidence_archive.py build
-python scripts/week07_evidence_archive.py verify
-python scripts/week08_preflight.py --dry-run
-python scripts/week08_preflight.py
-python scripts/week08_preflight.py --dry-run --final-readiness
-```
-
-A current development `BLOCK` for `heldout_source_independence` is expected:
-the ledger has no newly obtained independent image, and the previously used
-`moon` source cannot serve as fully unseen data. Phase 3's evaluator and label
-firewall are complete and hash-bound to the current preflight. Current
-validation is 702 backend tests passed with three expected unsupported-symlink
-skips and 179 UI tests passed. Development preflight is 18 PASS / 1 BLOCK; the
-sole block is the still-empty independent Week 8 source enrollment. Do not run
-the Week 8 benchmark. Phase 4 is complete. Phase 5 now has an exact 55-package
-lock, clean-install smoke test, 149/150 release-critical tests passed with one
-expected Windows symlink skip, clean restoration, a 12/12 sealed
-development-only rehearsal with zero-execution resume, and a 219-file
-executable inventory. Named reviewer Md Moshiur Rahman approved G5; immutable
-tag `pre-week08-g5-20261114` and its metadata-only release manifest bind the
-candidate. Phase 6 independent-source enrollment is next. See
+At that checkpoint, G2 integrity hardening had completed the historical source
+ledger and deterministic 81-file Week 7 evidence archive. The Phase 3 evaluator
+and label firewall were implemented, but the intentionally empty source
+enrollment produced the expected independence block. Phase 5 then bound the
+55-package lock, clean-install smoke test, development rehearsal, executable
+inventory, and historical tag `pre-week08-g5-20261114`. Phase 6 enrollment was
+the next step at that time. See
 `docs/PRE_WEEK08_RELEASE_CHECKLIST.md`,
 `reports/pre_week08_validation.json`, and
 `reports/pre_week08_environment.json`.
 
-### Pre-Week 8 Stage B UI acceptance
+### Historical pre-Week 8 Stage B UI acceptance
 
 The deterministic Stage B QA harness and hardened human-attestation contract
-are implemented. The current Windows regression is 702 backend tests passed
-with 3 expected skips and 179 UI tests passed. Named human Windows review
+were implemented. The checkpoint Windows regression recorded 702 backend tests
+passed with 3 expected skips and 179 UI tests passed. Named human Windows review
 accepted all five interactive scenarios and all five supplemental observations;
 the sanitized validation report therefore records UI v0.2 as formally frozen.
-This does not approve Week 8 execution or deploy a recommendation/confidence
+This checkpoint did not itself approve Week 8 execution or deploy a recommendation/confidence
 path. See
 `ui/evidence/pre_week08_stage_b_acceptance.md` and
 `reports/pre_week08_stage_b_validation.json`.
