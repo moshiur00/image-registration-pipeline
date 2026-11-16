@@ -6,13 +6,15 @@ The central question is not which registration method is universally best. It is
 
 ## Week 8 final evaluation and analysis
 
-**Status:** The authorized Phase 8 final run is complete and archived. Phase 9.1 data-quality closure, Phase 9.2 final analysis, and Phase 9.3 documentation are technically complete. Scientific and release review, the remaining release deliverables, and final G8 signoff are pending. The recommendation policy remains non-deployed.
+**Status:** The authorized Phase 8 run is complete and archived, but an automated scientific audit found a post-label implementation nonconformance. The frozen configuration required a Wilson quantile of `1.959963984540054`; the evaluator used its helper default of `1.96`. Under the maintained protocol, the run is invalid for preregistration-conformant confirmatory claims. G8 is **BLOCKED**, release review cannot proceed, and the recommendation policy remains non-deployed.
 
 The sealed final evidence contains 294 preregistered Track A attempts: 284/294 completed (96.60%), 278/294 met the frozen geometric-success criterion (94.56%), and 278/284 completed attempts were geometrically successful (97.89%). Track B abstained on all 24 eligible pairs, giving 0% coverage; selective correctness is undefined because no pair was selected.
 
-These results are **source-specific software evidence from one independently enrolled source with synthetic-after-freeze ground truth**. They do not support anatomical, clinical, external-validity, modality-wide, population, or cross-source claims. Common post-registration similarity fields were available for 0/294 attempts, so similarity-versus-geometric disagreement is `NOT_EVALUABLE_FROM_SEALED_FINAL_RECORDS`, not zero.
+The counts, point estimates, terminal outcomes, runtimes, and 24 pre-label policy decisions are unchanged. They are retained only as **source-specific, non-confirmatory software evidence from one independently enrolled source with synthetic-after-freeze ground truth**. They do not support anatomical, clinical, external-validity, modality-wide, population, cross-source, or calibrated-confidence claims. Common post-registration similarity fields were available for 0/294 attempts, so similarity-versus-geometric disagreement is `NOT_EVALUABLE_FROM_SEALED_FINAL_RECORDS`, not zero.
 
-See the [final analysis](docs/WEEK08_FINAL_ANALYSIS.md), [data-quality closure](reports/week08_phase9_data_quality_closure.json), [analysis manifest](reports/week08_phase9_final_analysis.json), and [aggregate tables](reports/week08_phase9_tables/).
+The audit also found incomplete public reporting: mandatory transform-model, severity, source-role/source-identity strata and nine estimable exact-McNemar comparisons were omitted; preregistered secondary `valid_overlap_fraction` and `method_runtime_ms` fields were unavailable for 294/294 attempts; and two recommendation integrity checks were not evidence-derived. These defects do not change the non-deployment outcome because four quantitative recommendation gates already failed. The original Phase 8, Phase 9.1, and Phase 9.2 artifacts remain immutable historical evidence. A versioned erratum/supplement is recorded separately; any corrected confirmatory claim requires a new evaluation cycle with a newly reserved, unexposed holdout.
+
+See the [scientific-review explanation](docs/WEEK08_PHASE9_SCIENTIFIC_REVIEW_FINDING.md), [machine-readable finding](reports/week08_phase9_scientific_review_finding.json), [final analysis](docs/WEEK08_FINAL_ANALYSIS.md), [data-quality closure](reports/week08_phase9_data_quality_closure.json), [analysis manifest](reports/week08_phase9_final_analysis.json), and [versioned review tables](reports/week08_phase9_review_tables/).
 
 ## Week 7: robustness study and validation handoff
 
@@ -34,7 +36,7 @@ The Day 35 controlled combined-stress suite has 61/88 geometric successes, with 
 | Data | Controlled synthetic pairs, visible-image samples, simulated multimodal pairs, RIRE CT/MR-T1 |
 | Evaluation | TRE, transform-parameter error, overlap-aware similarity, runtime, success/failure status, diagnostic evidence |
 | Reproducibility | YAML configurations, fixed seeds, structured reports, deterministic dataset fingerprints, automated tests |
-| Current status | Weeks 1-7 complete; Phase 8 final evaluation completed and archived; Phases 9.1-9.3 technically complete; G8 scientific/release review and remaining release deliverables pending; policy non-deployed |
+| Current status | Weeks 1-7 complete; Phase 8 run archived but invalid for confirmatory use after scientific-review nonconformance; G8 blocked; policy non-deployed; fresh holdout required for any corrected confirmatory claim |
 | Day 35 closure validation | Windows: 552 backend passed, 3 expected skips; 149 UI passed. Combined stress: 88 attempts / 40 pairs, 61 geometric successes, 11 failed registrations, resume 88 / rerun 0 |
 
 ## Research objectives
@@ -246,9 +248,9 @@ The most useful entry points are:
 | 5 | Multimodal Mutual Information and RIRE validation | Complete |
 | 6 | Unified evaluation and reproducible benchmarking | Complete and target-validated |
 | 7 | Robustness, runtime analysis, and failure diagnosis | Complete and Windows validated through Day 35 |
-| 8 | Final benchmark, analysis, documentation, and demonstration | Final evaluation archived; Phases 9.1-9.3 technically complete; G8 review and release closure in progress |
+| 8 | Final benchmark, analysis, documentation, and demonstration | Run archived as non-confirmatory evidence; automated scientific audit failed; erratum complete; G8 blocked; new confirmatory cycle required |
 
-Week 8 executed the frozen evaluation once under the signed authorization and preserved all planned outcomes. The final evidence supports source-specific software conclusions only. Because Track B selected no pairs, the preregistered recommendation disposition is to preserve the transparent comparison results, keep the policy non-deployed, and defer any new recommendation or confidence path to a future cycle with newly reserved evaluation data.
+Week 8 executed once under the signed authorization and preserved all planned outcomes, but it did not implement the frozen Wilson quantile exactly and therefore cannot support a preregistration-conformant confirmatory claim. Its unchanged counts and outcomes are preserved only as source-specific, non-confirmatory software evidence. Because Track B selected no pairs, the disposition remains to keep the policy non-deployed. Any corrected confirmatory evaluation or new recommendation/confidence path requires a future cycle with a newly reserved holdout.
 
 ## License
 

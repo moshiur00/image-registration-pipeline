@@ -1,0 +1,193 @@
+{
+  "claim_scope": {
+    "approved_scope": "source_specific_nonconfirmatory_software_evidence_only",
+    "prohibited_claims": [
+      "anatomical_generalization",
+      "calibrated_confidence",
+      "clinical_recommendation",
+      "cross_source_generalization",
+      "external_validity",
+      "modality_wide_generalization",
+      "population_generalization"
+    ]
+  },
+  "disposition": {
+    "confirmatory_status": "invalid",
+    "fresh_unexposed_holdout_required_for_corrected_confirmatory_claim": true,
+    "frozen_evaluator_and_enforcement_must_be_corrected_before_new_g5": true,
+    "g8_status": "BLOCKED",
+    "phase8_execution_status": "completed_archived",
+    "release_review_status": "BLOCKED_BY_SCIENTIFIC_AUDIT",
+    "retained_evidence_scope": "source_specific_nonconfirmatory_software_evidence_only",
+    "same_holdout_corrected_confirmatory_rerun_permitted": false
+  },
+  "finding_payload_sha256": "438fb656a4443e76bdd74863c2412e2cd8bdc7bc4c50f62f714de372160c2978",
+  "findings": {
+    "frozen_secondary_endpoints_not_captured": {
+      "attempt_denominator": 294,
+      "availability": {
+        "method_runtime_ms": 0,
+        "total_runtime_ms": 294,
+        "tre_mean_px": 284,
+        "tre_median_px": 284,
+        "tre_p95_px": 284,
+        "valid_overlap_fraction": 0
+      },
+      "retroactive_calculation_permitted": false,
+      "severity": "preregistration_nonconformance"
+    },
+    "frozen_wilson_quantile_not_used": {
+      "evaluator_call_lines_omitting_z": [
+        1739,
+        1900,
+        2379
+      ],
+      "expected_z": 1.959963984540054,
+      "observed_helper_default_z": 1.96,
+      "public_phase9_2_impact": {
+        "affected_csv_files": 4,
+        "affected_svg_files": 4,
+        "changed_endpoints_at_6_decimals": 57,
+        "changed_intervals_at_6_decimals": 52,
+        "displayed_intervals": 54,
+        "markdown_percentages_changed_at_2_decimals": false
+      },
+      "sealed_impact": {
+        "changed_endpoints_at_6_decimals": 141,
+        "changed_records_at_6_decimals": 132,
+        "defined_interval_records": 142,
+        "mathematically_changed_records": 142,
+        "total_interval_records": 157,
+        "undefined_zero_denominator_records": 15
+      },
+      "severity": "confirmatory_blocker"
+    },
+    "phase9_reporting_omissions": {
+      "missing_exact_mcnemar_comparisons": 9,
+      "missing_phase9_1_strata": [
+        "severity",
+        "source_identity"
+      ],
+      "missing_phase9_2_mandatory_stratum_rows": 15,
+      "missing_tre_endpoint_distribution_reporting": true,
+      "severity": "release_blocker",
+      "supplement_status": "COMPLETE_VERSIONED_REPORTING_ONLY"
+    },
+    "recommendation_integrity_checks_not_evidence_derived": {
+      "no_firewall_or_integrity_incident": "hardcoded_true",
+      "no_post_label_change": "cli_passed_true_unconditionally",
+      "outcome_changed": false,
+      "reason_outcome_unchanged": "minimum selected pairs, coverage, selective correctness, and selective-correctness lower-bound gates all failed",
+      "severity": "latent_enforcement_defect"
+    }
+  },
+  "identity": {
+    "finding_id": "week08-phase9-scientific-review-20261116",
+    "recorded_utc": "2026-11-16T16:44:33Z",
+    "release_id": "pre-week08-g5r2-20261115",
+    "reviewed_commit": "8bbe782247dec025a95e34cbae9b4ff075e66d0f",
+    "run_id": "week08-final-r2-20261115T154035Z"
+  },
+  "immutable_bindings": {
+    "audit_generator_sha256": "ea0d94aa04bc782d17311227f93de18e82f5be307ed368f345e0b9375b3bb657",
+    "files": {
+      "configs/week08_final_evaluation.yaml": "a2327b09c6896c4a8c7a8d8c03e10690d9d8b71efdd28b391ce00bf2fa0e0893",
+      "outputs/week08_final/evaluation_summary.json": "d83e1a23ccae29d7e40d090384d2ba8b2eff24c6d25fe1d234bffacc5bd88fd4",
+      "reports/pre_week08_release_manifest.json": "93eecca7de8fc4eee43d02d33a0f9bbfe921fbd5fb52f34164d5ef51bc3e7db7",
+      "reports/week08_phase9_data_quality_closure.json": "04cb0faa2ecbc9baab5d119564b4c503ac54a2681eb513654b7e50b0ec98c4d8",
+      "reports/week08_phase9_final_analysis.json": "af254c646c8cfde6d37904173ff0b1cf74454e895b51d9c552e5371e8bd807a7",
+      "scripts/week08_final_evaluation.py": "6e2168d453f8bd5867c19e1e650b8a40c5fa60c4b2baa673f60a251bfb6ba2fe",
+      "src/image_registration/week7_calibration.py": "44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c",
+      "src/image_registration/week8_evaluation.py": "9f1846bda8d7835cb510ed9b88b315b7449d5239de06b0d08cb8d2e7d56e5b31"
+    },
+    "historical_artifacts_modified": false,
+    "historical_phase9_2_artifacts_verified": 14,
+    "phase9_1_payload_sha256": "e1ebf2d2e7fec780e61048c1d19dc7f7ddad966f65057efd7a920acdc3b8f77f",
+    "phase9_2_payload_sha256": "c604685fe41686f303d330bd58febfd36363af1b6f81eb3b48e368c6eb44d0bb"
+  },
+  "next": "Correct and test the evaluator and evidence-derived recommendation gates before a new G5/G6/G7 cycle; reserve a new unexposed holdout before any corrected confirmatory run.",
+  "privacy": {
+    "classification": "tracked_sanitized_aggregate",
+    "contains_pixels_arrays_labels_transforms_or_diagnostic_traces": false,
+    "contains_source_pair_or_attempt_identifiers": false,
+    "source_identity_stratum": "sanitized_as_enrolled_source_1"
+  },
+  "protocol_basis": {
+    "post_label_defect_rule": "docs/PRE_WEEK08_INTEGRATION_PLAN.md:760",
+    "versioned_reporting_correction_rule": "docs/PRE_WEEK08_INTEGRATION_PLAN.md:878-880"
+  },
+  "review": {
+    "automated_scientific_audit": "FAIL",
+    "named_human_release_attestation": "NOT_RECORDED",
+    "named_human_scientific_attestation": "NOT_RECORDED"
+  },
+  "schema_version": "week08_phase9_scientific_review_finding_v1",
+  "status": "CONFIRMATORY_RUN_INVALID_IMPLEMENTATION_NONCONFORMANCE",
+  "supplement": {
+    "artifacts": [
+      {
+        "format": "csv",
+        "path": "reports/week08_phase9_review_tables/wilson_interval_erratum.csv",
+        "rows": 54,
+        "sha256": "bd2a7bfdb085ee1d42d1c89033683c1cb9e5834468ae1c39c446197c3a2733d3",
+        "size_bytes": 6194
+      },
+      {
+        "format": "csv",
+        "path": "reports/week08_phase9_review_tables/track_a_mandatory_strata.csv",
+        "rows": 20,
+        "sha256": "413a349657b7b5176a58ec5a245d26adb71a3ee711e275f523897213244f0dc3",
+        "size_bytes": 7913
+      },
+      {
+        "format": "csv",
+        "path": "reports/week08_phase9_review_tables/track_b_mandatory_strata.csv",
+        "rows": 15,
+        "sha256": "2222b3186fa56f727f1ad89edf890f51fba3c0590d7b0bddf0e7c52b5afae4eb",
+        "size_bytes": 6121
+      },
+      {
+        "format": "csv",
+        "path": "reports/week08_phase9_review_tables/track_a_endpoint_distributions.csv",
+        "rows": 21,
+        "sha256": "8bdf4aae93a18f2fd69491b51e94811678523acd65e7e7fb31e248982f4039c5",
+        "size_bytes": 6451
+      },
+      {
+        "format": "csv",
+        "path": "reports/week08_phase9_review_tables/pairwise_exact_mcnemar.csv",
+        "rows": 9,
+        "sha256": "4583fe9665872bc7351cd71552544b85851f4a089c697f115aab84a4455dd720",
+        "size_bytes": 1143
+      }
+    ],
+    "new_registration_or_geometric_endpoint_computation": false,
+    "purpose": "versioned deterministic correction and completion of aggregate reporting from immutable sealed records",
+    "registration_or_evaluation_rerun": false,
+    "reporting_only_interval_recalculation": true,
+    "restores_confirmatory_validity": false,
+    "sealed_label_payload_opened": false,
+    "source_pixels_or_prepared_arrays_opened": false
+  },
+  "unaffected_outcomes": {
+    "policy_status": "non_deployed",
+    "pre_label_policy_decisions_changed": false,
+    "recommendation_disposition": "preserve_results_keep_policy_non_deployed",
+    "registration_transforms_or_terminal_classifications_changed": false,
+    "track_a": {
+      "completed_attempts": 284,
+      "failed_attempts": 10,
+      "geometric_successes": 278,
+      "planned_attempts": 294
+    },
+    "track_b": {
+      "abstained_pairs": 24,
+      "coverage": 0.0,
+      "eligible_pairs": 24,
+      "invalid_pairs": 0,
+      "missing_decision_pairs": 0,
+      "selected_pairs": 0,
+      "selective_correctness": null
+    }
+  }
+}

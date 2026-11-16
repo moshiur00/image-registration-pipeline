@@ -1,14 +1,16 @@
 # Week 8 Phase 9.2 final analysis
 
-**Status:** Technical analysis complete; scientific and release review pending.
+**Status:** Superseded for confirmatory use by a scientific-review nonconformance finding; G8 blocked.
 
 This report summarizes the sealed Phase 8 evidence. It does not rerun registration or evaluation, open source pixels, prepared arrays, or sealed labels, change frozen thresholds or policy, or compare noncommensurate method-family objectives.
+
+> **Scientific-review erratum (16 November 2026):** The evaluator inherited `z=1.96` instead of passing the frozen Wilson quantile `1.959963984540054`. Scientific review also found two uncaptured frozen secondary endpoints, two recommendation-integrity checks that were not evidence-derived, and incomplete mandatory-stratum/McNemar reporting. Under the maintained post-label defect rule, this run is invalid for preregistration-conformant confirmatory claims. Counts, point estimates, terminal outcomes, and the non-deployed policy decision are unchanged. See the [full finding and consequence](WEEK08_PHASE9_SCIENTIFIC_REVIEW_FINDING.md) and the [versioned interval/reporting supplement](../reports/week08_phase9_review_tables/). The original Phase 9.2 tables and figures below remain immutable historical evidence; their interval endpoints are superseded by the erratum table.
 
 ## Evidence and claim boundary
 
 - 150 prepared pairs, 294 preregistered compatible Track A attempts, and 24 Track B policy-eligible pairs were reconciled.
 - The evidence comes from one independently enrolled source with synthetic-after-freeze ground truth.
-- Claims are restricted to source-specific software evidence.
+- Claims are restricted to source-specific, non-confirmatory software evidence.
 - The results do not support anatomical, clinical, modality-wide, population, external-validity, or cross-source generalization.
 
 ## Track A completion and geometric success
@@ -22,7 +24,7 @@ This report summarizes the sealed Phase 8 evidence. It does not rerun registrati
 
 There were ten execution failures and six completed attempts that did not meet the frozen geometric-success criterion.
 
-The Wilson intervals are attempt-level descriptive intervals. Because the attempts are correlated within one source, they do not represent independent-source uncertainty.
+The Wilson intervals are attempt-level descriptive intervals. Because the attempts are correlated within one source, they do not represent independent-source uncertainty. The displayed two-decimal bounds happen to be unchanged by the quantile correction, but the six-decimal historical endpoints are superseded by the [Wilson interval erratum](../reports/week08_phase9_review_tables/wilson_interval_erratum.csv).
 
 ![Track A completion and geometric performance](figures/week08_phase9/track_a_overall_rates.svg)
 
@@ -45,7 +47,7 @@ Recorded total runtime across all 294 attempts had a median of 80.506 ms, a mean
 | Mattes MI Rigid 2D | 270.767 | 502.041 |
 | Mattes MI Affine 2D | 371.981 | 616.037 |
 
-These values are total recorded runtimes from one environment. Median and p95 are distribution summaries, not confidence intervals; method-only runtime is unavailable.
+These values are total recorded runtimes from one environment. Median and p95 are distribution summaries, not confidence intervals. Method-only runtime was unavailable for 294/294 attempts, despite being a frozen endpoint; this is preregistration nonconformance, not merely an ordinary limitation.
 
 ![Track A runtime by method](figures/week08_phase9/track_a_runtime_by_method.svg)
 
@@ -94,7 +96,7 @@ Data: [repeated-pattern table](../reports/week08_phase9_tables/repeated_pattern_
 
 **Status: `NOT_EVALUABLE_FROM_SEALED_FINAL_RECORDS`.**
 
-Common post-registration MAE, MSE, NCC, SSIM, mutual-information, and valid-overlap values were available for 0/294 attempts. Valid geometric references were available for 294/294 attempts, and numeric TRE was available for 284/294.
+Common post-registration MAE, MSE, NCC, SSIM, mutual-information, and valid-overlap values were available for 0/294 attempts. Valid geometric references were available for 294/294 attempts, and numeric TRE was available for 284/294. Because `valid_overlap_fraction` was a frozen secondary endpoint, its 0/294 availability is also preregistration nonconformance; it must not be calculated retroactively from the revealed holdout.
 
 Family-native diagnostics exist for all attempts: ECC values for 72, Mattes MI values for 102, phase response for 24, and feature/RANSAC diagnostics for 96. Those objectives are not commensurate, and the frozen protocol prohibits treating them as a shared similarity scale. Consequently, the disagreement rate is unavailable, not zero. Computing new common similarity values after label access would be an unregistered post-label analysis.
 
@@ -126,6 +128,10 @@ Data: [Track B policy table](../reports/week08_phase9_tables/track_b_policy.csv)
 4. Runtime describes one recorded environment only.
 5. Common similarity evidence was not sealed, so similarity-versus-geometry disagreement cannot be estimated.
 6. Track B made no selections, so selective correctness cannot be measured.
+7. The evaluator used `z=1.96` rather than the frozen `1.959963984540054`; the corrected six-decimal intervals are versioned separately.
+8. Method-only runtime and valid-overlap endpoints were absent for all 294 attempts.
+9. Recommendation integrity/post-label checks were not evidence-derived, although four quantitative gates independently preserve non-deployment.
+10. The original Phase 9.2 package omitted mandatory strata, TRE endpoint distributions, and nine exact-McNemar comparisons; the versioned supplement publishes them without restoring confirmatory validity.
 
 ## Reproduction
 
@@ -133,10 +139,11 @@ Run:
 
 ```powershell
 .venv\Scripts\python.exe -B scripts\week08_phase9_final_analysis.py --check
+.venv\Scripts\python.exe -B scripts\week08_phase9_scientific_review_audit.py --check
 ```
 
-The command privately rebuilds the aggregate tables and SVG figures and verifies every tracked byte against the sealed evidence and the [Phase 9.2 manifest](../reports/week08_phase9_final_analysis.json).
+The first command privately rebuilds the historical aggregate tables and SVG figures and verifies every tracked byte against the sealed evidence and the [Phase 9.2 manifest](../reports/week08_phase9_final_analysis.json). The second independently reproduces the scientific-review finding and the five versioned supplement tables. Neither command executes registration or evaluation.
 
 ## Review and next step
 
-Developer/analyst review and Phase 9.3 documentation reconciliation are complete. Scientific and release review remain pending. The next work is the remaining G8 release closure: reviewer signoff, presentation/timed-demo rehearsal, sanitized release archive and checksums, closure summary, and final release snapshot. Frozen methods and the non-deployed policy remain unchanged.
+The automated scientific audit failed and release review is blocked; no named human approval has been recorded. G8 cannot close on this run. The next compliant work is a new evaluation cycle: correct and test the evaluator and evidence-derived integrity gates before a new G5 freeze, then enroll a newly reserved, unexposed holdout through renewed G6/G7 review. The frozen historical artifacts and non-deployed policy remain unchanged.

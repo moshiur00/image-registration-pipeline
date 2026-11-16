@@ -1,7 +1,7 @@
 # Image Registration Pipeline
 ## Week 8 Execution, Validation, and Release Plan
 
-**Status:** ACTIVE PLAN - PHASE 9 RELEASE CLOSURE IN PROGRESS
+**Status:** ACTIVE PLAN - PHASE 9 SCIENTIFIC REVIEW BLOCKED; NEW CONFIRMATORY CYCLE REQUIRED
 **Revision date:** 2026-11-16
 **Authority:** This revision supersedes the earlier planning-only version at this path. It is the single maintained plan for pre-Week 8 integration, final evaluation, and release.
 
@@ -173,12 +173,19 @@ pre-decode infrastructure resume occurred before any scientific attempt; one
 label-access event occurred only after the verified decision seal. No
 post-label tuning or unauthorized rerun occurred.
 
-Phase 9.1 data-quality closure and Phase 9.2 final analysis are technically
-complete and remain pending scientific and release review. Phase 9.3 reconciles
-the README, reproduction guide, report index, maintained gate register, and
-progress registry. Claims remain restricted to source-specific software
-evidence and the recommendation policy remains non-deployed. G8 remains in
-progress until the reviews and remaining release deliverables are complete.
+Phase 9.1 data-quality closure, Phase 9.2 final analysis, and Phase 9.3
+documentation were technically completed. The subsequent scientific audit
+found that the evaluator used the helper default `z=1.96` instead of the frozen
+Wilson quantile `1.959963984540054`; method-only runtime and valid-overlap were
+uncaptured frozen endpoints; two recommendation-integrity checks were not
+evidence-derived; and mandatory strata, TRE endpoint summaries, and nine
+exact-McNemar comparisons were omitted from the public package. Under the
+post-label defect rule in section 15, the run is invalid for confirmatory use.
+Its counts and decisions remain only source-specific, non-confirmatory
+software evidence, the recommendation policy remains non-deployed, and G8 is
+blocked. `reports/week08_phase9_scientific_review_finding.json` binds the
+finding and versioned reporting supplement. A corrected confirmatory claim
+requires corrected frozen code and a newly reserved, unexposed holdout.
 
 ### 4. Non-negotiable scientific and engineering invariants
 
@@ -774,7 +781,7 @@ verified restricted private evidence archive.
 
 ### 16. Phase 9 - final analysis, documentation, demonstration, and release
 
-**Status:** IN PROGRESS - Phases 9.1-9.3 technically complete; G8 reviews and remaining release deliverables pending
+**Status:** BLOCKED - scientific audit failed; current run invalid for confirmatory use; new holdout required
 **Priority:** P0
 **Owner:** developer/analyst; scientific and release reviewers sign.
 
@@ -831,6 +838,29 @@ Do not deploy a new recommendation UI after label access unless a dormant, fully
 - archive/checksum manifests;
 - final Git tag/release snapshot;
 - updated progress registry and closure summary.
+
+#### 16.5 Scientific-review nonconformance (16 November 2026)
+
+The deterministic audit in
+`scripts/week08_phase9_scientific_review_audit.py` records four blocking
+findings without rerunning registration or evaluation:
+
+- the frozen Wilson quantile was not passed to three evaluator call sites;
+- method-only runtime and valid-overlap were unavailable for all 294 attempts;
+- the firewall/integrity and post-label-change recommendation gates were not
+  derived from bound evidence; and
+- the Phase 9 package omitted mandatory strata, endpoint distributions, and
+  all nine estimable exact-McNemar comparisons.
+
+The original Phase 8, Phase 9.1, and Phase 9.2 bytes remain immutable. Five
+sanitized versioned tables under `reports/week08_phase9_review_tables/`
+correct the interval presentation and publish the omitted sealed aggregates.
+This reporting-only supplement does not restore confirmatory validity. No
+named human scientific or release approval has been recorded.
+
+The required recovery path is a new cycle: correct and test the evaluator and
+evidence-derived gates before a new G5 freeze, complete renewed G6/G7 review,
+and use a newly reserved holdout that was not exposed to this run.
 
 #### Exit gate G8
 
@@ -935,7 +965,7 @@ Use only NOT STARTED, IN PROGRESS, PASSED, BLOCKED, or DEFERRED.
 | G5 Release-candidate freeze | PASSED | `docs/PRE_WEEK08_RELEASE_CHECKLIST_R2.md`, `reports/pre_week08_stage_b_rebinding_r2.json`, immutable tag `pre-week08-g5r2-20261115`, and `reports/pre_week08_release_manifest.json` |
 | G6 Source enrollment | PASSED | `reports/pre_week08_source_registration.json`, tracked ledger/enrollment manifest, and renewed custodian approval |
 | G7 Final readiness/execution | PASSED | `reports/pre_week08_phase7_authorization.json` and `reports/pre_week08_release_manifest.json`; the authorized one-run sequence completed and the restricted evidence archive verified |
-| G8 Analysis/release closure | IN PROGRESS | `reports/week08_phase9_data_quality_closure.json`, `reports/week08_phase9_final_analysis.json`, and `docs/WEEK08_FINAL_ANALYSIS.md`; Phase 9.1-9.3 technical work is complete, while scientific/release review and remaining release deliverables are pending |
+| G8 Analysis/release closure | BLOCKED | `reports/week08_phase9_scientific_review_finding.json` and `docs/WEEK08_PHASE9_SCIENTIFIC_REVIEW_FINDING.md`; frozen-quantile, missing-endpoint, evidence-derived-gate, and reporting-completeness defects invalidate confirmatory use of this holdout. Original counts remain non-confirmatory evidence; policy non-deployed; new holdout required for a corrected confirmatory claim |
 
 Update this table and link the tracked evidence whenever a gate changes.
 
@@ -975,11 +1005,13 @@ Current Phase 9 reporting verification commands:
 
 ~~~powershell
 python -m pytest tests/test_week08_phase9_final_analysis.py -q -p no:cacheprovider
+python -m pytest tests/test_week08_phase9_scientific_review_audit.py -q -p no:cacheprovider
 python scripts/week08_phase9_data_quality_closure.py --check
 python scripts/week08_phase9_final_analysis.py --check
+python scripts/week08_phase9_scientific_review_audit.py --check
 ~~~
 
-The last two commands require the authorized private final evidence at its
+The last three commands require the authorized private final evidence at its
 canonical ignored locations. They rebuild or verify sanitized reporting only;
 they do not rerun preparation, registration, decision, or evaluation. After
 label reveal, the Phase 8 prepare/decide/evaluate commands above are historical
@@ -987,17 +1019,22 @@ records and must not be used as reproduction commands.
 
 ### 23. Immediate next actions
 
-1. Obtain scientific and release review of the Phase 9.1 and Phase 9.2 evidence
-   without changing methods, metrics, thresholds, denominators, or policy.
-2. Complete the presentation/timed-demo rehearsal, sanitized public release
-   archive and checksums, and final closure summary.
-3. Perform clean G8 verification and reviewer signoff, then create the final
-   release tag/snapshot.
-4. Reserve any new algorithm, metric, recommendation-policy, confidence, or
-   deployment work for a future cycle with newly reserved evaluation data.
+1. Preserve the Phase 8, Phase 9.1, and Phase 9.2 bytes and the Phase 9.4
+   nonconformance finding; do not request normal G8 approval for this run.
+2. Correct the Wilson-quantile call sites, capture or remove every declared
+   endpoint before freeze, and derive integrity/post-label gates from bound
+   evidence. Add tests that enforce complete mandatory-stratum, endpoint, and
+   paired-comparison reporting.
+3. Start a new G5/G6/G7 cycle and reserve a newly independent, unexposed
+   holdout. The current holdout may not be rerun for a corrected confirmatory
+   claim.
+4. Only after a conformant new run, repeat Phase 9 analysis, human scientific
+   and release review, presentation/demo/archive work, and G8 signoff.
 
-**Current boundary:** Phase 8 is complete and archived; Phase 9.1 data-quality
-closure, Phase 9.2 final analysis, and Phase 9.3 documentation are technically
-complete. The policy remains non-deployed, scientific and release reviews are
-pending, and G8 is IN PROGRESS. No new run, post-label tuning, or broader claim
-is authorized.
+**Current boundary:** Phase 8 is complete and archived but invalid for
+confirmatory use. Phase 9.1/9.2 remain immutable historical reports; Phase 9.4
+records the automated scientific-audit failure and versioned reporting
+supplement. The policy remains non-deployed, release review is blocked, and G8
+is BLOCKED. Only source-specific, non-confirmatory software reporting is
+authorized; no rerun of the exposed holdout, post-label tuning, or broader
+claim is authorized.

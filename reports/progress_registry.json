@@ -250,14 +250,17 @@
       "week_closure": "reports/week07_week_closure.json"
     },
     "week_08": {
-      "status": "in_progress",
-      "latest_completed_phase": "phase_9_3_documentation",
-      "final_run_status": "completed_archived",
-      "g8_status": "in_progress",
+      "status": "blocked",
+      "latest_completed_phase": "phase_9_4_scientific_review_finding",
+      "final_run_status": "completed_archived_confirmatory_invalid",
+      "confirmatory_status": "invalid",
+      "g8_status": "blocked",
       "release_manifest": "reports/pre_week08_release_manifest.json",
       "data_quality_closure": "reports/week08_phase9_data_quality_closure.json",
       "analysis_manifest": "reports/week08_phase9_final_analysis.json",
       "final_analysis": "docs/WEEK08_FINAL_ANALYSIS.md",
+      "scientific_review_finding": "reports/week08_phase9_scientific_review_finding.json",
+      "scientific_review_document": "docs/WEEK08_PHASE9_SCIENTIFIC_REVIEW_FINDING.md",
       "track_a": {
         "attempted": 294,
         "completed": 284,
@@ -271,11 +274,13 @@
         "coverage": 0.0,
         "selective_correctness": null
       },
-      "claim_scope": "source_specific_software_evidence_only",
+      "claim_scope": "source_specific_nonconfirmatory_software_evidence_only",
       "policy_status": "non_deployed",
-      "scientific_review": "pending",
-      "release_review": "pending",
-      "next_work_package": "g8_scientific_release_review_and_remaining_release_deliverables"
+      "scientific_review": "failed",
+      "human_scientific_attestation": "not_recorded",
+      "release_review": "blocked_by_scientific_review",
+      "fresh_holdout_required": true,
+      "next_work_package": "new_confirmatory_cycle_evaluator_correction_and_fresh_holdout"
     }
   },
   "pre_week08_integration": {
@@ -433,16 +438,16 @@
       "private_evidence_archive_verified": true
     },
     "phase_9_1_data_quality_closure": {
-      "status": "technical_complete_reviews_pending",
+      "status": "historical_technical_complete_superseded_by_phase_9_4_failure",
       "date": "2026-11-15",
       "evidence": "reports/week08_phase9_data_quality_closure.json",
       "attempts_reconciled": 294,
       "policy_decisions_reconciled": 24,
-      "scientific_review": "pending",
-      "release_review": "pending"
+      "scientific_review": "superseded_failed_by_phase_9_4",
+      "release_review": "blocked_by_scientific_review"
     },
     "phase_9_2_final_analysis": {
-      "status": "technical_complete_reviews_pending",
+      "status": "historical_technical_complete_superseded_by_phase_9_4_failure",
       "date": "2026-11-15",
       "manifest": "reports/week08_phase9_final_analysis.json",
       "report": "docs/WEEK08_FINAL_ANALYSIS.md",
@@ -450,8 +455,8 @@
       "vector_figures": 7,
       "reproducibility_check": "passed",
       "policy_status": "non_deployed",
-      "scientific_review": "pending",
-      "release_review": "pending"
+      "scientific_review": "superseded_failed_by_phase_9_4",
+      "release_review": "blocked_by_scientific_review"
     },
     "phase_9_3_documentation": {
       "status": "complete",
@@ -463,7 +468,24 @@
       "progress_registry": "reports/progress_registry.json",
       "frozen_methods_changed": false,
       "frozen_policy_changed": false,
-      "next": "g8_scientific_release_review_and_remaining_release_deliverables"
+      "next": "phase_9_4_scientific_review"
+    },
+    "phase_9_4_scientific_review_finding": {
+      "status": "complete_blocking_finding",
+      "date": "2026-11-16",
+      "finding": "reports/week08_phase9_scientific_review_finding.json",
+      "document": "docs/WEEK08_PHASE9_SCIENTIFIC_REVIEW_FINDING.md",
+      "supplement_directory": "reports/week08_phase9_review_tables",
+      "supplement_tables": 5,
+      "automated_scientific_audit": "failed",
+      "human_scientific_attestation": "not_recorded",
+      "release_review": "blocked_by_scientific_review",
+      "confirmatory_status": "invalid",
+      "retained_scope": "source_specific_nonconfirmatory_software_evidence_only",
+      "policy_status": "non_deployed",
+      "fresh_holdout_required": true,
+      "historical_phase8_phase9_artifacts_modified": false,
+      "next": "correct_evaluator_and_enforcement_then_start_new_g5_g6_g7_cycle_with_fresh_holdout"
     },
     "gate_summary": {
       "G0": "passed",
@@ -474,7 +496,7 @@
       "G5": "passed",
       "G6": "passed",
       "G7": "passed",
-      "G8": "in_progress"
+      "G8": "blocked"
     },
     "stage_c": {
       "status": "deferred"

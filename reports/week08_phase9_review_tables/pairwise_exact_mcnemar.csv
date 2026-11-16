@@ -1,0 +1,10 @@
+method_a,method_b,common_denominator,both_success,method_a_only_success,method_b_only_success,both_failure,method_a_successes,method_b_successes,mcnemar_exact_two_sided_p,interpretation
+ecc_affine,mi_affine_2d,24,21,0,3,0,21,24,0.250000,descriptive_paired_comparison_not_a_universal_ranking
+ecc_affine,orb_affine,21,18,0,3,0,18,21,0.250000,descriptive_paired_comparison_not_a_universal_ranking
+ecc_affine,sift_affine,22,19,0,3,0,19,22,0.250000,descriptive_paired_comparison_not_a_universal_ranking
+ecc_rigid,mi_rigid_2d,24,24,0,0,0,24,24,1.000000,descriptive_paired_comparison_not_a_universal_ranking
+ecc_translation,phase_translation,24,24,0,0,0,24,24,1.000000,descriptive_paired_comparison_not_a_universal_ranking
+mi_affine_2d,orb_affine,21,21,0,0,0,21,21,1.000000,descriptive_paired_comparison_not_a_universal_ranking
+mi_affine_2d,sift_affine,22,22,0,0,0,22,22,1.000000,descriptive_paired_comparison_not_a_universal_ranking
+orb_affine,sift_affine,21,21,0,0,0,21,21,1.000000,descriptive_paired_comparison_not_a_universal_ranking
+orb_similarity,sift_similarity,21,21,0,0,0,21,21,1.000000,descriptive_paired_comparison_not_a_universal_ranking
