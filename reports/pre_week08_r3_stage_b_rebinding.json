@@ -1,7 +1,7 @@
 {
   "schema_version": "pre_week08_r3_stage_b_rebinding_v1",
   "stage": "pre_week08_stage_b_release_rebinding",
-  "status": "PENDING_REVIEW",
+  "status": "APPROVED",
   "basis": {
     "validation_path": "reports/pre_week08_stage_b_validation.json",
     "validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
@@ -61,10 +61,10 @@
   },
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": null,
+    "name": "Md Moshiur Rahman",
     "role": "release reviewer",
-    "decision": "PENDING",
-    "attested_utc": null
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-17T19:52:58Z"
   },
   "week8_heldout_used": false
 }

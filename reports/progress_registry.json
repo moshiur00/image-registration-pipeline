@@ -280,10 +280,10 @@
       "human_scientific_attestation": "not_recorded",
       "release_review": "blocked_by_scientific_review",
       "fresh_holdout_required": true,
-      "next_work_package": "r3_renewed_g5_release_review_after_post_tag_test_incident",
+      "next_work_package": "r3_g6_fresh_source_enrollment_after_renewed_g5_tag_binding",
       "r3_cycle": {
         "cycle_id": "week08-r3-confirmatory-20261116",
-        "status": "renewed_g5_review_package_pending_approval",
+        "status": "renewed_g5_approved_tag_authorized_g6_fresh_source_pending",
         "protocol": "docs/WEEK08_R3_CONFIRMATORY_CYCLE.md",
         "config": "configs/week08_r3_final_evaluation.yaml",
         "cycle_start": "reports/week08_r3_cycle_start.json",
@@ -296,8 +296,8 @@
         "g5_proposed_tag": "pre-week08-g5r3r2-20261117",
         "g5_historical_invalid_tag": "pre-week08-g5r3-20261117",
         "g5_incident": "reports/pre_week08_r3_g5_incident.json",
-        "g5_status": "blocked_pending_renewed_distinct_review",
-        "g6_status": "blocked_pending_renewed_g5_and_fresh_source",
+        "g5_status": "renewed_approved_tag_creation_authorized",
+        "g6_status": "blocked_pending_fresh_source_after_tag_binding",
         "g7_status": "blocked_pending_g5_g6",
         "g8_status": "not_started",
         "fresh_sources_enrolled": 0,
@@ -307,7 +307,7 @@
         "policy_decisions": 0,
         "evaluation_runs": 0,
         "r2_holdout_reuse_permitted": false,
-        "next_gate": "renewed_distinct_g5_release_review"
+        "next_gate": "g6_fresh_source_enrollment_after_renewed_release_tag_binding"
       }
     }
   },

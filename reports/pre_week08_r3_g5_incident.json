@@ -2,7 +2,7 @@
   "schema_version": "pre_week08_r3_g5_incident_v1",
   "incident_id": "r3-g5-post-tag-phase-state-test-20261117",
   "recorded_utc": "2026-11-17T19:47:53Z",
-  "status": "REMEDIATED_PENDING_RENEWED_G5_REVIEW",
+  "status": "REMEDIATED_AND_APPROVED_FOR_RENEWED_G5_FREEZE",
   "historical_freeze": {
     "release_commit": "95259685dc926b05c75f529b658573eb2f2fabff",
     "release_tag": "pre-week08-g5r3-20261117",
@@ -45,6 +45,17 @@
     "full_tests_failed": 0,
     "historical_tag_moved_or_deleted": false
   },
-  "next": "Obtain a renewed G5 review for the corrected checkpoint under a new tag. Fresh-source enrollment remains prohibited until that freeze passes.",
-  "incident_payload_sha256": "2b1740554b713531f326f999523b5503c62079b745ff1ff1ab40f860f859b5fb"
+  "renewed_g5_review": {
+    "reviewer": "Md Moshiur Rahman",
+    "role": "release reviewer",
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-17T19:52:58Z",
+    "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
+    "reviewed_package_commit": "8a164fe71bb31ecc4fcdc70b51634e748bd2a8c3",
+    "authorized_tag": "pre-week08-g5r3r2-20261117",
+    "historical_tag_acknowledged_ineligible_for_g6": true,
+    "zero_access_boundary_approved": true
+  },
+  "next": "Create and bind the approved renewed G5 tag. Fresh-source enrollment remains prohibited until the tag binding passes.",
+  "incident_payload_sha256": "1ff3b013937a8d2a008ba5224dbc5ecebd637ee5c7fefe0aaa11d88a5d8207c3"
 }

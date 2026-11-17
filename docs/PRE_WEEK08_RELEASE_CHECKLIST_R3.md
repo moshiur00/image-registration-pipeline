@@ -2,7 +2,7 @@
 
 **Prepared:** 17 November 2026
 
-**Status:** RENEWED G5 REVIEW PENDING
+**Status:** RENEWED G5 APPROVED — TAG CREATION AUTHORIZED
 
 **Cycle:** `week08-r3-confirmatory-20261116`
 
@@ -10,11 +10,11 @@
 
 **Proposed tag:** `pre-week08-g5r3r2-20261117`
 
-This checklist presents the renewed R3 G5 candidate after post-tag validation
-found a phase-state-coupled test. The historical tag
-`pre-week08-g5r3-20261117` remains immutable but is not eligible for G6. This
-checklist does not approve G5, enroll a holdout, authorize G7, or permit any
-source or label decoding.
+This checklist records the renewed human G5 approval after post-tag validation
+found and remediated a phase-state-coupled test. The historical tag
+`pre-week08-g5r3-20261117` remains immutable and ineligible for G6. This
+approval does not enroll a holdout, authorize G7, or permit any source or
+label decoding.
 
 ## Corrected evaluator and reporting boundary
 
@@ -66,7 +66,8 @@ source or label decoding.
 - [x] No UI runtime or UI test path changed.
 - [x] The original 5/5 scenarios and 5/5 supplemental checks are identified
   as unchanged inherited observations, not as a new manual run.
-- [ ] A release reviewer has approved the renewed R3 Stage B rebinding.
+- [x] Release reviewer Md Moshiur Rahman approved the renewed R3 Stage B
+  rebinding and incident disposition at `2026-11-17T19:52:58Z`.
 
 ## Pre-enrollment boundary
 
@@ -74,22 +75,31 @@ source or label decoding.
 - [x] The R3 source registration and G7 authorization artifacts are absent.
 - [x] The historical tag `pre-week08-g5r3-20261117` is invalid for G6 and has
   not been moved or deleted.
-- [x] The corrected tag `pre-week08-g5r3r2-20261117` is proposed only and does
-  not exist.
-- [x] G6 remains blocked until renewed G5 approval, tag binding, and a
-  genuinely new source supplied by a data custodian.
+- [x] Creation of `pre-week08-g5r3r2-20261117` is authorized by the renewed
+  approval; this checklist itself does not create the tag.
+- [x] G6 remains blocked until the renewed tag is bound and a genuinely new
+  source is supplied by a data custodian.
 - [x] G7 remains blocked until reviewed G5 and G6 evidence exists.
 
 ## Required G5 decision
 
 - **Requested reviewer:** Md Moshiur Rahman
 - **Role:** release reviewer
-- **Decision: PENDING**
-- **Attested UTC:** pending
+- **Decision: APPROVED**
+- **Attested UTC:** `2026-11-17T19:52:58Z`
 - **Reviewed implementation:** `caf7717d0f138df0c8dfe7eb95be98f3c0e2495f`
-- **Candidate tag:** `pre-week08-g5r3r2-20261117` proposed only
+- **Reviewed package:** `8a164fe71bb31ecc4fcdc70b51634e748bd2a8c3`
+- **Candidate tag:** `pre-week08-g5r3r2-20261117` authorized for creation
 
-The reviewer must confirm the recorded incident disposition, phase-stable test
-fixtures, immutable cycle-start validation, complete regression evidence,
-Stage B inheritance, and zero-access boundary. Approval must be explicit and
-is not inherited from the invalid historical freeze.
+Recorded approval statement:
+
+> Approve the renewed R3 G5 release freeze and Stage B rebinding for
+> implementation checkpoint caf7717d0f138df0c8dfe7eb95be98f3c0e2495f,
+> reviewed through package commit 8a164fe71bb31ecc4fcdc70b51634e748bd2a8c3,
+> including disposition of incident r3-g5-post-tag-phase-state-test-20261117,
+> under proposed tag pre-week08-g5r3r2-20261117 as release reviewer Md Moshiur
+> Rahman. I approve the zero-access pre-enrollment boundary and acknowledge
+> that pre-week08-g5r3-20261117 is historical and ineligible for G6.
+
+This approval is limited to renewed G5, the incident disposition, and Stage B
+rebinding. G6 enrollment and G7 one-run authorization remain separate gates.

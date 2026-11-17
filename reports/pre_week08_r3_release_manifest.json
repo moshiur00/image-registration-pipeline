@@ -3,32 +3,32 @@
   "cycle_id": "week08-r3-confirmatory-20261116",
   "release_id": "pre-week08-g5r3r2-20261117",
   "gate": "G5",
-  "status": "R3_REVIEW_PENDING",
-  "generated_utc": "2026-11-17T19:47:53Z",
+  "status": "G5_APPROVED_TAG_PENDING",
+  "generated_utc": "2026-11-17T19:52:58Z",
   "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
   "release_commit": null,
   "release_tag": null,
   "proposed_release_tag": "pre-week08-g5r3r2-20261117",
   "clean_worktree": true,
-  "required_signoffs_complete": false,
+  "required_signoffs_complete": true,
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": null,
+    "name": "Md Moshiur Rahman",
     "role": "release reviewer",
-    "decision": "PENDING",
-    "attested_utc": null
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-17T19:52:58Z"
   },
   "stage_b_binding": {
     "base_validation_path": "reports/pre_week08_stage_b_validation.json",
     "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
-    "rebinding_sha256": "a85a2fb7b6932c592360d6eba95a6675626009d596e093c8c334e956025f629a",
+    "rebinding_sha256": "e6b2bebd6e9aff7d649f2a16780bcee606cda2d499505134b6a58c2ffaf8108a",
     "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
     "frozen_ui_version": "v0.2",
     "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
     "ui_runtime_or_ui_test_paths_changed": false,
-    "review_status": "PENDING"
+    "review_status": "APPROVED"
   },
   "dependency_environment": {
     "lock_path": "reports/pre_week08_dependency_lock.txt",
@@ -40,11 +40,11 @@
     "configs/week07_day01_frozen_methods.yaml": "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
     "configs/week08_frozen_baseline.json": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
     "configs/week08_r3_final_evaluation.yaml": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea",
-    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "7e00ee13b5b08370a4fdf01fefe2c1a9bc57f3dad875741df4b5871df9c8b0a5",
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "e57a9a98f115f40a3699fc2c34a424b35f89400a8c1fe0482ba2a2ce0c329095",
     "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
-    "reports/pre_week08_r3_g5_incident.json": "8e1a4f554b23eb07597790e5b8dc1c8f0a086cf3e22842a5a2c8536acd6a7d92",
-    "reports/pre_week08_r3_stage_b_rebinding.json": "a85a2fb7b6932c592360d6eba95a6675626009d596e093c8c334e956025f629a",
-    "reports/pre_week08_r3_validation.json": "a898b0eb719a746877633c47b4ba1130ab9c7d33527e61131b4dbe2309459905",
+    "reports/pre_week08_r3_g5_incident.json": "b3b11bed827f763c3a83040253482dcba89e20847a025cf875df6d255d7382a9",
+    "reports/pre_week08_r3_stage_b_rebinding.json": "e6b2bebd6e9aff7d649f2a16780bcee606cda2d499505134b6a58c2ffaf8108a",
+    "reports/pre_week08_r3_validation.json": "c4d7f3abffd65c6b8d06626ec43856b76479b2c5cdd0ddab1a436b51e16f8306",
     "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "reports/week08_r3_g3_remediation.json": "27ae317ef5781b9a74caa111835ad4829fe02d8637d0fc9e8cc0f139df92b138",
     "scripts/week08_final_evaluation.py": "e6f9f95cbbab65fd2622975f77d783c9810c95e6f7b1760030b7743536d67aa0",
@@ -65,7 +65,7 @@
     "reports/pre_week08_r3_source_registration.json"
   ],
   "g6_enrollment": {
-    "status": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "status": "BLOCKED_PENDING_G5_TAG_AND_FRESH_SOURCE",
     "reviewed_commit": null,
     "source_ids": [],
     "source_ledger_sha256": null,
@@ -73,7 +73,7 @@
     "source_registration_sha256": null
   },
   "g7_authorization": {
-    "status": "BLOCKED_PENDING_G5_G6",
+    "status": "BLOCKED_PENDING_G5_TAG_G6",
     "authorization_id": null,
     "authorization_sha256": null
   },
