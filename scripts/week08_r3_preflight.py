@@ -49,6 +49,7 @@ STAGE_B_BASE_REL = "reports/pre_week08_stage_b_validation.json"
 STAGE_B_REBINDING_REL = "reports/pre_week08_r3_stage_b_rebinding.json"
 CHECKLIST_REL = "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md"
 VALIDATION_REL = "reports/pre_week08_r3_validation.json"
+G5_INCIDENT_REL = "reports/pre_week08_r3_g5_incident.json"
 SOURCE_REGISTRATION_REL = "reports/pre_week08_r3_source_registration.json"
 AUTHORIZATION_REL = "reports/pre_week08_r3_phase7_authorization.json"
 
@@ -89,11 +90,13 @@ CRITICAL_ARTIFACTS = frozenset({
     STAGE_B_BASE_REL,
     STAGE_B_REBINDING_REL,
     VALIDATION_REL,
+    G5_INCIDENT_REL,
     CHECKLIST_REL,
 })
 REVIEW_PACKAGE_ARTIFACTS = frozenset({
     STAGE_B_REBINDING_REL,
     VALIDATION_REL,
+    G5_INCIDENT_REL,
     CHECKLIST_REL,
 })
 RUNTIME_BINDINGS = {

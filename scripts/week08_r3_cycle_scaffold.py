@@ -12,6 +12,7 @@ from typing import Any, Mapping
 
 
 BASELINE_COMMIT = "68e2ecf1cd7c3e1172dea1d8bfd93127d2a1cd16"
+CYCLE_START_COMMIT = "1208c7d93da3646eb9a02c30ff59f21f530325d2"
 CYCLE_ID = "week08-r3-confirmatory-20261116"
 FINDING_PATH = "reports/week08_phase9_scientific_review_finding.json"
 R2_SOURCE_SHA256 = "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19"
@@ -67,6 +68,24 @@ def git_blob(repo_root: Path, commit: str, path: str) -> bytes:
     return completed.stdout
 
 
+def scaffold_blob(repo_root: Path, path: str) -> bytes:
+    """Read the immutable cycle-start artifact in the canonical repository.
+
+    Copied test scaffolds still read their local files so premature enrollment
+    remains directly testable without requiring a Git repository.
+    """
+    canonical_root = Path(__file__).resolve().parents[1]
+    if repo_root.resolve() == canonical_root.resolve():
+        return git_blob(repo_root, CYCLE_START_COMMIT, path)
+    return (repo_root / path).read_bytes()
+
+
+def scaffold_json(repo_root: Path, path: str) -> dict[str, Any]:
+    value = json.loads(scaffold_blob(repo_root, path).decode("utf-8"))
+    require(isinstance(value, dict), f"{path} must contain a JSON object")
+    return value
+
+
 def validate_scaffold(repo_root: Path) -> dict[str, Any]:
     record_path = repo_root / "reports/week08_r3_cycle_start.json"
     ledger_path = repo_root / "configs/week08_r3_source_use_ledger.json"
@@ -74,9 +93,9 @@ def validate_scaffold(repo_root: Path) -> dict[str, Any]:
     protocol_path = repo_root / "docs/WEEK08_R3_CONFIRMATORY_CYCLE.md"
     intake_readme = repo_root / "data/holdout/week08_r3/README.md"
 
-    record = load_json(record_path)
-    ledger = load_json(ledger_path)
-    manifest = load_json(manifest_path)
+    record = scaffold_json(repo_root, record_path.relative_to(repo_root).as_posix())
+    ledger = scaffold_json(repo_root, ledger_path.relative_to(repo_root).as_posix())
+    manifest = scaffold_json(repo_root, manifest_path.relative_to(repo_root).as_posix())
 
     recorded_hash = record.get("record_payload_sha256")
     unhashed = dict(record)
@@ -107,12 +126,22 @@ def validate_scaffold(repo_root: Path) -> dict[str, Any]:
 
     require(manifest.get("release_id") is None, "release id exists before G5")
     require(manifest.get("execution_authorized") is False, "execution was authorized before G7")
-    require(manifest.get("ledger_sha256") == file_sha256(ledger_path), "manifest ledger binding mismatch")
+    ledger_sha256 = hashlib.sha256(scaffold_blob(
+        repo_root, ledger_path.relative_to(repo_root).as_posix(),
+    )).hexdigest()
+    manifest_sha256 = hashlib.sha256(scaffold_blob(
+        repo_root, manifest_path.relative_to(repo_root).as_posix(),
+    )).hexdigest()
+    require(manifest.get("ledger_sha256") == ledger_sha256, "manifest ledger binding mismatch")
 
     artifacts = record.get("r3_artifacts", {})
-    require(artifacts.get("source_ledger", {}).get("sha256") == file_sha256(ledger_path), "record ledger binding mismatch")
-    require(artifacts.get("holdout_manifest", {}).get("sha256") == file_sha256(manifest_path), "record manifest binding mismatch")
-    require(protocol_path.is_file() and intake_readme.is_file(), "R3 protocol boundary is incomplete")
+    require(artifacts.get("source_ledger", {}).get("sha256") == ledger_sha256, "record ledger binding mismatch")
+    require(artifacts.get("holdout_manifest", {}).get("sha256") == manifest_sha256, "record manifest binding mismatch")
+    try:
+        scaffold_blob(repo_root, protocol_path.relative_to(repo_root).as_posix())
+        scaffold_blob(repo_root, intake_readme.relative_to(repo_root).as_posix())
+    except (OSError, subprocess.SubprocessError):
+        raise R3ScaffoldError("R3 protocol boundary is incomplete") from None
 
     prior_sources = ledger.get("prior_exposed_sources", [])
     require(len(prior_sources) >= 1, "R2 exposed source is absent from the rejection ledger")
