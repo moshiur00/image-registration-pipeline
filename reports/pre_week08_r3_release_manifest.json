@@ -4,7 +4,7 @@
   "release_id": "pre-week08-g5r3r2-20261117",
   "gate": "G5",
   "status": "G5_PASS",
-  "generated_utc": "2026-11-17T19:57:04Z",
+  "generated_utc": "2026-11-17T20:01:47Z",
   "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
   "release_commit": "0301bd29e3e62b3ee9c918469774f827b2706b7d",
   "release_tag": "pre-week08-g5r3r2-20261117",
@@ -97,6 +97,7 @@
     "evaluation_runs": 0
   },
   "limitations": [
+    "Post-tag verification passed: 31 focused tests and the complete 783-test suite completed with 780 passed, 3 skipped, and 0 failed; all G5 checks pass and readiness stops at fresh-source G6.",
     "The historical tag pre-week08-g5r3-20261117 is retained as immutable evidence but is invalid for G6 because a phase-state-coupled test failed after the intended manifest transition.",
     "The corrected checkpoint, incident disposition, renewed human G5 approval, and replacement tag are bound; G6 remains blocked pending a genuinely fresh source.",
     "Technical readiness is not human G5 approval; no release tag exists yet.",
