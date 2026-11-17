@@ -46,8 +46,10 @@ from image_registration.week8_evaluation import (  # noqa: E402
 from week08_final_evaluation import (  # noqa: E402
     DEFAULT_CONFIG,
     FINAL_READINESS_RECEIPT_VERSION,
+    R3_CONFIG,
     build_development_plan,
     build_final_plan,
+    canonical_config_path,
     development_output_root,
     final_paths,
     load_final_enrollment,
@@ -258,25 +260,14 @@ def make_development_artifacts(config_path: Path, output_root: Path | None) -> d
 
 def require_strict_final_readiness(config_path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     """Re-run the authoritative strict gate immediately before first decode."""
-    from week08_preflight import Audit
-
-    if resolve_path(config_path).resolve() != DEFAULT_CONFIG.resolve():
+    resolved = resolve_path(config_path).resolve()
+    if resolved not in {DEFAULT_CONFIG.resolve(), R3_CONFIG.resolve()}:
         raise ValueError("Final preparation requires the canonical preregistered config path.")
-    report = Audit(ROOT, final_readiness=True).run()
-    if (
-        report.get("readiness") != "PASS"
-        or report.get("mode") != "final_readiness"
-        or report.get("phase7_authorization_required") is not True
-    ):
-        blocked = [
-            check["check"] for check in report.get("checks", [])
-            if check.get("status") == "BLOCK"
-        ]
-        raise ValueError(
-            "Strict final readiness did not pass; no final source was decoded. "
-            f"Blocking checks: {', '.join(blocked)}"
-        )
-    return report
+    if resolved == DEFAULT_CONFIG.resolve():
+        raise ValueError("The exposed R2 holdout is closed and cannot be prepared again.")
+    # The existing preflight is an immutable R2 verifier. R3 must supply a
+    # separate renewed release validator before this boundary can open.
+    raise ValueError("R3 final preparation is blocked pending the renewed R3 strict-readiness gate.")
 
 
 def _atomic_json(path: Path, value: Mapping[str, Any]) -> None:
@@ -306,7 +297,7 @@ def _final_readiness_receipt(
     payload: dict[str, Any] = {
         "schema_version": FINAL_READINESS_RECEIPT_VERSION,
         "readiness": "PASS",
-        "config_sha256": sha256_file(DEFAULT_CONFIG),
+        "config_sha256": sha256_file(canonical_config_path(config)),
         "runner_code_sha256": runner_code_sha256(config),
         "release_manifest_sha256": sha256_file(release_manifest_path),
         "phase7_authorization_sha256": sha256_file(authorization_path),
@@ -317,9 +308,11 @@ def _final_readiness_receipt(
         "enrollment_manifest_sha256": sha256_file(
             resolve_path(config["sources"]["enrollment_manifest_path"])
         ),
-        "source_registration_sha256": sha256_file(
-            resolve_path("reports/pre_week08_source_registration.json")
-        ),
+        "source_registration_sha256": sha256_file(resolve_path(
+            authorization_contract.get(
+                "source_registration_path", "reports/pre_week08_source_registration.json"
+            )
+        )),
         "method_catalog_sha256": str(config["frozen_assets"]["method_catalog"]["sha256"]),
         "policy_sha256": str(config["frozen_assets"]["policy"]["sha256"]),
         "preflight_report": dict(readiness),

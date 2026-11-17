@@ -36,9 +36,11 @@ from image_registration.week8_evaluation import (  # noqa: E402
     verify_week8_plan,
     write_week8_plan,
 )
+from image_registration.overlap import overlap_fraction, transformed_support_mask  # noqa: E402
 
 DEFAULT_CONFIG = ROOT / "configs/week08_final_evaluation.yaml"
-FINAL_READINESS_RECEIPT_VERSION = "week08_final_readiness_receipt_v2"
+R3_CONFIG = ROOT / "configs/week08_r3_final_evaluation.yaml"
+FINAL_READINESS_RECEIPT_VERSION = "week08_final_readiness_receipt_v3"
 
 
 class _UniqueSafeLoader(yaml.SafeLoader):
@@ -92,8 +94,11 @@ def load_json(path: Path) -> dict[str, Any]:
 def require_phase3_development(config: Mapping[str, Any]) -> None:
     safety = config.get("safety", {})
     rehearsal = config.get("development_rehearsal", {})
-    if config.get("state") != "phase3_preregistered_development_rehearsal_only":
-        raise ValueError("This Phase 3 command only accepts the preregistered development state.")
+    if config.get("state") not in {
+        "phase3_preregistered_development_rehearsal_only",
+        "r3_g3_remediation_in_progress_no_source_access",
+    }:
+        raise ValueError("This command only accepts an isolated preregistered development state.")
     if safety.get("phase3_allows_real_week08_pixel_access") is not False:
         raise ValueError("Phase 3 pixel-access guard is not fail-closed.")
     if safety.get("phase3_allows_real_week08_label_access") is not False:
@@ -116,14 +121,24 @@ def load_protocol(
     config_path: str | Path, *, development: bool = True,
 ) -> tuple[Path, dict[str, Any]]:
     path = resolve_path(config_path).resolve()
-    if not development and path != DEFAULT_CONFIG.resolve():
+    if not development and path not in {DEFAULT_CONFIG.resolve(), R3_CONFIG.resolve()}:
         raise ValueError(
             "Final execution requires the canonical preregistered config path; "
             "alternate --config files are development-only."
         )
+    if not development and path == DEFAULT_CONFIG.resolve():
+        raise ValueError(
+            "The R2 holdout is exposed and permanently closed; final execution is prohibited."
+        )
     config = load_yaml(path)
-    if config.get("schema_version") != "week08_final_evaluation_v1":
+    if config.get("schema_version") not in {
+        "week08_final_evaluation_v1",
+        "week08_final_evaluation_v2",
+    }:
         raise ValueError("Unsupported Week 8 evaluation schema.")
+    if not development:
+        if config.get("state") != "r3_g7_authorized_one_run":
+            raise ValueError("R3 final execution is blocked until renewed G5, G6, and G7 pass.")
     if development:
         require_phase3_development(config)
     for key in ("method_catalog", "policy", "observable_projection", "frozen_baseline"):
@@ -136,6 +151,10 @@ def load_protocol(
         if sha256_file(resolve_path(ledger["path"])) != ledger["phase3_reference_sha256"]:
             raise ValueError("Phase 3 source-ledger hash mismatch.")
     return path, config
+
+
+def canonical_config_path(config: Mapping[str, Any]) -> Path:
+    return R3_CONFIG if config.get("cycle_id") == "week08-r3-confirmatory-20261116" else DEFAULT_CONFIG
 
 
 def prior_experiment_ids(config: Mapping[str, Any]) -> set[str]:
@@ -242,6 +261,65 @@ def runner_code_sha256(config: Mapping[str, Any]) -> str:
     return canonical_sha256(observed)
 
 
+def uncertainty_contract(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Return only the machine-enforced interval fields bound into the plan."""
+    source = config.get("uncertainty")
+    if not isinstance(source, Mapping):
+        raise ValueError("uncertainty must be an object.")
+    return {
+        "confidence_level": source.get("confidence_level"),
+        "binomial_interval": source.get("binomial_interval"),
+        "z_value": source.get("z_value"),
+        "interval_metrics": list(source.get("interval_metrics", [])),
+    }
+
+
+def endpoint_availability_contract(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate and bind the v2 observable endpoint-availability semantics."""
+    endpoints = config.get("endpoints")
+    if not isinstance(endpoints, Mapping):
+        raise ValueError("endpoints must be an object.")
+    if list(endpoints.get("runtime_endpoints", [])) != [
+        "total_runtime_ms", "method_runtime_ms"
+    ]:
+        raise ValueError("Runtime endpoint contract must declare total and method runtime.")
+    if "valid_overlap_fraction" not in list(endpoints.get("secondary_geometric_endpoints", [])):
+        raise ValueError("valid_overlap_fraction must remain a declared endpoint.")
+    declared = endpoints.get("availability_contract")
+    expected = {
+        "total_runtime_ms": {
+            "required_for": "every_terminal_scientific_record",
+            "finite_nonnegative": True,
+            "source": "external_executor_wall_clock",
+        },
+        "method_runtime_ms": {
+            "required_for": "every_terminal_scientific_record",
+            "finite_nonnegative": True,
+            "source": "registration_run_runtime_seconds",
+            "wire_key": "registration",
+        },
+        "valid_overlap_fraction": {
+            "required_when": "estimated_transform_is_present",
+            "null_required_when": "estimated_transform_is_absent",
+            "range_inclusive": [0.0, 1.0],
+            "definition": "fraction_of_fixed_raster_with_geometric_support_from_moving_raster",
+        },
+    }
+    if declared is not None and declared != expected:
+        raise ValueError("Endpoint availability contract differs from evaluator v2.")
+    return expected
+
+
+def reporting_contract(config: Mapping[str, Any]) -> dict[str, Any] | None:
+    """Return the explicit R3 reporting contract when the config declares it."""
+    value = config.get("reporting_enforcement")
+    if value is None:
+        return None
+    if not isinstance(value, Mapping):
+        raise ValueError("reporting_enforcement must be an object.")
+    return dict(value)
+
+
 def build_development_plan(
     config_path: str | Path,
 ) -> tuple[Path, dict[str, Any], dict[str, Any], list[Week8PairSpec], list[Week8MethodSpec]]:
@@ -262,6 +340,10 @@ def build_development_plan(
         policy_gate=gate_from_policy(policy),
         tolerance_px=float(config["endpoints"]["primary_geometric_endpoint"]["tolerance_px"]),
         mask_dice_threshold=float(config["endpoints"]["verified_mask_endpoint"]["tolerance"]),
+        uncertainty=uncertainty_contract(config),
+        endpoint_availability=endpoint_availability_contract(config),
+        reporting_contract=reporting_contract(config),
+        mandatory_reporting_strata=config["strata"]["mandatory"],
     )
     return path, config, plan, pairs, methods
 
@@ -334,7 +416,7 @@ def verify_final_readiness_receipt(
     expected = {
         "schema_version": FINAL_READINESS_RECEIPT_VERSION,
         "readiness": "PASS",
-        "config_sha256": sha256_file(DEFAULT_CONFIG),
+        "config_sha256": sha256_file(canonical_config_path(config)),
         "runner_code_sha256": runner_code_sha256(config),
         "release_manifest_sha256": sha256_file(release_manifest_path),
         "phase7_authorization_sha256": sha256_file(authorization_path),
@@ -345,9 +427,11 @@ def verify_final_readiness_receipt(
         "enrollment_manifest_sha256": sha256_file(
             resolve_path(config["sources"]["enrollment_manifest_path"])
         ),
-        "source_registration_sha256": sha256_file(
-            resolve_path("reports/pre_week08_source_registration.json")
-        ),
+        "source_registration_sha256": sha256_file(resolve_path(
+            authorization_contract.get(
+                "source_registration_path", "reports/pre_week08_source_registration.json"
+            )
+        )),
         "method_catalog_sha256": str(config["frozen_assets"]["method_catalog"]["sha256"]),
         "policy_sha256": str(config["frozen_assets"]["policy"]["sha256"]),
     }
@@ -455,7 +539,11 @@ def load_final_enrollment(config: Mapping[str, Any]) -> tuple[dict[str, Any], di
     manifest = load_json(manifest_path)
     if ledger.get("schema_version") != config["sources"]["required_ledger_schema_version"]:
         raise ValueError("Unsupported final source ledger schema.")
-    sources = ledger.get("week08_sources")
+    sources = (
+        ledger.get("fresh_sources")
+        if str(ledger.get("schema_version", "")).startswith("week08_r3_")
+        else ledger.get("week08_sources")
+    )
     if not isinstance(sources, list) or not sources:
         raise ValueError("No Week 8 sources are enrolled; final planning is blocked.")
     if manifest.get("schema_version") != config["sources"]["enrollment_manifest_schema_version"]:
@@ -759,6 +847,10 @@ def build_final_plan(
         policy_gate=gate_from_policy(policy),
         tolerance_px=float(config["endpoints"]["primary_geometric_endpoint"]["tolerance_px"]),
         mask_dice_threshold=float(config["endpoints"]["verified_mask_endpoint"]["tolerance"]),
+        uncertainty=uncertainty_contract(config),
+        endpoint_availability=endpoint_availability_contract(config),
+        reporting_contract=reporting_contract(config),
+        mandatory_reporting_strata=config["strata"]["mandatory"],
         source_ledger_sha256=sha256_file(resolve_path(config["sources"]["ledger_path"])),
         enrollment_manifest_sha256=sha256_file(
             resolve_path(config["sources"]["enrollment_manifest_path"])
@@ -870,10 +962,22 @@ def observable_executor(methods: Sequence[Week8MethodSpec]):
         run = service.run(request)
         elapsed_ms = (perf_counter() - started) * 1000.0
         raw = _disambiguate_estimated_diagnostics(dict(run.diagnostics.values))
+        similarity_metrics = {
+            key: run.metrics.after.get(key)
+            for key in ("mae", "mse", "ncc", "ssim", "mi_nats")
+        }
         raw.setdefault("preparation", {
             "fixed_source": {"shape": list(fixed.shape)},
             "moving_source": {"shape": list(moving.shape)},
         })
+        valid_overlap = None
+        if run.transform is not None:
+            support = transformed_support_mask(
+                moving.shape,
+                run.transform.matrix,
+                destination_shape=tuple(int(value) for value in fixed.shape[:2]),
+            )
+            valid_overlap = overlap_fraction(support)
         return {
             "pair_id": task["pair_id"],
             "method_id": task["method_id"],
@@ -885,8 +989,12 @@ def observable_executor(methods: Sequence[Week8MethodSpec]):
             "execution_status": run.run_status.value,
             "estimated_transform": None if run.transform is None else run.transform.matrix.tolist(),
             "transform_plausible": None if run.transform is None else run.transform.plausible,
-            "valid_overlap_fraction": run.metrics.after.get("valid_overlap_fraction"),
-            "timings_ms": {"total": elapsed_ms},
+            "valid_overlap_fraction": valid_overlap,
+            "timings_ms": {
+                "registration": max(0.0, float(run.runtime_seconds) * 1000.0),
+                "total": max(0.0, float(elapsed_ms)),
+            },
+            "similarity_metrics": similarity_metrics,
             "method_diagnostics": {"raw": raw},
             "warnings": list(run.warnings),
             "failure_reason": run.failure_reason,
@@ -967,8 +1075,8 @@ def command_evaluate(args: argparse.Namespace) -> int:
     result = evaluate_sealed_run(
         run_paths,
         tolerance_px=float(config["endpoints"]["primary_geometric_endpoint"]["tolerance_px"]),
+        wilson_z=float(config["uncertainty"]["z_value"]),
         recommendation_criteria=recommendation_criteria(config),
-        no_post_label_change_attested=True,
         track_a_table=track_a_table,
         track_b_table=track_b_table,
     )

@@ -1,0 +1,24 @@
+{
+  "schema_version": "week08_r3_holdout_sources_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "release_id": null,
+  "status": "BLOCKED_AWAITING_FRESH_UNEXPOSED_SOURCE",
+  "ledger_path": "configs/week08_r3_source_use_ledger.json",
+  "ledger_sha256": "d8d5625b5e3f69d60e43e1014095d3d3ccec0cd219071387075aaee09f2e56c7",
+  "source_ids": [],
+  "pairs": [],
+  "source_bytes_accessed": 0,
+  "labels_accessed": 0,
+  "synthetic_ground_truth_generated": false,
+  "execution_authorized": false,
+  "blockers": [
+    "corrected evaluator and reporting enforcement have not passed renewed G5",
+    "no fresh unexposed source has been enrolled by a data custodian",
+    "renewed G6 and G7 have not passed"
+  ],
+  "output_namespaces": {
+    "prepared": "outputs/week08_r3_holdout",
+    "final": "outputs/week08_r3_final",
+    "archives": "outputs/week08_r3_archives"
+  }
+}

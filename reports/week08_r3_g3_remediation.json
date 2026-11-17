@@ -1,0 +1,131 @@
+{
+  "schema_version": "week08_r3_g3_remediation_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "recorded_utc": "2026-11-17T13:51:54Z",
+  "status": "PASS_TECHNICAL_REMEDIATION",
+  "scope": "pre_freeze_evaluator_endpoint_integrity_and_reporting_remediation",
+  "baseline": {
+    "git_commit": "68e2ecf1cd7c3e1172dea1d8bfd93127d2a1cd16",
+    "scientific_review_finding": "reports/week08_phase9_scientific_review_finding.json",
+    "finding_payload_sha256": "438fb656a4443e76bdd74863c2412e2cd8bdc7bc4c50f62f714de372160c2978",
+    "r2_evidence_mutated": false,
+    "r2_holdout_rerun_permitted": false
+  },
+  "schema_contract": {
+    "runner": "week08_evaluator_v2",
+    "plan": "week08_evaluation_plan_v2",
+    "prepare_receipt": "week08_prepare_receipt_v2",
+    "decision_seal": "week08_decision_seal_v2",
+    "evaluation_summary": "week08_evaluation_summary_v2"
+  },
+  "remediation_checks": {
+    "frozen_wilson_contract_bound_and_explicitly_propagated": "PASS",
+    "method_runtime_captured_from_registration_run": "PASS",
+    "total_runtime_captured_from_external_wall_clock": "PASS",
+    "valid_overlap_derived_from_estimated_transform_support": "PASS",
+    "observable_endpoints_required_and_validated": "PASS",
+    "integrity_gates_derived_from_verified_evidence": "PASS",
+    "caller_supplied_post_label_attestation_removed": "PASS",
+    "one_shot_label_access_enforced_atomically": "PASS",
+    "second_evaluation_and_preexisting_outputs_rejected": "PASS",
+    "six_mandatory_strata_enforced": "PASS",
+    "complete_reporting_table_inventory_enforced": "PASS",
+    "pairwise_exact_mcnemar_reconciled": "PASS",
+    "source_identifiers_sanitized_in_public_tables": "PASS",
+    "r2_final_execution_machine_blocked": "PASS",
+    "r3_final_execution_blocked_before_renewed_g5_g6_g7": "PASS",
+    "historical_phase9_finding_still_reproducible": "PASS"
+  },
+  "artifact_bindings": {
+    "evaluator": {
+      "path": "src/image_registration/week8_evaluation.py",
+      "sha256": "c29151916c8128e623e742e8c6c91e93fc043cd0da28df7d7e0dd6200129a722"
+    },
+    "evaluation_cli": {
+      "path": "scripts/week08_final_evaluation.py",
+      "sha256": "b734cb7ac30fe6b795e0481bb0ce9f273ddc0e8e55eacf98ce381e485160f26b"
+    },
+    "prepare_boundary": {
+      "path": "scripts/week08_prepare_holdout.py",
+      "sha256": "7babb47906ec883563c425879cdd9e03d903394276a118f512b53c79f808ce70"
+    },
+    "reporting_enforcement": {
+      "path": "scripts/week08_r3_reporting.py",
+      "sha256": "16df2feca0697139a4cad72193370148d9f361cf208edd3c69af0fcab4c96937"
+    },
+    "g3_validator": {
+      "path": "scripts/week08_r3_g3_remediation.py",
+      "sha256": "b3a39c1067fc8a2a29c79da2c86c0f75fc22232ba015c9d43ec5d3cdce915bd2"
+    },
+    "r3_config": {
+      "path": "configs/week08_r3_final_evaluation.yaml",
+      "sha256": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea"
+    },
+    "r3_source_ledger": {
+      "path": "configs/week08_r3_source_use_ledger.json",
+      "sha256": "d8d5625b5e3f69d60e43e1014095d3d3ccec0cd219071387075aaee09f2e56c7"
+    },
+    "r3_holdout_manifest": {
+      "path": "data/manifests/week08_r3_holdout_sources.json",
+      "sha256": "f9193c44f01d4fd8f1c9ba9f6941054b2939b0ea3bdc46e69b1124f69491ca20"
+    },
+    "r3_protocol": {
+      "path": "docs/WEEK08_R3_CONFIRMATORY_CYCLE.md",
+      "sha256": "52db94df525c42aed836a4212839b108fd68b9210cea65d003f4454bbeb6eb87"
+    },
+    "historical_scientific_audit": {
+      "path": "scripts/week08_phase9_scientific_review_audit.py",
+      "sha256": "b8baf2281c7f90549c94122280dbf28328a7458db0f7d5ae7deaf1964d14009d"
+    }
+  },
+  "development_plan_probe": {
+    "plan_sha256": "5856f99855e4f8c54cfb6dfc5bfc54dfc4b6a01a0f26a8677b206b5b31c3ae4d",
+    "expected_counts": {
+      "sources": 1,
+      "pairs": 4,
+      "attempts": 12,
+      "policy_eligible_pairs": 2
+    },
+    "pair_specs": 4,
+    "method_specs": 10,
+    "uncertainty_sha256": "15bc2a12589c521e2f570d86effa864f31703800d61e0e124d75bcef65cbea6d",
+    "endpoint_availability_sha256": "e4b7703a65a826f7049087d45096caee27be2dfc1bc16ad410562966e982859c",
+    "reporting_contract_sha256": "aae817514532ef39a9f17ee3d84c94493803fe16199cc56763729ee59f0b3468",
+    "mandatory_reporting_strata_sha256": "9c066fbaa1ff8ddebf98ceb36e70982c10610936e4d41a73cc1562d47443556c",
+    "final_evidence": false,
+    "holdout_source_accessed": false
+  },
+  "validation": {
+    "focused_command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_reporting.py tests/test_week08_final_evaluation.py tests/test_week08_phase3_cli.py tests/test_week08_r3_cycle_scaffold.py tests/test_week08_phase9_scientific_review_audit.py -q",
+    "focused_tests_passed": 102,
+    "full_command": ".venv\\Scripts\\python.exe -m pytest -q",
+    "tests_collected": 776,
+    "tests_passed": 773,
+    "tests_skipped": 3,
+    "tests_failed": 0,
+    "diff_check": "PASS",
+    "historical_phase9_audit": "PASS"
+  },
+  "activity_counters": {
+    "fresh_sources_enrolled": 0,
+    "r3_source_bytes_accessed": 0,
+    "r3_labels_accessed": 0,
+    "r3_registration_attempts": 0,
+    "r3_policy_decisions": 0,
+    "r3_evaluation_runs": 0
+  },
+  "review_status": {
+    "technical_remediation_validation": "PASS",
+    "human_release_reviewer_attestation": "NOT_RECORDED",
+    "g5_release_freeze_approved": false
+  },
+  "gate_state": {
+    "G3_corrected_evaluator": "PASS_TECHNICAL_REMEDIATION",
+    "G5_release_freeze": "BLOCKED_PENDING_DISTINCT_REVIEW",
+    "G6_fresh_source_enrollment": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "G7_one_run_authorization": "BLOCKED_PENDING_G5_G6",
+    "G8_scientific_release_review": "NOT_STARTED"
+  },
+  "next": "Obtain a distinct G5 release review for the bound R3 remediation commit before any fresh-source intake.",
+  "report_payload_sha256": "13327953b1ff6c6593a06f33c00a61cd918cfd54d89f5b70b0992e7683d852bf"
+}

@@ -1,0 +1,92 @@
+{
+  "schema_version": "week08_r3_cycle_start_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "recorded_utc": "2026-11-16T17:19:17Z",
+  "status": "REMEDIATION_STARTED_FRESH_HOLDOUT_PENDING",
+  "baseline": {
+    "git_commit": "68e2ecf1cd7c3e1172dea1d8bfd93127d2a1cd16",
+    "scientific_review_finding": {
+      "path": "reports/week08_phase9_scientific_review_finding.json",
+      "binding": "git_blob_at_baseline_commit",
+      "file_sha256": "ae8a44feba93a9e15e69456d4101696eafb5774d8e52f8de1ca2e777f7388dd0",
+      "finding_payload_sha256": "438fb656a4443e76bdd74863c2412e2cd8bdc7bc4c50f62f714de372160c2978",
+      "status": "CONFIRMATORY_RUN_INVALID_IMPLEMENTATION_NONCONFORMANCE"
+    },
+    "r2_release_id": "pre-week08-g5r2-20261115",
+    "r2_evaluation_summary_sha256": "d83e1a23ccae29d7e40d090384d2ba8b2eff24c6d25fe1d234bffacc5bd88fd4",
+    "r2_source_ledger_sha256": "97fe46f1bf3b483d2806ba05760e45b7482a276476d13e9f4437a553e9874b41",
+    "r2_holdout_manifest_sha256": "c450000e23b921f99ca0bbe5e955f13a4b011a67541769b7f559089706efda50"
+  },
+  "project_owner_instruction": {
+    "instruction": "Do it",
+    "interpreted_scope": "start the recommended corrected confirmatory cycle and implement pre-freeze remediation",
+    "role": "project_owner_instruction",
+    "is_release_reviewer_attestation": false,
+    "is_data_custodian_attestation": false,
+    "authorizes_source_access": false,
+    "authorizes_g5_freeze": false,
+    "authorizes_g6_enrollment": false,
+    "authorizes_g7_execution": false
+  },
+  "objectives": [
+    "correct and test the evaluator",
+    "capture all frozen endpoints",
+    "derive integrity gates from verified evidence",
+    "enforce complete reproducible reporting",
+    "freeze a new release only after remediation passes",
+    "enroll a genuinely new unexposed holdout after the new freeze"
+  ],
+  "historical_preservation": {
+    "r2_artifacts_immutable": true,
+    "r2_holdout_rerun_permitted": false,
+    "r2_source_reuse_permitted": false,
+    "r2_results_retained_scope": "source_specific_nonconfirmatory_software_evidence_only"
+  },
+  "reuse_prohibition": {
+    "source_id": "nasa_pia18033_earth",
+    "source_sha256": "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
+    "canonical_source_id": "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
+    "historical_holdout_root": "data/holdout/week08",
+    "reject_on": [
+      "path_match",
+      "byte_hash_match",
+      "canonical_identity_match",
+      "lineage_intersection",
+      "renamed_copy",
+      "derived_or_transcoded_copy"
+    ]
+  },
+  "r3_artifacts": {
+    "source_ledger": {
+      "path": "configs/week08_r3_source_use_ledger.json",
+      "sha256": "d8d5625b5e3f69d60e43e1014095d3d3ccec0cd219071387075aaee09f2e56c7"
+    },
+    "holdout_manifest": {
+      "path": "data/manifests/week08_r3_holdout_sources.json",
+      "sha256": "f9193c44f01d4fd8f1c9ba9f6941054b2939b0ea3bdc46e69b1124f69491ca20"
+    },
+    "protocol": "docs/WEEK08_R3_CONFIRMATORY_CYCLE.md"
+  },
+  "output_namespaces": {
+    "prepared": "outputs/week08_r3_holdout",
+    "final": "outputs/week08_r3_final",
+    "archives": "outputs/week08_r3_archives"
+  },
+  "gate_state": {
+    "G3_corrected_evaluator": "IN_PROGRESS",
+    "G5_release_freeze": "BLOCKED_PENDING_G3_AND_TESTS",
+    "G6_fresh_source_enrollment": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "G7_one_run_authorization": "BLOCKED_PENDING_G5_G6",
+    "G8_scientific_release_review": "NOT_STARTED"
+  },
+  "activity_counters": {
+    "fresh_sources_enrolled": 0,
+    "r3_source_bytes_accessed": 0,
+    "r3_labels_accessed": 0,
+    "r3_registration_attempts": 0,
+    "r3_policy_decisions": 0,
+    "r3_evaluation_runs": 0
+  },
+  "next": "Complete corrected evaluator and reporting tests; then request a distinct G5 review before any fresh-source intake.",
+  "record_payload_sha256": "21df83eeb72b1aac2035ef102c7af5abe10b260954666a52c6ce6bd9e4d8bb29"
+}

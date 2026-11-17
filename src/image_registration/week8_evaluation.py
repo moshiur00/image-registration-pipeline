@@ -29,13 +29,13 @@ from .unified_metrics import dice_score
 from .warping import warp_mask
 
 
-WEEK8_SCHEMA_VERSION = "week08_evaluator_v1"
+WEEK8_SCHEMA_VERSION = "week08_evaluator_v2"
 TASK_IDENTITY_VERSION = "week08_task_identity_v1"
-PLAN_SCHEMA_VERSION = "week08_evaluation_plan_v1"
-PREPARE_SCHEMA_VERSION = "week08_prepare_receipt_v1"
-DECISION_SCHEMA_VERSION = "week08_decision_seal_v1"
-EVALUATION_SCHEMA_VERSION = "week08_evaluation_summary_v1"
-DEFAULT_PROTOCOL_VERSION = "week08_evaluator_firewall_v1"
+PLAN_SCHEMA_VERSION = "week08_evaluation_plan_v2"
+PREPARE_SCHEMA_VERSION = "week08_prepare_receipt_v2"
+DECISION_SCHEMA_VERSION = "week08_decision_seal_v2"
+EVALUATION_SCHEMA_VERSION = "week08_evaluation_summary_v2"
+DEFAULT_PROTOCOL_VERSION = "week08_evaluator_firewall_v2"
 
 MANDATORY_STRATA = (
     "modality_class",
@@ -45,6 +45,63 @@ MANDATORY_STRATA = (
     "source_role",
     "source_id",
 )
+DEFAULT_UNCERTAINTY_CONTRACT: dict[str, Any] = {
+    "confidence_level": 0.95,
+    "binomial_interval": "wilson_score",
+    "z_value": 1.959963984540054,
+    "interval_metrics": [
+        "geometric_success_rate",
+        "conditional_accuracy",
+        "execution_completion_rate",
+        "infrastructure_incident_rate",
+        "policy_coverage",
+        "policy_selective_correctness",
+        "policy_abstention_rate",
+    ],
+}
+DEFAULT_ENDPOINT_AVAILABILITY_CONTRACT: dict[str, Any] = {
+    "total_runtime_ms": {
+        "required_for": "every_terminal_scientific_record",
+        "finite_nonnegative": True,
+        "source": "external_executor_wall_clock",
+    },
+    "method_runtime_ms": {
+        "required_for": "every_terminal_scientific_record",
+        "finite_nonnegative": True,
+        "source": "registration_run_runtime_seconds",
+        "wire_key": "registration",
+    },
+    "valid_overlap_fraction": {
+        "required_when": "estimated_transform_is_present",
+        "null_required_when": "estimated_transform_is_absent",
+        "range_inclusive": [0.0, 1.0],
+        "definition": "fraction_of_fixed_raster_with_geometric_support_from_moving_raster",
+    },
+}
+R3_REQUIRED_REPORT_TABLES = (
+    "track_a_overall.csv",
+    "track_a_mandatory_strata.csv",
+    "track_a_endpoint_distributions.csv",
+    "pairwise_exact_mcnemar.csv",
+    "track_b_overall.csv",
+    "track_b_mandatory_strata.csv",
+    "runtime_failure_similarity.csv",
+)
+R3_REPORT_ENDPOINT_METRICS = (
+    "tre_mean_px",
+    "tre_median_px",
+    "tre_p95_px",
+    "valid_overlap_fraction",
+    "method_runtime_ms",
+    "total_runtime_ms",
+)
+DEFAULT_REPORTING_CONTRACT: dict[str, Any] = {
+    "mandatory_strata": list(MANDATORY_STRATA),
+    "required_tables": list(R3_REQUIRED_REPORT_TABLES),
+    "endpoint_metrics": list(R3_REPORT_ENDPOINT_METRICS),
+    "source_alias_format": "enrolled_source_{ordinal:03d}",
+    "fail_closed_on_missing_or_unreconciled_evidence": True,
+}
 DEFAULT_RECOMMENDATION_CRITERIA: dict[str, Any] = {
     "minimum_selected_pairs": 20,
     "minimum_coverage": 0.10,
@@ -207,6 +264,26 @@ def _append_jsonl(path: Path, value: Mapping[str, Any]) -> None:
         stream.write(canonical_json(value) + "\n")
         stream.flush()
         os.fsync(stream.fileno())
+
+
+def _create_exclusive_jsonl(path: Path, value: Mapping[str, Any]) -> None:
+    """Create a one-event journal exactly once, failing closed on any prior file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    except FileExistsError as exc:
+        raise IntegrityError(
+            f"one-shot evaluation journal already exists: {path}"
+        ) from exc
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+            stream.write(canonical_json(value) + "\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+    except Exception:
+        # Keep the file as a durable incident marker. A failed post-label run
+        # cannot be silently retried as confirmatory evidence.
+        raise
 
 
 def _read_json(path: Path) -> Any:
@@ -538,6 +615,63 @@ def _expected_counts(tasks: Sequence[Week8Task]) -> dict[str, int]:
     }
 
 
+def _normalize_uncertainty_contract(value: Mapping[str, Any] | None) -> dict[str, Any]:
+    raw = DEFAULT_UNCERTAINTY_CONTRACT if value is None else value
+    if not isinstance(raw, Mapping):
+        raise Week8ContractError("uncertainty contract must be a mapping")
+    expected_keys = set(DEFAULT_UNCERTAINTY_CONTRACT)
+    if set(raw) != expected_keys:
+        raise Week8ContractError(
+            "uncertainty contract keys must be exactly " + ", ".join(sorted(expected_keys))
+        )
+    try:
+        confidence = float(raw["confidence_level"])
+        z_value = float(raw["z_value"])
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise Week8ContractError("uncertainty confidence and z must be numeric") from exc
+    if not math.isclose(confidence, 0.95, rel_tol=0.0, abs_tol=1e-12):
+        raise Week8ContractError("only the preregistered 0.95 confidence level is supported")
+    if not math.isfinite(z_value) or z_value <= 0:
+        raise Week8ContractError("uncertainty z_value must be finite and positive")
+    if raw["binomial_interval"] != "wilson_score":
+        raise Week8ContractError("binomial_interval must be wilson_score")
+    interval_metrics = list(raw["interval_metrics"])
+    if interval_metrics != DEFAULT_UNCERTAINTY_CONTRACT["interval_metrics"]:
+        raise Week8ContractError("uncertainty interval_metrics differ from the reporting contract")
+    return {
+        "confidence_level": confidence,
+        "binomial_interval": "wilson_score",
+        "z_value": z_value,
+        "interval_metrics": interval_metrics,
+    }
+
+
+def _normalize_endpoint_availability_contract(
+    value: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    raw = DEFAULT_ENDPOINT_AVAILABILITY_CONTRACT if value is None else value
+    if not isinstance(raw, Mapping):
+        raise Week8ContractError("endpoint availability contract must be a mapping")
+    normalized = json.loads(canonical_json(raw))
+    if normalized != DEFAULT_ENDPOINT_AVAILABILITY_CONTRACT:
+        raise Week8ContractError(
+            "endpoint availability contract differs from the machine-enforced v2 contract"
+        )
+    return normalized
+
+
+def _normalize_reporting_contract(value: Mapping[str, Any] | None) -> dict[str, Any]:
+    raw = DEFAULT_REPORTING_CONTRACT if value is None else value
+    if not isinstance(raw, Mapping):
+        raise Week8ContractError("reporting contract must be a mapping")
+    normalized = json.loads(canonical_json(raw))
+    if normalized != DEFAULT_REPORTING_CONTRACT:
+        raise Week8ContractError(
+            "reporting contract differs from the machine-enforced R3 contract"
+        )
+    return normalized
+
+
 def build_week8_plan(
     tasks: Sequence[Week8Task],
     *,
@@ -549,6 +683,10 @@ def build_week8_plan(
     policy_gate: Gate | Mapping[str, Any] | None = None,
     tolerance_px: float = 2.0,
     mask_dice_threshold: float = 0.8,
+    uncertainty: Mapping[str, Any] | None = None,
+    endpoint_availability: Mapping[str, Any] | None = None,
+    reporting_contract: Mapping[str, Any] | None = None,
+    mandatory_reporting_strata: Sequence[str] = MANDATORY_STRATA,
     source_ledger_sha256: str | None = None,
     enrollment_manifest_sha256: str | None = None,
     final_readiness_receipt_sha256: str | None = None,
@@ -591,6 +729,12 @@ def build_week8_plan(
     dice_threshold = float(mask_dice_threshold)
     if not math.isfinite(dice_threshold) or not 0.0 <= dice_threshold <= 1.0:
         raise Week8ContractError("mask_dice_threshold must be in [0,1]")
+    uncertainty_contract = _normalize_uncertainty_contract(uncertainty)
+    endpoint_contract = _normalize_endpoint_availability_contract(endpoint_availability)
+    normalized_reporting_contract = _normalize_reporting_contract(reporting_contract)
+    reporting_strata = [str(item) for item in mandatory_reporting_strata]
+    if reporting_strata != list(MANDATORY_STRATA):
+        raise Week8ContractError("mandatory reporting strata differ from the v2 contract")
     ordered = sorted(tasks, key=lambda task: task.experiment_id)
     ids = [task.experiment_id for task in ordered]
     if len(ids) != len(set(ids)):
@@ -609,6 +753,14 @@ def build_week8_plan(
         **enrollment_hashes,
         "tolerance_px": tolerance,
         "mask_dice_threshold": dice_threshold,
+        "uncertainty": uncertainty_contract,
+        "uncertainty_sha256": canonical_sha256(uncertainty_contract),
+        "endpoint_availability": endpoint_contract,
+        "endpoint_availability_sha256": canonical_sha256(endpoint_contract),
+        "reporting_contract": normalized_reporting_contract,
+        "reporting_contract_sha256": canonical_sha256(normalized_reporting_contract),
+        "mandatory_reporting_strata": reporting_strata,
+        "mandatory_reporting_strata_sha256": canonical_sha256(reporting_strata),
         "expected_counts": counts,
         "expected_counts_sha256": canonical_sha256(counts),
         "tasks": [task.to_dict() for task in ordered],
@@ -697,6 +849,31 @@ def _verify_plan_payload(raw: Mapping[str, Any]) -> dict[str, Any]:
         raise IntegrityError("invalid plan mask_dice_threshold") from exc
     if not math.isfinite(dice_threshold) or not 0.0 <= dice_threshold <= 1.0:
         raise IntegrityError("invalid plan mask_dice_threshold")
+    try:
+        uncertainty_contract = _normalize_uncertainty_contract(value.get("uncertainty"))
+        endpoint_contract = _normalize_endpoint_availability_contract(
+            value.get("endpoint_availability")
+        )
+        reporting_contract = _normalize_reporting_contract(value.get("reporting_contract"))
+    except Week8ContractError as exc:
+        raise IntegrityError(str(exc)) from exc
+    if value.get("uncertainty") != uncertainty_contract:
+        raise IntegrityError("plan uncertainty contract is not canonical")
+    if value.get("uncertainty_sha256") != canonical_sha256(uncertainty_contract):
+        raise IntegrityError("plan uncertainty contract hash mismatch")
+    if value.get("endpoint_availability") != endpoint_contract:
+        raise IntegrityError("plan endpoint availability contract is not canonical")
+    if value.get("endpoint_availability_sha256") != canonical_sha256(endpoint_contract):
+        raise IntegrityError("plan endpoint availability hash mismatch")
+    if value.get("reporting_contract") != reporting_contract:
+        raise IntegrityError("plan reporting contract is not canonical")
+    if value.get("reporting_contract_sha256") != canonical_sha256(reporting_contract):
+        raise IntegrityError("plan reporting contract hash mismatch")
+    reporting_strata = value.get("mandatory_reporting_strata")
+    if reporting_strata != list(MANDATORY_STRATA):
+        raise IntegrityError("plan mandatory reporting strata mismatch")
+    if value.get("mandatory_reporting_strata_sha256") != canonical_sha256(reporting_strata):
+        raise IntegrityError("plan mandatory reporting strata hash mismatch")
     raw_tasks = value.get("tasks")
     if not isinstance(raw_tasks, list) or not raw_tasks:
         raise IntegrityError("plan tasks must be a nonempty list")
@@ -940,6 +1117,10 @@ def prepare_artifacts(
             "code_sha256": verified_plan["code_sha256"],
             "tolerance_px": verified_plan["tolerance_px"],
             "mask_dice_threshold": verified_plan["mask_dice_threshold"],
+            "uncertainty_sha256": verified_plan["uncertainty_sha256"],
+            "endpoint_availability_sha256": verified_plan["endpoint_availability_sha256"],
+            "reporting_contract_sha256": verified_plan["reporting_contract_sha256"],
+            "mandatory_reporting_strata_sha256": verified_plan["mandatory_reporting_strata_sha256"],
             "source_ledger_sha256": verified_plan["source_ledger_sha256"],
             "enrollment_manifest_sha256": verified_plan["enrollment_manifest_sha256"],
             "final_readiness_receipt_sha256": verified_plan["final_readiness_receipt_sha256"],
@@ -986,6 +1167,10 @@ def _verify_prepared(paths: Week8Paths, *, verify_observable_bytes: bool) -> tup
         "code_sha256": plan["code_sha256"],
         "tolerance_px": plan["tolerance_px"],
         "mask_dice_threshold": plan["mask_dice_threshold"],
+        "uncertainty_sha256": plan["uncertainty_sha256"],
+        "endpoint_availability_sha256": plan["endpoint_availability_sha256"],
+        "reporting_contract_sha256": plan["reporting_contract_sha256"],
+        "mandatory_reporting_strata_sha256": plan["mandatory_reporting_strata_sha256"],
         "source_ledger_sha256": plan["source_ledger_sha256"],
         "enrollment_manifest_sha256": plan["enrollment_manifest_sha256"],
         "final_readiness_receipt_sha256": plan["final_readiness_receipt_sha256"],
@@ -1052,6 +1237,10 @@ def _contract_fingerprint(plan: Mapping[str, Any], manifest: Mapping[str, Any], 
             "code_sha256": plan["code_sha256"],
             "tolerance_px": plan["tolerance_px"],
             "mask_dice_threshold": plan["mask_dice_threshold"],
+            "uncertainty_sha256": plan["uncertainty_sha256"],
+            "endpoint_availability_sha256": plan["endpoint_availability_sha256"],
+            "reporting_contract_sha256": plan["reporting_contract_sha256"],
+            "mandatory_reporting_strata_sha256": plan["mandatory_reporting_strata_sha256"],
             "source_ledger_sha256": plan["source_ledger_sha256"],
             "enrollment_manifest_sha256": plan["enrollment_manifest_sha256"],
             "final_readiness_receipt_sha256": plan["final_readiness_receipt_sha256"],
@@ -1127,9 +1316,59 @@ def _normalize_scientific_record(task: Week8Task, raw_result: Any) -> dict[str, 
             raise Week8ContractError("estimated_transform must be a finite 3x3 matrix")
         estimated = matrix.tolist()
     diagnostics = raw_result.get("method_diagnostics", {})
+    similarity_raw = raw_result.get("similarity_metrics", {})
     timings = raw_result.get("timings_ms", {})
-    if not isinstance(diagnostics, Mapping) or not isinstance(timings, Mapping):
-        raise Week8ContractError("diagnostics and timings must be mappings")
+    if (
+        not isinstance(diagnostics, Mapping)
+        or not isinstance(similarity_raw, Mapping)
+        or not isinstance(timings, Mapping)
+    ):
+        raise Week8ContractError("diagnostics, similarity_metrics, and timings must be mappings")
+    allowed_similarity = {"mae", "mse", "ncc", "ssim", "mi_nats"}
+    if not set(similarity_raw).issubset(allowed_similarity):
+        raise Week8ContractError("similarity_metrics contains an unregistered metric")
+    similarity_metrics: dict[str, float | None] = {}
+    for key in sorted(allowed_similarity):
+        raw_value = similarity_raw.get(key)
+        if raw_value is None:
+            similarity_metrics[key] = None
+            continue
+        try:
+            number = float(raw_value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise Week8ContractError(f"similarity_metrics.{key} must be numeric or null") from exc
+        if not math.isfinite(number):
+            raise Week8ContractError(f"similarity_metrics.{key} must be finite")
+        similarity_metrics[key] = number
+    if not {"registration", "total"}.issubset(timings):
+        raise Week8ContractError(
+            "timings_ms must contain registration and total for every terminal record"
+        )
+    normalized_timings: dict[str, float] = {}
+    for key, value in timings.items():
+        try:
+            number = float(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise Week8ContractError(f"timings_ms.{key} must be numeric") from exc
+        if not math.isfinite(number) or number < 0:
+            raise Week8ContractError(f"timings_ms.{key} must be finite and nonnegative")
+        normalized_timings[str(key)] = number
+    overlap_raw = raw_result.get("valid_overlap_fraction")
+    if estimated is None:
+        if overlap_raw is not None:
+            raise Week8ContractError(
+                "valid_overlap_fraction must be null when estimated_transform is absent"
+            )
+        overlap: float | None = None
+    else:
+        try:
+            overlap = float(overlap_raw)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise Week8ContractError(
+                "valid_overlap_fraction is required when estimated_transform is present"
+            ) from exc
+        if not math.isfinite(overlap) or not 0.0 <= overlap <= 1.0:
+            raise Week8ContractError("valid_overlap_fraction must be finite and in [0,1]")
     warnings = raw_result.get("warnings", [])
     if not isinstance(warnings, (list, tuple)):
         raise Week8ContractError("warnings must be a list")
@@ -1138,8 +1377,9 @@ def _normalize_scientific_record(task: Week8Task, raw_result: Any) -> dict[str, 
         "execution_status": status,
         "estimated_transform": estimated,
         "transform_plausible": raw_result.get("transform_plausible"),
-        "valid_overlap_fraction": raw_result.get("valid_overlap_fraction"),
-        "timings_ms": _jsonable(dict(timings)),
+        "valid_overlap_fraction": overlap,
+        "timings_ms": normalized_timings,
+        "similarity_metrics": similarity_metrics,
         "method_diagnostics": _jsonable(dict(diagnostics)),
         "warnings": [str(value) for value in warnings],
         "failure_reason": raw_result.get("failure_reason"),
@@ -1234,7 +1474,7 @@ def _policy_decisions(tasks: Sequence[Week8Task], records: Sequence[Mapping[str,
                 }
             )
     return {
-        "schema_version": "week08_policy_decisions_v1",
+        "schema_version": "week08_policy_decisions_v2",
         "eligible_pair_count": len(rows),
         "decisions": rows,
     }
@@ -1568,6 +1808,10 @@ class Week8DecisionRunner:
             "code_sha256": plan["code_sha256"],
             "tolerance_px": plan["tolerance_px"],
             "mask_dice_threshold": plan["mask_dice_threshold"],
+            "uncertainty_sha256": plan["uncertainty_sha256"],
+            "endpoint_availability_sha256": plan["endpoint_availability_sha256"],
+            "reporting_contract_sha256": plan["reporting_contract_sha256"],
+            "mandatory_reporting_strata_sha256": plan["mandatory_reporting_strata_sha256"],
             "source_ledger_sha256": plan["source_ledger_sha256"],
             "enrollment_manifest_sha256": plan["enrollment_manifest_sha256"],
             "final_readiness_receipt_sha256": plan["final_readiness_receipt_sha256"],
@@ -1623,6 +1867,10 @@ def _verify_decision_artifacts(
         "code_sha256": plan["code_sha256"],
         "tolerance_px": plan["tolerance_px"],
         "mask_dice_threshold": plan["mask_dice_threshold"],
+        "uncertainty_sha256": plan["uncertainty_sha256"],
+        "endpoint_availability_sha256": plan["endpoint_availability_sha256"],
+        "reporting_contract_sha256": plan["reporting_contract_sha256"],
+        "mandatory_reporting_strata_sha256": plan["mandatory_reporting_strata_sha256"],
         "source_ledger_sha256": plan["source_ledger_sha256"],
         "enrollment_manifest_sha256": plan["enrollment_manifest_sha256"],
         "final_readiness_receipt_sha256": plan["final_readiness_receipt_sha256"],
@@ -1678,7 +1926,7 @@ def _verify_decision_artifacts(
         raise IntegrityError("infrastructure retry limit exceeded")
 
     policy = _read_json(paths.policy_decisions)
-    if not isinstance(policy, dict) or policy.get("schema_version") != "week08_policy_decisions_v1":
+    if not isinstance(policy, dict) or policy.get("schema_version") != "week08_policy_decisions_v2":
         raise IntegrityError("invalid policy decision artifact")
     decisions = policy.get("decisions")
     if not isinstance(decisions, list):
@@ -1735,12 +1983,22 @@ def _numeric_summary(values: Iterable[Any]) -> dict[str, Any]:
     }
 
 
-def _rate_uncertainty(rate: Mapping[str, Any]) -> dict[str, Any]:
-    low, high = wilson_interval(int(rate["numerator"]), int(rate["denominator"]))
-    return {"method": "wilson_95", "lower": low, "upper": high}
+def _rate_uncertainty(rate: Mapping[str, Any], *, z_value: float) -> dict[str, Any]:
+    low, high = wilson_interval(
+        int(rate["numerator"]), int(rate["denominator"]), z=float(z_value)
+    )
+    return {
+        "method": "wilson_score",
+        "confidence_level": 0.95,
+        "z_value": float(z_value),
+        "lower": low,
+        "upper": high,
+    }
 
 
-def _track_a_subset_summary(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+def _track_a_subset_summary(
+    rows: Sequence[Mapping[str, Any]], *, z_value: float
+) -> dict[str, Any]:
     valid_gt = sum(row.get("geometric_reference_valid") is True for row in rows)
     evaluable = sum(row.get("geometric_within_tolerance") is not None for row in rows)
     successes = sum(row.get("geometric_within_tolerance") is True for row in rows)
@@ -1760,14 +2018,18 @@ def _track_a_subset_summary(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]
         "geometrically_evaluable_completed_attempts": evaluable,
         "geometric_successes": successes,
         **rates,
-        "uncertainty": {name: _rate_uncertainty(rate) for name, rate in rates.items()},
+        "uncertainty": {
+            name: _rate_uncertainty(rate, z_value=z_value) for name, rate in rates.items()
+        },
         "total_runtime_ms": _numeric_summary(row.get("total_runtime_ms") for row in rows),
         "method_runtime_ms": _numeric_summary(row.get("method_runtime_ms") for row in rows),
         "valid_overlap_fraction": _numeric_summary(row.get("valid_overlap_fraction") for row in rows),
     }
 
 
-def _track_b_subset_summary(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+def _track_b_subset_summary(
+    rows: Sequence[Mapping[str, Any]], *, z_value: float
+) -> dict[str, Any]:
     selected = sum(row.get("decision") == "selected" for row in rows)
     abstained = sum(row.get("decision") == "abstained" for row in rows)
     invalid = sum(row.get("decision") == "invalid" for row in rows)
@@ -1793,7 +2055,9 @@ def _track_b_subset_summary(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]
         "missing_decision_pairs": missing,
         "correct_selected_pairs": correct,
         **rates,
-        "uncertainty": {name: _rate_uncertainty(rate) for name, rate in rates.items()},
+        "uncertainty": {
+            name: _rate_uncertainty(rate, z_value=z_value) for name, rate in rates.items()
+        },
     }
 
 
@@ -1890,14 +2154,15 @@ def _recommendation_validation(
     mode: str,
     decision_rows: Sequence[Mapping[str, Any]],
     criteria: Mapping[str, Any],
-    no_post_label_change_attested: bool,
+    integrity_evidence: Mapping[str, Any],
+    z_value: float,
 ) -> dict[str, Any]:
     independent = [row for row in decision_rows if row.get("source_role") == "full_project_independent"]
     selected = [row for row in independent if row.get("decision") == "selected"]
     correct = sum(row.get("selected_geometrically_correct") is True for row in selected)
     coverage = _rate(len(selected), len(independent))
     precision = _rate(correct, len(selected))
-    lower, upper = wilson_interval(correct, len(selected))
+    lower, upper = wilson_interval(correct, len(selected), z=float(z_value))
     missing = sum(row.get("decision") == "missing_decision" for row in independent)
     checks = {
         "final_evidence_mode": mode != "development_rehearsal",
@@ -1906,8 +2171,10 @@ def _recommendation_validation(
         "minimum_selective_correctness": precision["value"] is not None and precision["value"] >= float(criteria["minimum_selective_correctness"]),
         "minimum_selective_correctness_wilson_lower_95": lower is not None and lower >= float(criteria["minimum_selective_correctness_wilson_lower_95"]),
         "maximum_missing_decisions": missing <= int(criteria["maximum_missing_decisions"]),
-        "no_firewall_or_integrity_incident": True,
-        "no_post_label_change": bool(no_post_label_change_attested),
+        "no_firewall_or_integrity_incident": bool(
+            integrity_evidence.get("no_firewall_or_integrity_incident")
+        ),
+        "no_post_label_change": bool(integrity_evidence.get("no_post_label_change")),
     }
     limited = all(checks.values())
     distinct_sources = len({str(row.get("source_id")) for row in independent})
@@ -1965,7 +2232,13 @@ def _recommendation_validation(
         "correct_selected_pairs": correct,
         "coverage": coverage,
         "selective_correctness": precision,
-        "selective_correctness_wilson_95": {"lower": lower, "upper": upper},
+        "selective_correctness_wilson_95": {
+            "method": "wilson_score",
+            "confidence_level": 0.95,
+            "z_value": float(z_value),
+            "lower": lower,
+            "upper": upper,
+        },
         "missing_decisions": missing,
         "distinct_independent_sources": distinct_sources,
         "has_real_verified_gt_subset": real_verified,
@@ -2110,8 +2383,8 @@ def evaluate_sealed_run(
     *,
     label_loader: Callable[[Path], Any] | None = None,
     tolerance_px: float = 2.0,
+    wilson_z: float | None = None,
     recommendation_criteria: Mapping[str, Any] | None = None,
-    no_post_label_change_attested: bool = False,
     track_a_table: str | Path | None = None,
     track_b_table: str | Path | None = None,
 ) -> dict[str, Any]:
@@ -2119,9 +2392,25 @@ def evaluate_sealed_run(
     if not math.isfinite(float(tolerance_px)) or float(tolerance_px) <= 0:
         raise Week8ContractError("tolerance_px must be finite and positive")
     paths = _coerce_paths(output_dir)
+    declared_outputs = [paths.evaluation_summary, paths.label_access_audit]
+    if track_a_table is not None:
+        declared_outputs.append(Path(track_a_table))
+    if track_b_table is not None:
+        declared_outputs.append(Path(track_b_table))
+    preexisting_outputs = [path for path in declared_outputs if path.exists()]
+    if preexisting_outputs:
+        raise IntegrityError(
+            "one-shot evaluation is already started or complete; refusing label access: "
+            + ", ".join(str(path) for path in preexisting_outputs)
+        )
     plan, manifest, receipt = _verify_prepared(paths, verify_observable_bytes=True)
     if not math.isclose(float(tolerance_px), float(plan["tolerance_px"]), rel_tol=0.0, abs_tol=1e-12):
         raise IntegrityError("evaluation tolerance differs from the frozen plan")
+    frozen_z = float(plan["uncertainty"]["z_value"])
+    if wilson_z is not None and not math.isclose(
+        float(wilson_z), frozen_z, rel_tol=0.0, abs_tol=1e-15
+    ):
+        raise IntegrityError("evaluation Wilson z differs from the frozen plan")
     records, policy, seal, events = _verify_decision_artifacts(
         paths, plan, manifest, receipt
     )
@@ -2145,16 +2434,21 @@ def evaluate_sealed_run(
     ):
         raise IntegrityError("sealed label artifact hash mismatch")
 
-    _append_jsonl(
-        paths.label_access_audit,
-        {
-            "schema_version": "week08_label_access_audit_v1",
-            "event": "label_open_after_verified_decision_seal",
-            "plan_sha256": plan["plan_sha256"],
-            "decision_seal_sha256": seal["seal_sha256"],
-            "label_artifact_sha256": label_hash,
-        },
-    )
+    access_event = {
+        "schema_version": "week08_label_access_audit_v2",
+        "event": "label_open_after_verified_decision_seal",
+        "plan_sha256": plan["plan_sha256"],
+        "decision_seal_sha256": seal["seal_sha256"],
+        "label_manifest_sha256": label_manifest["manifest_sha256"],
+        "label_artifact_sha256": label_hash,
+        "prior_label_access_event_count": 0,
+        "prior_evaluation_output_count": 0,
+    }
+    access_event["event_sha256"] = canonical_sha256(access_event)
+    _create_exclusive_jsonl(paths.label_access_audit, access_event)
+    audit_events = _read_jsonl(paths.label_access_audit)
+    if audit_events != [access_event]:
+        raise IntegrityError("label-access audit is not the canonical one-shot event")
     sealed_labels = _read_json(paths.sealed_labels)
     if label_loader is None:
         raw_labels = sealed_labels
@@ -2271,6 +2565,9 @@ def evaluate_sealed_run(
         if not isinstance(raw_diagnostics, Mapping):
             raw_diagnostics = {}
         timings = record.get("timings_ms", {})
+        similarity_metrics = record.get("similarity_metrics", {})
+        if not isinstance(similarity_metrics, Mapping):
+            similarity_metrics = {}
         total_runtime = timings.get("total") if isinstance(timings, Mapping) else None
         method_runtime = None
         if isinstance(timings, Mapping):
@@ -2291,6 +2588,7 @@ def evaluate_sealed_run(
                 "severity": task.pair.severity,
                 "ground_truth_type": task.pair.ground_truth_type,
                 "execution_status": record["execution_status"],
+                "estimated_transform_present": record.get("estimated_transform") is not None,
                 "geometric_reference_valid": valid_gt,
                 **metrics,
                 "geometric_within_tolerance": success,
@@ -2298,6 +2596,10 @@ def evaluate_sealed_run(
                 "total_runtime_ms": total_runtime,
                 "method_runtime_ms": method_runtime,
                 "timings_ms": timings,
+                **{
+                    key: similarity_metrics.get(key)
+                    for key in ("mae", "mse", "ncc", "ssim", "mi_nats")
+                },
                 "diagnostic_keys": sorted(str(key) for key in raw_diagnostics),
             }
         )
@@ -2376,14 +2678,19 @@ def evaluate_sealed_run(
         "policy_selective_correctness": track_b_overall["selective_correctness"],
         "policy_abstention_rate": track_b_overall["abstention_rate"],
     }.items():
-        low, high = wilson_interval(rate["numerator"], rate["denominator"])
-        uncertainty[name] = {"method": "wilson_95", "lower": low, "upper": high}
+        uncertainty[name] = _rate_uncertainty(rate, z_value=frozen_z)
 
     criteria = dict(DEFAULT_RECOMMENDATION_CRITERIA)
     if recommendation_criteria is not None:
         criteria.update(dict(recommendation_criteria))
-    track_a_strata = _stratified_summaries(attempt_rows, _track_a_subset_summary)
-    track_b_strata = _stratified_summaries(decision_rows, _track_b_subset_summary)
+    track_a_strata = _stratified_summaries(
+        attempt_rows,
+        lambda rows: _track_a_subset_summary(rows, z_value=frozen_z),
+    )
+    track_b_strata = _stratified_summaries(
+        decision_rows,
+        lambda rows: _track_b_subset_summary(rows, z_value=frozen_z),
+    )
     runtime_by_method = []
     for method_id in sorted({str(row["method_id"]) for row in attempt_rows}):
         group = [row for row in attempt_rows if row["method_id"] == method_id]
@@ -2403,11 +2710,54 @@ def evaluate_sealed_run(
                 "valid_overlap_fraction": _numeric_summary(row.get("valid_overlap_fraction") for row in group),
             }
         )
+    integrity_evidence = {
+        "schema_version": "week08_integrity_evidence_v2",
+        "plan_verified": True,
+        "prepare_receipt_verified": True,
+        "observable_manifest_and_bytes_verified": True,
+        "decision_seal_verified": True,
+        "decision_artifact_hashes_verified": True,
+        "decision_outcome_count_verified": True,
+        "contract_error_event_count": 0,
+        "decision_seal_label_accessed": False,
+        "label_manifest_and_artifact_hashes_verified_before_open": True,
+        "prior_label_access_event_count": 0,
+        "prior_evaluation_output_count": 0,
+        "label_access_event_count": len(audit_events),
+        "label_access_event_sha256": access_event["event_sha256"],
+        "final_readiness_receipt_bound": bool(
+            plan["mode"] == "final"
+            and plan.get("final_readiness_receipt_sha256")
+            and receipt.get("final_readiness_receipt_sha256")
+            == plan.get("final_readiness_receipt_sha256")
+        ),
+    }
+    integrity_evidence["no_firewall_or_integrity_incident"] = bool(
+        integrity_evidence["plan_verified"]
+        and integrity_evidence["prepare_receipt_verified"]
+        and integrity_evidence["observable_manifest_and_bytes_verified"]
+        and integrity_evidence["decision_seal_verified"]
+        and integrity_evidence["decision_artifact_hashes_verified"]
+        and integrity_evidence["decision_outcome_count_verified"]
+        and integrity_evidence["contract_error_event_count"] == 0
+        and integrity_evidence["decision_seal_label_accessed"] is False
+        and integrity_evidence["label_manifest_and_artifact_hashes_verified_before_open"]
+        and integrity_evidence["prior_label_access_event_count"] == 0
+        and integrity_evidence["prior_evaluation_output_count"] == 0
+        and integrity_evidence["label_access_event_count"] == 1
+    )
+    integrity_evidence["no_post_label_change"] = bool(
+        integrity_evidence["no_firewall_or_integrity_incident"]
+        and integrity_evidence["final_readiness_receipt_bound"]
+    )
+    integrity_evidence["evidence_sha256"] = canonical_sha256(integrity_evidence)
+
     recommendation = _recommendation_validation(
         mode=str(plan["mode"]),
         decision_rows=decision_rows,
         criteria=criteria,
-        no_post_label_change_attested=no_post_label_change_attested,
+        integrity_evidence=integrity_evidence,
+        z_value=frozen_z,
     )
 
     report = {
@@ -2416,6 +2766,10 @@ def evaluate_sealed_run(
         "plan_sha256": plan["plan_sha256"],
         "decision_seal_sha256": seal["seal_sha256"],
         "tolerance_px": float(tolerance_px),
+        "uncertainty_contract": dict(plan["uncertainty"]),
+        "endpoint_availability_contract": dict(plan["endpoint_availability"]),
+        "reporting_contract": dict(plan["reporting_contract"]),
+        "mandatory_reporting_strata": list(plan["mandatory_reporting_strata"]),
         "track_a": {
             "overall": track_a_overall,
             "attempts": attempt_rows,
@@ -2438,11 +2792,11 @@ def evaluate_sealed_run(
         "track_b": {"overall": track_b_overall, "pairs": decision_rows, "strata": track_b_strata},
         "uncertainty": uncertainty,
         "recommendation_validation": recommendation,
+        "integrity_evidence": integrity_evidence,
         "label_access": {
             "after_verified_decision_seal": True,
             "label_artifact_sha256": label_hash,
         },
-        "no_post_label_change_attested": bool(no_post_label_change_attested),
         "final_evidence": plan["mode"] != "development_rehearsal",
     }
     if track_a_table is not None:

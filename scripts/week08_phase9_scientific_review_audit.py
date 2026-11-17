@@ -18,6 +18,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -31,6 +32,14 @@ FINDING = ROOT / "reports/week08_phase9_scientific_review_finding.json"
 TABLE_DIR = ROOT / "reports/week08_phase9_review_tables"
 SCHEMA_VERSION = "week08_phase9_scientific_review_finding_v1"
 REVIEWED_COMMIT = "8bbe782247dec025a95e34cbae9b4ff075e66d0f"
+FINDING_GENERATOR_COMMIT = "68e2ecf1cd7c3e1172dea1d8bfd93127d2a1cd16"
+
+HISTORICAL_GIT_BINDINGS = frozenset({
+    "configs/week08_final_evaluation.yaml",
+    "src/image_registration/week8_evaluation.py",
+    "src/image_registration/week7_calibration.py",
+    "scripts/week08_final_evaluation.py",
+})
 
 TABLE_FILES = (
     "wilson_interval_erratum.csv",
@@ -132,6 +141,43 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def git_blob_bytes(root: Path, commit: str, relative: str) -> bytes:
+    """Read a tracked historical byte stream without using the worktree copy."""
+
+    completed = subprocess.run(
+        [
+            "git",
+            "-c",
+            f"safe.directory={root.resolve().as_posix()}",
+            "cat-file",
+            "blob",
+            f"{commit}:{relative}",
+        ],
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    require(
+        completed.returncode == 0,
+        f"Historical Git blob is unavailable: {commit}:{relative}",
+    )
+    return completed.stdout
+
+
+def git_blob_sha256(root: Path, commit: str, relative: str) -> str:
+    return hashlib.sha256(git_blob_bytes(root, commit, relative)).hexdigest()
+
+
+def git_blob_text(root: Path, commit: str, relative: str) -> str:
+    try:
+        return git_blob_bytes(root, commit, relative).decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ScientificReviewError(
+            f"Historical Git blob is not UTF-8 text: {commit}:{relative}"
+        ) from exc
+
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     require(isinstance(value, dict), f"Expected a JSON object: {path}")
@@ -212,11 +258,14 @@ def safe_stratum(dimension: str, row: Mapping[str, Any]) -> str:
     return str(row[dimension])
 
 
-def parse_frozen_z(path: Path) -> float:
-    text = path.read_text(encoding="utf-8")
+def parse_frozen_z_text(text: str) -> float:
     match = re.search(r"(?m)^\s*z_value:\s*([0-9.]+)\s*$", text)
     require(match is not None, "Frozen z_value is missing")
     return float(match.group(1))
+
+
+def parse_frozen_z(path: Path) -> float:
+    return parse_frozen_z_text(path.read_text(encoding="utf-8"))
 
 
 def numeric_summary(values: Iterable[Any]) -> dict[str, Any]:
@@ -277,9 +326,13 @@ def exact_interval_fields(prefix: str, rate: Mapping[str, Any], z: float) -> dic
 
 def verify_context(root: Path) -> dict[str, Any]:
     for relative, expected in EXPECTED_HASHES.items():
-        path = root / relative
-        require(path.is_file(), f"Required evidence is unavailable: {relative}")
-        require(sha256_file(path) == expected, f"Immutable binding changed: {relative}")
+        if relative in HISTORICAL_GIT_BINDINGS:
+            actual = git_blob_sha256(root, REVIEWED_COMMIT, relative)
+        else:
+            path = root / relative
+            require(path.is_file(), f"Required evidence is unavailable: {relative}")
+            actual = sha256_file(path)
+        require(actual == expected, f"Immutable binding changed: {relative}")
 
     phase91 = load_json(root / "reports/week08_phase9_data_quality_closure.json")
     phase92 = load_json(root / "reports/week08_phase9_final_analysis.json")
@@ -298,11 +351,14 @@ def verify_context(root: Path) -> dict[str, Any]:
         require(path.is_file(), f"Historical Phase 9.2 artifact missing: {artifact['path']}")
         require(sha256_file(path) == artifact["sha256"], f"Historical artifact changed: {artifact['path']}")
 
-    config = root / "configs/week08_final_evaluation.yaml"
-    frozen_z = parse_frozen_z(config)
+    frozen_z = parse_frozen_z_text(git_blob_text(
+        root, REVIEWED_COMMIT, "configs/week08_final_evaluation.yaml"
+    ))
     require(frozen_z == 1.959963984540054, "Unexpected frozen Wilson quantile")
 
-    evaluator = (root / "src/image_registration/week8_evaluation.py").read_text(encoding="utf-8")
+    evaluator = git_blob_text(
+        root, REVIEWED_COMMIT, "src/image_registration/week8_evaluation.py"
+    )
     evaluator_lines = evaluator.splitlines()
     wilson_calls = [
         index for index, line in enumerate(evaluator_lines, 1) if "wilson_interval(" in line
@@ -312,7 +368,9 @@ def verify_context(root: Path) -> dict[str, Any]:
         all("z=" not in evaluator_lines[index - 1] for index in wilson_calls),
         "A frozen z is now passed at an audited historical call site",
     )
-    helper = (root / "src/image_registration/week7_calibration.py").read_text(encoding="utf-8")
+    helper = git_blob_text(
+        root, REVIEWED_COMMIT, "src/image_registration/week7_calibration.py"
+    )
     require(
         "def wilson_interval(successes: int, n: int, z: float = 1.96)" in helper,
         "Historical Wilson helper default changed",
@@ -321,7 +379,7 @@ def verify_context(root: Path) -> dict[str, Any]:
         '"no_firewall_or_integrity_incident": True' in evaluator,
         "Recommendation integrity finding no longer matches reviewed source",
     )
-    cli = (root / "scripts/week08_final_evaluation.py").read_text(encoding="utf-8")
+    cli = git_blob_text(root, REVIEWED_COMMIT, "scripts/week08_final_evaluation.py")
     require(
         "no_post_label_change_attested=True" in cli,
         "Post-label attestation finding no longer matches reviewed source",
@@ -347,6 +405,11 @@ def verify_context(root: Path) -> dict[str, Any]:
         "phase92": phase92,
         "frozen_z": frozen_z,
         "wilson_call_lines": wilson_calls,
+        "audit_generator_sha256": git_blob_sha256(
+            root,
+            FINDING_GENERATOR_COMMIT,
+            "scripts/week08_phase9_scientific_review_audit.py",
+        ),
     }
 
 
@@ -668,7 +731,7 @@ def build_finding(context: Mapping[str, Any], artifacts: Sequence[Mapping[str, A
         },
         "immutable_bindings": {
             "files": dict(sorted(EXPECTED_HASHES.items())),
-            "audit_generator_sha256": sha256_file(Path(__file__)),
+            "audit_generator_sha256": context["audit_generator_sha256"],
             "phase9_1_payload_sha256": EXPECTED_PAYLOAD_HASHES["phase9_1"],
             "phase9_2_payload_sha256": EXPECTED_PAYLOAD_HASHES["phase9_2"],
             "historical_phase9_2_artifacts_verified": len(context["phase92"]["outputs"]),

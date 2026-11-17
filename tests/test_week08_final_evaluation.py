@@ -258,7 +258,7 @@ def test_w8_id_is_deterministic_and_disjoint_from_week7_ids() -> None:
         ("pair", "case_id", "case-b"),
         ("pair", "geometry_seed", 81117),
         ("pair", "evaluation_role", "policy_transfer_check"),
-        ("pair", "protocol_version", "week08_evaluator_firewall_v2"),
+        ("pair", "protocol_version", "week08_evaluator_firewall_v3"),
         ("pair", "transform_model", "similarity"),
         ("method", "method_id", "orb_affine"),
         ("method", "config_id", "orb-affine-v1"),
@@ -676,7 +676,7 @@ def test_track_a_success_and_conditional_accuracy_have_distinct_denominators(
             return {
                 "execution_status": "failed",
                 "failure_reason": "development fixture failure",
-                "timings_ms": {"total": 1.0},
+                "timings_ms": {"registration": 0.5, "total": 1.0},
                 "method_diagnostics": {"raw": {}},
             }
         return completed(view, item)
@@ -858,7 +858,7 @@ def test_final_plan_binds_enrollment_and_readiness_hashes() -> None:
     assert verified["source_ledger_sha256"] == "7" * 64
     assert verified["enrollment_manifest_sha256"] == "8" * 64
     assert verified["final_readiness_receipt_sha256"] == "9" * 64
-    assert verified["tasks"][0]["protocol_version"] == "week08_evaluator_firewall_v1"
+    assert verified["tasks"][0]["protocol_version"] == "week08_evaluator_firewall_v2"
 
     with pytest.raises(Week8ContractError, match="bind"):
         build_week8_plan(
@@ -974,12 +974,11 @@ def test_split_final_layout_runs_without_exposing_holdout_paths(tmp_path: Path) 
     track_b = paths.root / "track_b_pairs.csv"
     report = evaluate_sealed_run(
         paths,
-        no_post_label_change_attested=True,
         track_a_table=track_a,
         track_b_table=track_b,
     )
     assert report["final_evidence"] is True
-    assert report["no_post_label_change_attested"] is True
+    assert report["integrity_evidence"]["no_post_label_change"] is True
     assert track_a.is_file() and "config_id" in track_a.read_text(encoding="utf-8").splitlines()[0]
     assert track_b.is_file()
 
@@ -1066,3 +1065,114 @@ def test_verified_landmarks_require_pixel_units_and_direction(tmp_path: Path) ->
     Week8DecisionRunner(tmp_path).run(completed)
     with pytest.raises(IntegrityError, match="pixel coordinates"):
         evaluate_sealed_run(tmp_path)
+
+
+def test_frozen_nondefault_wilson_z_is_bound_propagated_and_mismatch_rejected(
+    tmp_path: Path,
+) -> None:
+    task_list = tasks(methods=methods())
+    frozen_z = 1.2345
+    value = build_week8_plan(
+        task_list,
+        config_sha256=SHA_CONFIG,
+        method_catalog_sha256=SHA_METHODS,
+        policy_sha256=SHA_POLICY,
+        code_sha256=SHA_CODE,
+        mode="development_rehearsal",
+        uncertainty={
+            "confidence_level": 0.95,
+            "binomial_interval": "wilson_score",
+            "z_value": frozen_z,
+            "interval_metrics": [
+                "geometric_success_rate",
+                "conditional_accuracy",
+                "execution_completion_rate",
+                "infrastructure_incident_rate",
+                "policy_coverage",
+                "policy_selective_correctness",
+                "policy_abstention_rate",
+            ],
+        },
+    )
+    prepare_artifacts(
+        tmp_path,
+        value,
+        {"dev-pair-a": observable()},
+        {"dev-pair-a": label()},
+    )
+    Week8DecisionRunner(tmp_path).run(completed)
+    with pytest.raises(IntegrityError, match="Wilson z differs"):
+        evaluate_sealed_run(tmp_path, wilson_z=1.96)
+    assert not Week8Paths(tmp_path).label_access_audit.exists()
+
+    report = evaluate_sealed_run(tmp_path, wilson_z=frozen_z)
+    assert report["uncertainty_contract"]["z_value"] == frozen_z
+    assert all(item["z_value"] == frozen_z for item in report["uncertainty"].values())
+    stratum = report["track_a"]["strata"]["modality_class"][0]
+    assert all(item["z_value"] == frozen_z for item in stratum["uncertainty"].values())
+
+
+@pytest.mark.parametrize(
+    ("mutation", "message"),
+    [
+        (lambda row: row["timings_ms"].pop("registration"), "registration and total"),
+        (lambda row: row["timings_ms"].__setitem__("registration", float("nan")), "finite and nonnegative"),
+        (lambda row: row.__setitem__("valid_overlap_fraction", None), "is required"),
+        (
+            lambda row: (
+                row.__setitem__("estimated_transform", None),
+                row.__setitem__("valid_overlap_fraction", 0.5),
+            ),
+            "must be null",
+        ),
+    ],
+)
+def test_runner_rejects_missing_or_malformed_required_observable_endpoints(
+    tmp_path: Path, mutation, message: str,
+) -> None:
+    prepare(tmp_path, method_specs=[method()])
+
+    def malformed(view, item):
+        row = completed(view, item)
+        mutation(row)
+        return row
+
+    with pytest.raises(Week8ContractError, match=message):
+        Week8DecisionRunner(tmp_path).run(malformed)
+    assert not Week8Paths(tmp_path).decision_seal.exists()
+
+
+def test_evaluation_is_one_shot_and_uses_machine_derived_integrity_evidence(
+    tmp_path: Path,
+) -> None:
+    prepare(tmp_path, method_specs=[method()])
+    Week8DecisionRunner(tmp_path).run(completed)
+    report = evaluate_sealed_run(tmp_path)
+    evidence = report["integrity_evidence"]
+    assert evidence["no_firewall_or_integrity_incident"] is True
+    assert evidence["no_post_label_change"] is False
+    assert evidence["prior_label_access_event_count"] == 0
+    assert evidence["label_access_event_count"] == 1
+    assert len(jsonl(Week8Paths(tmp_path).label_access_audit)) == 1
+
+    with pytest.raises(IntegrityError, match="one-shot evaluation"):
+        evaluate_sealed_run(tmp_path)
+    assert len(jsonl(Week8Paths(tmp_path).label_access_audit)) == 1
+
+
+def test_plan_binds_endpoint_and_reporting_contracts() -> None:
+    value = verify_week8_plan(plan())
+    assert value["endpoint_availability"]["method_runtime_ms"]["wire_key"] == "registration"
+    assert value["reporting_contract"]["mandatory_strata"] == [
+        "modality_class", "transform_model", "condition", "severity",
+        "source_role", "source_id",
+    ]
+    assert value["reporting_contract"]["required_tables"] == [
+        "track_a_overall.csv",
+        "track_a_mandatory_strata.csv",
+        "track_a_endpoint_distributions.csv",
+        "pairwise_exact_mcnemar.csv",
+        "track_b_overall.csv",
+        "track_b_mandatory_strata.csv",
+        "runtime_failure_similarity.csv",
+    ]

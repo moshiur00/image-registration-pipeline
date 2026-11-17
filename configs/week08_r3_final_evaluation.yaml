@@ -1,0 +1,753 @@
+schema_version: week08_final_evaluation_v2
+protocol_version: week08_evaluator_firewall_v2
+cycle_id: week08-r3-confirmatory-20261116
+state: r3_g3_remediation_in_progress_no_source_access
+authority: docs/WEEK08_R3_CONFIRMATORY_CYCLE.md
+preregistration_document: docs/WEEK08_R3_CONFIRMATORY_CYCLE.md
+baseline_scientific_review: reports/week08_phase9_scientific_review_finding.json
+
+# These are permanent attestations about what Phase 3 is allowed to access;
+# later release/enrollment gates do not flip them. Final execution is authorized
+# separately by the G3-G7 fields below.
+safety:
+  phase3_allows_real_week08_pixel_access: false
+  phase3_allows_real_week08_label_access: false
+  final_execution_requires_gates: [G3, G4, G5, G6]
+  final_execution_gate: G7
+  phase7_authorization:
+    required_for_final_readiness: true
+    technical_readiness_may_defer_authorization: true
+    release_manifest_path: reports/pre_week08_r3_release_manifest.json
+    release_manifest_schema_version: pre_week08_r3_release_manifest_v1
+    authorization_path: reports/pre_week08_r3_phase7_authorization.json
+    authorization_schema_version: pre_week08_r3_phase7_authorization_v1
+    incident_report_path: reports/pre_week08_r3_phase7_incident.json
+    source_registration_path: reports/pre_week08_r3_source_registration.json
+    authorization_must_bind:
+      - release_commit_and_tag
+      - reviewed_g6_enrollment_commit
+      - source_ledger
+      - holdout_manifest
+      - source_registration
+      - runtime_files
+      - incident_disposition
+      - source_reuse_decision
+      - independent_real_verified_gt_deviation
+      - restricted_claim_scope
+      - phase8_one_run_sequence
+  source_count_locked_before_first_pixel_decode: true
+  source_count_may_increase_after_any_enrolled_pixel_is_opened: false
+  source_count_may_increase_after_any_enrolled_label_is_opened: false
+  post_label_tuning_allowed: false
+  outcome_affecting_post_label_correction_reuses_holdout: false
+  plan_and_dry_run_are_metadata_only: true
+  plan_and_dry_run_forbid_image_or_label_decoding: true
+
+sources:
+  ledger_path: configs/week08_r3_source_use_ledger.json
+  required_ledger_schema_version: week08_r3_source_use_ledger_v1
+  enrollment_manifest_path: data/manifests/week08_r3_holdout_sources.json
+  enrollment_manifest_schema_version: week08_r3_holdout_sources_v1
+  enrollment_manifest_contract:
+    required_top_level_fields:
+      - schema_version
+      - cycle_id
+      - release_id
+      - status
+      - ledger_path
+      - ledger_sha256
+      - source_ids
+      - pairs
+      - source_bytes_accessed
+      - labels_accessed
+      - synthetic_ground_truth_generated
+      - execution_authorized
+      - blockers
+      - output_namespaces
+    release_id_must_be_nonempty: true
+    ledger_sha256_must_match_current_ledger: true
+    source_ids_must_exactly_match_enrolled_ledger: true
+    duplicate_source_or_pair_ids_forbidden: true
+    non_synthetic_pair_required_fields:
+      - pair_id
+      - case_id
+      - source_id
+      - fixed_source_id
+      - moving_source_id
+      - modality_class
+      - transform_model
+      - dimensions
+      - ground_truth_type
+    dimensions_allowed: [2]
+    ground_truth_type_must_equal_source_ledger: true
+    fixed_and_moving_source_ids_must_reference_enrolled_ledger: true
+    manifest_supplied_policy_eligibility_forbidden: true
+    policy_eligibility_is_derived_from_frozen_rules: true
+    verified_pair_additional_required_fields:
+      - label_manifest_id
+      - label
+    verified_label_descriptor:
+      required_fields:
+        - type
+        - units
+        - direction
+        - fixed_path
+        - fixed_sha256
+        - moving_path
+        - moving_sha256
+      type_must_equal_ground_truth_type: true
+      units: pixels
+      direction: moving_to_fixed
+      every_file_hash_verified_metadata_only_before_decode: true
+    technical_only_label_descriptor_forbidden: true
+  enrollment_lock:
+    event: source_registration_signoff_before_prepare
+    bind_fields:
+      - source_id
+      - canonical_source_id
+      - canonical_dataset_id
+      - canonical_subject_id
+      - canonical_case_id
+      - canonical_acquisition_id
+      - path
+      - sha256
+      - format
+      - modality
+      - role
+      - previously_used
+      - prior_usage
+      - reference_or_license
+      - lineage_ancestors
+      - lineage_evidence
+      - lineage_status
+      - ground_truth
+    bind_artifact_hashes:
+      - source_ledger_sha256
+      - enrollment_manifest_sha256
+    exact_enrolled_count_and_ids_are_hashed_into_plan: true
+    persisted_plan_contains_source_or_label_locators: false
+    persisted_plan_binds_canonical_provenance_and_one_way_record_hashes: true
+    every_enrolled_source_and_label_hash_verified_before_first_decode: true
+    additions_or_removals_after_prepare_started: abort_and_new_evaluation_cycle
+  roles:
+    independent_known_gt:
+      ledger_role: full_project_independent
+      allowed_ground_truth_types:
+        - synthetic_created_after_freeze
+        - verified_landmarks
+        - verified_masks
+      minimum_distinct_source_identities: 1
+      required_for_core_benchmark: true
+      geometric_metrics_allowed: true
+      report_section: primary_independent_known_gt
+    independent_real_verified_gt:
+      ledger_role: full_project_independent
+      allowed_ground_truth_types: [verified_landmarks, verified_masks]
+      minimum_distinct_source_identities_for_full_plan_conformance: 1
+      preferred_for_full_plan_conformance: true
+      absence_requires_deviation_approval: true
+      geometric_metrics_allowed: true
+      report_section: independent_real_verified_gt
+    policy_transfer_check:
+      ledger_role: policy_transfer_check
+      allowed_ground_truth_types:
+        - synthetic_created_after_freeze
+        - verified_landmarks
+        - verified_masks
+      required_for_core_benchmark: false
+      previously_used_must_be: true
+      geometric_metrics_allowed_when_gt_valid: true
+      report_separately_from_independent_sources: true
+      report_section: secondary_policy_transfer
+    real_technical_only:
+      ledger_role: real_technical_only
+      allowed_ground_truth_types: [unavailable]
+      required_for_core_benchmark: false
+      previously_used_must_be: true
+      geometric_metrics_allowed: false
+      policy_correctness_allowed: false
+      report_section: technical_execution_only
+  source_count_rationale:
+    text: >-
+      At least one genuinely new source identity with valid ground truth is
+      required to test the frozen software path without reusing development
+      content. One identity can pass a software gate, but it cannot establish
+      cross-source, population, modality, anatomical, clinical, or external
+      validity. Independently acquired real pairs with verified landmarks or
+      masks remain preferred and require a documented deviation when absent.
+    minimum_for_software_gate: 1
+    minimum_independent_sources_for_cross_source_claim: 3
+    single_source_claim_limit: limited_source_specific_software_evidence
+    broad_external_validity_from_this_benchmark_alone: forbidden
+
+task_matrix:
+  task_unit: one_source_case_method_attempt
+  pair_unit: one_source_case_before_method_expansion
+  attempt_expansion: all_catalog_methods_compatible_with_pair_model_dimension_and_modality
+  expected_counts:
+    computed_before_prepare_from_enrollment_and_this_frozen_matrix: true
+    bind_pair_count: true
+    bind_compatible_attempt_count: true
+    bind_policy_eligible_pair_count: true
+    bind_counts_hash: true
+    count_mismatch_action: abort
+  known_gt_synthetic_cross_product:
+    enabled_for_ground_truth_type: synthetic_created_after_freeze
+    axes:
+      - enrolled_source
+      - geometry_seed
+      - transform_model
+      - applicable_case_template
+      - modality_class
+    transform_models: [translation, rigid, similarity, affine]
+    modality_classes: [monomodal, simulated_multimodal]
+    model_modality_cells:
+      - modality_class: monomodal
+        transform_models: [translation, rigid, similarity, affine]
+      - modality_class: simulated_multimodal
+        transform_models: [rigid, affine]
+    zero_compatible_method_cells_are_not_generated: true
+    dimensions: [2]
+    image_shape: [192, 192]
+    resize_interpolation: area
+    transform_interpolation: linear
+    border_value: 0
+    coordinate_convention: moving_to_fixed
+    one_pair_per_cross_product_cell: true
+    derived_counts_per_enrolled_synthetic_source:
+      pairs: 150
+      planned_compatible_method_attempts: 294
+      policy_eligible_pairs: 24
+      note: >-
+        Counts use three geometry seeds, eight monomodal templates, nine
+        simulated-multimodal templates, and the frozen method catalog. Optional
+        catalog methods remain planned attempts and retain validation outcomes.
+  verified_real_cases:
+    enabled_for_ground_truth_types: [verified_landmarks, verified_masks]
+    source_manifest_must_enumerate_pairs_before_prepare: true
+    required_pair_fields:
+      - pair_id
+      - case_id
+      - source_id
+      - fixed_source_id
+      - moving_source_id
+      - modality_class
+      - transform_model
+      - dimensions
+      - ground_truth_type
+      - label_manifest_id
+      - label
+    exact_dimensions: [2]
+    ground_truth_type_must_match_ledger: true
+    policy_eligibility_derived_not_supplied: true
+    pair_list_hash_bound_into_plan: true
+    additions_after_plan: forbidden
+  technical_only_cases:
+    enabled_for_ground_truth_type: unavailable
+    source_manifest_must_enumerate_pairs_before_prepare: true
+    required_pair_fields:
+      - pair_id
+      - case_id
+      - source_id
+      - fixed_source_id
+      - moving_source_id
+      - modality_class
+      - transform_model
+      - dimensions
+      - ground_truth_type
+    exact_dimensions: [2]
+    ground_truth_type_must_match_ledger: true
+    policy_eligibility_derived_not_supplied: true
+    transform_model_required_for_method_compatibility: true
+    label_descriptor_forbidden: true
+    geometric_metric_fields_must_be_null: true
+
+transforms:
+  generator_id: image_registration.synthetic.sample_ground_truth_transform
+  generator_version: week08_frozen_synthetic_geometry_v1
+  sampling_distribution: seeded_continuous_uniform_closed_ranges
+  models:
+    translation:
+      tx_px: [-7.0, 7.0]
+      ty_px: [-7.0, 7.0]
+    rigid:
+      tx_px: [-7.0, 7.0]
+      ty_px: [-7.0, 7.0]
+      angle_degrees: [-8.0, 8.0]
+    similarity:
+      tx_px: [-7.0, 7.0]
+      ty_px: [-7.0, 7.0]
+      angle_degrees: [-8.0, 8.0]
+      scale: [0.94, 1.06]
+    affine:
+      tx_px: [-7.0, 7.0]
+      ty_px: [-7.0, 7.0]
+      angle_degrees: [-8.0, 8.0]
+      scale_x: [0.94, 1.06]
+      scale_y: [0.94, 1.06]
+      shear_x: [-0.04, 0.04]
+  synthetic_label_validation:
+    inverse_matrix_max_absolute_error: 1.0e-10
+    control_point_round_trip_max_px: 1.0e-8
+    minimum_valid_overlap_fraction: 0.50
+
+conditions:
+  severity_version: week08_condition_severity_v1
+  case_distribution: one_case_for_each_applicable_template_per_geometry_seed
+  templates:
+    - id: clean
+      condition: none
+      severity: baseline
+      parameters: {}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: gaussian_noise_moderate
+      condition: gaussian_noise
+      severity: moderate
+      parameters: {sigma_fraction: 0.025}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: gaussian_blur_moderate
+      condition: gaussian_blur
+      severity: moderate
+      parameters: {sigma: 1.5}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: illumination_moderate
+      condition: illumination
+      severity: moderate
+      parameters: {gamma: 1.30}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: occlusion_moderate
+      condition: occlusion
+      severity: moderate
+      parameters: {area_fraction: 0.25}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: partial_overlap_moderate
+      condition: partial_overlap
+      severity: moderate
+      parameters: {target_overlap: 0.65}
+      modality_classes: [monomodal, simulated_multimodal]
+      actual_overlap_tolerance: 0.03
+      weight: 1
+    - id: low_texture_moderate
+      condition: low_texture
+      severity: moderate
+      parameters: {texture_strength: 0.45}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: repeated_pattern_moderate
+      condition: repeated_pattern
+      severity: moderate
+      parameters: {repeat_fraction: 0.35}
+      modality_classes: [monomodal, simulated_multimodal]
+      weight: 1
+    - id: multimodal_histogram_remap
+      condition: multimodal_mapping
+      severity: fixed_mapping
+      parameters: {mapping: histogram_remap}
+      modality_classes: [simulated_multimodal]
+      weight: 1
+  simulated_multimodal_default_mapping: intensity_inversion
+  case_template_weights_are_sampling_weights: false
+
+seeds:
+  geometry: [81103, 81117, 81131]
+  appearance_derivation: sha256_of_pair_identity_and_condition_domain
+  method_random_seed: 42
+  mi_sampling_seed: 42
+  seed_reuse_from_week07_geometry_sets: false
+  all_seed_values_are_identity_bound: true
+
+frozen_assets:
+  method_catalog:
+    path: configs/week07_day01_frozen_methods.yaml
+    sha256: fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5
+    catalog_version: week07_day01_frozen_methods
+    use_every_compatible_method: true
+  policy:
+    path: outputs/week07_day04_calibration/tentative_policy_not_for_ui.json
+    sha256: 408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93
+    version: week07_day34_offline_calibration_v1
+    status_expected: exploratory_not_deployed
+    independent_validation_expected: false
+  observable_projection:
+    implementation: image_registration.week7_calibration.project_observables
+    implementation_file: src/image_registration/week7_calibration.py
+    sha256: 44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c
+  selector:
+    implementation: image_registration.week7_calibration.select_pair
+    ground_truth_arguments_allowed: false
+  frozen_baseline:
+    path: configs/week08_frozen_baseline.json
+    sha256: 03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01
+  source_ledger:
+    path: configs/week08_r3_source_use_ledger.json
+    hash_is_captured_at_plan_time: true
+    phase3_reference_sha256: d8d5625b5e3f69d60e43e1014095d3d3ccec0cd219071387075aaee09f2e56c7
+    phase6_metadata_overlay_may_change_hash_before_plan: true
+
+endpoints:
+  primary_geometric_endpoint:
+    metric: tre_mean_px
+    tolerance_operator: less_than_or_equal
+    tolerance_px: 2.0
+    valid_ground_truth_required: true
+    transform_plausibility_required: true
+    completed_scientific_record_required: true
+  secondary_geometric_endpoints:
+    - tre_median_px
+    - tre_p95_px
+    - valid_overlap_fraction
+  verified_mask_endpoint:
+    metric: dice
+    tolerance_operator: greater_than_or_equal
+    tolerance: 0.80
+    verified_fixed_and_moving_masks_required: true
+    masks_must_be_binary_and_nonempty: true
+    fixed_mask_shape_must_match_fixed_image: true
+    moving_mask_shape_must_match_moving_image: true
+    transform_plausibility_required: true
+  runtime_endpoints:
+    - total_runtime_ms
+    - method_runtime_ms
+  availability_contract:
+    total_runtime_ms:
+      required_for: every_terminal_scientific_record
+      finite_nonnegative: true
+      source: external_executor_wall_clock
+    method_runtime_ms:
+      required_for: every_terminal_scientific_record
+      finite_nonnegative: true
+      source: registration_run_runtime_seconds
+      wire_key: registration
+    valid_overlap_fraction:
+      required_when: estimated_transform_is_present
+      null_required_when: estimated_transform_is_absent
+      range_inclusive: [0.0, 1.0]
+      definition: fraction_of_fixed_raster_with_geometric_support_from_moving_raster
+  diagnostics_are_descriptive_not_ground_truth:
+    - execution_status
+    - transform_plausible
+    - valid_overlap_fraction
+    - method_diagnostics
+  technical_only_forbidden_fields:
+    - tre_mean_px
+    - tre_median_px
+    - tre_p95_px
+    - dice
+    - geometric_within_tolerance
+    - policy_selected_correct
+  pairwise_method_comparisons:
+    denominator: pairs_with_both_methods_planned_and_geometrically_evaluable
+    report_common_denominator_raw_count: true
+    do_not_impute_failed_or_missing_metrics: true
+
+strata:
+  mandatory:
+    - modality_class
+    - transform_model
+    - condition
+    - severity
+    - source_role
+    - source_id
+  cross_strata_allowed_when_denominator_at_least: 5
+  always_report_raw_counts: true
+  low_count_rates_are_labeled_descriptive: true
+
+uncertainty:
+  confidence_level: 0.95
+  binomial_interval: wilson_score
+  z_value: 1.959963984540054
+  interval_metrics:
+    - geometric_success_rate
+    - conditional_accuracy
+    - execution_completion_rate
+    - infrastructure_incident_rate
+    - policy_coverage
+    - policy_selective_correctness
+    - policy_abstention_rate
+  paired_method_comparison: exact_mcnemar_on_stated_common_denominator
+  correlation_warning: cases_from_one_source_are_not_independent_source_replicates
+  intervals_do_not_create_external_validity: true
+
+reporting_enforcement:
+  mandatory_strata:
+    - modality_class
+    - transform_model
+    - condition
+    - severity
+    - source_role
+    - source_id
+  required_tables:
+    - track_a_overall.csv
+    - track_a_mandatory_strata.csv
+    - track_a_endpoint_distributions.csv
+    - pairwise_exact_mcnemar.csv
+    - track_b_overall.csv
+    - track_b_mandatory_strata.csv
+    - runtime_failure_similarity.csv
+  endpoint_metrics:
+    - tre_mean_px
+    - tre_median_px
+    - tre_p95_px
+    - valid_overlap_fraction
+    - method_runtime_ms
+    - total_runtime_ms
+  source_alias_format: "enrolled_source_{ordinal:03d}"
+  fail_closed_on_missing_or_unreconciled_evidence: true
+
+policy:
+  evaluation_track: B
+  decision_inputs: observable_projection_only
+  label_fields_forbidden_during_decide: true
+  eligibility_is_fixed_before_execution: true
+  eligibility:
+    source_roles: [full_project_independent, policy_transfer_check]
+    ground_truth_types_for_correctness:
+      - synthetic_created_after_freeze
+      - verified_landmarks
+      - verified_masks
+    dimensions: [2]
+    modality_classes: [monomodal]
+    transform_models: [affine]
+    minimum_planned_compatible_candidates: 3
+    minimum_planned_distinct_method_families: 3
+    candidate_failure_does_not_remove_pair_from_denominator: true
+    technical_only_excluded: true
+  development_rehearsal_eligibility_override:
+    enabled_only_when_final_evidence_is_false: true
+    source_roles: [development]
+    modality_classes: [monomodal]
+    transform_models: [affine]
+    provenance_is_never_reclassified_as_independent: true
+  decision_states: [selected, abstained, invalid, missing_decision]
+  preserve_failed_check_and_validation_error_candidates: true
+  selected_method_must_reference_planned_attempt: true
+
+denominators:
+  track_a:
+    planned_compatible_attempts: all_attempts_in_frozen_plan
+    execution_completion_rate: completed_attempts / planned_compatible_attempts
+    geometric_success_rate: successful_attempts / all_preregistered_attempts_with_valid_gt
+    conditional_accuracy: successful_attempts / geometrically_evaluable_completed_attempts
+    infrastructure_incident_rate: attempts_with_one_or_more_infrastructure_events / planned_compatible_attempts
+    failures_check_validation_error_and_unresolved_infrastructure_count_as_success: false
+  track_b:
+    eligible_pairs: all_pairs_matching_frozen_pre_execution_eligibility
+    coverage: selected_pairs / eligible_pairs
+    selective_correctness: correct_selected_pairs / selected_pairs
+    abstention_rate: abstained_pairs / eligible_pairs
+    invalid_rate: invalid_pairs / eligible_pairs
+    missing_decision_rate: missing_decision_pairs / eligible_pairs
+    execution_failure_or_check_removes_pair_from_denominator: false
+  zero_denominator_value: null
+  every_rate_must_include_numerator_and_denominator: true
+  track_a_and_track_b_denominators_must_never_be_substituted: true
+
+reruns:
+  permitted_reason: infrastructure_error_only
+  permitted_before_decision_seal_only: true
+  permitted_after_any_label_access: false
+  maximum_retries_per_attempt: 1
+  requires_explicit_resume_flag: true
+  prior_infrastructure_event_is_append_only: true
+  exact_contract_fields_required:
+    - code_hash
+    - config_hash
+    - plan_hash
+    - source_hash
+    - observable_manifest_hash
+    - method_catalog_hash
+    - method_config_hash
+    - policy_hash
+    - geometry_seed
+    - method_seed
+  completed_check_failed_and_validation_error_are_terminal_scientific_outcomes: true
+  terminal_scientific_outcomes_may_be_reexecuted: false
+  unresolved_infrastructure_error_blocks_decision_seal: true
+
+artifact_paths:
+  final_prepare_root: outputs/week08_r3_holdout
+  final_decision_root: outputs/week08_r3_final
+  archive_root: outputs/week08_r3_archives
+  reporting_bundle_root: outputs/week08_r3_final/reporting_tables
+  reporting_manifest: outputs/week08_r3_final/reporting_manifest.json
+  final_layout_contract:
+    prepare_and_decision_roots_must_be_disjoint: true
+    equal_or_nested_roots_forbidden: true
+    every_declared_final_path_must_match_the_derived_layout: true
+  final:
+    plan: outputs/week08_r3_final/evaluation_plan.json
+    final_readiness_receipt: outputs/week08_r3_final/final_readiness_receipt.json
+    observable_inputs: outputs/week08_r3_holdout/observable_inputs
+    observable_manifest: outputs/week08_r3_holdout/observable_manifest.json
+    prepare_receipt: outputs/week08_r3_holdout/prepare_receipt.json
+    sealed_label_artifact: outputs/week08_r3_holdout/sealed_labels/labels.json
+    sealed_label_manifest: outputs/week08_r3_holdout/sealed_labels/label_manifest.json
+    attempt_events: outputs/week08_r3_final/attempt_events.jsonl
+    scientific_records: outputs/week08_r3_final/scientific_records.jsonl
+    policy_decisions: outputs/week08_r3_final/policy_decisions.json
+    decision_seal: outputs/week08_r3_final/decision_seal.json
+    label_access_audit: outputs/week08_r3_final/label_access_audit.jsonl
+    evaluation_summary: outputs/week08_r3_final/evaluation_summary.json
+    track_a_table: outputs/week08_r3_final/track_a_attempts.csv
+    track_b_table: outputs/week08_r3_final/track_b_pairs.csv
+  development:
+    root: outputs/week08_r3_g3_rehearsal
+    plan: outputs/week08_r3_g3_rehearsal/evaluation_plan.json
+    observable_inputs: outputs/week08_r3_g3_rehearsal/prepared/observable_inputs
+    observable_manifest: outputs/week08_r3_g3_rehearsal/prepared/observable_manifest.json
+    prepare_receipt: outputs/week08_r3_g3_rehearsal/prepared/prepare_receipt.json
+    sealed_label_artifact: outputs/week08_r3_g3_rehearsal/prepared/sealed_labels/labels.json
+    sealed_label_manifest: outputs/week08_r3_g3_rehearsal/prepared/sealed_labels/label_manifest.json
+    attempt_events: outputs/week08_r3_g3_rehearsal/decision/attempt_events.jsonl
+    scientific_records: outputs/week08_r3_g3_rehearsal/decision/scientific_records.jsonl
+    policy_decisions: outputs/week08_r3_g3_rehearsal/decision/policy_decisions.json
+    decision_seal: outputs/week08_r3_g3_rehearsal/decision/decision_seal.json
+    label_access_audit: outputs/week08_r3_g3_rehearsal/evaluation/label_access_audit.jsonl
+    evaluation_summary: outputs/week08_r3_g3_rehearsal/evaluation/evaluation_summary.json
+
+execution_contract:
+  phases: [prepare, decide, evaluate]
+  prepare:
+    input: enrolled_sources_and_frozen_plan
+    pre_decode_requirements:
+      - strict_final_readiness_pass
+      - persisted_final_readiness_receipt
+      - persisted_evaluation_plan
+      - exact_source_ledger_and_enrollment_manifest_hashes
+      - all_enrolled_source_and_label_file_hashes
+      - disjoint_exact_artifact_layout
+    outputs:
+      - final_readiness_receipt
+      - evaluation_plan
+      - observable_input_manifest
+      - observable_fixed_and_moving_inputs
+      - sealed_label_manifest
+      - sealed_label_artifact
+    label_storage_is_separate_from_observable_inputs: true
+  decide:
+    readable_inputs:
+      - config
+      - plan
+      - observable_input_manifest
+      - observable_fixed_and_moving_inputs
+      - frozen_method_catalog
+      - frozen_policy
+    prohibited_inputs:
+      - sealed_label_artifact
+      - ground_truth_transform
+      - landmarks
+      - masks
+      - geometric_metrics
+    outputs:
+      - append_only_attempt_event_journal
+      - exactly_one_terminal_scientific_record_per_planned_attempt
+      - policy_decisions
+      - decision_seal
+  evaluate:
+    verify_before_label_open:
+      - config_hash
+      - code_hash
+      - plan_hash
+      - expected_counts_hash
+      - source_hashes
+      - observable_manifest_hash
+      - method_catalog_hash
+      - method_config_hashes
+      - policy_hash
+      - complete_terminal_record_set
+      - attempt_event_journal_hash
+      - scientific_record_journal_hash
+      - policy_decision_hash
+      - decision_seal
+    verification_failure_action: abort_without_label_access
+    label_open_audit_event_required: true
+  id_namespace: w8
+  id_digest: sha256_first_24_lowercase_hex
+  id_bound_fields:
+    - protocol_version
+    - evaluation_role
+    - source_id
+    - source_sha256
+    - case_id
+    - condition
+    - severity
+    - geometry_seed
+    - modality_class
+    - transform_model
+    - method_id
+    - method_family
+    - method_config_sha256
+    - method_seed
+  prior_id_journals:
+    - outputs/week07_day02_full/benchmark_records.jsonl
+    - outputs/week07_day05_integration/benchmark_records.jsonl
+  duplicate_or_prior_id_collision_action: abort
+  terminal_scientific_statuses:
+    - completed
+    - check
+    - failed
+    - validation_error
+  infrastructure_error_is_an_event_not_a_terminal_scientific_status: true
+  labels_cannot_change_plan_execution_decision_or_abstention: true
+
+development_rehearsal:
+  enabled: true
+  final_evidence: false
+  evidence_class: non_evidentiary_development_fixture
+  may_satisfy: [G3_evaluator_firewall_implementation]
+  may_not_satisfy: [G6_source_enrollment, G7_final_readiness, G8_final_evaluation]
+  source:
+    source_id: phase3_camera_fixture
+    path: data/samples/week02_real_general/camera.png
+    sha256: b779d2c8e2a7098a0182c26227c3b516fb2d9d15f14ed99940c6196ba4a2c4e2
+    ledger_role: development
+  subset:
+    geometry_seeds: [93103]
+    transform_models: [translation, affine]
+    modality_classes: [monomodal]
+    case_template_ids: [clean, gaussian_noise_moderate]
+    must_exercise_track_a: true
+    must_exercise_track_b: true
+    must_exercise_abstention_or_invalid_path: true
+    must_exercise_technical_only_no_metric_in_tests: true
+  output_root: outputs/week08_r3_g3_rehearsal
+  real_week08_source_or_label_paths_allowed: false
+  final_claims_allowed: false
+
+recommendation_validation:
+  candidate_policy_status_before_evaluation: exploratory_not_deployed
+  limited_independent_support_requires_all:
+    source_role: full_project_independent
+    minimum_selected_pairs: 20
+    minimum_coverage: 0.10
+    minimum_selective_correctness: 0.95
+    minimum_selective_correctness_wilson_lower_95: 0.80
+    maximum_missing_decisions: 0
+    no_label_firewall_or_integrity_incident: true
+    no_post_label_change: true
+  broad_cross_source_support_additionally_requires:
+    minimum_distinct_independent_source_identities: 3
+    required_real_verified_gt_subset: true
+    consistent_direction_in_every_reported_mandatory_stratum: true
+  failure_action: preserve_results_and_keep_policy_non_deployed
+  abstention_is_not_a_failure_but_reduces_coverage: true
+  technical_only_evidence_can_validate_recommendations: false
+  calibrated_probability_or_user_facing_confidence_claim: forbidden
+  clinical_anatomical_or_population_claim: forbidden
+
+reporting:
+  track_a_name: frozen_per_method_benchmark
+  track_b_name: frozen_policy_evaluation
+  primary_and_secondary_source_roles_reported_separately: true
+  include_all_terminal_failures_and_checks: true
+  include_all_infrastructure_events: true
+  include_raw_counts_with_every_rate: true
+  include_preregistered_deviations: true
+  include_label_access_audit: true
+  include_no_post_label_tuning_attestation: true
+  no_week08_benchmark_run_in_phase3: true

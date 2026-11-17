@@ -1,0 +1,78 @@
+{
+  "schema_version": "week08_r3_source_use_ledger_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "purpose": "R3 canonical source-use and lineage ledger; metadata only, with no held-out pixels, labels, transforms, or outcomes",
+  "eligibility_rule": "A confirmatory source is eligible only after G5 and only when its bytes, path, canonical identity, and complete lineage are absent from every prior project use and exposure record.",
+  "required_fresh_source_fields": [
+    "source_id",
+    "path",
+    "sha256",
+    "format",
+    "modality",
+    "role",
+    "previously_used",
+    "prior_usage",
+    "reference_or_license",
+    "canonical_dataset_id",
+    "canonical_subject_id",
+    "canonical_case_id",
+    "canonical_acquisition_id",
+    "canonical_source_id",
+    "lineage_ancestors",
+    "lineage_evidence",
+    "lineage_status",
+    "custodian_attestation"
+  ],
+  "fresh_sources": [],
+  "prior_exposed_sources": [
+    {
+      "source_id": "nasa_pia18033_earth",
+      "path": "data/holdout/week08/nasa_pia18033_earth.jpg",
+      "sha256": "872e1a5317ac31612a766ef6dfa7e774e2d10509b1e564b38e3aa384d6b0bf19",
+      "previously_used": true,
+      "prior_usage": [
+        "R2 G6 source enrollment",
+        "R2 Phase 8 prepare-decide-evaluate sequence",
+        "R2 Phase 9 aggregate reporting and scientific review"
+      ],
+      "canonical_dataset_id": "nasa_photojournal",
+      "canonical_subject_id": "earth",
+      "canonical_case_id": "pia18033",
+      "canonical_acquisition_id": "suomi_npp_viirs_2012_01_composite",
+      "canonical_source_id": "nasa_photojournal:pia18033:suomi_npp_viirs_2012_01_composite",
+      "lineage_ancestors": [
+        "nasa:suomi_npp",
+        "nasa:suomi_npp:viirs",
+        "nasa_photojournal:pia18033"
+      ],
+      "historical_registration_path": "reports/pre_week08_source_registration.json",
+      "historical_release_id": "pre-week08-g5r2-20261115",
+      "r3_disposition": "permanently_ineligible_for_confirmatory_reuse"
+    }
+  ],
+  "prohibited_paths": [
+    "data/holdout/week08",
+    "outputs/week08_holdout",
+    "outputs/week08_final",
+    "outputs/week08_archives"
+  ],
+  "reuse_rejection_rules": {
+    "path_match": "reject",
+    "byte_hash_match": "reject",
+    "canonical_dataset_subject_case_or_acquisition_match": "reject",
+    "canonical_source_id_match": "reject",
+    "lineage_ancestor_intersection": "reject",
+    "renamed_copy": "reject",
+    "derived_or_transcoded_copy": "reject",
+    "ambiguous_or_incomplete_lineage": "reject"
+  },
+  "enrollment": {
+    "status": "BLOCKED_AWAITING_FRESH_UNEXPOSED_SOURCE",
+    "g5_freeze_required_before_intake": true,
+    "custodian_attestation_required": true,
+    "fresh_source_count": 0,
+    "source_bytes_accessed_in_r3": 0,
+    "labels_accessed_in_r3": 0,
+    "outcomes_accessed_in_r3": 0
+  }
+}

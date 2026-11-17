@@ -62,12 +62,19 @@ def test_immutable_bindings_and_supplement_artifacts_are_exact():
     assert bindings["historical_phase9_2_artifacts_verified"] == 14
     assert bindings["phase9_1_payload_sha256"] == module.EXPECTED_PAYLOAD_HASHES["phase9_1"]
     assert bindings["phase9_2_payload_sha256"] == module.EXPECTED_PAYLOAD_HASHES["phase9_2"]
-    assert bindings["audit_generator_sha256"] == module.sha256_file(SCRIPT)
+    assert bindings["audit_generator_sha256"] == module.git_blob_sha256(
+        ROOT,
+        module.FINDING_GENERATOR_COMMIT,
+        "scripts/week08_phase9_scientific_review_audit.py",
+    )
     for relative, expected in bindings["files"].items():
-        path = ROOT / relative
-        if relative.startswith("outputs/") and not path.is_file():
-            continue
-        assert module.sha256_file(path) == expected
+        if relative in module.HISTORICAL_GIT_BINDINGS:
+            assert module.git_blob_sha256(ROOT, module.REVIEWED_COMMIT, relative) == expected
+        else:
+            path = ROOT / relative
+            if relative.startswith("outputs/") and not path.is_file():
+                continue
+            assert module.sha256_file(path) == expected
     assert len(finding["supplement"]["artifacts"]) == 5
     for artifact in finding["supplement"]["artifacts"]:
         path = ROOT / artifact["path"]

@@ -8,6 +8,7 @@ from __future__ import annotations
 from copy import deepcopy
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -98,6 +99,25 @@ def test_final_mode_rejects_an_alternate_config_before_reading_it(tmp_path: Path
     alternate = tmp_path / "alternate.yaml"
     with pytest.raises(ValueError, match="canonical preregistered config"):
         final_cli.load_protocol(alternate, development=False)
+
+
+def test_r2_final_is_closed_and_r3_is_blocked_before_g7() -> None:
+    with pytest.raises(ValueError, match="R2 holdout is exposed"):
+        final_cli.load_protocol(final_cli.DEFAULT_CONFIG, development=False)
+    with pytest.raises(ValueError, match="blocked until renewed G5, G6, and G7"):
+        final_cli.load_protocol(final_cli.R3_CONFIG, development=False)
+
+
+def test_r3_development_plan_uses_v2_contract_and_separate_namespaces() -> None:
+    _, config, plan, _pairs, _methods = final_cli.build_development_plan(
+        final_cli.R3_CONFIG
+    )
+    assert config["state"] == "r3_g3_remediation_in_progress_no_source_access"
+    assert plan["schema_version"] == "week08_evaluation_plan_v2"
+    assert plan["uncertainty"]["z_value"] == config["uncertainty"]["z_value"]
+    assert plan["reporting_contract"] == config["reporting_enforcement"]
+    assert config["artifact_paths"]["final_prepare_root"] == "outputs/week08_r3_holdout"
+    assert config["artifact_paths"]["final_decision_root"] == "outputs/week08_r3_final"
 
 
 def test_final_layout_is_exact_disjoint_and_non_nested() -> None:
@@ -202,7 +222,7 @@ def test_receipt_and_plan_are_persisted_before_first_decode(tmp_path: Path, monk
     source_file = tmp_path / "synthetic-source.bin"
     source_file.write_bytes(b"development-only-source")
     source = {
-        **_technical_source(source_file.relative_to(final_cli.ROOT).as_posix()),
+        **_technical_source(source_file.as_posix()),
         "source_id": "synthetic-source",
         "sha256": sha256_file(source_file),
         "role": "full_project_independent",
@@ -273,6 +293,11 @@ def test_receipt_and_plan_are_persisted_before_first_decode(tmp_path: Path, monk
         prepare_cli,
         "prevalidate_final_inputs",
         lambda *_a: ({"synthetic-source": source}, {}),
+    )
+    monkeypatch.setattr(
+        prepare_cli,
+        "_verified_file",
+        lambda _path, _sha256: source_file,
     )
 
     class DecodeReached(RuntimeError):
@@ -394,3 +419,62 @@ def test_estimated_transform_diagnostics_are_disambiguated_without_hiding_gt() -
     assert "estimated_moving_to_fixed" in renamed["levels"][0]
     assert "estimated_fixed_to_moving" in renamed
     assert renamed["ground_truth_transform"] == raw["ground_truth_transform"]
+
+
+def test_observable_executor_captures_method_runtime_and_geometric_overlap(monkeypatch) -> None:
+    matrix = np.array(
+        [[1.0, 0.0, 1.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        dtype=np.float64,
+    )
+    run = SimpleNamespace(
+        run_status=SimpleNamespace(value="completed"),
+        transform=SimpleNamespace(matrix=matrix, plausible=True),
+        metrics=SimpleNamespace(after={"ncc": 0.8, "mae": 1.25}),
+        diagnostics=SimpleNamespace(values={}),
+        runtime_seconds=0.0125,
+        warnings=(),
+        failure_reason=None,
+    )
+    service = SimpleNamespace(run=lambda _request: run)
+    monkeypatch.setattr(
+        "ui.adapters.build_default_registration_service",
+        lambda: service,
+    )
+    spec = Week8MethodSpec(
+        method_id="ecc_affine_2d",
+        config_id="r3-test-config",
+        method_family="intensity_based",
+        method_config_sha256="a" * 64,
+        supported_transform_models=("affine",),
+        supported_modality_classes=("monomodal",),
+        method_seed=7,
+        metadata={"parameters": {}},
+    )
+    execute = final_cli.observable_executor([spec])
+    view = {
+        "pair_id": "synthetic-pair",
+        "method_id": spec.method_id,
+        "config_id": spec.config_id,
+        "method_family": spec.method_family,
+        "transform_model": "affine",
+        "modality_class": "monomodal",
+        "dimensions": 2,
+        "method_seed": 7,
+        "experiment_id": "w8-synthetic",
+    }
+    observable = {
+        "fixed": np.zeros((4, 4), dtype=np.uint8),
+        "moving": np.zeros((4, 4), dtype=np.uint8),
+    }
+    result = execute(view, observable)
+    expected_support = final_cli.transformed_support_mask(
+        observable["moving"].shape,
+        matrix,
+        destination_shape=(4, 4),
+    )
+    assert result["timings_ms"]["registration"] == pytest.approx(12.5)
+    assert result["timings_ms"]["total"] >= 0.0
+    assert result["valid_overlap_fraction"] == final_cli.overlap_fraction(expected_support)
+    assert 0.0 <= result["valid_overlap_fraction"] <= 1.0
+    assert result["similarity_metrics"]["ncc"] == pytest.approx(0.8)
+    assert result["similarity_metrics"]["mae"] == pytest.approx(1.25)
