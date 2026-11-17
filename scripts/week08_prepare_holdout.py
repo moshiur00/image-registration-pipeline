@@ -265,9 +265,24 @@ def require_strict_final_readiness(config_path: Path = DEFAULT_CONFIG) -> dict[s
         raise ValueError("Final preparation requires the canonical preregistered config path.")
     if resolved == DEFAULT_CONFIG.resolve():
         raise ValueError("The exposed R2 holdout is closed and cannot be prepared again.")
-    # The existing preflight is an immutable R2 verifier. R3 must supply a
-    # separate renewed release validator before this boundary can open.
-    raise ValueError("R3 final preparation is blocked pending the renewed R3 strict-readiness gate.")
+    # Keep the R2 verifier immutable.  R3 has a separate fail-closed verifier
+    # whose final mode requires the reviewed G5 tag, renewed G6 enrollment,
+    # and one-run G7 authorization.  It performs metadata and byte-hash checks
+    # only; no image or label decoder is reachable from this call.
+    from week08_r3_preflight import run_preflight
+
+    report = run_preflight(ROOT, require_g7=True)
+    if report.get("readiness") != "PASS":
+        blocking = [
+            str(item.get("check"))
+            for item in report.get("checks", [])
+            if isinstance(item, Mapping) and item.get("status") == "BLOCK"
+        ]
+        raise ValueError(
+            "R3 strict final readiness did not pass; no final source was decoded. "
+            "Blocking checks: " + ", ".join(blocking)
+        )
+    return report
 
 
 def _atomic_json(path: Path, value: Mapping[str, Any]) -> None:

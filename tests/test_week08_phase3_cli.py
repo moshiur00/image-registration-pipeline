@@ -101,11 +101,14 @@ def test_final_mode_rejects_an_alternate_config_before_reading_it(tmp_path: Path
         final_cli.load_protocol(alternate, development=False)
 
 
-def test_r2_final_is_closed_and_r3_is_blocked_before_g7() -> None:
+def test_r2_final_is_closed_and_r3_metadata_opens_but_prepare_is_blocked_before_g7() -> None:
     with pytest.raises(ValueError, match="R2 holdout is exposed"):
         final_cli.load_protocol(final_cli.DEFAULT_CONFIG, development=False)
-    with pytest.raises(ValueError, match="blocked until renewed G5, G6, and G7"):
-        final_cli.load_protocol(final_cli.R3_CONFIG, development=False)
+    path, config = final_cli.load_protocol(final_cli.R3_CONFIG, development=False)
+    assert path == final_cli.R3_CONFIG.resolve()
+    assert config["cycle_id"] == "week08-r3-confirmatory-20261116"
+    with pytest.raises(ValueError, match="strict final readiness did not pass"):
+        prepare_cli.require_strict_final_readiness(final_cli.R3_CONFIG)
 
 
 def test_r3_development_plan_uses_v2_contract_and_separate_namespaces() -> None:
@@ -160,6 +163,52 @@ def test_manifest_cannot_override_gt_or_policy_eligibility(tmp_path: Path) -> No
     )
     with pytest.raises(ValueError, match="ground-truth type"):
         final_cli.load_final_enrollment(config)
+
+
+def test_r3_fresh_sources_are_normalized_for_shared_final_planning(tmp_path: Path) -> None:
+    config = final_cli.load_yaml(final_cli.R3_CONFIG)
+    source = _technical_source()
+    ledger = {
+        "schema_version": config["sources"]["required_ledger_schema_version"],
+        "fresh_sources": [source],
+    }
+    ledger_path = tmp_path / "r3-ledger.json"
+    ledger_path.write_text(json.dumps(ledger), encoding="utf-8")
+    manifest = {
+        "schema_version": config["sources"]["enrollment_manifest_schema_version"],
+        "cycle_id": config["cycle_id"],
+        "release_id": "r3-test-release",
+        "status": "G6_PASS",
+        "ledger_path": str(ledger_path),
+        "ledger_sha256": sha256_file(ledger_path),
+        "source_ids": [source["source_id"]],
+        "pairs": [_technical_row()],
+        "source_bytes_accessed": 0,
+        "labels_accessed": 0,
+        "synthetic_ground_truth_generated": False,
+        "execution_authorized": False,
+        "blockers": ["G7 authorization pending"],
+        "output_namespaces": {
+            "prepared": "outputs/week08_r3_holdout",
+            "final": "outputs/week08_r3_final",
+            "archives": "outputs/week08_r3_archives",
+        },
+    }
+    manifest_path = tmp_path / "r3-manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    config["sources"]["ledger_path"] = str(ledger_path)
+    config["sources"]["enrollment_manifest_path"] = str(manifest_path)
+
+    normalized, loaded_manifest = final_cli.load_final_enrollment(config)
+    assert normalized["fresh_sources"] == [source]
+    assert normalized["week08_sources"] == [source]
+    pairs = final_cli.final_pairs(
+        config,
+        normalized,
+        loaded_manifest,
+        final_cli.development_methods(config),
+    )
+    assert [item.pair_id for item in pairs] == ["technical-pair"]
 
 
 def test_final_plan_path_with_empty_enrollment_is_metadata_only(monkeypatch) -> None:

@@ -137,8 +137,13 @@ def load_protocol(
     }:
         raise ValueError("Unsupported Week 8 evaluation schema.")
     if not development:
-        if config.get("state") != "r3_g7_authorized_one_run":
-            raise ValueError("R3 final execution is blocked until renewed G5, G6, and G7 pass.")
+        # The preregistration document is immutable across G5/G6/G7.  Those
+        # gates are represented by separately reviewed, hash-bound metadata,
+        # not by mutating this configuration after the release tag.  Final
+        # preparation re-runs the R3 strict gate before its first side effect;
+        # plan construction below remains metadata-only.
+        if config.get("state") != "r3_g3_remediation_in_progress_no_source_access":
+            raise ValueError("R3 preregistration state differs from the frozen release candidate.")
     if development:
         require_phase3_development(config)
     for key in ("method_catalog", "policy", "observable_projection", "frozen_baseline"):
@@ -638,7 +643,14 @@ def load_final_enrollment(config: Mapping[str, Any]) -> tuple[dict[str, Any], di
             raise ValueError(f"Unsupported non-synthetic ground-truth type: {ground_truth_type}")
     if referenced_sources != set(source_ids):
         raise ValueError("Every enrolled source must be represented by the frozen final matrix.")
-    return ledger, manifest
+    # R2 used ``week08_sources`` while the corrected R3 ledger deliberately
+    # names the collection ``fresh_sources``.  Normalize only the in-memory
+    # view so the shared final-plan/preparation code cannot silently skip the
+    # enrolled R3 records.  The tracked ledger bytes and their hash are not
+    # changed by this compatibility view.
+    normalized_ledger = dict(ledger)
+    normalized_ledger["week08_sources"] = list(sources)
+    return normalized_ledger, manifest
 
 
 def _compatible_methods(

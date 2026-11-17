@@ -48,3 +48,8 @@ deliverables/real_multimodal_rire_test/
 # source pixels, labels, sidecars, and custodian packages must remain ignored.
 data/holdout/week08/*
 !data/holdout/week08/README.md
+
+# Private R3 Week 8 enrollment staging. Fresh holdout pixels, labels,
+# provenance sidecars, and custodian packages must never be tracked.
+data/holdout/week08_r3/*
+!data/holdout/week08_r3/README.md
