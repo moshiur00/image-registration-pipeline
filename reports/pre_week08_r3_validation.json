@@ -1,0 +1,75 @@
+{
+  "schema_version": "pre_week08_r3_validation_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "generated_utc": "2026-11-17T19:30:56Z",
+  "status": "PASS_TECHNICAL_REVIEW_READY",
+  "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
+  "g3_checkpoint": {
+    "commit": "1208c7d93da3646eb9a02c30ff59f21f530325d2",
+    "report_path": "reports/week08_r3_g3_remediation.json",
+    "report_payload_sha256": "13327953b1ff6c6593a06f33c00a61cd918cfd54d89f5b70b0992e7683d852bf",
+    "status": "PASS_TECHNICAL_REMEDIATION"
+  },
+  "candidate_preflight": {
+    "schema_version": "week08_r3_preflight_v1",
+    "status": "PASS",
+    "config_sha256": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea",
+    "fresh_sources_enrolled": 0,
+    "source_or_label_decoded": false,
+    "week08_evaluation_executed": false
+  },
+  "release_gate_implementation": {
+    "r2_preflight_remains_immutable": true,
+    "r3_preflight_path": "scripts/week08_r3_preflight.py",
+    "r3_final_prepare_bridge": "scripts/week08_prepare_holdout.py",
+    "g5_release_commit_and_tag_required": true,
+    "g6_fresh_source_and_custodian_review_required": true,
+    "g7_one_run_authorization_required": true,
+    "final_gate_is_read_only_before_first_decode": true,
+    "missing_malformed_stale_or_tampered_metadata_blocks": true,
+    "r2_source_reuse_machine_rejected": true
+  },
+  "validation": {
+    "focused_command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_preflight.py tests/test_week08_phase3_cli.py tests/test_week08_r3_g3_remediation.py -q -o addopts=''",
+    "focused_tests_passed": 21,
+    "focused_tests_skipped": 0,
+    "focused_tests_failed": 0,
+    "full_command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts=''",
+    "tests_collected": 783,
+    "tests_passed": 780,
+    "tests_skipped": 3,
+    "tests_failed": 0,
+    "git_diff_check": "PASS",
+    "candidate_preflight": "PASS",
+    "historical_phase9_scientific_audit": "PASS"
+  },
+  "stage_b": {
+    "base_validation_path": "reports/pre_week08_stage_b_validation.json",
+    "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+    "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
+    "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
+    "ui_runtime_or_ui_test_paths_changed": false,
+    "manual_evidence_inherited": "5/5 scenarios and 5/5 supplemental checks; not rerun",
+    "human_rebinding_decision": "PENDING"
+  },
+  "privacy_boundary": {
+    "r3_private_intake_git_ignored": true,
+    "fresh_sources_enrolled": 0,
+    "source_bytes_decoded": 0,
+    "labels_accessed": 0,
+    "registration_attempts": 0,
+    "policy_decisions": 0,
+    "evaluation_runs": 0,
+    "r3_output_roots_absent_or_empty": true,
+    "r2_holdout_reuse_permitted": false
+  },
+  "historical_integrity": {
+    "r2_evidence_mutated": false,
+    "r2_holdout_rerun_permitted": false,
+    "phase9_finding_status": "CONFIRMATORY_RUN_INVALID_IMPLEMENTATION_NONCONFORMANCE",
+    "phase9_finding_payload_sha256": "438fb656a4443e76bdd74863c2412e2cd8bdc7bc4c50f62f714de372160c2978"
+  },
+  "human_g5_decision": "PENDING",
+  "next": "A distinct release reviewer must inspect the bound candidate and explicitly approve or reject G5. No source intake is permitted before approval.",
+  "report_payload_sha256": "a0d3581d4d7db90439ce575cffa4faad954a5a95d5d4ae9df1434887c90894c1"
+}

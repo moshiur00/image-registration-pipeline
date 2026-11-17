@@ -1,0 +1,105 @@
+{
+  "schema_version": "pre_week08_r3_release_manifest_v1",
+  "cycle_id": "week08-r3-confirmatory-20261116",
+  "release_id": "pre-week08-g5r3-20261117",
+  "gate": "G5",
+  "status": "R3_REVIEW_PENDING",
+  "generated_utc": "2026-11-17T19:30:56Z",
+  "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
+  "release_commit": null,
+  "release_tag": null,
+  "proposed_release_tag": "pre-week08-g5r3-20261117",
+  "clean_worktree": true,
+  "required_signoffs_complete": false,
+  "reviewer": {
+    "requested_reviewer": "Md Moshiur Rahman",
+    "name": null,
+    "role": "release reviewer",
+    "decision": "PENDING",
+    "attested_utc": null
+  },
+  "stage_b_binding": {
+    "base_validation_path": "reports/pre_week08_stage_b_validation.json",
+    "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+    "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
+    "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
+    "rebinding_sha256": "df32a3f3fa1a4cab8eb8c4735c4d5b785bf105f4598d5644e87f1563b72b4473",
+    "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
+    "frozen_ui_version": "v0.2",
+    "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
+    "ui_runtime_or_ui_test_paths_changed": false,
+    "review_status": "PENDING"
+  },
+  "dependency_environment": {
+    "lock_path": "reports/pre_week08_dependency_lock.txt",
+    "lock_sha256": "0737e16b2d5599ebf1545d95cfdc8a69aa19085c152af2f6e43a76ddf39c02b5",
+    "environment_path": "reports/pre_week08_environment.json",
+    "environment_sha256": "117c4073b66aa0f6752dd8985ad77242ce83397cf72973f0ddaa6565ca272239"
+  },
+  "artifacts": {
+    "configs/week07_day01_frozen_methods.yaml": "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
+    "configs/week08_frozen_baseline.json": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
+    "configs/week08_r3_final_evaluation.yaml": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea",
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "17392d4ad49a1c7900ed94c1e9ec177eb442705e8a9b4179e83af2f58e51d9c2",
+    "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
+    "reports/pre_week08_r3_stage_b_rebinding.json": "df32a3f3fa1a4cab8eb8c4735c4d5b785bf105f4598d5644e87f1563b72b4473",
+    "reports/pre_week08_r3_validation.json": "69ed9dd43243cce8999d0ef685a124188da71939c9a83c28d7eae89e7a0dc074",
+    "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
+    "reports/week08_r3_g3_remediation.json": "27ae317ef5781b9a74caa111835ad4829fe02d8637d0fc9e8cc0f139df92b138",
+    "scripts/week08_final_evaluation.py": "e6f9f95cbbab65fd2622975f77d783c9810c95e6f7b1760030b7743536d67aa0",
+    "scripts/week08_prepare_holdout.py": "dbf83c2188a1889fbc77444427f863c7113d906616cbdedb2978d323b143dff2",
+    "scripts/week08_r3_preflight.py": "388c8ff1e333d2b000d938a2fbc30df45b4ca7b2a52c8bf3bfc82c98f1ad541f",
+    "scripts/week08_r3_reporting.py": "16df2feca0697139a4cad72193370148d9f361cf208edd3c69af0fcab4c96937",
+    "src/image_registration/week7_calibration.py": "44fec86c2acde61c0f908871fe532440d67a364cc524a76782d576a19218ee5c",
+    "src/image_registration/week8_evaluation.py": "c29151916c8128e623e742e8c6c91e93fc043cd0da28df7d7e0dd6200129a722",
+    "tests/test_week08_final_evaluation.py": "172f5413aa2519817f1d3deb96e102291d29b19aca5396237fd1c94683351429",
+    "tests/test_week08_phase3_cli.py": "55f4615357be6e5d7971e038a7511d7dcf52acc782cc1e543d22be0f7d2e2b92",
+    "tests/test_week08_r3_preflight.py": "f56c28c97fab6bfa9719a7ac987484bfdf25c32187745e8f91a3e412f6505fb8"
+  },
+  "post_release_metadata_allowlist": [
+    "configs/week08_r3_source_use_ledger.json",
+    "data/manifests/week08_r3_holdout_sources.json",
+    "reports/pre_week08_r3_phase7_authorization.json",
+    "reports/pre_week08_r3_release_manifest.json",
+    "reports/pre_week08_r3_source_registration.json"
+  ],
+  "g6_enrollment": {
+    "status": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "reviewed_commit": null,
+    "source_ids": [],
+    "source_ledger_sha256": null,
+    "holdout_manifest_sha256": null,
+    "source_registration_sha256": null
+  },
+  "g7_authorization": {
+    "status": "BLOCKED_PENDING_G5_G6",
+    "authorization_id": null,
+    "authorization_sha256": null
+  },
+  "final_readiness": {
+    "authorized": false,
+    "release_reviewer_approval_pending": true,
+    "expected_remaining_blocks": [
+      "G5",
+      "G6",
+      "G7"
+    ],
+    "week08_benchmark_executed": false,
+    "real_week08_pixels_accessed": false,
+    "real_week08_labels_accessed": false
+  },
+  "activity_counters": {
+    "fresh_sources_enrolled": 0,
+    "source_bytes_decoded": 0,
+    "labels_accessed": 0,
+    "registration_attempts": 0,
+    "policy_decisions": 0,
+    "evaluation_runs": 0
+  },
+  "limitations": [
+    "Technical readiness is not human G5 approval; no release tag exists yet.",
+    "G6 requires a genuinely new, unexposed source and a separate data-custodian attestation.",
+    "G7 requires a separate release-reviewer authorization after the reviewed G6 commit.",
+    "A single independent source can support only source-specific software evidence and cannot establish cross-source, anatomical, clinical, population, modality-wide, or external validity."
+  ]
+}
