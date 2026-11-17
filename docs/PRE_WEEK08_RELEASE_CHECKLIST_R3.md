@@ -1,9 +1,13 @@
 # Pre-Week 8 R3 release checklist
 
-**Prepared:** 17 November 2026  
-**Status:** G5 REVIEW PENDING  
-**Cycle:** `week08-r3-confirmatory-20261116`  
-**Implementation checkpoint:** `98b50cb071b5bea9657bd8e151b41741b1718092`  
+**Prepared:** 17 November 2026
+
+**Status:** G5 REVIEW PENDING
+
+**Cycle:** `week08-r3-confirmatory-20261116`
+
+**Implementation checkpoint:** `98b50cb071b5bea9657bd8e151b41741b1718092`
+
 **Proposed tag:** `pre-week08-g5r3-20261117`
 
 This checklist presents the corrected R3 candidate for a distinct human G5
