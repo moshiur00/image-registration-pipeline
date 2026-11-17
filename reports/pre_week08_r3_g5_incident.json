@@ -1,0 +1,50 @@
+{
+  "schema_version": "pre_week08_r3_g5_incident_v1",
+  "incident_id": "r3-g5-post-tag-phase-state-test-20261117",
+  "recorded_utc": "2026-11-17T19:47:53Z",
+  "status": "REMEDIATED_PENDING_RENEWED_G5_REVIEW",
+  "historical_freeze": {
+    "release_commit": "95259685dc926b05c75f529b658573eb2f2fabff",
+    "release_tag": "pre-week08-g5r3-20261117",
+    "tag_type": "annotated",
+    "manifest_binding_commit": "4a5de6e39a36b5b67ca7106a39ff74158578c82e",
+    "invalidation_commit": "d4ec31769ffdae3dd773d3aa0354a8038124a6d4",
+    "disposition": "immutable_historical_nonconforming_freeze_not_eligible_for_g6"
+  },
+  "trigger": {
+    "command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_preflight.py tests/test_week08_phase3_cli.py tests/test_week08_r3_g3_remediation.py tests/test_week08_phase9_documentation.py -q -o addopts=''",
+    "observed": "One repository-integrated test expected G5 itself to remain blocked after the intended post-tag manifest transition.",
+    "failed_test": "tests/test_week08_r3_preflight.py::test_r3_final_readiness_fails_closed_before_g5_g6_g7"
+  },
+  "root_cause": {
+    "category": "phase_state_coupled_test_fixture",
+    "description": "The test read mutable live governance metadata while asserting the pre-G5 blocker set. Passing G5 therefore invalidated the test assumption even though the runtime gate correctly advanced to G6.",
+    "runtime_gate_failure": false,
+    "scientific_evaluator_failure": false,
+    "data_or_label_exposure": false
+  },
+  "impact": {
+    "g5_freeze_valid": false,
+    "g6_opened": false,
+    "g7_opened": false,
+    "source_bytes_decoded": 0,
+    "labels_accessed": 0,
+    "registration_attempts": 0,
+    "policy_decisions": 0,
+    "evaluation_runs": 0,
+    "r3_output_roots_created": false
+  },
+  "remediation": {
+    "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
+    "controlled_pre_g5_fixture_replaces_live_gate_assumption": true,
+    "cycle_start_validator_uses_immutable_historical_blobs": true,
+    "focused_tests_passed": 26,
+    "full_tests_collected": 783,
+    "full_tests_passed": 780,
+    "full_tests_skipped": 3,
+    "full_tests_failed": 0,
+    "historical_tag_moved_or_deleted": false
+  },
+  "next": "Obtain a renewed G5 review for the corrected checkpoint under a new tag. Fresh-source enrollment remains prohibited until that freeze passes.",
+  "incident_payload_sha256": "2b1740554b713531f326f999523b5503c62079b745ff1ff1ab40f860f859b5fb"
+}

@@ -1,9 +1,9 @@
 {
   "schema_version": "pre_week08_r3_validation_v1",
   "cycle_id": "week08-r3-confirmatory-20261116",
-  "generated_utc": "2026-11-17T19:30:56Z",
-  "status": "PASS_G5_APPROVED",
-  "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
+  "generated_utc": "2026-11-17T19:47:53Z",
+  "status": "PASS_TECHNICAL_REVIEW_READY",
+  "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
   "g3_checkpoint": {
     "commit": "1208c7d93da3646eb9a02c30ff59f21f530325d2",
     "report_path": "reports/week08_r3_g3_remediation.json",
@@ -30,8 +30,8 @@
     "r2_source_reuse_machine_rejected": true
   },
   "validation": {
-    "focused_command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_preflight.py tests/test_week08_phase3_cli.py tests/test_week08_r3_g3_remediation.py -q -o addopts=''",
-    "focused_tests_passed": 21,
+    "focused_command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_preflight.py tests/test_week08_r3_cycle_scaffold.py tests/test_week08_r3_g3_remediation.py tests/test_week08_phase3_cli.py -q -o addopts=''",
+    "focused_tests_passed": 26,
     "focused_tests_skipped": 0,
     "focused_tests_failed": 0,
     "full_command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts=''",
@@ -50,7 +50,7 @@
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
     "ui_runtime_or_ui_test_paths_changed": false,
     "manual_evidence_inherited": "5/5 scenarios and 5/5 supplemental checks; not rerun",
-    "human_rebinding_decision": "APPROVED"
+    "human_rebinding_decision": "PENDING"
   },
   "privacy_boundary": {
     "r3_private_intake_git_ignored": true,
@@ -69,17 +69,15 @@
     "phase9_finding_status": "CONFIRMATORY_RUN_INVALID_IMPLEMENTATION_NONCONFORMANCE",
     "phase9_finding_payload_sha256": "438fb656a4443e76bdd74863c2412e2cd8bdc7bc4c50f62f714de372160c2978"
   },
-  "human_g5_decision": "APPROVED",
-  "human_g5_approval": {
-    "reviewer": "Md Moshiur Rahman",
-    "role": "release reviewer",
-    "attested_utc": "2026-11-17T19:37:41Z",
-    "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
-    "reviewed_package_commit": "44d9783b2247a9033d2ce702673e641944972e47",
-    "authorized_tag": "pre-week08-g5r3-20261117",
-    "zero_access_pre_enrollment_boundary_approved": true,
-    "statement": "Approve the R3 G5 release freeze and Stage B rebinding for implementation checkpoint 98b50cb071b5bea9657bd8e151b41741b1718092, reviewed through package commit 44d9783b2247a9033d2ce702673e641944972e47, under proposed tag pre-week08-g5r3-20261117 as release reviewer Md Moshiur Rahman. I approve the zero-access pre-enrollment boundary."
+  "g5_incident": {
+    "path": "reports/pre_week08_r3_g5_incident.json",
+    "incident_id": "r3-g5-post-tag-phase-state-test-20261117",
+    "historical_tag": "pre-week08-g5r3-20261117",
+    "historical_freeze_valid": false,
+    "source_or_label_exposure": false,
+    "remediation_complete": true
   },
-  "next": "Commit and tag the approved G5 freeze. G6 remains blocked pending a genuinely new, unexposed source and a separate data-custodian attestation.",
-  "report_payload_sha256": "a40eccbc8012807e27dc41e8830acefd7ffdf0abc4473277fd588343df71ba3e"
+  "human_g5_decision": "PENDING",
+  "next": "A distinct release reviewer must review the corrected checkpoint and recorded G5 incident before any new tag or fresh-source intake.",
+  "report_payload_sha256": "2406908424bc50d3f693d9bbd439df5f6666d7fd9ec082565e22707d336f11d2"
 }
