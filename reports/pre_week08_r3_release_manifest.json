@@ -3,32 +3,32 @@
   "cycle_id": "week08-r3-confirmatory-20261116",
   "release_id": "pre-week08-g5r3-20261117",
   "gate": "G5",
-  "status": "R3_REVIEW_PENDING",
-  "generated_utc": "2026-11-17T19:30:56Z",
+  "status": "G5_APPROVED_TAG_PENDING",
+  "generated_utc": "2026-11-17T19:37:41Z",
   "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
   "release_commit": null,
   "release_tag": null,
   "proposed_release_tag": "pre-week08-g5r3-20261117",
   "clean_worktree": true,
-  "required_signoffs_complete": false,
+  "required_signoffs_complete": true,
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": null,
+    "name": "Md Moshiur Rahman",
     "role": "release reviewer",
-    "decision": "PENDING",
-    "attested_utc": null
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-17T19:37:41Z"
   },
   "stage_b_binding": {
     "base_validation_path": "reports/pre_week08_stage_b_validation.json",
     "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
-    "rebinding_sha256": "df32a3f3fa1a4cab8eb8c4735c4d5b785bf105f4598d5644e87f1563b72b4473",
+    "rebinding_sha256": "00cd6892f745426142158251c9e32a5a43375366ca6e5b0866a4738720f5d15a",
     "implementation_checkpoint": "98b50cb071b5bea9657bd8e151b41741b1718092",
     "frozen_ui_version": "v0.2",
     "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
     "ui_runtime_or_ui_test_paths_changed": false,
-    "review_status": "PENDING"
+    "review_status": "APPROVED"
   },
   "dependency_environment": {
     "lock_path": "reports/pre_week08_dependency_lock.txt",
@@ -40,10 +40,10 @@
     "configs/week07_day01_frozen_methods.yaml": "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
     "configs/week08_frozen_baseline.json": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
     "configs/week08_r3_final_evaluation.yaml": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea",
-    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "8984e461a3b946700f9d7d45ce8e2c4b5489bd79efdd5518d0a128b176c925f9",
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "2be2b2538300a8e2f80b2c5cd5bc40eb833e31669012d5e1e83bda78d629e45c",
     "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
-    "reports/pre_week08_r3_stage_b_rebinding.json": "df32a3f3fa1a4cab8eb8c4735c4d5b785bf105f4598d5644e87f1563b72b4473",
-    "reports/pre_week08_r3_validation.json": "69ed9dd43243cce8999d0ef685a124188da71939c9a83c28d7eae89e7a0dc074",
+    "reports/pre_week08_r3_stage_b_rebinding.json": "00cd6892f745426142158251c9e32a5a43375366ca6e5b0866a4738720f5d15a",
+    "reports/pre_week08_r3_validation.json": "bb20b6901504285a742ca1256917a8ef0ad04d3e7e2c68cdf0d650cb179692ec",
     "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "reports/week08_r3_g3_remediation.json": "27ae317ef5781b9a74caa111835ad4829fe02d8637d0fc9e8cc0f139df92b138",
     "scripts/week08_final_evaluation.py": "e6f9f95cbbab65fd2622975f77d783c9810c95e6f7b1760030b7743536d67aa0",
@@ -80,7 +80,6 @@
     "authorized": false,
     "release_reviewer_approval_pending": true,
     "expected_remaining_blocks": [
-      "G5",
       "G6",
       "G7"
     ],

@@ -2,7 +2,7 @@
 
 **Prepared:** 17 November 2026
 
-**Status:** G5 REVIEW PENDING
+**Status:** G5 APPROVED — TAG CREATION AUTHORIZED
 
 **Cycle:** `week08-r3-confirmatory-20261116`
 
@@ -10,9 +10,9 @@
 
 **Proposed tag:** `pre-week08-g5r3-20261117`
 
-This checklist presents the corrected R3 candidate for a distinct human G5
-review. It does not approve G5, enroll a holdout, authorize G7, or permit any
-source or label decoding.
+This checklist records the distinct human G5 approval of the corrected R3
+candidate. It does not enroll a holdout, authorize G7, or permit any source or
+label decoding.
 
 ## Corrected evaluator and reporting boundary
 
@@ -64,28 +64,37 @@ source or label decoding.
 - [x] No UI runtime or UI test path changed.
 - [x] The original 5/5 scenarios and 5/5 supplemental checks are identified
   as unchanged inherited observations, not as a new manual run.
-- [ ] A release reviewer has approved the R3 Stage B rebinding.
+- [x] Release reviewer Md Moshiur Rahman approved the R3 Stage B rebinding at
+  `2026-11-17T19:37:41Z`.
 
 ## Pre-enrollment boundary
 
 - [x] `fresh_sources` is empty.
 - [x] The R3 source registration and G7 authorization artifacts are absent.
-- [x] No R3 release tag exists.
-- [x] G6 remains blocked until G5 passes and a genuinely new source is
-  supplied by a data custodian.
+- [x] Creation of `pre-week08-g5r3-20261117` is authorized by the recorded G5
+  approval; this checklist itself does not create the tag.
+- [x] G6 remains blocked until the approved freeze is tagged and a genuinely
+  new source is supplied by a data custodian.
 - [x] G7 remains blocked until reviewed G5 and G6 evidence exists.
 
 ## Required G5 decision
 
 - **Requested reviewer:** Md Moshiur Rahman
 - **Role:** release reviewer
-- **Decision: PENDING**
-- **Attested UTC:** pending
+- **Decision: APPROVED**
+- **Attested UTC:** `2026-11-17T19:37:41Z`
 - **Reviewed implementation:** `98b50cb071b5bea9657bd8e151b41741b1718092`
-- **Candidate tag:** proposed only; not created
+- **Reviewed package:** `44d9783b2247a9033d2ce702673e641944972e47`
+- **Candidate tag:** `pre-week08-g5r3-20261117` authorized for creation
 
-The reviewer must confirm that the corrected evaluator, complete R3 gate,
-regression evidence, Stage B inheritance, frozen artifacts, and zero-access
-pre-enrollment boundary are sufficient for the new G5 freeze. Approval must be
-an explicit user attestation; it is never inferred from project-owner
-instructions or from this technically passing package.
+Recorded approval statement:
+
+> Approve the R3 G5 release freeze and Stage B rebinding for implementation
+> checkpoint 98b50cb071b5bea9657bd8e151b41741b1718092, reviewed through package
+> commit 44d9783b2247a9033d2ce702673e641944972e47, under proposed tag
+> pre-week08-g5r3-20261117 as release reviewer Md Moshiur Rahman. I approve the
+> zero-access pre-enrollment boundary.
+
+This approval is limited to G5 and the Stage B rebinding. G6 fresh-source
+enrollment and G7 one-run execution authorization remain separate blocked
+gates.
