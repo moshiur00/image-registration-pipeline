@@ -48,6 +48,7 @@ RELEASE_REL = "reports/pre_week08_r3_release_manifest.json"
 STAGE_B_BASE_REL = "reports/pre_week08_stage_b_validation.json"
 STAGE_B_REBINDING_REL = "reports/pre_week08_r3_stage_b_rebinding.json"
 CHECKLIST_REL = "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md"
+VALIDATION_REL = "reports/pre_week08_r3_validation.json"
 SOURCE_REGISTRATION_REL = "reports/pre_week08_r3_source_registration.json"
 AUTHORIZATION_REL = "reports/pre_week08_r3_phase7_authorization.json"
 
@@ -87,6 +88,12 @@ CRITICAL_ARTIFACTS = frozenset({
     "tests/test_week08_r3_preflight.py",
     STAGE_B_BASE_REL,
     STAGE_B_REBINDING_REL,
+    VALIDATION_REL,
+    CHECKLIST_REL,
+})
+REVIEW_PACKAGE_ARTIFACTS = frozenset({
+    STAGE_B_REBINDING_REL,
+    VALIDATION_REL,
     CHECKLIST_REL,
 })
 RUNTIME_BINDINGS = {
@@ -436,7 +443,7 @@ def validate_candidate(root: Path = ROOT) -> dict[str, Any]:
         "observed": access,
     })
     runtime_errors: list[str] = []
-    for relative in sorted(CRITICAL_ARTIFACTS - {STAGE_B_REBINDING_REL, CHECKLIST_REL}):
+    for relative in sorted(CRITICAL_ARTIFACTS - REVIEW_PACKAGE_ARTIFACTS):
         path = safe_file(root, relative)
         if path is None or not path.is_file():
             runtime_errors.append(f"missing candidate artifact: {relative}")
@@ -483,6 +490,250 @@ EXPECTED_RELEASE_FIELDS = {
     "activity_counters",
     "limitations",
 }
+
+
+def _pending_release_record_errors(release: Mapping[str, Any]) -> list[str]:
+    """Validate the human-unapproved form used for the G5 review package."""
+    errors: list[str] = []
+    if set(release) != EXPECTED_RELEASE_FIELDS:
+        errors.append("pending R3 release manifest fields are not exact")
+    if release.get("schema_version") != RELEASE_SCHEMA:
+        errors.append("pending R3 release manifest schema mismatch")
+    if release.get("cycle_id") != CYCLE_ID or release.get("gate") != "G5":
+        errors.append("pending R3 release cycle or gate mismatch")
+    if release.get("status") != "R3_REVIEW_PENDING":
+        errors.append("pending R3 release status is not R3_REVIEW_PENDING")
+    if not nonempty(release.get("release_id")):
+        errors.append("pending R3 release_id is missing")
+    if release.get("release_id") != release.get("proposed_release_tag"):
+        errors.append("pending R3 release_id and proposed tag differ")
+    if release.get("release_commit") is not None or release.get("release_tag") is not None:
+        errors.append("pending R3 package must not invent a release commit or tag")
+    if release.get("required_signoffs_complete") is not False:
+        errors.append("pending R3 package claims completed signoffs")
+    reviewer = release.get("reviewer") if isinstance(release.get("reviewer"), dict) else {}
+    if set(reviewer) != {"requested_reviewer", "name", "role", "decision", "attested_utc"}:
+        errors.append("pending R3 reviewer fields are not exact")
+    if (
+        not nonempty(reviewer.get("requested_reviewer"))
+        or reviewer.get("name") is not None
+        or reviewer.get("role") != "release reviewer"
+        or reviewer.get("decision") != "PENDING"
+        or reviewer.get("attested_utc") is not None
+    ):
+        errors.append("pending R3 reviewer state is not explicitly unapproved")
+    if release.get("post_release_metadata_allowlist") != sorted(POST_G5_METADATA_ALLOWLIST):
+        errors.append("pending R3 post-G5 allowlist is not exact")
+    g6 = release.get("g6_enrollment") if isinstance(release.get("g6_enrollment"), dict) else {}
+    if g6 != {
+        "status": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+        "reviewed_commit": None,
+        "source_ids": [],
+        "source_ledger_sha256": None,
+        "holdout_manifest_sha256": None,
+        "source_registration_sha256": None,
+    }:
+        errors.append("pending R3 package does not keep G6 blocked")
+    g7 = release.get("g7_authorization") if isinstance(release.get("g7_authorization"), dict) else {}
+    if g7 != {"status": "BLOCKED_PENDING_G5_G6", "authorization_id": None, "authorization_sha256": None}:
+        errors.append("pending R3 package does not keep G7 blocked")
+    final = release.get("final_readiness") if isinstance(release.get("final_readiness"), dict) else {}
+    if final != {
+        "authorized": False,
+        "release_reviewer_approval_pending": True,
+        "expected_remaining_blocks": ["G5", "G6", "G7"],
+        "week08_benchmark_executed": False,
+        "real_week08_pixels_accessed": False,
+        "real_week08_labels_accessed": False,
+    }:
+        errors.append("pending R3 final-readiness state is not exact")
+    counters = release.get("activity_counters") if isinstance(release.get("activity_counters"), dict) else {}
+    if counters != {
+        "fresh_sources_enrolled": 0,
+        "source_bytes_decoded": 0,
+        "labels_accessed": 0,
+        "registration_attempts": 0,
+        "policy_decisions": 0,
+        "evaluation_runs": 0,
+    }:
+        errors.append("pending R3 activity counters are not exactly zero")
+    return errors
+
+
+def _pending_stage_b_errors(report: Mapping[str, Any]) -> list[str]:
+    errors: list[str] = []
+    expected_fields = {
+        "schema_version", "stage", "status", "basis", "candidate",
+        "automated_validation", "inheritance", "reviewer", "week8_heldout_used",
+    }
+    if set(report) != expected_fields or report.get("schema_version") != STAGE_B_REBINDING_SCHEMA:
+        errors.append("pending R3 Stage B schema or fields are invalid")
+    if report.get("stage") != "pre_week08_stage_b_release_rebinding":
+        errors.append("pending R3 Stage B stage identifier is wrong")
+    if report.get("status") != "PENDING_REVIEW" or report.get("week8_heldout_used") is not False:
+        errors.append("pending R3 Stage B status or held-out-use declaration is invalid")
+    inheritance = report.get("inheritance") if isinstance(report.get("inheritance"), dict) else {}
+    if inheritance != {
+        "manual_scenarios_inherited": 5,
+        "supplemental_checks_inherited": 5,
+        "evidence_unchanged": True,
+        "manual_evidence_rerun": False,
+    }:
+        errors.append("pending R3 Stage B inheritance is not exact")
+    validation = (
+        report.get("automated_validation")
+        if isinstance(report.get("automated_validation"), dict)
+        else {}
+    )
+    full = validation.get("full_suite") if isinstance(validation.get("full_suite"), dict) else {}
+    if (
+        not isinstance(full.get("collected"), int)
+        or not isinstance(full.get("passed"), int)
+        or full.get("collected", 0) <= 0
+        or full.get("passed", 0) <= 0
+        or full.get("skipped", -1) < 0
+        or full.get("failed") != 0
+        or full.get("passed", 0) + full.get("skipped", 0) != full.get("collected")
+    ):
+        errors.append("pending R3 Stage B full-suite result is invalid")
+    reviewer = report.get("reviewer") if isinstance(report.get("reviewer"), dict) else {}
+    if reviewer != {
+        "requested_reviewer": "Md Moshiur Rahman",
+        "name": None,
+        "role": "release reviewer",
+        "decision": "PENDING",
+        "attested_utc": None,
+    }:
+        errors.append("pending R3 Stage B reviewer state is not explicitly unapproved")
+    return errors
+
+
+def validate_review_package(root: Path = ROOT) -> dict[str, Any]:
+    """Validate a tracked, clean, still-unapproved G5 review package."""
+    errors: list[str] = []
+    observed: dict[str, Any] = {}
+    try:
+        release = read_json(root / RELEASE_REL)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return {
+            "schema_version": PREFLIGHT_SCHEMA,
+            "cycle_id": CYCLE_ID,
+            "mode": "g5_review_package",
+            "readiness": "BLOCK",
+            "errors": [f"invalid pending R3 release manifest: {exc}"],
+        }
+    errors.extend(_pending_release_record_errors(release))
+    implementation_errors: list[str] = []
+    implementation = _resolve_commit(
+        root,
+        release.get("implementation_checkpoint"),
+        "R3 review implementation checkpoint",
+        implementation_errors,
+    )
+    errors.extend(implementation_errors)
+    head_result = _git(root, "rev-parse", "--verify", "HEAD^{commit}")
+    head = head_result.stdout.strip().lower() if head_result.returncode == 0 else None
+    if head is None:
+        errors.append("cannot resolve the R3 review-package HEAD")
+    elif implementation:
+        if _git(root, "merge-base", "--is-ancestor", implementation, head).returncode != 0:
+            errors.append("R3 implementation checkpoint is not an ancestor of the review package")
+        else:
+            tail = _changed_paths(root, implementation, head, errors)
+            observed["review_tail_changed_paths"] = tail
+            forbidden = [
+                item for item in tail
+                if not item.startswith("docs/") and not item.startswith("reports/")
+            ]
+            if forbidden:
+                errors.append("R3 review-package tail exceeds docs/reports: " + ", ".join(forbidden))
+    status = _git(root, "status", "--porcelain=v1", "--untracked-files=all")
+    if status.returncode != 0 or status.stdout.strip():
+        errors.append("R3 review-package worktree is not clean")
+    observed["worktree_status"] = status.stdout.splitlines()
+
+    artifacts = release.get("artifacts") if isinstance(release.get("artifacts"), dict) else {}
+    if set(artifacts) != CRITICAL_ARTIFACTS:
+        errors.append("pending R3 artifact inventory is not exact")
+    for relative in sorted(CRITICAL_ARTIFACTS):
+        issue = checked_hash(root, relative, artifacts.get(relative))
+        if issue:
+            errors.append(issue)
+    dependency = (
+        release.get("dependency_environment")
+        if isinstance(release.get("dependency_environment"), dict)
+        else {}
+    )
+    for path_field, hash_field in (
+        ("lock_path", "lock_sha256"),
+        ("environment_path", "environment_sha256"),
+    ):
+        issue = checked_hash(root, dependency.get(path_field), dependency.get(hash_field))
+        if issue:
+            errors.append(issue)
+
+    try:
+        stage = read_json(root / STAGE_B_REBINDING_REL)
+        errors.extend(_pending_stage_b_errors(stage))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        stage = {}
+        errors.append(f"invalid pending R3 Stage B report: {exc}")
+    if stage:
+        basis = stage.get("basis") if isinstance(stage.get("basis"), dict) else {}
+        candidate = stage.get("candidate") if isinstance(stage.get("candidate"), dict) else {}
+        if basis.get("validation_path") != STAGE_B_BASE_REL:
+            errors.append("pending R3 Stage B report names the wrong base validation")
+        if basis.get("validation_sha256") != sha256_file(root / STAGE_B_BASE_REL):
+            errors.append("pending R3 Stage B base hash mismatch")
+        if candidate.get("implementation_commit") != release.get("implementation_checkpoint"):
+            errors.append("pending R3 Stage B implementation checkpoint mismatch")
+        tested_errors: list[str] = []
+        tested = _resolve_commit(root, basis.get("tested_release_commit"), "Stage B base commit", tested_errors)
+        errors.extend(tested_errors)
+        if tested and implementation:
+            paths = _changed_paths(root, tested, implementation, errors)
+            protected = [item for item in paths if _stage_b_protected_path(item)]
+            ui_runtime = [
+                item for item in paths
+                if item.startswith("ui/") and PurePosixPath(item).suffix.lower() != ".md"
+            ]
+            observed["protected_changed_paths"] = protected
+            observed["ui_runtime_changed_paths"] = ui_runtime
+            if candidate.get("protected_changed_paths") != protected:
+                errors.append("pending R3 Stage B protected paths differ from Git")
+            if candidate.get("ui_runtime_changed") is not False or ui_runtime:
+                errors.append("pending R3 Stage B package cannot inherit across a UI runtime change")
+
+    try:
+        validation = read_json(root / VALIDATION_REL)
+        errors.extend(_self_hash_errors(validation, "report_payload_sha256", "R3 G5 validation"))
+        if validation.get("implementation_checkpoint") != release.get("implementation_checkpoint"):
+            errors.append("R3 G5 validation checkpoint mismatch")
+        if validation.get("status") != "PASS_TECHNICAL_REVIEW_READY":
+            errors.append("R3 G5 validation is not technically review-ready")
+        if validation.get("human_g5_decision") != "PENDING":
+            errors.append("R3 G5 validation invents a human decision")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        errors.append(f"invalid R3 G5 validation report: {exc}")
+    checklist = safe_file(root, CHECKLIST_REL)
+    if checklist is None or not checklist.is_file():
+        errors.append(f"missing {CHECKLIST_REL}")
+    else:
+        text = checklist.read_text(encoding="utf-8")
+        if "G5 REVIEW PENDING" not in text or "Decision: PENDING" not in text:
+            errors.append("R3 checklist does not clearly preserve the pending human decision")
+
+    return {
+        "schema_version": PREFLIGHT_SCHEMA,
+        "cycle_id": CYCLE_ID,
+        "mode": "g5_review_package",
+        "readiness": "PASS" if not errors else "BLOCK",
+        "errors": errors,
+        "observed": observed,
+        "human_g5_decision": "PENDING",
+        "source_or_label_decoded": False,
+        "week08_evaluation_executed": False,
+    }
 
 
 def _load_release(root: Path) -> tuple[list[str], dict[str, Any]]:
@@ -1121,11 +1372,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--candidate-readiness", action="store_true")
+    mode.add_argument("--review-package", action="store_true")
     mode.add_argument("--technical-readiness", action="store_true")
     mode.add_argument("--final-readiness", action="store_true")
     args = parser.parse_args(argv)
     if args.candidate_readiness:
         report = validate_candidate(ROOT)
+    elif args.review_package:
+        report = validate_review_package(ROOT)
     else:
         report = run_preflight(ROOT, require_g7=bool(args.final_readiness))
     print(json.dumps(report, indent=2, sort_keys=True))
