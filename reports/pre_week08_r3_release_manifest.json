@@ -64,7 +64,7 @@
     "reports/pre_week08_r3_source_registration.json"
   ],
   "g6_enrollment": {
-    "status": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "status": "BLOCKED_PENDING_FRESH_SOURCE",
     "reviewed_commit": null,
     "source_ids": [],
     "source_ledger_sha256": null,
@@ -72,7 +72,7 @@
     "source_registration_sha256": null
   },
   "g7_authorization": {
-    "status": "BLOCKED_PENDING_G5_G6",
+    "status": "BLOCKED_PENDING_G6",
     "authorization_id": null,
     "authorization_sha256": null
   },
