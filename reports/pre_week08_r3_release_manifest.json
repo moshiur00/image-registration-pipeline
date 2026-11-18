@@ -3,14 +3,14 @@
   "cycle_id": "week08-r3-confirmatory-20261116",
   "release_id": "pre-week08-g5r3r2-20261117",
   "gate": "G5",
-  "status": "G5_PASS",
-  "generated_utc": "2026-11-18T15:04:41Z",
+  "status": "INVALIDATED_POST_G6_REGRESSION",
+  "generated_utc": "2026-11-18T15:11:34Z",
   "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
   "release_commit": "0301bd29e3e62b3ee9c918469774f827b2706b7d",
   "release_tag": "pre-week08-g5r3r2-20261117",
   "proposed_release_tag": "pre-week08-g5r3r2-20261117",
   "clean_worktree": true,
-  "required_signoffs_complete": true,
+  "required_signoffs_complete": false,
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
     "name": "Md Moshiur Rahman",
@@ -65,7 +65,7 @@
     "reports/pre_week08_r3_source_registration.json"
   ],
   "g6_enrollment": {
-    "status": "PASS",
+    "status": "INVALIDATED_POST_ENROLLMENT_TEST_FAILURE",
     "reviewed_commit": "713c4a89c4d21c10a815d02c4bef8778c8cb9cce",
     "source_ids": [
       "nga_106382_self_portrait_1889"
@@ -75,7 +75,7 @@
     "source_registration_sha256": "e957aa869973c85dada5e9fa7f2c122c4869a9c32e7778237e1db2d24011f484"
   },
   "g7_authorization": {
-    "status": "BLOCKED_PENDING_REVIEWER_AUTHORIZATION",
+    "status": "BLOCKED_INVALID_G5_G6",
     "authorization_id": null,
     "authorization_sha256": null
   },
@@ -83,6 +83,8 @@
     "authorized": false,
     "release_reviewer_approval_pending": true,
     "expected_remaining_blocks": [
+      "G5",
+      "G6",
       "G7"
     ],
     "week08_benchmark_executed": false,
@@ -98,6 +100,7 @@
     "evaluation_runs": 0
   },
   "limitations": [
+    "The G5/G6 chain is invalid for G7 because post-enrollment regression verification exposed a phase-state-coupled development-plan test; no source pixels, labels, outcomes, attempts, decisions, or evaluations were accessed or executed.",
     "Post-tag verification passed: 31 focused tests and the complete 783-test suite completed with 780 passed, 3 skipped, and 0 failed; all G5 checks pass.",
     "The historical tag pre-week08-g5r3-20261117 is retained as immutable evidence but is invalid for G6 because a phase-state-coupled test failed after the intended manifest transition.",
     "The corrected checkpoint, incident disposition, renewed human G5 approval, and replacement tag are bound.",
