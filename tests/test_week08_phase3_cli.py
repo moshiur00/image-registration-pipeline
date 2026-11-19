@@ -12,6 +12,7 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
+import yaml
 
 from image_registration.week8_evaluation import (
     Week8MethodSpec,
@@ -101,26 +102,50 @@ def test_final_mode_rejects_an_alternate_config_before_reading_it(tmp_path: Path
         final_cli.load_protocol(alternate, development=False)
 
 
-def test_r2_final_is_closed_and_r3_metadata_opens_but_prepare_is_blocked_before_g7() -> None:
+def test_r2_final_is_closed_and_r3_metadata_loads_without_source_access() -> None:
     with pytest.raises(ValueError, match="R2 holdout is exposed"):
         final_cli.load_protocol(final_cli.DEFAULT_CONFIG, development=False)
     path, config = final_cli.load_protocol(final_cli.R3_CONFIG, development=False)
     assert path == final_cli.R3_CONFIG.resolve()
     assert config["cycle_id"] == "week08-r3-confirmatory-20261116"
-    with pytest.raises(ValueError, match="strict final readiness did not pass"):
-        prepare_cli.require_strict_final_readiness(final_cli.R3_CONFIG)
 
 
-def test_r3_development_plan_uses_v2_contract_and_separate_namespaces() -> None:
-    _, config, plan, _pairs, _methods = final_cli.build_development_plan(
-        final_cli.R3_CONFIG
+def test_r3_development_plan_uses_v2_contract_and_separate_namespaces(
+    tmp_path: Path,
+) -> None:
+    ledger_path = tmp_path / "phase3_source_ledger.json"
+    ledger_path.write_text(
+        json.dumps({
+            "schema_version": "week08_r3_source_use_ledger_v1",
+            "cycle_id": "week08-r3-confirmatory-20261116",
+            "fresh_sources": [],
+            "fixture_scope": "controlled_phase3_development_test",
+        }),
+        encoding="utf-8",
     )
+    controlled = deepcopy(final_cli.load_yaml(final_cli.R3_CONFIG))
+    controlled["frozen_assets"]["source_ledger"]["path"] = ledger_path.as_posix()
+    controlled["frozen_assets"]["source_ledger"]["phase3_reference_sha256"] = (
+        sha256_file(ledger_path)
+    )
+    controlled["sources"]["ledger_path"] = ledger_path.as_posix()
+    config_path = tmp_path / "week08_r3_phase3_fixture.yaml"
+    config_path.write_text(
+        yaml.safe_dump(controlled, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    _, config, plan, _pairs, _methods = final_cli.build_development_plan(config_path)
     assert config["state"] == "r3_g3_remediation_in_progress_no_source_access"
     assert plan["schema_version"] == "week08_evaluation_plan_v2"
     assert plan["uncertainty"]["z_value"] == config["uncertainty"]["z_value"]
     assert plan["reporting_contract"] == config["reporting_enforcement"]
     assert config["artifact_paths"]["final_prepare_root"] == "outputs/week08_r3_holdout"
     assert config["artifact_paths"]["final_decision_root"] == "outputs/week08_r3_final"
+
+    ledger_path.write_text('{"tampered": true}', encoding="utf-8")
+    with pytest.raises(ValueError, match="Phase 3 source-ledger hash mismatch"):
+        final_cli.build_development_plan(config_path)
 
 
 def test_final_layout_is_exact_disjoint_and_non_nested() -> None:

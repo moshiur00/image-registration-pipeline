@@ -1,0 +1,92 @@
+{
+  "schema_version": "pre_week08_r3_g6_incident_v1",
+  "incident_id": "r3-g6-post-enrollment-phase-state-test-20261118",
+  "recorded_utc": "2026-11-18T15:21:05Z",
+  "status": "REMEDIATED_PENDING_RENEWED_G5_G6_REVIEW",
+  "historical_chain": {
+    "g5_release_commit": "0301bd29e3e62b3ee9c918469774f827b2706b7d",
+    "g5_release_tag": "pre-week08-g5r3r2-20261117",
+    "g5_manifest_binding_commit": "20a880d86d2138b8667fed4f22f9977e38d8a2af",
+    "g5_post_tag_verification_commit": "053f1842dac32a753c5713a86bcb99eb7fe8abbd",
+    "g6_enrollment_commit": "713c4a89c4d21c10a815d02c4bef8778c8cb9cce",
+    "g6_binding_commit": "e5e5ac4472c635b346e7121ab23683e426c896a0",
+    "invalidation_commit": "b5815be06242c887aeb2a467b92640e33e542d96",
+    "disposition": "immutable_historical_nonconforming_g5_g6_chain_not_eligible_for_g7"
+  },
+  "trigger": {
+    "command": ".venv\\Scripts\\python.exe -m pytest -q tests\\test_week08_r3_preflight.py tests\\test_week08_r3_reporting.py tests\\test_week08_final_evaluation.py tests\\test_week08_phase3_cli.py",
+    "failed_test": "tests/test_week08_phase3_cli.py::test_r3_development_plan_uses_v2_contract_and_separate_namespaces",
+    "observed": "The Phase 3 development-only plan test read the mutable live R3 source ledger after the permitted G6 metadata overlay and failed the deliberately immutable Phase 3 ledger-hash guard.",
+    "failure": "ValueError: Phase 3 source-ledger hash mismatch."
+  },
+  "root_cause": {
+    "category": "phase_state_coupled_test_fixture",
+    "description": "The test used the live post-G6 ledger while asserting a Phase 3-only development contract. Final planning uses development=False and correctly binds the reviewed G6 ledger and manifest; production runtime behavior was not defective.",
+    "production_runtime_change_required": false,
+    "scientific_evaluator_failure": false,
+    "g6_preflight_failure": false,
+    "source_content_failure": false
+  },
+  "impact": {
+    "g5_freeze_valid_for_g7": false,
+    "g6_enrollment_valid_for_g7": false,
+    "g7_opened": false,
+    "source_raw_bytes_transferred": true,
+    "source_raw_bytes_hashed_without_decode": true,
+    "source_pixels_previewed": false,
+    "source_pixels_decoded": false,
+    "labels_accessed": false,
+    "scientific_outcomes_accessed": false,
+    "registration_attempts": 0,
+    "policy_decisions": 0,
+    "evaluation_runs": 0,
+    "r3_output_roots_created": false
+  },
+  "source_disposition": {
+    "source_id": "nga_106382_self_portrait_1889",
+    "sha256": "d0892e50daa20d8a3d9168b9e6e86d2884fca81ad78d4ee2ff25b809cfe74e32",
+    "metadata_only_enrollment_changes_scientific_prior_use_status": false,
+    "same_source_may_be_rebound_after_renewed_g5": true,
+    "renewed_g6_custodian_approval_required": true,
+    "new_holdout_required": false,
+    "basis": "No enrolled pixel, label, or outcome was previewed or decoded, and no prepare, decide, evaluate, or benchmark action ran."
+  },
+  "remediation": {
+    "production_files_changed": [],
+    "test_files_changed": [
+      "tests/test_week08_phase3_cli.py"
+    ],
+    "preflight_governance_files_changed": [
+      "scripts/week08_r3_preflight.py"
+    ],
+    "controlled_phase3_ledger_fixture_replaces_live_ledger_assumption": true,
+    "live_g7_blocker_assertion_replaced_by_existing_controlled_gate_tests": true,
+    "production_phase3_hash_guard_retained": true,
+    "targeted_tests": {
+      "passed": 20,
+      "failed": 0
+    },
+    "focused_tests": {
+      "passed": 98,
+      "failed": 0
+    },
+    "full_suite": {
+      "collected": 783,
+      "passed": 780,
+      "skipped": 3,
+      "failed": 0,
+      "warning": "One non-functional pytest cache ACL warning; no test failure."
+    }
+  },
+  "renewal_requirements": {
+    "new_implementation_checkpoint": true,
+    "renewed_stage_b_rebinding": true,
+    "renewed_g5_release_review": true,
+    "new_immutable_g5_tag": true,
+    "renewed_g6_custodian_rebinding": true,
+    "new_g7_one_run_authorization": true,
+    "historical_tags_must_not_move_or_be_deleted": true
+  },
+  "next": "Commit the phase-stable test remediation and incident evidence, prepare a renewed G5 review package, and stop for renewed release-reviewer approval before tagging or rebinding G6.",
+  "incident_payload_sha256": "cc445eef973b42bbd9707e903a3ccf14fa44f1d371420be55628ec4676ddbe30"
+}
