@@ -23,61 +23,7 @@
     "lineage_status",
     "custodian_attestation"
   ],
-  "fresh_sources": [
-    {
-      "source_id": "nga_106382_self_portrait_1889",
-      "path": "data/holdout/week08_r3/nga_106382_self_portrait_iiif_2710x3534.jpg",
-      "sha256": "d0892e50daa20d8a3d9168b9e6e86d2884fca81ad78d4ee2ff25b809cfe74e32",
-      "format": "jpg",
-      "modality": "visible_color",
-      "role": "full_project_independent",
-      "previously_used": false,
-      "prior_usage": [],
-      "reference_or_license": "National Gallery of Art object 106382, accession 1998.74.5. The object page marks the media free and in the public domain; the NGA Open Access Policy releases eligible digital images under CC0. Credit: Courtesy National Gallery of Art, Washington. No NGA endorsement is implied.",
-      "canonical_dataset_id": "nga_open_access_collection",
-      "canonical_subject_id": "vincent_van_gogh_self_portrait_1889",
-      "canonical_case_id": "nga_object_106382",
-      "canonical_acquisition_id": "nga_media_54ee6643-e0f9-4b92-a1d2-441e5108724d_primary_sequence_0",
-      "canonical_source_id": "nga_open_access:object_106382:media_54ee6643-e0f9-4b92-a1d2-441e5108724d:iiif_2710x3534_default_jpg",
-      "lineage_ancestors": [
-        "nga:open_access_collection",
-        "nga:subject:vincent_van_gogh_self_portrait_1889",
-        "nga:object:106382",
-        "nga:accession:1998.74.5",
-        "nga:media:54ee6643-e0f9-4b92-a1d2-441e5108724d",
-        "nga:iiif:54ee6643-e0f9-4b92-a1d2-441e5108724d:primary:sequence_0"
-      ],
-      "lineage_evidence": {
-        "path": "data/holdout/week08_r3/nga_106382_self_portrait_lineage.json",
-        "sha256": "a23980305534ffe020aab6ace923debb7af25d983a18fa10f8ccc2d70978195d"
-      },
-      "lineage_status": "custodian_approved_official_nga_open_access_primary_media_rendition",
-      "custodian_attestation": {
-        "name": "Md Moshiur Rahman",
-        "role": "data custodian/provenance reviewer",
-        "decision": "APPROVED",
-        "attested_utc": "2026-11-18T14:56:40Z",
-        "intake_path": "data/holdout/week08_r3/custodian_intake.nga_106382_self_portrait.json",
-        "intake_sha256": "7784fc00e275321eaa44bcbc1d2ac0a415ca4daa63bffd8a150b1c185822e559"
-      },
-      "ground_truth": {
-        "type": "synthetic_created_after_freeze",
-        "release_freeze_id": "pre-week08-g5r3r2-20261117",
-        "generator_id": "image_registration.synthetic.sample_ground_truth_transform",
-        "generator_version": "week08_frozen_synthetic_geometry_v1",
-        "seeds": [81103, 81117, 81131],
-        "coordinate_convention": "moving_to_fixed",
-        "config_path": "data/holdout/week08_r3/nga_106382_self_portrait_synthetic_gt_config.json",
-        "config_sha256": "c1f2d852fce14286569e4a64eee153ca4ccf0a24fa458de52bd8d21ca90f9296",
-        "case_spec_path": "data/holdout/week08_r3/nga_106382_self_portrait_case_specification.json",
-        "case_spec_sha256": "6f964d25b9d65d550aeced45b00600448e8b5f4e2eebce7cc230d87eb5844c86",
-        "manifest_path": "data/holdout/week08_r3/nga_106382_self_portrait_synthetic_gt_manifest.json",
-        "manifest_sha256": "4099badd7d70ccd4850efc5b8f6eafc277d7ed0d2d77d2ae0aa76ca02a55b17f",
-        "synthetic_pairs_generated": false,
-        "labels_generated": false
-      }
-    }
-  ],
+  "fresh_sources": [],
   "prior_exposed_sources": [
     {
       "source_id": "nasa_pia18033_earth",
@@ -121,10 +67,10 @@
     "ambiguous_or_incomplete_lineage": "reject"
   },
   "enrollment": {
-    "status": "G6_PASS",
+    "status": "BLOCKED_AWAITING_FRESH_UNEXPOSED_SOURCE",
     "g5_freeze_required_before_intake": true,
     "custodian_attestation_required": true,
-    "fresh_source_count": 1,
+    "fresh_source_count": 0,
     "source_bytes_accessed_in_r3": 0,
     "labels_accessed_in_r3": 0,
     "outcomes_accessed_in_r3": 0
