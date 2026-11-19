@@ -1,9 +1,9 @@
 {
   "schema_version": "pre_week08_r3_validation_v1",
   "cycle_id": "week08-r3-confirmatory-20261116",
-  "generated_utc": "2026-11-17T19:47:53Z",
-  "status": "PASS_RENEWED_G5_APPROVED",
-  "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
+  "generated_utc": "2026-11-19T18:02:36Z",
+  "status": "PASS_TECHNICAL_REVIEW_READY",
+  "implementation_checkpoint": "98b56dac785aa455aad2c4d964b8e88869241402",
   "g3_checkpoint": {
     "commit": "1208c7d93da3646eb9a02c30ff59f21f530325d2",
     "report_path": "reports/week08_r3_g3_remediation.json",
@@ -30,18 +30,25 @@
     "r2_source_reuse_machine_rejected": true
   },
   "validation": {
-    "focused_command": ".venv\\Scripts\\python.exe -m pytest tests/test_week08_r3_preflight.py tests/test_week08_r3_cycle_scaffold.py tests/test_week08_r3_g3_remediation.py tests/test_week08_phase3_cli.py -q -o addopts=''",
-    "focused_tests_passed": 26,
+    "focused_command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts='' -p no:cacheprovider tests\\test_week08_r3_preflight.py tests\\test_week08_r3_reporting.py tests\\test_week08_final_evaluation.py tests\\test_week08_phase3_cli.py",
+    "focused_tests_passed": 98,
     "focused_tests_skipped": 0,
     "focused_tests_failed": 0,
-    "full_command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts=''",
+    "full_temp_setup": [
+      "$r3Temp = 'E:\\project\\image-registration-pipeline\\r3_full_20261119.tmp'",
+      "New-Item -ItemType Directory -Path $r3Temp",
+      "$env:TEMP = $r3Temp; $env:TMP = $r3Temp"
+    ],
+    "full_command": ".venv\\Scripts\\python.exe -m pytest -q -o addopts='' -p no:cacheprovider --basetemp E:\\project\\image-registration-pipeline\\r3_full_20261119.tmp\\basetemp",
     "tests_collected": 783,
     "tests_passed": 780,
     "tests_skipped": 3,
     "tests_failed": 0,
     "git_diff_check": "PASS",
     "candidate_preflight": "PASS",
-    "historical_phase9_scientific_audit": "PASS"
+    "historical_phase9_scientific_audit": "PASS",
+    "temp_strategy": "The counted rerun used a fresh Git-ignored repository-scoped E: temp root and disabled pytest cache writes.",
+    "discarded_infrastructure_run": "An earlier run using the ACL-problematic C: pytest temp root exhausted that volume and was discarded; its partial results are not release evidence."
   },
   "stage_b": {
     "base_validation_path": "reports/pre_week08_stage_b_validation.json",
@@ -50,13 +57,16 @@
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
     "ui_runtime_or_ui_test_paths_changed": false,
     "manual_evidence_inherited": "5/5 scenarios and 5/5 supplemental checks; not rerun",
-    "human_rebinding_decision": "APPROVED"
+    "human_rebinding_decision": "PENDING"
   },
   "privacy_boundary": {
     "r3_private_intake_git_ignored": true,
     "fresh_sources_enrolled": 0,
-    "source_bytes_decoded": 0,
+    "raw_source_bytes_transferred_and_hashed_without_decode": true,
+    "source_pixels_previewed": false,
+    "source_pixels_decoded": 0,
     "labels_accessed": 0,
+    "scientific_outcomes_accessed": 0,
     "registration_attempts": 0,
     "policy_decisions": 0,
     "evaluation_runs": 0,
@@ -77,19 +87,19 @@
     "source_or_label_exposure": false,
     "remediation_complete": true
   },
-  "human_g5_decision": "APPROVED",
-  "human_g5_approval": {
-    "reviewer": "Md Moshiur Rahman",
-    "role": "release reviewer",
-    "attested_utc": "2026-11-17T19:52:58Z",
-    "implementation_checkpoint": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
-    "reviewed_package_commit": "8a164fe71bb31ecc4fcdc70b51634e748bd2a8c3",
-    "authorized_tag": "pre-week08-g5r3r2-20261117",
-    "incident_disposition_approved": true,
-    "historical_tag_acknowledged_ineligible_for_g6": true,
-    "zero_access_pre_enrollment_boundary_approved": true,
-    "statement": "Approve the renewed R3 G5 release freeze and Stage B rebinding for implementation checkpoint caf7717d0f138df0c8dfe7eb95be98f3c0e2495f, reviewed through package commit 8a164fe71bb31ecc4fcdc70b51634e748bd2a8c3, including disposition of incident r3-g5-post-tag-phase-state-test-20261117, under proposed tag pre-week08-g5r3r2-20261117 as release reviewer Md Moshiur Rahman. I approve the zero-access pre-enrollment boundary and acknowledge that pre-week08-g5r3-20261117 is historical and ineligible for G6."
+  "g6_incident": {
+    "path": "reports/pre_week08_r3_g6_incident.json",
+    "incident_id": "r3-g6-post-enrollment-phase-state-test-20261118",
+    "historical_tag": "pre-week08-g5r3r2-20261117",
+    "historical_g5_g6_chain_valid_for_g7": false,
+    "source_raw_bytes_transferred_and_hashed_without_decode": true,
+    "source_pixels_previewed_or_decoded": false,
+    "labels_or_outcomes_accessed": false,
+    "scientific_execution_occurred": false,
+    "remediation_complete": true,
+    "tracked_pre_enrollment_boundary_restored": true
   },
-  "next": "Commit and tag the approved renewed G5 freeze. G6 remains blocked pending a genuinely new, unexposed source and separate data-custodian approval.",
-  "report_payload_sha256": "b6f4f3f8d7d33ad1145c16e771979b116170f3ccdd22515909a2e48cef7647d9"
+  "human_g5_decision": "PENDING",
+  "next": "Obtain release-reviewer approval of the committed package before creating the new G5 tag. G6 remains blocked pending the new freeze and separate renewed custodian rebinding; G7 remains blocked.",
+  "report_payload_sha256": "8959f4ed3d2ac31d319894a3fa9dffa681625aff9102111cc360142b5374c572"
 }

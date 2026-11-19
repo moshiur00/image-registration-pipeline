@@ -1,14 +1,14 @@
 {
   "schema_version": "pre_week08_r3_stage_b_rebinding_v1",
   "stage": "pre_week08_stage_b_release_rebinding",
-  "status": "APPROVED",
+  "status": "PENDING_REVIEW",
   "basis": {
     "validation_path": "reports/pre_week08_stage_b_validation.json",
     "validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "tested_release_commit": "2cb75adef4e616b34f70d7697c781b23ab861174"
   },
   "candidate": {
-    "implementation_commit": "caf7717d0f138df0c8dfe7eb95be98f3c0e2495f",
+    "implementation_commit": "98b56dac785aa455aad2c4d964b8e88869241402",
     "protected_changed_paths": [
       "configs/week08_final_evaluation.yaml",
       "configs/week08_r3_final_evaluation.yaml",
@@ -38,11 +38,11 @@
       "tests/test_week08_r3_reporting.py"
     ],
     "ui_runtime_changed": false,
-    "rationale": "The renewed candidate retains the corrected evaluator and fail-closed R3 release gate, replaces a live phase-state test assumption with controlled fixtures, and makes the cycle-start validator read immutable historical blobs. Changes under ui/ are Markdown evidence or status documentation only; no UI runtime or UI test path changed. The original Stage B observations therefore remain unchanged inherited evidence rather than a rerun."
+    "rationale": "The renewed candidate preserves the corrected evaluator and fail-closed R3 gate, fixes the Phase 3 test fixture so it is independent of live enrollment state, records and remediates the post-G6 incident, and restores the tracked pre-enrollment boundary. The post-G6 remediation did not change the production registration runtime. Changes under ui/ remain Markdown-only, so the original 5/5 scenarios and 5/5 supplemental checks remain inherited observations, not a rerun."
   },
   "automated_validation": {
     "focused_r3_gate_suite": {
-      "passed": 26,
+      "passed": 98,
       "skipped": 0,
       "failed": 0
     },
@@ -61,10 +61,10 @@
   },
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": "Md Moshiur Rahman",
+    "name": null,
     "role": "release reviewer",
-    "decision": "APPROVED",
-    "attested_utc": "2026-11-17T19:52:58Z"
+    "decision": "PENDING",
+    "attested_utc": null
   },
   "week8_heldout_used": false
 }
