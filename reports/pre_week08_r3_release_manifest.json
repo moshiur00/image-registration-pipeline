@@ -3,32 +3,32 @@
   "cycle_id": "week08-r3-confirmatory-20261116",
   "release_id": "pre-week08-g5r3r3-20261119",
   "gate": "G5",
-  "status": "R3_REVIEW_PENDING",
-  "generated_utc": "2026-11-19T18:02:36Z",
+  "status": "G5_APPROVED_TAG_PENDING",
+  "generated_utc": "2026-11-19T18:20:10Z",
   "implementation_checkpoint": "98b56dac785aa455aad2c4d964b8e88869241402",
   "release_commit": null,
   "release_tag": null,
   "proposed_release_tag": "pre-week08-g5r3r3-20261119",
   "clean_worktree": true,
-  "required_signoffs_complete": false,
+  "required_signoffs_complete": true,
   "reviewer": {
     "requested_reviewer": "Md Moshiur Rahman",
-    "name": null,
+    "name": "Md Moshiur Rahman",
     "role": "release reviewer",
-    "decision": "PENDING",
-    "attested_utc": null
+    "decision": "APPROVED",
+    "attested_utc": "2026-11-19T18:20:10Z"
   },
   "stage_b_binding": {
     "base_validation_path": "reports/pre_week08_stage_b_validation.json",
     "base_validation_sha256": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "base_tested_commit": "2cb75adef4e616b34f70d7697c781b23ab861174",
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
-    "rebinding_sha256": "3f88aa7f9e6ee65718e8609f4fcc66f40fa552b25d6e53f4d644a7f80b78495b",
+    "rebinding_sha256": "112c3026da23f7fdf1e78dba1bbcb1d80d5d7c8e22ddb0f81c051112f4ca16ad",
     "implementation_checkpoint": "98b56dac785aa455aad2c4d964b8e88869241402",
     "frozen_ui_version": "v0.2",
     "manual_evidence": "5/5 scenarios and 5/5 supplemental checks inherited unchanged, not rerun",
     "ui_runtime_or_ui_test_paths_changed": false,
-    "review_status": "PENDING"
+    "review_status": "APPROVED"
   },
   "dependency_environment": {
     "lock_path": "reports/pre_week08_dependency_lock.txt",
@@ -40,12 +40,12 @@
     "configs/week07_day01_frozen_methods.yaml": "fa251674b5d7b2c078645e92c3662161ecbeef8dcab7c059d7ecdc4a46f45ec5",
     "configs/week08_frozen_baseline.json": "03306f1b71453865944f611eb2da934be35f817d0bca78b11e4a36eb9989da01",
     "configs/week08_r3_final_evaluation.yaml": "198a3f35d23a0f351ba9fe7c08e24932b8a8efc9364f08b313ec291200fe55ea",
-    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "b019630ad03028477f69f92d4a272ef47d721e6cde6dd79bb4eb3929b4819d6c",
+    "docs/PRE_WEEK08_RELEASE_CHECKLIST_R3.md": "17e108b0f4a114a39a4c3f28b58d21567608b238e1d8b85522a23641d22d20f1",
     "outputs/week07_day04_calibration/tentative_policy_not_for_ui.json": "408bd3d8c68ede75c92bdc8b9a615c9d66cffe8162d3e4e2a105b0af00e45a93",
     "reports/pre_week08_r3_g5_incident.json": "b3b11bed827f763c3a83040253482dcba89e20847a025cf875df6d255d7382a9",
     "reports/pre_week08_r3_g6_incident.json": "78a83353e37f3b2498c57ec36df607a24b90b0ffabb38b4f09ac32ac2ebc7f04",
-    "reports/pre_week08_r3_stage_b_rebinding.json": "3f88aa7f9e6ee65718e8609f4fcc66f40fa552b25d6e53f4d644a7f80b78495b",
-    "reports/pre_week08_r3_validation.json": "91c8e685fb09cc8eca205c04ef84d4a2d0a60653e1fbf7ca605c39edf10990ce",
+    "reports/pre_week08_r3_stage_b_rebinding.json": "112c3026da23f7fdf1e78dba1bbcb1d80d5d7c8e22ddb0f81c051112f4ca16ad",
+    "reports/pre_week08_r3_validation.json": "99c4d0aee8e1f889c6ddb3c4928b3f7cc3e2272e02634b416cf36a6b4efec66a",
     "reports/pre_week08_stage_b_validation.json": "1d807cb94b1e93be6113b8b9b2ce967d932a45d5bdc836089ca56e846c433398",
     "reports/week08_r3_g3_remediation.json": "27ae317ef5781b9a74caa111835ad4829fe02d8637d0fc9e8cc0f139df92b138",
     "scripts/week08_final_evaluation.py": "e6f9f95cbbab65fd2622975f77d783c9810c95e6f7b1760030b7743536d67aa0",
@@ -66,7 +66,7 @@
     "reports/pre_week08_r3_source_registration.json"
   ],
   "g6_enrollment": {
-    "status": "BLOCKED_PENDING_G5_AND_FRESH_SOURCE",
+    "status": "BLOCKED_PENDING_G5_TAG_AND_FRESH_SOURCE",
     "reviewed_commit": null,
     "source_ids": [],
     "source_ledger_sha256": null,
@@ -74,7 +74,7 @@
     "source_registration_sha256": null
   },
   "g7_authorization": {
-    "status": "BLOCKED_PENDING_G5_G6",
+    "status": "BLOCKED_PENDING_G5_TAG_G6",
     "authorization_id": null,
     "authorization_sha256": null
   },
@@ -99,9 +99,9 @@
     "evaluation_runs": 0
   },
   "limitations": [
-    "This committed package will remain a human-unapproved G5 review package until a release reviewer explicitly approves the checkpoint, package commit, incident dispositions, Stage B rebinding, and proposed tag.",
+    "Release reviewer Md Moshiur Rahman approved the checkpoint, reviewed package, both incident dispositions, restored pre-enrollment boundary, Stage B rebinding, and proposed tag; the tag is not yet created or bound.",
     "The historical tags pre-week08-g5r3-20261117 and pre-week08-g5r3r2-20261117 remain immutable; their respective G5 and G5/G6 chains are ineligible for further authorization.",
-    "The post-G6 regression failure was caused by a phase-state-coupled test fixture. The production evaluator and registration runtime did not require correction; the test fixture and governance inventory were remediated and the tracked pre-enrollment boundary was restored.",
+    "The post-G6 regression failure was caused by a phase-state-coupled test fixture. The production evaluator and registration runtime did not require correction; the test fixture and governance inventory were remediated, the tracked pre-enrollment boundary was restored, and the disposition is reviewer-approved.",
     "The NGA source raw bytes were transferred and hashed under the historical G6 approval but were never previewed or decoded; no label, outcome, preparation, decision, registration attempt, or evaluation occurred.",
     "The NGA source is not currently enrolled. Rebinding it for renewed G6 requires the new G5 freeze and separate renewed data-custodian approval.",
     "A single independent artwork source can support only source-specific software evidence and cannot establish cross-source, anatomical, clinical, population, modality-wide, or external validity."

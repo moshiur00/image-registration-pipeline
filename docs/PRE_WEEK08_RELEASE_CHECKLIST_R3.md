@@ -2,7 +2,7 @@
 
 **Prepared:** 19 November 2026
 
-**Status:** G5 REVIEW PENDING
+**Status:** RENEWED G5 APPROVED - TAG CREATION AUTHORIZED
 
 **Cycle:** `week08-r3-confirmatory-20261116`
 
@@ -82,7 +82,8 @@ eligible for G7.
 - [x] No UI runtime or UI test path changed.
 - [x] The original 5/5 scenarios and 5/5 supplemental checks are unchanged
   inherited observations, not a new manual run.
-- [ ] Release reviewer approval of the renewed Stage B rebinding is pending.
+- [x] Release reviewer Md Moshiur Rahman approved the renewed Stage B
+  rebinding and both incident dispositions at `2026-11-19T18:20:10Z`.
 
 ## Pre-enrollment and source boundary
 
@@ -94,19 +95,35 @@ eligible for G7.
   outcomes, preparation, decision, registration attempt, or evaluation ran.
 - [x] The NGA source is not currently enrolled. Its possible reuse for renewed
   G6 requires the new G5 freeze and a separate renewed custodian approval.
-- [x] G6 remains blocked pending renewed G5 and custodian rebinding.
+- [x] G6 remains blocked pending creation and binding of the renewed G5 tag,
+  followed by separate custodian rebinding.
 - [x] G7 remains blocked pending reviewed G5 and G6 evidence.
 
 ## Required G5 decision
 
 - **Requested reviewer:** Md Moshiur Rahman
 - **Role:** release reviewer
-- **Decision: PENDING**
-- **Attested UTC:** pending
+- **Decision: APPROVED**
+- **Attested UTC:** `2026-11-19T18:20:10Z`
 - **Reviewed implementation:** `98b56dac785aa455aad2c4d964b8e88869241402`
-- **Reviewed package:** pending committed package object ID
-- **Candidate tag:** `pre-week08-g5r3r3-20261119` (not created)
+- **Reviewed package:** `ef6968b86beeca9d9f658a9e06f696c4edc77711`
+- **Candidate tag:** `pre-week08-g5r3r3-20261119` authorized for creation
 
-The future approval, if granted, is limited to renewed G5, both incident
-dispositions, and Stage B rebinding. It will not enroll a source, authorize
-G7, decode an image, generate synthetic ground truth, or execute the benchmark.
+Recorded approval statement:
+
+> Approve the renewed R3 G5 release freeze and Stage B rebinding for
+> implementation checkpoint 98b56dac785aa455aad2c4d964b8e88869241402,
+> reviewed through package commit ef6968b86beeca9d9f658a9e06f696c4edc77711,
+> including disposition of incidents r3-g5-post-tag-phase-state-test-20261117
+> and r3-g6-post-enrollment-phase-state-test-20261118, under proposed tag
+> pre-week08-g5r3r3-20261119 as release reviewer Md Moshiur Rahman. I approve
+> the restored tracked pre-enrollment boundary with zero currently enrolled
+> sources, zero pixel preview or decode, zero label or outcome access, and zero
+> prepare, decide, or evaluate activity. I acknowledge that
+> pre-week08-g5r3-20261117 and pre-week08-g5r3r2-20261117 remain immutable
+> historical evidence and their respective chains are ineligible for further
+> authorization as documented. This approval does not authorize G6 source
+> rebinding, synthetic ground-truth generation, G7, or benchmark execution.
+
+This approval is limited to renewed G5, both incident dispositions, and Stage
+B rebinding. G6 enrollment and G7 one-run authorization remain separate gates.

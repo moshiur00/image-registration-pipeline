@@ -1,8 +1,8 @@
 {
   "schema_version": "pre_week08_r3_validation_v1",
   "cycle_id": "week08-r3-confirmatory-20261116",
-  "generated_utc": "2026-11-19T18:02:36Z",
-  "status": "PASS_TECHNICAL_REVIEW_READY",
+  "generated_utc": "2026-11-19T18:20:10Z",
+  "status": "PASS_RENEWED_G5_APPROVED",
   "implementation_checkpoint": "98b56dac785aa455aad2c4d964b8e88869241402",
   "g3_checkpoint": {
     "commit": "1208c7d93da3646eb9a02c30ff59f21f530325d2",
@@ -57,7 +57,7 @@
     "rebinding_path": "reports/pre_week08_r3_stage_b_rebinding.json",
     "ui_runtime_or_ui_test_paths_changed": false,
     "manual_evidence_inherited": "5/5 scenarios and 5/5 supplemental checks; not rerun",
-    "human_rebinding_decision": "PENDING"
+    "human_rebinding_decision": "APPROVED"
   },
   "privacy_boundary": {
     "r3_private_intake_git_ignored": true,
@@ -99,7 +99,24 @@
     "remediation_complete": true,
     "tracked_pre_enrollment_boundary_restored": true
   },
-  "human_g5_decision": "PENDING",
-  "next": "Obtain release-reviewer approval of the committed package before creating the new G5 tag. G6 remains blocked pending the new freeze and separate renewed custodian rebinding; G7 remains blocked.",
-  "report_payload_sha256": "8959f4ed3d2ac31d319894a3fa9dffa681625aff9102111cc360142b5374c572"
+  "human_g5_decision": "APPROVED",
+  "human_g5_approval": {
+    "reviewer": "Md Moshiur Rahman",
+    "role": "release reviewer",
+    "attested_utc": "2026-11-19T18:20:10Z",
+    "implementation_checkpoint": "98b56dac785aa455aad2c4d964b8e88869241402",
+    "reviewed_package_commit": "ef6968b86beeca9d9f658a9e06f696c4edc77711",
+    "authorized_tag": "pre-week08-g5r3r3-20261119",
+    "g5_incident_disposition_approved": true,
+    "g6_incident_disposition_approved": true,
+    "historical_tags_acknowledged_immutable_and_ineligible": true,
+    "restored_tracked_pre_enrollment_boundary_approved": true,
+    "g6_source_rebinding_authorized": false,
+    "synthetic_ground_truth_generation_authorized": false,
+    "g7_authorized": false,
+    "benchmark_execution_authorized": false,
+    "statement": "Approve the renewed R3 G5 release freeze and Stage B rebinding for implementation checkpoint 98b56dac785aa455aad2c4d964b8e88869241402, reviewed through package commit ef6968b86beeca9d9f658a9e06f696c4edc77711, including disposition of incidents r3-g5-post-tag-phase-state-test-20261117 and r3-g6-post-enrollment-phase-state-test-20261118, under proposed tag pre-week08-g5r3r3-20261119 as release reviewer Md Moshiur Rahman. I approve the restored tracked pre-enrollment boundary with zero currently enrolled sources, zero pixel preview or decode, zero label or outcome access, and zero prepare, decide, or evaluate activity. I acknowledge that pre-week08-g5r3-20261117 and pre-week08-g5r3r2-20261117 remain immutable historical evidence and their respective chains are ineligible for further authorization as documented. This approval does not authorize G6 source rebinding, synthetic ground-truth generation, G7, or benchmark execution."
+  },
+  "next": "Commit and tag the approved renewed G5 freeze. G6 remains blocked pending tag binding and separate renewed custodian rebinding; G7 remains blocked.",
+  "report_payload_sha256": "2d7b0e07d6647acea739ec073e0c0e1dc9a53fc69c243df54973063eb8efd6fe"
 }
